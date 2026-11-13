@@ -3,6 +3,7 @@ import type {
   CalibrationResponse,
   Change,
   CorridorResponse,
+  ScanResponse,
   SensitivityResponse,
   SimulateResponse,
 } from "./types/corridor";
@@ -42,6 +43,7 @@ export const api = {
       body: JSON.stringify({ changes, testData }),
     }),
   calibration: () => request<CalibrationResponse>("/api/corridor/calibration"),
+  scan: (testData: boolean) => request<ScanResponse>(`/api/corridor/scan?testData=${testData}`),
 };
 
 export function fmt(n: number | null | undefined, digits = 1): string {

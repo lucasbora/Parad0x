@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 
 from app.corridor import calibration, config
 from app.corridor.model import LaneChange, NeedsData, get_model
-from app.corridor.osm_network import compass
+from app.corridor.osm_network import compass, street_directions
 
 router = APIRouter(prefix="/api/corridor", tags=["corridor"])
 
@@ -35,38 +35,6 @@ def _changes(body_changes: list[Change]) -> list[LaneChange]:
         if c.carLanesAfter > current:
             raise HTTPException(422, f"{c.linkId}: carLanesAfter ({c.carLanesAfter}) exceeds current lanes ({current})")
         out.append(LaneChange(c.linkId, c.carLanesAfter, "closed" if c.carLanesAfter == 0 else c.use))
-    return out
-
-
-def street_directions(net) -> dict[str, dict[str, list[str]]]:
-    """street → {heading label: [link ids]}, split into the street's two travel directions.
-
-    Curved streets get many compass bearings; we split relative to the street's longest
-    segment (same way / opposite way) and label each side by its length-weighted mean bearing.
-    """
-    import math
-
-    by_street: dict[str, list] = {}
-    for l in net.links:
-        if l.street == "(fără nume)" or not (net.nodes[l.from_node].inside and net.nodes[l.to_node].inside):
-            continue
-        by_street.setdefault(l.street, []).append(l)
-    out: dict[str, dict[str, list[str]]] = {}
-    for street, ls in by_street.items():
-        ref = max(ls, key=lambda l: l.length_m).bearing
-        groups: dict[bool, list] = {True: [], False: []}
-        for l in ls:
-            diff = abs((l.bearing - ref + 180) % 360 - 180)
-            groups[diff < 90].append(l)
-        dirs: dict[str, list[str]] = {}
-        for g in groups.values():
-            if not g:
-                continue
-            x = sum(l.length_m * math.sin(math.radians(l.bearing)) for l in g)
-            y = sum(l.length_m * math.cos(math.radians(l.bearing)) for l in g)
-            label = compass(math.degrees(math.atan2(x, y)) % 360)
-            dirs.setdefault(label, []).extend(sorted(l.id for l in g))
-        out[street] = dirs
     return out
 
 
@@ -157,6 +125,16 @@ def baseline(testData: bool = False) -> dict[str, Any]:
     m = get_model()
     try:
         return {"status": "ok", **m.baseline(testData)}
+    except NeedsData as nd:
+        return {"status": "needs_data", "dataStatus": nd.status}
+
+
+@router.get("/scan")
+def scan(testData: bool = False) -> dict[str, Any]:
+    """Take one car lane from every street direction in turn and rank by total time in traffic."""
+    m = get_model()
+    try:
+        return {"status": "ok", **m.scan(testData)}
     except NeedsData as nd:
         return {"status": "needs_data", "dataStatus": nd.status}
 

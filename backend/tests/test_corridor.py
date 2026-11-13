@@ -158,3 +158,16 @@ def test_test_mode_only_without_real_counts(tmp_path, synthetic_inputs):
     assert b["testData"] is True and all(x["timeSec"] >= x["freeTimeSec"] - 1e-6 for x in b["links"])
     real = CorridorModel(input_dir=synthetic_inputs)   # real counts present → test flag ignored
     assert real.compare([LaneChange(lid.id, lid.car_lanes - 1, "bike")], test=True)["testData"] is False
+
+
+def test_scan_and_map_helpers(tmp_path):
+    m = CorridorModel(input_dir=tmp_path / "none")
+    sc = m.scan(test=True)
+    assert sc["testData"] is True and len(sc["rows"]) > 10
+    assert sc["rows"] == sorted(sc["rows"], key=lambda r: r["changePct"])
+    b = m.baseline(test=True)
+    assert len(b["junctions"]) == len(m.net.junctions)
+    lid = next(l for l in m.net.links if l.street == "Strada Cluj" and l.car_lanes >= 2)
+    r = m.compare([LaneChange(lid.id, lid.car_lanes - 1, "bike")], test=True)
+    assert all(len(cr["pathBefore"]) >= 2 and len(cr["pathAfter"]) >= 2 for cr in r["carRoutes"])
+    assert len(r["junctions"]) == len(m.net.junctions)

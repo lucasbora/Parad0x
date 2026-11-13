@@ -113,6 +113,8 @@ export interface CarRoute {
   vehH: number;
   minutesBefore: number;
   minutesAfter: number;
+  pathBefore: LngLat[];
+  pathAfter: LngLat[];
 }
 
 export interface TrafficShift {
@@ -155,6 +157,7 @@ export interface SimulateOk {
   braess: { detected: boolean; carCapacityRemoved: boolean; totalChangePct: number };
   totals: { vehMinBefore: number; vehMinAfter: number; changePct: number; demandVehH: number };
   carRoutes: CarRoute[];
+  junctions: { nodeId: string; delayBeforeSec: number; delayAfterSec: number }[];
   trafficShifts: TrafficShift[];
   intersections: IntersectionResult[];
   buses: BusResult[];
@@ -197,7 +200,7 @@ export interface BaselineLink {
 }
 
 export type BaselineResponse =
-  | { status: "ok"; testData: boolean; totalVehMin: number; links: BaselineLink[] }
+  | { status: "ok"; testData: boolean; totalVehMin: number; links: BaselineLink[]; junctions: { nodeId: string; delaySec: number }[] }
   | NeedsData;
 
 /** UI lane type in the mixer. */
@@ -206,4 +209,37 @@ export type LaneKind = "car" | "bus" | "bike" | "sidewalk";
 export interface Pin {
   street: string;
   heading: string;
+}
+
+export interface ScanRow {
+  street: string;
+  heading: string;
+  linkIds: string[];
+  mode: "minus_one_lane" | "closure";
+  changePct: number;
+  vehMinDelta: number;
+  braess: boolean;
+  lowRegret: boolean;
+}
+
+export type ScanResponse =
+  | { status: "ok"; testData: boolean; rows: ScanRow[]; braessCount: number; lowRegretCount: number }
+  | NeedsData;
+
+export interface MapLayers {
+  traffic: boolean;
+  glow: boolean;
+  flow: boolean;
+  intersections: boolean;
+  gates: boolean;
+  buildings3d: boolean;
+}
+
+/** A route highlighted on the map with A/B pins and a time callout. */
+export interface Highlight {
+  coordinates: LngLat[];
+  ghost?: LngLat[];          // previous route, drawn dashed
+  color: string;
+  label: string;
+  time: string;
 }

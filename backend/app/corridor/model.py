@@ -14,7 +14,7 @@ from app.corridor import config, inputs
 from app.corridor.assignment import AssignmentResult, LinkCosts, Network, assign
 from app.corridor.config import ASSUMPTIONS
 from app.corridor.demand import GateMatrix, furness
-from app.corridor.osm_network import CorridorNetwork, compass, load_network
+from app.corridor.osm_network import CorridorNetwork, compass, load_network, street_directions
 
 USES = ("bus", "bike", "sidewalk", "closed")
 
@@ -43,6 +43,7 @@ class CorridorModel:
         self.fd = inputs.load_field_data(self.net, self.input_dir)
         self.status = inputs.data_status(self.net, self.fd, self.input_dir)
         self._cache: dict[Any, Any] = {}
+        self._incoming: dict[str, np.ndarray] = {}
         self._lock = threading.Lock()
 
     # ------------------------------------------------------------------ inputs
@@ -144,13 +145,78 @@ class CorridorModel:
         return res
 
     # ------------------------------------------------------------------ results
+    # ------------------------------------------------------------------ helpers for the map
+    def junction_delays(self, res: AssignmentResult) -> dict[str, float]:
+        """Flow-weighted extra wait (s) on the approaches of every intersection."""
+        out = {}
+        t0 = np.array([l.t0_min for l in self.net.links])
+        for n in self.net.junctions:
+            inc = self._incoming.get(n.id)
+            if inc is None:
+                inc = np.array([i for i, l in enumerate(self.net.links) if l.to_node == n.id], dtype=int)
+                self._incoming[n.id] = inc
+            f = res.flow[inc]
+            out[n.id] = float(np.dot(f, (res.cost[inc] - t0[inc]) * 60) / f.sum()) if f.sum() > 1 else 0.0
+        return out
+
+    def path_coords(self, cost: np.ndarray, usable: np.ndarray, o: int, d: int) -> list[list[float]]:
+        """Geometry of the shortest path o → d at the given link costs."""
+        _, pred = self.solver_net.shortest_paths(cost, [o], usable)
+        nodes = [d]
+        while nodes[-1] != o:
+            u = int(pred[0, nodes[-1]])
+            if u < 0:
+                return []
+            nodes.append(u)
+        nodes.reverse()
+        coords: list[list[float]] = []
+        for u, v in zip(nodes[:-1], nodes[1:]):
+            g = self.net.links[self.solver_net.edge_link[(u, v)]].geometry
+            coords.extend(g if not coords else g[1:])
+        return coords
+
+    def scan(self, test: bool = False) -> dict[str, Any]:
+        """Remove one car lane (or close, if only one) on every street direction; rank by total time.
+
+        changePct < 0 → Braess's paradox (less capacity, less total time).
+        |changePct| < 0.5 → low-regret: the lane can go to buses/bikes at almost no cost to cars.
+        """
+        test = self.is_test(test)
+        key = ("scan", test)
+        if key in self._cache:
+            return self._cache[key]
+        base = self.solve([], 1.0, test)
+        rows = []
+        for street, dirs in street_directions(self.net).items():
+            for heading, ids in dirs.items():
+                lanes = {i: self.car_lanes(i)[0] for i in ids}
+                multi = [i for i, n in lanes.items() if n >= 2]
+                ch = ([LaneChange(i, lanes[i] - 1, "bike") for i in multi] if multi
+                      else [LaneChange(i, 0, "closed") for i in ids])
+                try:
+                    res = self.solve(ch, 1.0, test)
+                except ValueError:      # closing it would cut a gate off — not a valid scenario
+                    continue
+                pct = (res.total_time - base.total_time) / base.total_time * 100
+                rows.append({"street": street, "heading": heading, "linkIds": ids,
+                             "mode": "minus_one_lane" if multi else "closure",
+                             "changePct": round(pct, 3), "vehMinDelta": round(res.total_time - base.total_time, 1),
+                             "braess": pct < -0.05, "lowRegret": abs(pct) < 0.5})
+        rows.sort(key=lambda r: r["changePct"])
+        out = {"testData": test, "rows": rows,
+               "braessCount": sum(r["braess"] for r in rows), "lowRegretCount": sum(r["lowRegret"] for r in rows)}
+        self._cache[key] = out
+        return out
+
     def baseline(self, test: bool = False) -> dict[str, Any]:
         """Current-state equilibrium: what the coloured map shows before any change."""
         res = self.solve([], 1.0, test)
         free = self.costs([])[0].fixed
+        jd = self.junction_delays(res)
         return {
             "testData": self.is_test(test),
             "totalVehMin": round(res.total_time, 0),
+            "junctions": [{"nodeId": k, "delaySec": round(v, 1)} for k, v in jd.items()],
             "links": [{"id": l.id, "flow": round(float(res.flow[i]), 1), "timeSec": round(float(res.cost[i]) * 60, 1),
                        "freeTimeSec": round(float(free[i]) * 60, 1)} for i, l in enumerate(self.net.links)],
         }
@@ -202,11 +268,16 @@ class CorridorModel:
         pairs = sorted(((m.trips[i, j], o, d) for i, o in enumerate(m.origins) for j, d in enumerate(m.destinations)),
                        reverse=True)[:6]
         routes = []
+        _, usable_before = self.costs([])
+        _, usable_after = self.costs(changes)
         for q, o, d in pairs:
             key = (self.node_idx[gates[o].node], self.node_idx[gates[d].node])
             routes.append({"from": f"{gates[o].street} ({gates[o].side})", "to": f"{gates[d].street} ({gates[d].side})",
                            "fromGate": o, "toGate": d, "vehH": round(float(q) * scale, 0),
-                           "minutesBefore": round(before.od_time[key], 2), "minutesAfter": round(after.od_time[key], 2)})
+                           "minutesBefore": round(before.od_time[key], 2), "minutesAfter": round(after.od_time[key], 2),
+                           "pathBefore": self.path_coords(before.cost, usable_before, *key),
+                           "pathAfter": self.path_coords(after.cost, usable_after, *key)})
+        jb, ja = self.junction_delays(before), self.junction_delays(after)
         removed = any(c.car_lanes_after < self.car_lanes(c.link_id)[0] for c in changes)
         change_pct = (after.total_time - before.total_time) / before.total_time * 100
         return {
@@ -220,6 +291,7 @@ class CorridorModel:
             "braess": {"detected": bool(removed and change_pct < -0.05), "carCapacityRemoved": removed,
                        "totalChangePct": round(change_pct, 2)},
             "carRoutes": routes,
+            "junctions": [{"nodeId": k, "delayBeforeSec": round(jb[k], 1), "delayAfterSec": round(ja[k], 1)} for k in jb],
             "trafficShifts": shifts[:8],
             "intersections": inter[:6],
             "buses": self.bus_results(changes, before, after),

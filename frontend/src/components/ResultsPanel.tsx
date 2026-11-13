@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
-import type { BusResult, Change, SensitivityRow, SimulateResponse } from "../types/corridor";
+import type { BusResult, CarRoute, Change, Highlight, SensitivityRow, SimulateResponse } from "../types/corridor";
 import { api, fmt, signed } from "../api";
 import { useI18n } from "../i18n/translations";
 import SourceBadge from "./SourceBadge";
@@ -10,6 +10,13 @@ interface Props {
   changes: Change[];
   testData: boolean;
   onHoverBus: (b: BusResult | null) => void;
+  onHighlight: (h: Highlight | null) => void;
+  onFocus: (h: Highlight) => void;
+}
+
+function routeHighlight(c: CarRoute, minLabel: string): Highlight {
+  return { coordinates: c.pathAfter, ghost: c.pathBefore, color: "#2563eb", label: `${c.from} → ${c.to}`,
+    time: `${fmt(c.minutesAfter, 2)} ${minLabel}` };
 }
 
 function Delta({ before, after, unit, digits = 1, goodWhenLower = true }: {
@@ -27,7 +34,7 @@ function Delta({ before, after, unit, digits = 1, goodWhenLower = true }: {
   );
 }
 
-export default function ResultsPanel({ result, changes, testData, onHoverBus }: Props) {
+export default function ResultsPanel({ result, changes, testData, onHoverBus, onHighlight, onFocus }: Props) {
   const { t } = useI18n();
   const [sens, setSens] = useState<SensitivityRow[] | null>(null);
   const [sensBusy, setSensBusy] = useState(false);
@@ -77,7 +84,9 @@ export default function ResultsPanel({ result, changes, testData, onHoverBus }: 
         <h3 className="text-[12.5px] font-semibold text-slate-800">{t.cars}</h3>
         <ul className="mt-1 divide-y divide-slate-100">
           {r.carRoutes.map((c) => (
-            <li key={`${c.fromGate}-${c.toGate}`} className="py-1.5">
+            <li key={`${c.fromGate}-${c.toGate}`} className="-mx-1 cursor-pointer rounded-lg px-1 py-1.5 transition hover:bg-blue-50"
+              onMouseEnter={() => onHighlight(routeHighlight(c, t.min))} onMouseLeave={() => onHighlight(null)}
+              onClick={() => onFocus(routeHighlight(c, t.min))}>
               <div className="text-[12px] text-slate-700">{c.from} → {c.to} <span className="text-slate-400">· {fmt(c.vehH, 0)} {t.vehH}</span></div>
               <Delta before={c.minutesBefore} after={c.minutesAfter} unit={t.min} digits={2} />
             </li>
