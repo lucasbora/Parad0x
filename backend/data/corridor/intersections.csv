@@ -1,0 +1,206 @@
+node_id,intersection,signalized,from_link_id,from,to_link_id,to,lat,lng
+25497659,Aleea F.C. Ripensia,yes,L2348326092_25497659,Aleea F.C. Ripensia (heading W),L25497659_25638202,Aleea F.C. Ripensia (heading W),45.749000,21.236853
+25497659,Aleea F.C. Ripensia,yes,L2348326092_25497659,Aleea F.C. Ripensia (heading W),L25497659_25638207,(fără nume) (heading N),45.749000,21.236853
+25638202,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,yes,L25497659_25638202,Aleea F.C. Ripensia (heading W),L25638202_256019786,Piața Leonardo da Vinci (heading W),45.749054,21.236525
+25638202,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,yes,L25497659_25638202,Aleea F.C. Ripensia (heading W),L25638202_25638207,Bulevardul Corneliu Coposu (heading NE),45.749054,21.236525
+25638202,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,yes,L255724621_25638202,Piața Leonardo da Vinci (heading NE),L25638202_256019786,Piața Leonardo da Vinci (heading W),45.749054,21.236525
+25638202,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,yes,L255724621_25638202,Piața Leonardo da Vinci (heading NE),L25638202_25638207,Bulevardul Corneliu Coposu (heading NE),45.749054,21.236525
+3354796213,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,yes,L2651466932_3354796213,Aleea F.C. Ripensia (heading N),L3354796213_358406089,Aleea F.C. Ripensia (heading N),45.746817,21.240376
+3354796213,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,yes,L2651466932_3354796213,Aleea F.C. Ripensia (heading N),L3354796213_4067925189,Bulevardul Eroilor de la Tisa (heading NE),45.746817,21.240376
+3354796213,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,yes,L2651466932_3354796213,Aleea F.C. Ripensia (heading N),L3354796213_5676019160,Bulevardul Eroilor de la Tisa (heading SW),45.746817,21.240376
+3354796213,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,yes,L4067925189_3354796213,Bulevardul Eroilor de la Tisa (heading SW),L3354796213_358406089,Aleea F.C. Ripensia (heading N),45.746817,21.240376
+3354796213,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,yes,L4067925189_3354796213,Bulevardul Eroilor de la Tisa (heading SW),L3354796213_5676019160,Bulevardul Eroilor de la Tisa (heading SW),45.746817,21.240376
+3354796213,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,yes,L5676019160_3354796213,Bulevardul Eroilor de la Tisa (heading NE),L3354796213_358406089,Aleea F.C. Ripensia (heading N),45.746817,21.240376
+3354796213,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,yes,L5676019160_3354796213,Bulevardul Eroilor de la Tisa (heading NE),L3354796213_4067925189,Bulevardul Eroilor de la Tisa (heading NE),45.746817,21.240376
+2105405166,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L13308832152_2105405166,Bulevardul Liviu Rebreanu (heading E),L2105405166_29119260,Bulevardul Liviu Rebreanu (heading E),45.738489,21.238145
+2105405166,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L13308832152_2105405166,Bulevardul Liviu Rebreanu (heading E),L2105405166_6959616673,Calea Martirilor 1989 (heading S),45.738489,21.238145
+2105405166,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L4462010368_2105405166,Calea Martirilor 1989 (heading S),L2105405166_29119260,Bulevardul Liviu Rebreanu (heading E),45.738489,21.238145
+2105405166,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L4462010368_2105405166,Calea Martirilor 1989 (heading S),L2105405166_6959616673,Calea Martirilor 1989 (heading S),45.738489,21.238145
+29119260,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L2105405166_29119260,Bulevardul Liviu Rebreanu (heading E),L29119260_4443823116,Calea Martirilor 1989 (heading N),45.738505,21.238285
+29119260,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L2105405166_29119260,Bulevardul Liviu Rebreanu (heading E),L29119260_6431559102,Bulevardul Liviu Rebreanu (heading E),45.738505,21.238285
+29119260,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L6959616673_29119260,Calea Martirilor 1989 (heading N),L29119260_4443823116,Calea Martirilor 1989 (heading N),45.738505,21.238285
+29119260,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L6959616673_29119260,Calea Martirilor 1989 (heading N),L29119260_6431559102,Bulevardul Liviu Rebreanu (heading E),45.738505,21.238285
+25478346,Bulevardul Liviu Rebreanu / Strada Arieș,yes,L262632090_25478346,Bulevardul Liviu Rebreanu (heading W),L25478346_25530087,Strada Arieș (heading SE),45.738416,21.240702
+25478346,Bulevardul Liviu Rebreanu / Strada Arieș,yes,L262632090_25478346,Bulevardul Liviu Rebreanu (heading W),L25478346_6428488571,Bulevardul Liviu Rebreanu (heading W),45.738416,21.240702
+25478346,Bulevardul Liviu Rebreanu / Strada Arieș,yes,L6428488575_25478346,Strada Arieș (heading SE),L25478346_25530087,Strada Arieș (heading SE),45.738416,21.240702
+25478346,Bulevardul Liviu Rebreanu / Strada Arieș,yes,L6428488575_25478346,Strada Arieș (heading SE),L25478346_6428488571,Bulevardul Liviu Rebreanu (heading W),45.738416,21.240702
+2350920093,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L2350919309_2350920093,Bulevardul Doctor Victor Babeș (heading W),L2350920093_25478406,Bulevardul Mihai Viteazu (heading S),45.744610,21.225587
+2350920093,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L25497633_2350920093,Bulevardul Mihai Viteazu (heading S),L2350920093_2350919309,Bulevardul Doctor Victor Babeș (heading E),45.744610,21.225587
+2350920093,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L25497633_2350920093,Bulevardul Mihai Viteazu (heading S),L2350920093_25478406,Bulevardul Mihai Viteazu (heading S),45.744610,21.225587
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L1236258899_2350919309,Bulevardul Doctor Victor Babeș (heading W),L2350919309_2350920093,Bulevardul Doctor Victor Babeș (heading W),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L1236258899_2350919309,Bulevardul Doctor Victor Babeș (heading W),L2350919309_415272696,Bulevardul Mihai Viteazu (heading N),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L2350920093_2350919309,Bulevardul Doctor Victor Babeș (heading E),L2350919309_1236258899,Bulevardul Doctor Victor Babeș (heading E),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L2350920093_2350919309,Bulevardul Doctor Victor Babeș (heading E),L2350919309_415272696,Bulevardul Mihai Viteazu (heading N),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),L2350919309_1236258899,Bulevardul Doctor Victor Babeș (heading E),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),L2350919309_2350920093,Bulevardul Doctor Victor Babeș (heading W),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),L2350919309_415272696,Bulevardul Mihai Viteazu (heading N),45.744613,21.225730
+263839960,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,yes,L263152841_263839960,Bulevardul Regele Ferdinand I (heading S),L263839960_21515988,Splaiul Tudor Vladimirescu (heading W),45.748001,21.225449
+263839960,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,yes,L263152841_263839960,Bulevardul Regele Ferdinand I (heading S),L263839960_25497634,Bulevardul Mihai Viteazu (heading S),45.748001,21.225449
+263839960,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,yes,L263839948_263839960,Bulevardul Vasile Pârvan (heading W),L263839960_21515988,Splaiul Tudor Vladimirescu (heading W),45.748001,21.225449
+263839960,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,yes,L263839948_263839960,Bulevardul Vasile Pârvan (heading W),L263839960_25497634,Bulevardul Mihai Viteazu (heading S),45.748001,21.225449
+25497634,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,yes,L21515988_25497634,Splaiul Tudor Vladimirescu (heading E),L25497634_25497633,Bulevardul Mihai Viteazu (heading S),45.747901,21.225414
+25497634,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,yes,L21515988_25497634,Splaiul Tudor Vladimirescu (heading E),L25497634_262642060,Bulevardul Vasile Pârvan (heading E),45.747901,21.225414
+25497634,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,yes,L263839960_25497634,Bulevardul Mihai Viteazu (heading S),L25497634_25497633,Bulevardul Mihai Viteazu (heading S),45.747901,21.225414
+25497634,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,yes,L263839960_25497634,Bulevardul Mihai Viteazu (heading S),L25497634_262642060,Bulevardul Vasile Pârvan (heading E),45.747901,21.225414
+263839948,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,yes,L1133482449_263839948,Bulevardul Vasile Pârvan (heading W),L263839948_263152841,Bulevardul Regele Ferdinand I (heading N),45.747989,21.225558
+263839948,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,yes,L1133482449_263839948,Bulevardul Vasile Pârvan (heading W),L263839948_263839960,Bulevardul Vasile Pârvan (heading W),45.747989,21.225558
+263839948,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,yes,L262642060_263839948,Bulevardul Regele Ferdinand I (heading N),L263839948_263152841,Bulevardul Regele Ferdinand I (heading N),45.747989,21.225558
+263839948,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,yes,L262642060_263839948,Bulevardul Regele Ferdinand I (heading N),L263839948_263839960,Bulevardul Vasile Pârvan (heading W),45.747989,21.225558
+262642060,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,yes,L25497634_262642060,Bulevardul Vasile Pârvan (heading E),L262642060_1133482449,Bulevardul Vasile Pârvan (heading E),45.747883,21.225529
+262642060,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,yes,L25497634_262642060,Bulevardul Vasile Pârvan (heading E),L262642060_263839948,Bulevardul Regele Ferdinand I (heading N),45.747883,21.225529
+262642060,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,yes,L415272696_262642060,Bulevardul Mihai Viteazu (heading N),L262642060_1133482449,Bulevardul Vasile Pârvan (heading E),45.747883,21.225529
+262642060,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,yes,L415272696_262642060,Bulevardul Mihai Viteazu (heading N),L262642060_263839948,Bulevardul Regele Ferdinand I (heading N),45.747883,21.225529
+4462010368,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,yes,L3815408390_4462010368,Calea Martirilor 1989 (heading S),L4462010368_13308612017,Bulevardul Liviu Rebreanu (heading SW),45.738668,21.238174
+4462010368,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,yes,L3815408390_4462010368,Calea Martirilor 1989 (heading S),L4462010368_2105405166,Calea Martirilor 1989 (heading S),45.738668,21.238174
+4462010368,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,yes,L4443823116_4462010368,Bulevardul Liviu Rebreanu (heading W),L4462010368_13308612017,Bulevardul Liviu Rebreanu (heading SW),45.738668,21.238174
+4462010368,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,yes,L4443823116_4462010368,Bulevardul Liviu Rebreanu (heading W),L4462010368_2105405166,Calea Martirilor 1989 (heading S),45.738668,21.238174
+4443823116,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,yes,L13309089601_4443823116,Bulevardul Liviu Rebreanu (heading W),L4443823116_3815408390,Calea Martirilor 1989 (heading N),45.738669,21.238306
+4443823116,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,yes,L13309089601_4443823116,Bulevardul Liviu Rebreanu (heading W),L4443823116_4462010368,Bulevardul Liviu Rebreanu (heading W),45.738669,21.238306
+4443823116,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,yes,L29119260_4443823116,Calea Martirilor 1989 (heading N),L4443823116_3815408390,Calea Martirilor 1989 (heading N),45.738669,21.238306
+4443823116,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,yes,L29119260_4443823116,Calea Martirilor 1989 (heading N),L4443823116_4462010368,Bulevardul Liviu Rebreanu (heading W),45.738669,21.238306
+1203989461,Piața Leonardo da Vinci,yes,L25507159_1203989461,Piața Leonardo da Vinci (heading E),L1203989461_1203989459,Piața Leonardo da Vinci (heading NE),45.748702,21.235806
+1203989461,Piața Leonardo da Vinci,yes,L256019138_1203989461,Piața Leonardo da Vinci (heading SE),L1203989461_1203989459,Piața Leonardo da Vinci (heading NE),45.748702,21.235806
+256019786,Piața Leonardo da Vinci,yes,L255724621_256019786,Piața Leonardo da Vinci (heading N),L256019786_25638344,Piața Leonardo da Vinci (heading W),45.749140,21.236047
+256019786,Piața Leonardo da Vinci,yes,L25638202_256019786,Piața Leonardo da Vinci (heading W),L256019786_25638344,Piața Leonardo da Vinci (heading W),45.749140,21.236047
+255724621,Piața Leonardo da Vinci,yes,L1203989459_255724621,Piața Leonardo da Vinci (heading NE),L255724621_256019786,Piața Leonardo da Vinci (heading N),45.748837,21.236141
+255724621,Piața Leonardo da Vinci,yes,L1203989459_255724621,Piața Leonardo da Vinci (heading NE),L255724621_25638202,Piața Leonardo da Vinci (heading NE),45.748837,21.236141
+255724417,Piața Leonardo da Vinci / Strada Michelangelo,yes,L25638344_255724417,Piața Leonardo da Vinci (heading SW),L255724417_256019138,Piața Leonardo da Vinci (heading S),45.748937,21.235417
+255724417,Piața Leonardo da Vinci / Strada Michelangelo,yes,L25638344_255724417,Piața Leonardo da Vinci (heading SW),L255724417_5014433131,Bulevardul Vasile Pârvan (heading W),45.748937,21.235417
+255724417,Piața Leonardo da Vinci / Strada Michelangelo,yes,L4281788870_255724417,Strada Michelangelo (heading S),L255724417_256019138,Piața Leonardo da Vinci (heading S),45.748937,21.235417
+255724417,Piața Leonardo da Vinci / Strada Michelangelo,yes,L4281788870_255724417,Strada Michelangelo (heading S),L255724417_5014433131,Bulevardul Vasile Pârvan (heading W),45.748937,21.235417
+3581040750,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),L3581040750_262632090,Strada Arieș (heading NW),45.738210,21.240985
+3581040750,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),L3581040750_6431276606,Bulevardul Liviu Rebreanu (heading E),45.738210,21.240985
+262632090,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L14015200349_262632090,Bulevardul Liviu Rebreanu (heading W),L262632090_25478346,Bulevardul Liviu Rebreanu (heading W),45.738397,21.240862
+262632090,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L14015200349_262632090,Bulevardul Liviu Rebreanu (heading W),L262632090_4846641045,Strada Arieș (heading NW),45.738397,21.240862
+262632090,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L3581040750_262632090,Strada Arieș (heading NW),L262632090_25478346,Bulevardul Liviu Rebreanu (heading W),45.738397,21.240862
+262632090,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L3581040750_262632090,Strada Arieș (heading NW),L262632090_4846641045,Strada Arieș (heading NW),45.738397,21.240862
+1112954234,Strada Arieș / Calea Martirilor 1989,yes,L1112986414_1112954234,Strada Arieș (heading SE),L1112954234_1112954238,Calea Martirilor 1989 (heading S),45.741480,21.238548
+1112954234,Strada Arieș / Calea Martirilor 1989,yes,L1112986414_1112954234,Strada Arieș (heading SE),L1112954234_1203996268,Strada Arieș (heading SE),45.741480,21.238548
+1203996268,Strada Arieș / Calea Martirilor 1989,yes,L1112954234_1203996268,Strada Arieș (heading SE),L1203996268_1112954247,Strada Arieș (heading SE),45.741280,21.238674
+1203996268,Strada Arieș / Calea Martirilor 1989,yes,L1112954234_1203996268,Strada Arieș (heading SE),L1203996268_1112986405,Calea Martirilor 1989 (heading N),45.741280,21.238674
+1203996268,Strada Arieș / Calea Martirilor 1989,yes,L1112954238_1203996268,Calea Martirilor 1989 (heading N),L1203996268_1112954247,Strada Arieș (heading SE),45.741280,21.238674
+1203996268,Strada Arieș / Calea Martirilor 1989,yes,L1112954238_1203996268,Calea Martirilor 1989 (heading N),L1203996268_1112986405,Calea Martirilor 1989 (heading N),45.741280,21.238674
+604969830,Strada Arieș / Strada Ștefan Covaci,yes,L1112954247_604969830,Strada Arieș (heading SE),L604969830_4846641045,Strada Arieș (heading SE),45.740255,21.239406
+604969830,Strada Arieș / Strada Ștefan Covaci,yes,L386486228_604969830,Strada Ștefan Covaci (heading W),L604969830_1112954247,Strada Arieș (heading NW),45.740255,21.239406
+604969830,Strada Arieș / Strada Ștefan Covaci,yes,L386486228_604969830,Strada Ștefan Covaci (heading W),L604969830_4846641045,Strada Arieș (heading SE),45.740255,21.239406
+604969830,Strada Arieș / Strada Ștefan Covaci,yes,L4846641045_604969830,Strada Arieș (heading NW),L604969830_1112954247,Strada Arieș (heading NW),45.740255,21.239406
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L1236258899_25507163,Bulevardul Doctor Victor Babeș (heading E),L25507163_2476973917,Strada Cluj (heading SE),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L1236258899_25507163,Bulevardul Doctor Victor Babeș (heading E),L25507163_5676019160,Bulevardul Eroilor de la Tisa (heading NE),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L2267824959_25507163,Strada Cluj (heading S),L25507163_1236258899,Bulevardul Doctor Victor Babeș (heading W),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L2267824959_25507163,Strada Cluj (heading S),L25507163_2476973917,Strada Cluj (heading SE),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L2267824959_25507163,Strada Cluj (heading S),L25507163_5676019160,Bulevardul Eroilor de la Tisa (heading NE),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L5676019160_25507163,Bulevardul Eroilor de la Tisa (heading SW),L25507163_1236258899,Bulevardul Doctor Victor Babeș (heading W),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L5676019160_25507163,Bulevardul Eroilor de la Tisa (heading SW),L25507163_2476973917,Strada Cluj (heading SE),45.745312,21.235923
+25507159,Strada Cluj / Piața Leonardo da Vinci,yes,L25507156_25507159,Bulevardul Vasile Pârvan (heading E),L25507159_1203989461,Piața Leonardo da Vinci (heading E),45.748615,21.235451
+25507159,Strada Cluj / Piața Leonardo da Vinci,yes,L25507156_25507159,Bulevardul Vasile Pârvan (heading E),L25507159_2267824959,Strada Cluj (heading S),45.748615,21.235451
+25507159,Strada Cluj / Piața Leonardo da Vinci,yes,L256019138_25507159,Piața Leonardo da Vinci (heading S),L25507159_1203989461,Piața Leonardo da Vinci (heading E),45.748615,21.235451
+25507159,Strada Cluj / Piața Leonardo da Vinci,yes,L256019138_25507159,Piața Leonardo da Vinci (heading S),L25507159_2267824959,Strada Cluj (heading S),45.748615,21.235451
+3931142598,Aleea F.C. Ripensia,no,L3931142600_3931142598,(fără nume) (heading NW),L3931142598_3931135801,Aleea F.C. Ripensia (heading NW),45.742746,21.243220
+3931142598,Aleea F.C. Ripensia,no,L3931142600_3931142598,(fără nume) (heading NW),L3931142598_3931136571,(fără nume) (heading SW),45.742746,21.243220
+3931136571,Aleea F.C. Ripensia,no,L3931135800_3931136571,Aleea F.C. Ripensia (heading SE),L3931136571_4615919089,(fără nume) (heading S),45.742692,21.243057
+3931136571,Aleea F.C. Ripensia,no,L3931142598_3931136571,(fără nume) (heading SW),L3931136571_4615919089,(fără nume) (heading S),45.742692,21.243057
+25497638,Aleea F.C. Ripensia,no,L3931135800_25497638,Aleea F.C. Ripensia (heading N),L25497638_2651466932,Aleea F.C. Ripensia (heading NW),45.743230,21.242814
+25497638,Aleea F.C. Ripensia,no,L3931135801_25497638,Aleea F.C. Ripensia (heading NW),L25497638_2651466932,Aleea F.C. Ripensia (heading NW),45.743230,21.242814
+358406089,Aleea F.C. Ripensia,no,L3354796213_358406089,Aleea F.C. Ripensia (heading N),L358406089_2348326092,Aleea F.C. Ripensia (heading NW),45.747043,21.240249
+358406089,Aleea F.C. Ripensia,no,L4067925189_358406089,(fără nume) (heading NW),L358406089_2348326092,Aleea F.C. Ripensia (heading NW),45.747043,21.240249
+25638207,Bulevardul Corneliu Coposu,no,L25497659_25638207,(fără nume) (heading N),L25638207_25638253,Bulevardul Corneliu Coposu (heading NE),45.749238,21.236716
+25638207,Bulevardul Corneliu Coposu,no,L25638202_25638207,Bulevardul Corneliu Coposu (heading NE),L25638207_25638253,Bulevardul Corneliu Coposu (heading NE),45.749238,21.236716
+4067925189,Bulevardul Eroilor de la Tisa,no,L11297495796_4067925189,Bulevardul Eroilor de la Tisa (heading SW),L4067925189_3354796213,Bulevardul Eroilor de la Tisa (heading SW),45.746905,21.240622
+4067925189,Bulevardul Eroilor de la Tisa,no,L11297495796_4067925189,Bulevardul Eroilor de la Tisa (heading SW),L4067925189_358406089,(fără nume) (heading NW),45.746905,21.240622
+4067925189,Bulevardul Eroilor de la Tisa,no,L3354796213_4067925189,Bulevardul Eroilor de la Tisa (heading NE),L4067925189_11297495796,Bulevardul Eroilor de la Tisa (heading NE),45.746905,21.240622
+4067925189,Bulevardul Eroilor de la Tisa,no,L3354796213_4067925189,Bulevardul Eroilor de la Tisa (heading NE),L4067925189_358406089,(fără nume) (heading NW),45.746905,21.240622
+25530087,Bulevardul Liviu Rebreanu / Strada Arieș,no,L25478346_25530087,Strada Arieș (heading SE),L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),45.738226,21.240846
+25530087,Bulevardul Liviu Rebreanu / Strada Arieș,no,L6431559102_25530087,Bulevardul Liviu Rebreanu (heading E),L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),45.738226,21.240846
+6428488571,Bulevardul Liviu Rebreanu / Strada Arieș,no,L25478346_6428488571,Bulevardul Liviu Rebreanu (heading W),L6428488571_13309089601,Bulevardul Liviu Rebreanu (heading W),45.738457,21.240294
+6428488571,Bulevardul Liviu Rebreanu / Strada Arieș,no,L6428488575_6428488571,Strada Arieș (heading SW),L6428488571_13309089601,Bulevardul Liviu Rebreanu (heading W),45.738457,21.240294
+2052012003,Bulevardul Regele Ferdinand I,no,L2052011839_2052012003,Bulevardul Regele Ferdinand I (heading S),L2052012003_2051947965,Bulevardul Regele Ferdinand I (heading S),45.749681,21.225505
+2052012003,Bulevardul Regele Ferdinand I,no,L2052011839_2052012003,Bulevardul Regele Ferdinand I (heading S),L2052012003_2052012082,Bulevardul Regele Ferdinand I (heading E),45.749681,21.225505
+263152841,Bulevardul Regele Ferdinand I / Podul Mihai Viteazul,no,L2051947965_263152841,Podul Mihai Viteazul (heading S),L263152841_263839960,Bulevardul Regele Ferdinand I (heading S),45.748448,21.225596
+263152841,Bulevardul Regele Ferdinand I / Podul Mihai Viteazul,no,L263839948_263152841,Bulevardul Regele Ferdinand I (heading N),L263152841_2051947965,Podul Mihai Viteazul (heading N),45.748448,21.225596
+263152841,Bulevardul Regele Ferdinand I / Podul Mihai Viteazul,no,L263839948_263152841,Bulevardul Regele Ferdinand I (heading N),L263152841_263839960,Bulevardul Regele Ferdinand I (heading S),45.748448,21.225596
+2052012082,Bulevardul Regele Ferdinand I / Strada 20 Decembrie 1989,no,L2051947965_2052012082,Strada 20 Decembrie 1989 (heading NE),L2052012082_4485472265,Strada 20 Decembrie 1989 (heading NE),45.749621,21.226187
+2052012082,Bulevardul Regele Ferdinand I / Strada 20 Decembrie 1989,no,L2052012003_2052012082,Bulevardul Regele Ferdinand I (heading E),L2052012082_4485472265,Strada 20 Decembrie 1989 (heading NE),45.749621,21.226187
+1133482449,Bulevardul Vasile Pârvan,no,L25507156_1133482449,Bulevardul Vasile Pârvan (heading W),L1133482449_263839948,Bulevardul Vasile Pârvan (heading W),45.747771,21.227001
+1133482449,Bulevardul Vasile Pârvan,no,L262642060_1133482449,Bulevardul Vasile Pârvan (heading E),L1133482449_25507156,Bulevardul Vasile Pârvan (heading E),45.747771,21.227001
+1133482449,Bulevardul Vasile Pârvan,no,L262642060_1133482449,Bulevardul Vasile Pârvan (heading E),L1133482449_263839948,Bulevardul Vasile Pârvan (heading W),45.747771,21.227001
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L1133482449_25507156,Bulevardul Vasile Pârvan (heading E),L25507156_2272193101,Pasajul Michelangelo (heading NE),45.748139,21.232178
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L1133482449_25507156,Bulevardul Vasile Pârvan (heading E),L25507156_25507159,Bulevardul Vasile Pârvan (heading E),45.748139,21.232178
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L2272193101_25507156,Pasajul Michelangelo (heading SW),L25507156_1133482449,Bulevardul Vasile Pârvan (heading W),45.748139,21.232178
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L2272193101_25507156,Pasajul Michelangelo (heading SW),L25507156_25507159,Bulevardul Vasile Pârvan (heading E),45.748139,21.232178
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L5014433131_25507156,Bulevardul Vasile Pârvan (heading SW),L25507156_1133482449,Bulevardul Vasile Pârvan (heading W),45.748139,21.232178
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L5014433131_25507156,Bulevardul Vasile Pârvan (heading SW),L25507156_2272193101,Pasajul Michelangelo (heading NE),45.748139,21.232178
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L5014433131_25507156,Bulevardul Vasile Pârvan (heading SW),L25507156_25507159,Bulevardul Vasile Pârvan (heading E),45.748139,21.232178
+1112954238,Calea Martirilor 1989,no,L1112954234_1112954238,Calea Martirilor 1989 (heading S),L1112954238_1203996268,Calea Martirilor 1989 (heading N),45.740752,21.238500
+1112954238,Calea Martirilor 1989,no,L1112954234_1112954238,Calea Martirilor 1989 (heading S),L1112954238_2105405142,Calea Martirilor 1989 (heading S),45.740752,21.238500
+1112954238,Calea Martirilor 1989,no,L2105405142_1112954238,Calea Martirilor 1989 (heading N),L1112954238_1203996268,Calea Martirilor 1989 (heading N),45.740752,21.238500
+2105405142,Calea Martirilor 1989,no,L1112954238_2105405142,Calea Martirilor 1989 (heading S),L2105405142_1112954247,(fără nume) (heading E),45.740723,21.238498
+2105405142,Calea Martirilor 1989,no,L1112954238_2105405142,Calea Martirilor 1989 (heading S),L2105405142_3815408390,Calea Martirilor 1989 (heading S),45.740723,21.238498
+2105405142,Calea Martirilor 1989,no,L3815408390_2105405142,Calea Martirilor 1989 (heading N),L2105405142_1112954238,Calea Martirilor 1989 (heading N),45.740723,21.238498
+2105405142,Calea Martirilor 1989,no,L3815408390_2105405142,Calea Martirilor 1989 (heading N),L2105405142_1112954247,(fără nume) (heading E),45.740723,21.238498
+3815408390,Calea Martirilor 1989,no,L2105405142_3815408390,Calea Martirilor 1989 (heading S),L3815408390_4462010368,Calea Martirilor 1989 (heading S),45.739002,21.238295
+3815408390,Calea Martirilor 1989,no,L4443823116_3815408390,Calea Martirilor 1989 (heading N),L3815408390_2105405142,Calea Martirilor 1989 (heading N),45.739002,21.238295
+3815408390,Calea Martirilor 1989,no,L4443823116_3815408390,Calea Martirilor 1989 (heading N),L3815408390_4462010368,Calea Martirilor 1989 (heading S),45.739002,21.238295
+256019138,Piața Leonardo da Vinci,no,L255724417_256019138,Piața Leonardo da Vinci (heading S),L256019138_1203989461,Piața Leonardo da Vinci (heading SE),45.748862,21.235430
+256019138,Piața Leonardo da Vinci,no,L255724417_256019138,Piața Leonardo da Vinci (heading S),L256019138_25507159,Piața Leonardo da Vinci (heading S),45.748862,21.235430
+1203989459,Piața Leonardo da Vinci,no,L1203989461_1203989459,Piața Leonardo da Vinci (heading NE),L1203989459_255724621,Piața Leonardo da Vinci (heading NE),45.748743,21.235919
+1203989459,Piața Leonardo da Vinci,no,L2267824959_1203989459,Piața Leonardo da Vinci (heading NE),L1203989459_255724621,Piața Leonardo da Vinci (heading NE),45.748743,21.235919
+25638344,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,no,L13891255589_25638344,Bulevardul Corneliu Coposu (heading SW),L25638344_255724417,Piața Leonardo da Vinci (heading SW),45.749172,21.235934
+25638344,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,no,L13891255589_25638344,Bulevardul Corneliu Coposu (heading SW),L25638344_4281788870,Strada Michelangelo (heading NW),45.749172,21.235934
+25638344,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,no,L256019786_25638344,Piața Leonardo da Vinci (heading W),L25638344_255724417,Piața Leonardo da Vinci (heading SW),45.749172,21.235934
+25638344,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,no,L256019786_25638344,Piața Leonardo da Vinci (heading W),L25638344_4281788870,Strada Michelangelo (heading NW),45.749172,21.235934
+2408666126,Piața Nicolae Bălcescu,no,L25478406_2408666126,Piața Nicolae Bălcescu (heading SW),L2408666126_29120255,Piața Nicolae Bălcescu (heading SW),45.741951,21.225640
+2408666126,Piața Nicolae Bălcescu,no,L792223260_2408666126,Piața Nicolae Bălcescu (heading NW),L2408666126_29120255,Piața Nicolae Bălcescu (heading SW),45.741951,21.225640
+792223260,Piața Nicolae Bălcescu,no,L2408666141_792223260,Piața Nicolae Bălcescu (heading NE),L792223260_2408666107,Piața Nicolae Bălcescu (heading NE),45.741689,21.225864
+792223260,Piața Nicolae Bălcescu,no,L2408666141_792223260,Piața Nicolae Bălcescu (heading NE),L792223260_2408666126,Piața Nicolae Bălcescu (heading NW),45.741689,21.225864
+29120256,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,no,L263151277_29120256,Strada Ciprian Porumbescu (heading E),L29120256_6274787022,Piața Nicolae Bălcescu (heading E),45.741327,21.225347
+29120256,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,no,L29120255_29120256,Piața Nicolae Bălcescu (heading SE),L29120256_6274787022,Piața Nicolae Bălcescu (heading E),45.741327,21.225347
+29120255,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,no,L2408666126_29120255,Piața Nicolae Bălcescu (heading SW),L29120255_263151277,Strada Ciprian Porumbescu (heading S),45.741527,21.225179
+29120255,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,no,L2408666126_29120255,Piața Nicolae Bălcescu (heading SW),L29120255_29120256,Piața Nicolae Bălcescu (heading SE),45.741527,21.225179
+6274787022,Piața Nicolae Bălcescu / Strada Independenței,no,L11195796846_6274787022,Strada Independenței (heading N),L6274787022_2408666141,Piața Nicolae Bălcescu (heading NE),45.741326,21.225425
+6274787022,Piața Nicolae Bălcescu / Strada Independenței,no,L29120256_6274787022,Piața Nicolae Bălcescu (heading E),L6274787022_2408666141,Piața Nicolae Bălcescu (heading NE),45.741326,21.225425
+21515988,Splaiul Tudor Vladimirescu,no,L21515986_21515988,Splaiul Tudor Vladimirescu (heading E),L21515988_25497634,Splaiul Tudor Vladimirescu (heading E),45.748057,21.224798
+21515988,Splaiul Tudor Vladimirescu,no,L263839960_21515988,Splaiul Tudor Vladimirescu (heading W),L21515988_21515986,Splaiul Tudor Vladimirescu (heading W),45.748057,21.224798
+21515988,Splaiul Tudor Vladimirescu,no,L263839960_21515988,Splaiul Tudor Vladimirescu (heading W),L21515988_25497634,Splaiul Tudor Vladimirescu (heading E),45.748057,21.224798
+2051947965,Strada 20 Decembrie 1989 / Podul Mihai Viteazul,no,L2052012003_2051947965,Bulevardul Regele Ferdinand I (heading S),L2051947965_2052012082,Strada 20 Decembrie 1989 (heading NE),45.748929,21.225714
+2051947965,Strada 20 Decembrie 1989 / Podul Mihai Viteazul,no,L2052012003_2051947965,Bulevardul Regele Ferdinand I (heading S),L2051947965_263152841,Podul Mihai Viteazul (heading S),45.748929,21.225714
+2051947965,Strada 20 Decembrie 1989 / Podul Mihai Viteazul,no,L263152841_2051947965,Podul Mihai Viteazul (heading N),L2051947965_2052012082,Strada 20 Decembrie 1989 (heading NE),45.748929,21.225714
+4846641045,Strada Arieș,no,L262632090_4846641045,Strada Arieș (heading NW),L4846641045_604969830,Strada Arieș (heading NW),45.739110,21.240250
+4846641045,Strada Arieș,no,L262632090_4846641045,Strada Arieș (heading NW),L4846641045_6428488575,Strada Arieș (heading SE),45.739110,21.240250
+4846641045,Strada Arieș,no,L604969830_4846641045,Strada Arieș (heading SE),L4846641045_6428488575,Strada Arieș (heading SE),45.739110,21.240250
+1112954247,Strada Arieș,no,L1203996268_1112954247,Strada Arieș (heading SE),L1112954247_1112986405,Strada Arieș (heading N),45.740801,21.239027
+1112954247,Strada Arieș,no,L1203996268_1112954247,Strada Arieș (heading SE),L1112954247_604969830,Strada Arieș (heading SE),45.740801,21.239027
+1112954247,Strada Arieș,no,L2105405142_1112954247,(fără nume) (heading E),L1112954247_1112986405,Strada Arieș (heading N),45.740801,21.239027
+1112954247,Strada Arieș,no,L2105405142_1112954247,(fără nume) (heading E),L1112954247_604969830,Strada Arieș (heading SE),45.740801,21.239027
+1112954247,Strada Arieș,no,L604969830_1112954247,Strada Arieș (heading NW),L1112954247_1112986405,Strada Arieș (heading N),45.740801,21.239027
+6428488575,Strada Arieș,no,L4846641045_6428488575,Strada Arieș (heading SE),L6428488575_25478346,Strada Arieș (heading SE),45.738706,21.240493
+6428488575,Strada Arieș,no,L4846641045_6428488575,Strada Arieș (heading SE),L6428488575_6428488571,Strada Arieș (heading SW),45.738706,21.240493
+1112986414,Strada Arieș / Strada Surorile Martir Caceu,no,L2476973917_1112986414,Strada Arieș (heading SE),L1112986414_1112954234,Strada Arieș (heading SE),45.741654,21.238423
+1112986414,Strada Arieș / Strada Surorile Martir Caceu,no,L2476973917_1112986414,Strada Arieș (heading SE),L1112986414_11834892321,Strada Surorile Martir Caceu (heading E),45.741654,21.238423
+263151277,Strada Ciprian Porumbescu,no,L11195796867_263151277,Strada Ciprian Porumbescu (heading NE),L263151277_29120256,Strada Ciprian Porumbescu (heading E),45.741261,21.225027
+263151277,Strada Ciprian Porumbescu,no,L29120255_263151277,Strada Ciprian Porumbescu (heading S),L263151277_11195796867,Strada Ciprian Porumbescu (heading SW),45.741261,21.225027
+263151277,Strada Ciprian Porumbescu,no,L29120255_263151277,Strada Ciprian Porumbescu (heading S),L263151277_29120256,Strada Ciprian Porumbescu (heading E),45.741261,21.225027
+2267824959,Strada Cluj / Piața Leonardo da Vinci,no,L25507159_2267824959,Strada Cluj (heading S),L2267824959_1203989459,Piața Leonardo da Vinci (heading NE),45.748278,21.235395
+2267824959,Strada Cluj / Piața Leonardo da Vinci,no,L25507159_2267824959,Strada Cluj (heading S),L2267824959_25507163,Strada Cluj (heading S),45.748278,21.235395
+4281788870,Strada Michelangelo,no,L2026197626_4281788870,Strada Michelangelo (heading SE),L4281788870_255724417,Strada Michelangelo (heading S),45.749767,21.235162
+4281788870,Strada Michelangelo,no,L25638344_4281788870,Strada Michelangelo (heading NW),L4281788870_2026197626,Strada Michelangelo (heading NW),45.749767,21.235162
+4281788870,Strada Michelangelo,no,L25638344_4281788870,Strada Michelangelo (heading NW),L4281788870_255724417,Strada Michelangelo (heading S),45.749767,21.235162
+3931145968,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L6428626919_3931145968,(fără nume) (heading NE),L3931145968_1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu (heading NE),45.742572,21.243340
+3931145968,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L6428626919_3931145968,(fără nume) (heading NE),L3931145968_3931142600,(fără nume) (heading N),45.742572,21.243340
+1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L11717009034_1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu (heading W),L1259637376_3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu (heading W),45.742656,21.243565
+1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L3931145968_1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu (heading NE),L1259637376_11717009034,Strada Profesor Doctor Aurel Păunescu Podeanu (heading E),45.742656,21.243565
+1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L3931145968_1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu (heading NE),L1259637376_3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu (heading W),45.742656,21.243565
+3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L1259637376_3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu (heading W),L3931142600_3931142598,(fără nume) (heading NW),45.742692,21.243338
+3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L3931145968_3931142600,(fără nume) (heading N),L3931142600_3931142598,(fără nume) (heading NW),45.742692,21.243338
+11834892321,Strada Surorile Martir Caceu,no,L1112986405_11834892321,Strada Surorile Martir Caceu (heading NE),L11834892321_3931135800,Strada Surorile Martir Caceu (heading NE),45.741834,21.239386
+11834892321,Strada Surorile Martir Caceu,no,L1112986414_11834892321,Strada Surorile Martir Caceu (heading E),L11834892321_3931135800,Strada Surorile Martir Caceu (heading NE),45.741834,21.239386
+3931135800,Strada Surorile Martir Caceu / Aleea F.C. Ripensia,no,L11834892321_3931135800,Strada Surorile Martir Caceu (heading NE),L3931135800_25497638,Aleea F.C. Ripensia (heading N),45.742974,21.242698
+3931135800,Strada Surorile Martir Caceu / Aleea F.C. Ripensia,no,L11834892321_3931135800,Strada Surorile Martir Caceu (heading NE),L3931135800_3931136571,Aleea F.C. Ripensia (heading SE),45.742974,21.242698
+1112986405,Strada Surorile Martir Caceu / Calea Martirilor 1989,no,L1112954247_1112986405,Strada Arieș (heading N),L1112986405_11834892321,Strada Surorile Martir Caceu (heading NE),45.741383,21.238732
+1112986405,Strada Surorile Martir Caceu / Calea Martirilor 1989,no,L1203996268_1112986405,Calea Martirilor 1989 (heading N),L1112986405_11834892321,Strada Surorile Martir Caceu (heading NE),45.741383,21.238732
+6428626919,Strada Ștefan Covaci,no,L4615919089_6428626919,(fără nume) (heading SE),L6428626919_3931145968,(fără nume) (heading NE),45.742516,21.243195
+6428626919,Strada Ștefan Covaci,no,L6548138207_6428626919,Strada Ștefan Covaci (heading NE),L6428626919_3931145968,(fără nume) (heading NE),45.742516,21.243195
+4615919089,Strada Ștefan Covaci,no,L3931136571_4615919089,(fără nume) (heading S),L4615919089_6428626919,(fără nume) (heading SE),45.742569,21.243058
+4615919089,Strada Ștefan Covaci,no,L3931136571_4615919089,(fără nume) (heading S),L4615919089_6548138207,Strada Ștefan Covaci (heading S),45.742569,21.243058
+6548138207,Strada Ștefan Covaci,no,L4615919089_6548138207,Strada Ștefan Covaci (heading S),L6548138207_4615919104,Strada Ștefan Covaci (heading S),45.742399,21.243041
+6548138207,Strada Ștefan Covaci,no,L4615919089_6548138207,Strada Ștefan Covaci (heading S),L6548138207_6428626919,Strada Ștefan Covaci (heading NE),45.742399,21.243041
+6548138207,Strada Ștefan Covaci,no,L4615919104_6548138207,Strada Ștefan Covaci (heading N),L6548138207_6428626919,Strada Ștefan Covaci (heading NE),45.742399,21.243041

@@ -13,6 +13,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 
 from app import config
 from app.engine.braess_detector import get_engine
+from app.corridor.api import router as corridor_router
 from app.models import schemas
 from app.services import live_data, osm_overpass, pmt_client
 from app.services import seed_timisoara as seed
@@ -67,6 +68,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(GZipMiddleware, minimum_size=1024)
+app.include_router(corridor_router)
 
 PresetQ = Literal["morning_rush", "evening_rush", "now", "weekend", "event_rush"]
 

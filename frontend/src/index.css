@@ -3,12 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --pmt-blue: #005bbc;
-  --pmt-slate: #0f172a;
-  --pmt-bg: #f8fafc;
-  --pmt-emerald: #059669;
-  --pmt-amber: #d97706;
-  --pmt-red: #dc2626;
   color-scheme: light;
 }
 
@@ -17,144 +11,15 @@ body,
 #root {
   height: 100%;
   margin: 0;
-  background: var(--pmt-bg);
+  background: #f8fafc;
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-@keyframes drive {
-  0% {
-    transform: translate(-50%, 110%);
-  }
-  100% {
-    transform: translate(-50%, -110%);
-  }
-}
-
-
-/* ---------------- intersection queue pillars ---------------- */
-.queue-pillar {
-  position: relative;
-  width: var(--qsize, 18px);
-  height: var(--qsize, 18px);
-  transition: width 0.6s ease, height 0.6s ease;
-  cursor: default;
-}
-.queue-pillar .queue-core {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 9999px;
-  border: 2px solid #fff;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 10px;
-  font-weight: 600;
-  color: #fff;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.35);
-  transition: background-color 0.6s ease;
-}
-.queue-pillar .queue-core small {
-  font-size: 7px;
-  margin-left: 1px;
-  opacity: 0.85;
-}
-.queue-pillar .queue-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-}
-.queue-saturated .queue-core {
-  background: #dc2626;
-}
-.queue-saturated .queue-ring {
-  background: rgba(220, 38, 38, 0.45);
-  animation: pulseRing 1.6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
-}
-.queue-relieved .queue-core {
-  background: #d97706;
-}
-.queue-relieved .queue-ring {
-  background: rgba(217, 119, 6, 0.35);
-  animation: pulseRing 2.4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
-}
-.queue-resolved .queue-core,
-.queue-free .queue-core {
-  background: #059669;
-  font-size: 8px;
-}
-.queue-free {
-  opacity: 0.8;
-}
-.queue-free .queue-core small,
-.queue-free .queue-core {
-  font-size: 0;
-}
-.queue-resolved .queue-ring {
-  background: rgba(5, 150, 105, 0.4);
-  animation: pulseRing 1.2s ease-out 2;
-}
-
-@keyframes pulseRing {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.85;
-  }
-  70% {
-    transform: scale(2);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-
-/* ---------------- route pins & callouts ---------------- */
-.route-pin {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 9999px;
-  border: 2px solid #fff;
-  color: #fff;
-  font: 700 11px Inter, sans-serif;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.35);
-}
-.route-pin-start {
-  background: #0f172a;
-}
-.route-pin-end {
-  background: #005bbc;
-}
-.route-callout {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  padding: 3px 8px;
-  border-radius: 9999px;
-  background: #fff;
-  color: #0f172a;
-  font: 500 11px Inter, sans-serif;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
-  margin-bottom: 8px;
-}
-.route-callout span {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-  display: inline-block;
-}
-.route-callout b {
-  font-family: "JetBrains Mono", monospace;
-}
-
 .maplibregl-popup-content {
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 8px 10px;
-  box-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.45);
+  box-shadow: 0 8px 24px -10px rgba(15, 23, 42, 0.4);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -162,7 +27,6 @@ body,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
 }

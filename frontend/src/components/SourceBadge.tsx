@@ -1,5 +1,3 @@
-import type { ProvenanceEntry } from "../../types/simulator";
-
 type Tone = "neutral" | "live" | "seed" | "warn" | "gdpr";
 
 interface Props {
@@ -17,7 +15,7 @@ const TONES: Record<Tone, string> = {
 };
 
 /** Compact monospace provenance pill: "SMTT GTFS v4.31 · Nov 2026". */
-export default function DataProvenanceBadge({ label, tone = "neutral", title }: Props) {
+export default function SourceBadge({ label, tone = "neutral", title }: Props) {
   return (
     <span
       title={title ?? label}
@@ -29,15 +27,4 @@ export default function DataProvenanceBadge({ label, tone = "neutral", title }: 
       <span className="truncate">{label}</span>
     </span>
   );
-}
-
-export function provenanceTone(p?: ProvenanceEntry | null): Tone {
-  if (!p) return "seed";
-  return p.source === "seed" ? "seed" : "live";
-}
-
-export function provenanceLabel(name: string, p?: ProvenanceEntry | null): string {
-  if (!p) return `${name} · seed`;
-  const when = p.fetchedAt ? new Date(p.fetchedAt).toLocaleDateString("ro-RO", { month: "short", year: "numeric" }) : "";
-  return `${name} · ${p.source}${when ? ` · ${when}` : ""}`;
 }

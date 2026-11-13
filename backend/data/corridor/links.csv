@@ -1,0 +1,165 @@
+link_id,street,heading,length_m,car_lanes_osm,lanes_source,speed_kmh,speed_source,bus_lane_osm
+L11105948655_13308832152,Bulevardul Liviu Rebreanu,NE,180,2,osm,50.0,osm,no
+L1112954234_1112954238,Calea Martirilor 1989,S,81,2,osm,50.0,assumed (RO:urban 50),no
+L1112954234_1203996268,Strada Arieș,SE,24,3,osm,50.0,osm,no
+L1112954238_1203996268,Calea Martirilor 1989,N,61,2,osm,50.0,assumed (RO:urban 50),no
+L1112954238_2105405142,Calea Martirilor 1989,S,3,2,osm,50.0,assumed (RO:urban 50),no
+L1112954247_1112986405,Strada Arieș,N,69,2,osm,50.0,osm,no
+L1112954247_604969830,Strada Arieș,SE,68,3,osm,50.0,osm,no
+L1112986405_11834892321,Strada Surorile Martir Caceu,NE,72,2,osm,50.0,osm,no
+L1112986414_1112954234,Strada Arieș,SE,22,4,osm,50.0,osm,yes
+L1112986414_11834892321,Strada Surorile Martir Caceu,E,80,1,osm,50.0,assumed (RO:urban 50),no
+L11195796846_6274787022,Strada Independenței,N,41,2,osm,30.0,osm,no
+L11195796867_12505529942,Strada Ciprian Porumbescu,SW,59,1,osm,50.0,assumed (RO:urban 50),no
+L11195796867_263151277,Strada Ciprian Porumbescu,NE,57,2,osm,50.0,assumed (RO:urban 50),no
+L11297495796_245150448,Bulevardul Eroilor de la Tisa,NE,234,1,osm,50.0,osm,no
+L11297495796_4067925189,Bulevardul Eroilor de la Tisa,SW,71,2,osm,50.0,osm,no
+L1133482449_25507156,Bulevardul Vasile Pârvan,E,405,2,osm,50.0,osm,no
+L1133482449_263839948,Bulevardul Vasile Pârvan,W,115,3,osm,50.0,osm,no
+L11717009034_1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu,W,43,2,osm,30.0,osm,no
+L11834892321_3931135800,Strada Surorile Martir Caceu,NE,287,3,osm,50.0,osm,no
+L1203989459_255724621,Piața Leonardo da Vinci,NE,20,3,osm,50.0,assumed (RO:urban 50),no
+L1203989461_1203989459,Piața Leonardo da Vinci,NE,10,3,osm,50.0,assumed (RO:urban 50),no
+L1203996268_1112954247,Strada Arieș,SE,60,3,osm,50.0,osm,no
+L1203996268_1112986405,Calea Martirilor 1989,N,12,2,osm,50.0,assumed (RO:urban 50),no
+L1236258899_2350919309,Bulevardul Doctor Victor Babeș,W,10,1,osm,50.0,assumed (RO:urban 50),no
+L1236258899_25507163,Bulevardul Doctor Victor Babeș,E,792,1,osm,50.0,osm,no
+L12505529942_11195796867,Strada Ciprian Porumbescu,NE,59,2,osm,50.0,assumed (RO:urban 50),no
+L1259637376_11717009034,Strada Profesor Doctor Aurel Păunescu Podeanu,E,43,2,osm,30.0,osm,no
+L1259637376_3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu,W,18,2,osm,30.0,osm,no
+L13308832152_2105405166,Bulevardul Liviu Rebreanu,E,46,3,osm,50.0,osm,no
+L13309089601_4443823116,Bulevardul Liviu Rebreanu,W,59,4,osm,50.0,osm,no
+L13825543151_14015200349,Bulevardul Liviu Rebreanu,W,91,2,osm,50.0,osm,no
+L13891255589_25638344,Bulevardul Corneliu Coposu,SW,185,2,osm,50.0,osm,no
+L14015200349_262632090,Bulevardul Liviu Rebreanu,W,155,3,osm,50.0,osm,no
+L2026197626_4281788870,Strada Michelangelo,SE,98,2,osm,50.0,osm,no
+L2051947965_2052012082,Strada 20 Decembrie 1989,NE,85,2,osm,50.0,osm,no
+L2051947965_263152841,Podul Mihai Viteazul,S,54,2,osm,50.0,assumed (RO:urban 50),no
+L2052011839_2052012003,Bulevardul Regele Ferdinand I,S,50,3,osm,50.0,osm,no
+L2052012003_2051947965,Bulevardul Regele Ferdinand I,S,85,2,osm,50.0,osm,no
+L2052012003_2052012082,Bulevardul Regele Ferdinand I,E,70,1,osm,50.0,osm,no
+L2052012082_4485472265,Strada 20 Decembrie 1989,NE,71,3,osm,50.0,osm,no
+L2105405142_1112954238,Calea Martirilor 1989,N,3,2,osm,50.0,assumed (RO:urban 50),no
+L2105405142_1112954247,(fără nume),E,52,1,osm,50.0,assumed (RO:urban 50),no
+L2105405142_3815408390,Calea Martirilor 1989,S,192,2,osm,50.0,assumed (RO:urban 50),no
+L2105405166_29119260,Bulevardul Liviu Rebreanu,E,11,2,osm,50.0,osm,no
+L2105405166_6959616673,Calea Martirilor 1989,S,65,2,osm,50.0,assumed (RO:urban 50),no
+L21515986_21515988,Splaiul Tudor Vladimirescu,E,88,2,osm,50.0,assumed (RO:urban 50),no
+L21515988_21515986,Splaiul Tudor Vladimirescu,W,88,2,osm,50.0,assumed (RO:urban 50),no
+L21515988_25497634,Splaiul Tudor Vladimirescu,E,51,3,osm,50.0,assumed (RO:urban 50),no
+L2267824959_1203989459,Piața Leonardo da Vinci,NE,66,1,osm,50.0,osm,no
+L2267824959_25507163,Strada Cluj,S,336,4,osm,50.0,osm,yes
+L2272193101_25507156,Pasajul Michelangelo,SW,476,1,osm,50.0,osm,no
+L2348326092_25497659,Aleea F.C. Ripensia,W,29,4,osm,50.0,osm,no
+L2350919309_1236258899,Bulevardul Doctor Victor Babeș,E,10,1,osm,50.0,assumed (RO:urban 50),no
+L2350919309_2350920093,Bulevardul Doctor Victor Babeș,W,11,1,osm,50.0,assumed (RO:urban 50),no
+L2350919309_415272696,Bulevardul Mihai Viteazu,N,298,2,osm,50.0,osm,no
+L2350920093_2350919309,Bulevardul Doctor Victor Babeș,E,11,1,osm,50.0,assumed (RO:urban 50),no
+L2350920093_25478406,Bulevardul Mihai Viteazu,S,273,2,osm,50.0,osm,no
+L2408666107_263151549,Piața Nicolae Bălcescu,N,13,3,osm,50.0,assumed (RO:urban 50),no
+L2408666126_29120255,Piața Nicolae Bălcescu,SW,68,2,osm,50.0,assumed (RO:urban 50),no
+L2408666141_792223260,Piața Nicolae Bălcescu,NE,29,3,osm,50.0,assumed (RO:urban 50),no
+L245150448_11297495796,Bulevardul Eroilor de la Tisa,SW,234,1,osm,50.0,osm,no
+L2476973917_1112986414,Strada Arieș,SE,249,4,osm,50.0,osm,yes
+L25478346_25530087,Strada Arieș,SE,24,3,osm,50.0,assumed (RO:urban 50),no
+L25478346_6428488571,Bulevardul Liviu Rebreanu,W,32,2,osm,50.0,osm,no
+L25478406_2408666126,Piața Nicolae Bălcescu,SW,36,2,osm,50.0,assumed (RO:urban 50),no
+L25497633_2350920093,Bulevardul Mihai Viteazu,S,255,2,osm,50.0,osm,no
+L25497634_25497633,Bulevardul Mihai Viteazu,S,112,2,osm,50.0,assumed (RO:urban 50),no
+L25497634_262642060,Bulevardul Vasile Pârvan,E,9,3,osm,50.0,osm,no
+L25497638_2651466932,Aleea F.C. Ripensia,NW,388,3,osm,50.0,osm,no
+L25497659_25638202,Aleea F.C. Ripensia,W,26,3,osm,50.0,osm,no
+L25497659_25638207,(fără nume),N,29,1,osm,50.0,osm,no
+L25507156_1133482449,Bulevardul Vasile Pârvan,W,405,2,osm,50.0,osm,no
+L25507156_2272193101,Pasajul Michelangelo,NE,476,1,osm,50.0,osm,no
+L25507156_25507159,Bulevardul Vasile Pârvan,E,261,2,osm,50.0,osm,no
+L25507159_1203989461,Piața Leonardo da Vinci,E,29,2,osm,50.0,assumed (RO:urban 50),no
+L25507159_2267824959,Strada Cluj,S,38,3,osm,50.0,osm,no
+L25507163_1236258899,Bulevardul Doctor Victor Babeș,W,792,1,osm,50.0,osm,no
+L25507163_2476973917,Strada Cluj,SE,203,4,osm,50.0,osm,yes
+L25507163_5676019160,Bulevardul Eroilor de la Tisa,NE,343,1,osm,50.0,assumed (RO:urban 50),no
+L25530087_3581040750,Bulevardul Liviu Rebreanu,E,11,3,osm,50.0,osm,no
+L255724417_256019138,Piața Leonardo da Vinci,S,8,4,osm,50.0,assumed (RO:urban 50),no
+L255724417_5014433131,Bulevardul Vasile Pârvan,W,231,2,osm,50.0,osm,no
+L255724621_256019786,Piața Leonardo da Vinci,N,38,2,osm,50.0,assumed (RO:urban 50),no
+L255724621_25638202,Piața Leonardo da Vinci,NE,38,2,osm,50.0,osm,no
+L255872252_262644268,Strada Drubeta,N,161,2,osm,30.0,osm,no
+L256019138_1203989461,Piața Leonardo da Vinci,SE,35,1,osm,50.0,assumed (RO:urban 50),no
+L256019138_25507159,Piața Leonardo da Vinci,S,28,3,osm,50.0,assumed (RO:urban 50),no
+L256019786_25638344,Piața Leonardo da Vinci,W,10,3,osm,50.0,assumed (RO:urban 50),no
+L25638202_256019786,Piața Leonardo da Vinci,W,38,3,osm,50.0,assumed (RO:urban 50),no
+L25638202_25638207,Bulevardul Corneliu Coposu,NE,25,2,osm,50.0,osm,no
+L25638207_25638253,Bulevardul Corneliu Coposu,NE,112,2,osm,50.0,osm,no
+L25638344_255724417,Piața Leonardo da Vinci,SW,48,3,osm,50.0,assumed (RO:urban 50),no
+L25638344_4281788870,Strada Michelangelo,NW,90,2,osm,50.0,osm,no
+L262632090_25478346,Bulevardul Liviu Rebreanu,W,12,2,osm,50.0,osm,no
+L262632090_4846641045,Strada Arieș,NW,93,2,osm,50.0,osm,no
+L262642060_1133482449,Bulevardul Vasile Pârvan,E,115,2,osm,50.0,osm,no
+L262642060_263839948,Bulevardul Regele Ferdinand I,N,12,3,osm,50.0,osm,no
+L262644268_11195796846,Strada Independenței,N,277,1,osm,30.0,osm,no
+L263151277_11195796867,Strada Ciprian Porumbescu,SW,57,2,osm,50.0,assumed (RO:urban 50),no
+L263151277_29120256,Strada Ciprian Porumbescu,E,26,2,osm,50.0,assumed (RO:urban 50),no
+L263151549_267643174,Piața Nicolae Bălcescu,N,24,2,osm,50.0,assumed (RO:urban 50),no
+L263152841_2051947965,Podul Mihai Viteazul,N,54,2,osm,50.0,assumed (RO:urban 50),no
+L263152841_263839960,Bulevardul Regele Ferdinand I,S,51,3,osm,50.0,assumed (RO:urban 50),no
+L263839948_263152841,Bulevardul Regele Ferdinand I,N,52,2,osm,50.0,osm,no
+L263839948_263839960,Bulevardul Vasile Pârvan,W,9,3,osm,50.0,osm,no
+L263839960_21515988,Splaiul Tudor Vladimirescu,W,51,2,osm,50.0,assumed (RO:urban 50),no
+L263839960_25497634,Bulevardul Mihai Viteazu,S,12,2,osm,50.0,assumed (RO:urban 50),no
+L2651466932_3354796213,Aleea F.C. Ripensia,N,54,4,osm,50.0,osm,no
+L267643174_2350919309,Bulevardul Mihai Viteazu,N,264,2,osm,50.0,osm,no
+L29119260_4443823116,Calea Martirilor 1989,N,18,3,osm,50.0,assumed (RO:urban 50),no
+L29119260_6431559102,Bulevardul Liviu Rebreanu,E,87,2,osm,50.0,osm,no
+L29120255_263151277,Strada Ciprian Porumbescu,S,33,2,osm,50.0,assumed (RO:urban 50),no
+L29120255_29120256,Piața Nicolae Bălcescu,SE,26,1,osm,50.0,assumed (RO:urban 50),no
+L29120256_6274787022,Piața Nicolae Bălcescu,E,6,2,osm,50.0,assumed (RO:urban 50),no
+L3354796213_358406089,Aleea F.C. Ripensia,N,27,3,osm,50.0,osm,no
+L3354796213_4067925189,Bulevardul Eroilor de la Tisa,NE,22,1,osm,50.0,osm,no
+L3354796213_5676019160,Bulevardul Eroilor de la Tisa,SW,42,2,osm,50.0,assumed (RO:urban 50),no
+L3581040750_262632090,Strada Arieș,NW,23,2,osm,50.0,osm,no
+L3581040750_6431276606,Bulevardul Liviu Rebreanu,E,195,3,osm,50.0,osm,no
+L358406089_2348326092,Aleea F.C. Ripensia,NW,327,3,osm,50.0,osm,no
+L3815408390_2105405142,Calea Martirilor 1989,N,192,2,osm,50.0,assumed (RO:urban 50),no
+L3815408390_4462010368,Calea Martirilor 1989,S,38,3,osm,50.0,assumed (RO:urban 50),no
+L386486228_604969830,Strada Ștefan Covaci,W,40,3,osm,50.0,assumed (RO:urban 50),no
+L3931135800_25497638,Aleea F.C. Ripensia,N,31,2,osm,50.0,osm,no
+L3931135800_3931136571,Aleea F.C. Ripensia,SE,50,1,osm,50.0,osm,no
+L3931135801_25497638,Aleea F.C. Ripensia,NW,36,1,osm,50.0,osm,no
+L3931136571_4615919089,(fără nume),S,14,2,osm,50.0,osm,no
+L3931142598_3931135801,Aleea F.C. Ripensia,NW,26,2,osm,50.0,osm,no
+L3931142598_3931136571,(fără nume),SW,15,2,osm,50.0,osm,no
+L3931142600_3931142598,(fără nume),NW,11,2,osm,50.0,osm,no
+L3931145968_1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu,NE,20,2,osm,50.0,osm,no
+L3931145968_3931142600,(fără nume),N,14,2,osm,50.0,osm,no
+L4067925189_11297495796,Bulevardul Eroilor de la Tisa,NE,71,1,osm,50.0,osm,no
+L4067925189_3354796213,Bulevardul Eroilor de la Tisa,SW,22,1,osm,50.0,osm,no
+L4067925189_358406089,(fără nume),NW,33,1,osm,50.0,assumed (RO:urban 50),no
+L415272696_262642060,Bulevardul Mihai Viteazu,N,68,4,osm,50.0,osm,no
+L4281788870_2026197626,Strada Michelangelo,NW,98,2,osm,50.0,osm,no
+L4281788870_255724417,Strada Michelangelo,S,95,4,osm,50.0,osm,no
+L4443823116_3815408390,Calea Martirilor 1989,N,37,2,osm,50.0,assumed (RO:urban 50),no
+L4443823116_4462010368,Bulevardul Liviu Rebreanu,W,10,4,osm,50.0,osm,no
+L4462010368_13308612017,Bulevardul Liviu Rebreanu,SW,190,2,osm,50.0,osm,no
+L4462010368_2105405166,Calea Martirilor 1989,S,20,2,osm,50.0,assumed (RO:urban 50),no
+L4615919089_6428626919,(fără nume),SE,13,2,osm,50.0,osm,no
+L4615919089_6548138207,Strada Ștefan Covaci,S,19,1,assumed,50.0,assumed (RO:urban 50),no
+L4615919104_386486228,Strada Ștefan Covaci,SW,344,1,osm,50.0,assumed (RO:urban 50),no
+L4615919104_6548138207,Strada Ștefan Covaci,N,62,1,assumed,50.0,assumed (RO:urban 50),no
+L4846641045_604969830,Strada Arieș,NW,143,2,osm,50.0,osm,no
+L4846641045_6428488575,Strada Arieș,SE,49,4,osm,50.0,osm,no
+L5014433131_25507156,Bulevardul Vasile Pârvan,SW,37,1,osm,50.0,osm,no
+L5676019160_25507163,Bulevardul Eroilor de la Tisa,SW,343,1,osm,50.0,assumed (RO:urban 50),no
+L5676019160_3354796213,Bulevardul Eroilor de la Tisa,NE,42,1,osm,50.0,assumed (RO:urban 50),no
+L604969830_1112954247,Strada Arieș,NW,68,2,osm,50.0,osm,no
+L604969830_4846641045,Strada Arieș,SE,143,3,osm,50.0,osm,no
+L6274787022_2408666141,Piața Nicolae Bălcescu,NE,27,2,osm,50.0,assumed (RO:urban 50),no
+L6428488571_13309089601,Bulevardul Liviu Rebreanu,W,97,2,osm,50.0,osm,no
+L6428488575_25478346,Strada Arieș,SE,36,3,osm,50.0,osm,no
+L6428488575_6428488571,Strada Arieș,SW,32,1,osm,50.0,assumed (RO:urban 50),no
+L6428626919_3931145968,(fără nume),NE,13,2,osm,50.0,osm,no
+L6431559102_25530087,Bulevardul Liviu Rebreanu,E,114,3,osm,50.0,osm,no
+L6548138207_4615919104,Strada Ștefan Covaci,S,62,1,assumed,50.0,assumed (RO:urban 50),no
+L6548138207_6428626919,Strada Ștefan Covaci,NE,18,1,assumed,50.0,assumed (RO:urban 50),no
+L6959616673_29119260,Calea Martirilor 1989,N,68,3,osm,50.0,assumed (RO:urban 50),no
+L792223260_2408666107,Piața Nicolae Bălcescu,NE,29,2,osm,50.0,assumed (RO:urban 50),no
+L792223260_2408666126,Piața Nicolae Bălcescu,NW,41,1,osm,50.0,assumed (RO:urban 50),no

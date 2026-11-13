@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { X } from "lucide-react";
-import { useI18n } from "../../i18n/translations";
-import { fmt } from "../../lib/format";
+import { useI18n } from "../i18n/translations";
+import { fmt } from "../api";
 
 interface Props {
   open: boolean;
@@ -79,8 +79,9 @@ export default function CitizenBraessExplainerModal({ open, onClose }: Props) {
       <div className="max-h-[94vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl animate-slideIn" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-start gap-3">
           <div className="flex-1">
-            <h2 id="explainer-title" className="text-[18px] font-bold text-slate-900">{t.explainBraess}</h2>
+            <h2 id="explainer-title" className="text-[18px] font-bold text-slate-900">{t.explain}</h2>
             <p className="mt-1 text-[13px] leading-relaxed text-slate-600">{t.explainerIntro}</p>
+            <p className="mt-1 text-[11.5px] italic text-slate-400">{t.explainerNote}</p>
           </div>
           <button ref={closeRef} onClick={onClose} aria-label={t.close} className="grid h-8 w-8 place-items-center rounded-lg text-slate-500 hover:bg-slate-100">
             <X size={18} />

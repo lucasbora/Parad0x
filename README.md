@@ -1,5 +1,10 @@
 # TM-BraessGreen — Timișoara Green Mobility & Braess Paradox Simulator
 
+> **Branch `corridor-mvp`:** the app is being narrowed to one real corridor (Calea Martirilor / Strada Cluj) on the
+> real OpenStreetMap network, with results only from field counts. See [`docs/TEAM_PLAN.md`](docs/TEAM_PLAN.md) and
+> [`docs/CORRIDOR_DATA.md`](docs/CORRIDOR_DATA.md). The new API is `/api/corridor` (+ `/simulate`, `/sensitivity`,
+> `/calibration`); the older city-wide demo endpoints below still exist but the frontend no longer uses them.
+
 Interactive lane-reallocation simulator for **Primăria Municipiului Timișoara (PMT)**, built for the
 **Direcția Generală de Investiții și Mentenanță** (urban planning) and **SMTT — Societatea Metropolitană de
 Transport Timișoara**. Click any street, swap a car lane for an STPT bus lane, a protected bike lane or a

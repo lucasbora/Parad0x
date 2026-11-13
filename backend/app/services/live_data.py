@@ -64,12 +64,16 @@ def official_streets(graph: ExtendedGraph) -> dict[str, dict]:
 # Transit
 # ---------------------------------------------------------------------------
 
-def live_lines() -> dict[str, dict]:
-    """shortName → live route info (id, color, polyline per direction, stops)."""
+def live_lines(wanted: set[str] | None | bool = True) -> dict[str, dict]:
+    """shortName → live route info (id, color, polyline per direction, stops).
+
+    ``wanted=True`` (default) keeps only the seed lines; ``None`` returns every live route.
+    """
     net, prov = pmt_client.get_transit_network()
     if prov.source == "seed" or not net.get("routes"):
         return {}
-    wanted = {l["shortName"] for l in seed.STPT_LINES}
+    if wanted is True:
+        wanted = {l["shortName"] for l in seed.STPT_LINES}
     stops_by_route: dict[str, list[dict]] = {}
     for st in net.get("stops", []):
         for rid in st.get("routeIds", []) or []:
@@ -82,7 +86,7 @@ def live_lines() -> dict[str, dict]:
             continue
     out = {}
     for r in net["routes"]:
-        if r.get("shortName") not in wanted:
+        if wanted is not None and r.get("shortName") not in wanted:
             continue
         rid = r["id"]
         color = str(r.get("color") or "")

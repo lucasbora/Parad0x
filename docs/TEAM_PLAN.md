@@ -1,96 +1,61 @@
-# Team plan — TM-BraessGreen
+# Team plan — TM-BraessGreen (corridor MVP, branch `corridor-mvp`)
 
-**The claim to prove:** "Change any street on Timișoara's real network and see, in under 1 s, the effect on cars, buses and bikes — with a validated solver and one corridor checked against real counts."
+**The claim to prove:** "For one real Timișoara corridor — Calea Martirilor / Strada Cluj — change a car lane and see,
+on real streets with real traffic counts, where the cars go, how driving time changes and how the buses are affected."
 
-Times are hours from now (T+).
+Scope is deliberately small: **one corridor, morning peak, real data only.** Braess's paradox is a possible result,
+not a promise.
 
-## T+0 to T+1: everyone
+## Done (on this branch)
 
-- [x] **Split the code so everyone can work in parallel** (done on `main`; see "File ownership" below).
-- [x] Freeze the network-node format and the demand interface (see "Frozen interfaces").
-- [ ] Pick **one demo corridor**: central, with a real debate, somewhere you can count traffic.
-- [ ] Choose **2 count intersections** on that corridor.
-- [ ] Lucas sends emails asking for the OD matrix, signal timings, FIWARE counts and the `/api/sesizari` parameters.
-- [ ] Everyone branches from `main` (`git switch -c <name>/<task>`); code freeze at T−6h before judging.
+- [x] Real network from OpenStreetMap: 164 directed links, 67 intersections, 25 traffic lights, 16 gates
+      (snapshot `backend/data/osm/corridor_martirilor.json`, refetch with `scripts/fetch_osm_corridor.py`).
+- [x] Link-based Wardrop equilibrium (Conjugate Frank–Wolfe + exact line search); reproduces the textbook
+      Braess example exactly (65 vs 80 min) — `tests/test_corridor.py`.
+- [x] Demand from gate counts (Furness / doubly-constrained gravity) — no counts, no results.
+- [x] Live STPT lines map-matched to the corridor; buses/hour from real SMTT timetables.
+- [x] GEH calibration report and ±20 % sensitivity endpoints.
+- [x] Simple UI: sidebar (data status → pick street → change lanes → results) + map.
+- [x] Field-data templates and reference lists in `backend/data/corridor/`; protocol in `docs/CORRIDOR_DATA.md`.
 
-## File ownership: only the owner edits these
+## Real-data findings so far (verify on site!)
 
-| Person | Owns |
-|---|---|
-| **Rareș** | `backend/app/engine/extended_graph.py`, `beckmann_solver.py`, `braess_detector.py`, `route_recommender.py` · `backend/app/seed/network.py`, `seed/transit.py`, `seed/hotspots.py` · `backend/app/services/layers/roads.py`, `layers/transit.py` · `backend/app/models/schemas.py` · `frontend/src/types/simulator.ts` · `backend/tests/test_solver.py` |
-| **Lucas** | `backend/app/engine/demand_model.py` · new `backend/app/engine/calibration.py` · `backend/app/seed/demand.py` · new `backend/data/counts/` · calibration tests |
-| **Laura** | `frontend/src/components/map/*` · `backend/app/services/osm_overpass.py` · `backend/app/seed/cycling.py` · `backend/app/services/layers/cycling.py` · field videos and GPS logs |
-| **Adriana** | `backend/app/seed/context.py` · `backend/app/services/layers/context.py` · `backend/app/services/pmt_client.py`, `live_data.py` · `frontend/src/components/studio/*` · `frontend/src/i18n/translations.ts` · `docs/`, the deck |
+- **Strada Cluj is one-way southbound**, 3–4 lanes, and OSM says it **already has a bus lane**.
+- Inbound traffic (towards the centre) uses **Aleea F.C. Ripensia** northbound and Calea Martirilor.
+- Lines on Strada Cluj southbound: **15, 16, E2, E3, M3, M24** (live SMTT feed).
 
-**Shared files, edited only by small coordinated PRs:** `backend/app/services/simulator.py` (it only assembles layers now), `backend/app/main.py`, `frontend/src/App.tsx`, `backend/app/services/seed_timisoara.py` (a re-export facade; never add data to it).
+→ The demo question is probably *not* "add a bus lane on Cluj" (it may exist already) but, e.g.,
+"take one lane from Strada Cluj / Calea Martirilor / Ripensia for a protected bike lane — where does the traffic go?"
+Decide after the site visit.
 
-## Frozen interfaces: code against these, never against internals
+## Next — who does what
 
-1. **Network → everyone** (Rareș keeps these stable when he swaps in the OSM network):
-   - `graph.node_table() -> [{id, name, coordinates: [lng, lat], cartier}]`
-   - `graph.snap_to_node(lng, lat) -> node_id`
-2. **Demand → engine** (Lucas): `build_od(graph, preset, now=None) -> [ODDemand(od_id, origin_node, destination_node, veh_h)]` in `engine/demand_model.py`. Use **node IDs only, never link IDs**.
-3. **Hotspots are locations, not link IDs:** each has an `anchor` (from → to coordinates) and a `streetHint`; `seed.hotspots.resolve_hotspots(graph)` finds the link in whatever network is loaded. `linkId`/`queueId` are hints only.
-4. **API schema:** only add fields, never rename or remove them. Schema changes go to Rareș as a small PR that updates both `schemas.py` and `types/simulator.ts`.
+| Person | Owns (only they edit) | Task | Done when |
+|---|---|---|---|
+| **Laura** | field videos, GPS logs; `frontend/src/components/CorridorMap.tsx` | Film all 16 gates (15 min each, 07:30–08:30) + 2–3 key intersections; GPS runs | `gate_counts.csv`, `turn_counts.csv`, `travel_times.csv` filled with `source` on every row |
+| **Lucas** | `backend/app/corridor/demand.py`, `calibration.py`; the CSVs in `backend/data/corridor/` | Enter counts, calibrate β / capacities against turn counts (GEH), run ±20 % | GEH table + sensitivity table for the slides |
+| **Rareș** | `backend/app/corridor/osm_network.py`, `assignment.py`, `model.py`, `transit.py`, `api.py`; `frontend/src/types/corridor.ts` | Signal timings from videos → `signal_timings.csv`; check lanes → `lane_checks.csv`; solver benchmarks (Sioux Falls optional) | Assumptions list in the app is mostly replaced by measured values |
+| **Adriana** | `frontend/src/components/*` (except the map), `frontend/src/i18n/translations.ts`, `docs/` | Read SIDU/PMUD PDFs for real corridor volumes (with page + year); talk to 2–3 people; deck, script, backup video | Deck with evidence slides; every number traceable to a source |
 
-**Heads-up for the network swap (Rareș):** link IDs (`LINK_CLUJ_01`…), the curated route sets in `seed/demand.py` and the STPT node lists in `seed/transit.py` are specific to the current seed network. Link-based assignment drops the curated routes. `tests/test_interfaces.py` checks the interfaces above; keep it green.
+**Shared files (small coordinated PRs only):** `frontend/src/App.tsx`, `backend/app/main.py`, `backend/app/corridor/config.py`.
 
-## Git workflow
-
-- `git pull --rebase` before starting any task; small PRs merged at least every 3–4 hours.
-- Run `pytest -q` (backend) and `npm run build` (frontend) before every merge. Both must pass.
-- Need to change a file you don't own? Say so in the team chat first and keep the change minimal.
-
-## Lucas: demand, calibration and robustness
-
-| When | Task | Done when |
-|---|---|---|
-| T+1–6 | Demand model: census population per cartier → OSM/PMT attractors, gravity model, centroids snapped to nodes | Produces an OD matrix for any network |
-| T+6–8 | Run it on the current graph for the corridor | The corridor solves with your demand |
-| T+8–12 | Switch it to Rareș's real network | Same, on the real network |
-| After counts | Calibrate the corridor to Laura's counts; report GEH and travel times | The "model vs. observed" numbers are ready |
-| Then | Sensitivity at −20%, normal and +20% demand | The "conclusion holds" table is ready |
-
-## Rareș: network and solver
-
-| When | Task | Done when |
-|---|---|---|
-| T+1–8 | Import the OSM network for the centre (lanes, speeds, one-ways, signals); commit a snapshot file | The network loads offline |
-| T+8–14 | Link-based CFW with shortest-path all-or-nothing loading | A scenario solves in under 1 s |
-| T+14–16 | Benchmark tests: Braess (65 vs 80 min) and Sioux Falls | Both pass |
-| T+16–22 | Map the real SMTT lines, stops and frequencies onto links; re-run the scan | The transit panel uses only real data |
-
-## Laura: field evidence and map
-
-| When | Task | Done when |
-|---|---|---|
-| Next rush hour | Film 15 min at each of the 2 intersections; do GPS travel-time runs on the corridor | Videos and GPS logs saved |
-| After | Count vehicles per movement from the videos | Counts table goes to Lucas |
-| Then | Load real OSM cycleways and i'velo stations; adapt the map to the real network | No invented cycling data left |
-| Then | "Model vs. observed" chart | Slide-ready |
-
-## Adriana: honesty pass and pitch
-
-| When | Task | Done when |
-|---|---|---|
-| T+1–4 | Remove the fabricated values (sesizări counts, FIWARE/air/events, random i'velo, fake cycleways, wrong codGis); add "estimated / illustrative" labels | Every number has a source or a label |
-| T+4–10 | Talk to 2–3 people: a planner, an STPT rider, a resident | Real quotes collected |
-| T+10–20 | Deck: problem, demo, 5 evidence slides (solver, counts, live data, sensitivity, limits), next steps | Deck is complete |
-| After freeze | Demo script, judge Q&A sheet, backup video | Ready to present |
+**API rule:** only add fields, never rename/remove. Changes to `backend/app/corridor/api.py` must update
+`frontend/src/types/corridor.ts` in the same PR.
 
 ## Checkpoints
 
 | When | Check | If it fails |
 |---|---|---|
-| T+8 | Is the real network loading? | Keep the current graph; calibrate the corridor only |
-| T+14 | Does Lucas's demand run on the real network? | Present the corridor on the current graph |
-| Freeze | Is the calibration done? | Present the sensitivity and state the gap honestly |
+| After first counting morning | ≥ the 6 biggest gates counted (Martirilor, Rebreanu ×2, Eroilor, bridges) | Present a partial count honestly; the app lists uncounted gates |
+| After calibration | GEH < 5 on most turn counts | Show the table anyway and explain the gap |
+| Code freeze (T−6 h) | Demo runs offline from the snapshot + CSVs | Live SMTT data is a bonus, not a dependency |
 
-## T−6h to judging: everyone
+## Git workflow
 
-- [ ] Code freeze: bug fixes only.
-- [ ] Demo runs from the snapshot in offline mode; live APIs are a bonus, not a dependency.
-- [ ] Record the backup video.
-- [ ] Rehearse 3 times. Question owners: maths (Rareș), demand (Lucas), data (Laura), product and limits (Adriana).
+- Branch from `corridor-mvp`; `git pull --rebase` before each task; small PRs every 3–4 hours.
+- Before every merge: `pytest -q` (backend) and `npm run build` (frontend) must pass.
+- **Never commit invented numbers into `backend/data/corridor/`.** Test data lives only inside `tests/`.
 
-**Demo order (3.5 min):** Braess explainer (30 s) → corridor lane swap with its routes and buses (90 s) → evidence slides (60 s) → the ask: the city's OD matrix and signal plans (30 s).
+**Demo (3 min):** the corridor on the map + where we counted (30 s) → pick a street, take a lane, run (60 s) →
+where traffic goes + buses + intersections (45 s) → model vs. counts (GEH) and ±20 % (30 s) → limits and what we'd
+need from the city (15 s).
