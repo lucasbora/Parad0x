@@ -5,6 +5,11 @@ __pycache__/
 .pytest_cache/
 # polite cache of live PMT/SMTT/Overpass payloads (regenerated at runtime)
 backend/app/cache/*.json
+# raw Overpass dump (regenerate with scripts/import_osm_network.py fetch); the built snapshot IS committed
+backend/data/osm/
+
+# Visual Studio
+.vs/
 
 # Node
 frontend/node_modules/

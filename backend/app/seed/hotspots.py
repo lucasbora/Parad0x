@@ -132,7 +132,53 @@ def resolve_link_id(graph: Any, hotspot: dict[str, Any], max_error_m: float = 25
             best = (e, rl.id)
     if best and best[0] <= max_error_m:
         return best[1]
-    return None
+    return _resolve_along_route(graph, hotspot, want)
+
+
+def _resolve_along_route(graph: Any, hotspot: dict[str, Any], want: str) -> str | None:
+    """Fine-grained networks (OSM): a hotspot street spans several links (one per block).
+
+    Route from the node nearest the anchor ``from`` to the node nearest ``to`` by free-flow time
+    and return the longest link on that route whose street name matches ``streetHint``
+    (the longest link of the route if none matches).
+    """
+    import networkx as nx
+
+    a_from, a_to = hotspot["anchor"]["from"], hotspot["anchor"]["to"]
+    src, dst = graph.snap_to_node(*a_from), graph.snap_to_node(*a_to)
+    if src == dst:
+        return None
+    g = getattr(graph, "_hotspot_digraph", None)
+    if g is None:
+        g = graph.road_digraph()
+        graph._hotspot_digraph = g
+    try:
+        nodes = nx.shortest_path(g, src, dst, weight="t0")
+    except (nx.NetworkXNoPath, nx.NodeNotFound):
+        return None
+    route = [graph.road_links[g[u][v]["idx"]] for u, v in zip(nodes[:-1], nodes[1:])]
+    named = [rl for rl in route if want and want in rl.street_name.lower()]
+    if named:
+        return max(named, key=lambda rl: rl.length_m).id
+    if want:
+        # anchor is approximate: nearest same-named link around the anchor, aligned with from → to
+        mid = [(a_from[0] + a_to[0]) / 2, (a_from[1] + a_to[1]) / 2]
+        ax, ay = a_to[0] - a_from[0], a_to[1] - a_from[1]
+        cands = []
+        for rl in graph.road_links:
+            if want not in rl.street_name.lower():
+                continue
+            lx, ly = rl.coords[-1][0] - rl.coords[0][0], rl.coords[-1][1] - rl.coords[0][1]
+            if lx * ax + ly * ay <= 0:
+                continue
+            c = [(rl.coords[0][0] + rl.coords[-1][0]) / 2, (rl.coords[0][1] + rl.coords[-1][1]) / 2]
+            d = _dist_m(c, mid)
+            if d <= 1000.0:
+                cands.append((d - 0.2 * rl.length_m, rl.id))
+        if cands:
+            return min(cands)[1]
+        return None   # the named street does not run this way on this network: drop, don't guess
+    return max(route, key=lambda rl: rl.length_m).id
 
 
 def resolve_hotspots(graph: Any) -> list[dict[str, Any]]:
