@@ -6,11 +6,40 @@ Times are hours from now (T+).
 
 ## T+0 to T+1: everyone
 
+- [x] **Split the code so everyone can work in parallel** (done on `main`; see "File ownership" below).
+- [x] Freeze the network-node format and the demand interface (see "Frozen interfaces").
 - [ ] Pick **one demo corridor**: central, with a real debate, somewhere you can count traffic.
 - [ ] Choose **2 count intersections** on that corridor.
-- [ ] Agree the network-node format (ID plus `[lng, lat]`), between Rareș and Lucas.
 - [ ] Lucas sends emails asking for the OD matrix, signal timings, FIWARE counts and the `/api/sesizari` parameters.
-- [ ] Git rules: one branch each; Rareș owns `schemas.py` and `types/simulator.ts`; code freeze at T−6h before judging.
+- [ ] Everyone branches from `main` (`git switch -c <name>/<task>`); code freeze at T−6h before judging.
+
+## File ownership: only the owner edits these
+
+| Person | Owns |
+|---|---|
+| **Rareș** | `backend/app/engine/extended_graph.py`, `beckmann_solver.py`, `braess_detector.py`, `route_recommender.py` · `backend/app/seed/network.py`, `seed/transit.py`, `seed/hotspots.py` · `backend/app/services/layers/roads.py`, `layers/transit.py` · `backend/app/models/schemas.py` · `frontend/src/types/simulator.ts` · `backend/tests/test_solver.py` |
+| **Lucas** | `backend/app/engine/demand_model.py` · new `backend/app/engine/calibration.py` · `backend/app/seed/demand.py` · new `backend/data/counts/` · calibration tests |
+| **Laura** | `frontend/src/components/map/*` · `backend/app/services/osm_overpass.py` · `backend/app/seed/cycling.py` · `backend/app/services/layers/cycling.py` · field videos and GPS logs |
+| **Adriana** | `backend/app/seed/context.py` · `backend/app/services/layers/context.py` · `backend/app/services/pmt_client.py`, `live_data.py` · `frontend/src/components/studio/*` · `frontend/src/i18n/translations.ts` · `docs/`, the deck |
+
+**Shared files, edited only by small coordinated PRs:** `backend/app/services/simulator.py` (it only assembles layers now), `backend/app/main.py`, `frontend/src/App.tsx`, `backend/app/services/seed_timisoara.py` (a re-export facade; never add data to it).
+
+## Frozen interfaces: code against these, never against internals
+
+1. **Network → everyone** (Rareș keeps these stable when he swaps in the OSM network):
+   - `graph.node_table() -> [{id, name, coordinates: [lng, lat], cartier}]`
+   - `graph.snap_to_node(lng, lat) -> node_id`
+2. **Demand → engine** (Lucas): `build_od(graph, preset, now=None) -> [ODDemand(od_id, origin_node, destination_node, veh_h)]` in `engine/demand_model.py`. Use **node IDs only, never link IDs**.
+3. **Hotspots are locations, not link IDs:** each has an `anchor` (from → to coordinates) and a `streetHint`; `seed.hotspots.resolve_hotspots(graph)` finds the link in whatever network is loaded. `linkId`/`queueId` are hints only.
+4. **API schema:** only add fields, never rename or remove them. Schema changes go to Rareș as a small PR that updates both `schemas.py` and `types/simulator.ts`.
+
+**Heads-up for the network swap (Rareș):** link IDs (`LINK_CLUJ_01`…), the curated route sets in `seed/demand.py` and the STPT node lists in `seed/transit.py` are specific to the current seed network. Link-based assignment drops the curated routes. `tests/test_interfaces.py` checks the interfaces above; keep it green.
+
+## Git workflow
+
+- `git pull --rebase` before starting any task; small PRs merged at least every 3–4 hours.
+- Run `pytest -q` (backend) and `npm run build` (frontend) before every merge. Both must pass.
+- Need to change a file you don't own? Say so in the team chat first and keep the change minimal.
 
 ## Lucas: demand, calibration and robustness
 

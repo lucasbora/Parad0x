@@ -153,6 +153,18 @@ class ExtendedGraph:
     def link(self, link_id: str) -> RoadLink:
         return self.road_links[self.road_index[link_id]]
 
+    # ------------------------------------------------------------------
+    # FROZEN INTERFACE (owner: Rareș) — what demand / layers may rely on.
+    def node_table(self) -> list[dict]:
+        """[{id, name, coordinates: [lng, lat], cartier}] for every network node."""
+        return [{"id": n["id"], "name": n["name"], "coordinates": n["coordinates"], "cartier": n["cartier"]}
+                for n in self.nodes.values()]
+
+    def snap_to_node(self, lng: float, lat: float) -> str:
+        """Id of the network node nearest to a WGS84 point (for centroids, POIs, counts)."""
+        best = min(self.nodes.values(), key=lambda n: seed.haversine_m((lng, lat), tuple(n["coordinates"])))
+        return best["id"]
+
     def base_params(self, lane_overrides: dict[str, list[str]] | None = None) -> EdgeParams:
         """Edge parameters for a given lane allocation (overrides keyed by link id)."""
         lane_overrides = lane_overrides or {}

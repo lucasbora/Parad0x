@@ -11,7 +11,11 @@ from app.engine.braess_detector import BraessEngine, LaneIntervention, Scenario,
 from app.engine.extended_graph import CAR
 from app.engine.route_recommender import RouteRecommender
 from app.models import schemas
-from app.services import green_scorer, live_data, osm_overpass, pmt_client
+from app.services import live_data, pmt_client
+from app.services.layers import context as layer_context
+from app.services.layers import cycling as layer_cycling
+from app.services.layers import roads as layer_roads
+from app.services.layers import transit as layer_transit
 from app.services import seed_timisoara as seed
 
 OWNERS = [
@@ -33,10 +37,12 @@ class Simulator:
         self._network_cache: dict[str, dict] = {}
         self._hotspot_cache: dict[str, list[dict]] = {}
         self._lock = threading.Lock()
-        self._lines_by_link: dict[str, list[str]] = {}
+        self.lines_by_link: dict[str, list[str]] = {}
         for line in self.routes.lines:
             for li in line["links"]:
-                self._lines_by_link.setdefault(self.g.road_links[li].id, []).append(line["shortName"])
+                self.lines_by_link.setdefault(self.g.road_links[li].id, []).append(line["shortName"])
+        # hotspots are locations; resolve them against whatever network is loaded
+        self.resolved_hotspots = seed.resolve_hotspots(self.g)
 
     # ------------------------------------------------------------------ helpers
     def _parking_delta(self, interventions: list[LaneIntervention]) -> tuple[int, float, str | None]:
@@ -86,7 +92,7 @@ class Simulator:
             solver_ms=round(sc.result.elapsed_ms, 2),
         )
 
-    def _link_props(self, sc: Scenario, i: int) -> dict[str, Any]:
+    def link_props(self, sc: Scenario, i: int) -> dict[str, Any]:
         rl = self.g.road_links[i]
         lanes = sc.lane_overrides.get(rl.id, rl.lanes)
         z = float(sc.result.z[i])
@@ -102,13 +108,6 @@ class Simulator:
             "lanes": lanes,
         }
 
-    def _queue_point(self, j: int) -> list[float]:
-        q = self.g.queue_links[j]
-        node = self.g.nodes[q.node]["coordinates"]
-        frm = self.g.link(q.in_link).coords[0]
-        t = 0.16
-        return [round(node[0] + (frm[0] - node[0]) * t, 6), round(node[1] + (frm[1] - node[1]) * t, 6)]
-
     # ------------------------------------------------------------------ hotspots
     def hotspots(self, preset: str) -> list[dict]:
         with self._lock:
@@ -116,11 +115,16 @@ class Simulator:
                 return self._hotspot_cache[preset]
         base = self.engine.baseline(preset)
         out = []
-        for h in seed.HOTSPOTS:
+        nr = self.g.n_road
+        for h in self.resolved_hotspots:
             ivs = [LaneIntervention(h["linkId"], h["suggestedLanes"])]
             sc = self.engine.evaluate(preset, ivs)
-            q = self.g.queue_index[h["queueId"]]
+            q = self.g.queue_index[h["queueId"]] if h["queueId"] else None
             riders, gains = self.routes.line_gain_summary(base, sc)
+
+            def qv(arr, scale=1.0, nd=1):
+                return round(float(arr[nr + q]) * scale, nd) if q is not None else None
+
             out.append({
                 **{k: v for k, v in h.items() if not k.startswith("story")},
                 "storyRo": h["story_ro"],
@@ -129,11 +133,11 @@ class Simulator:
                 "officialCodGis": live_data.official_streets(self.g).get(h["linkId"], {}).get("codGis"),
                 "braessValueV": round(sc.total_time - base.total_time, 1),
                 "delayReductionPct": round((base.total_time - sc.total_time) / base.total_time * 100, 2),
-                "queueBeforeSec": round(float(base.result.phi[self.g.n_road + q]) * 60, 1),
-                "queueAfterSec": round(float(sc.result.phi[self.g.n_road + q]) * 60, 1),
-                "queueFlowBefore": round(float(base.result.z[self.g.n_road + q]), 0),
-                "queueFlowAfter": round(float(sc.result.z[self.g.n_road + q]), 0),
-                "saturationS": round(float(base.params.s[q]), 0),
+                "queueBeforeSec": qv(base.result.phi, 60),
+                "queueAfterSec": qv(sc.result.phi, 60),
+                "queueFlowBefore": qv(base.result.z, 1, 0),
+                "queueFlowAfter": qv(sc.result.z, 1, 0),
+                "saturationS": round(float(base.params.s[q]), 0) if q is not None else None,
                 "linkFlow": round(float(base.result.z[self.g.road_index[h["linkId"]]]), 0),
                 "stptRidersBenefitingPerHour": riders,
             })
@@ -144,157 +148,35 @@ class Simulator:
 
     # ------------------------------------------------------------------ network
     def network(self, preset: str) -> dict[str, Any]:
+        """Assemble /api/network from the per-owner layer builders in app.services.layers."""
         with self._lock:
             if preset in self._network_cache and preset != "now":
                 return self._network_cache[preset]
         g = self.g
         base = self.engine.baseline(preset)
         scan = self.engine.prescan(preset)
-        scores = green_scorer.score_links(g, base.result.z)
-        hotspot_by_link = {h["linkId"]: h["id"] for h in seed.HOTSPOTS}
-        official = live_data.official_streets(g)
+        hotspots = self.resolved_hotspots
 
-        road_features = []
-        for i, rl in enumerate(g.road_links):
-            props = self._link_props(base, i)
-            ps = scan.get(rl.id)
-            mid = [(rl.coords[0][0] + rl.coords[-1][0]) / 2, (rl.coords[0][1] + rl.coords[-1][1]) / 2]
-            ses = seed.sesizari_for_point(mid[0], mid[1], 500)
-            v = round(ps["V"], 1) if ps else None
-            imp = round(ps["I"], 2) if ps else None
-            road_features.append({
-                "type": "Feature",
-                "id": i,
-                "geometry": {"type": "LineString", "coordinates": rl.coords},
-                "properties": {
-                    "id": rl.id,
-                    "codGis": official.get(rl.id, {}).get("codGis", rl.cod_gis),
-                    "seedCodGis": rl.cod_gis,
-                    "codGisSource": "PMT Nomenclator (live)" if rl.id in official else "seed",
-                    "officialName": official.get(rl.id, {}).get("denumireCompleta"),
-                    "streetName": rl.street_name,
-                    "cartier": rl.cartier,
-                    "direction": rl.id[-2:],
-                    "twinId": rl.twin_id,
-                    "fromName": g.nodes[rl.from_node]["name"],
-                    "toName": g.nodes[rl.to_node]["name"],
-                    "lengthM": round(rl.length_m, 0),
-                    "freeFlowSpeedKmh": rl.speed_kmh,
-                    "lanes": rl.lanes,
-                    "baselineFlow": props["flow"],
-                    "capacity": props["capacity"],
-                    "vOverC": props["vOverC"],
-                    "speedKmh": props["speedKmh"],
-                    "travelTimeSec": props["travelTimeSec"],
-                    "bprDelaySec": props["bprDelaySec"],
-                    "braessValueV": v,
-                    "braessImprovementPct": imp,
-                    "prescanMode": ps["mode"] if ps else None,
-                    "isBraessCandidate": bool(ps and ps["V"] < -0.5),
-                    "isGreenOpportunity": bool(ps and abs(ps["I"]) < 0.5),
-                    "greenSuitabilityScores": scores[rl.id],
-                    "recommendedReallocation": green_scorer.recommend_reallocation(scores[rl.id]),
-                    "timparkZone": rl.timpark_zone,
-                    "cyclewayExisting": rl.cycleway,
-                    "hotspotId": hotspot_by_link.get(rl.id),
-                    "stptLines": sorted(set(self._lines_by_link.get(rl.id, []))),
-                    "sesizariSummary": ses,
-                },
-            })
+        roads = layer_roads.roads_geojson(self, base, scan, hotspots)
+        queues = layer_roads.queues_geojson(g, base)
+        stpt, transit_prov, transit = layer_transit.stpt_lines_geojson(g)
+        cycleways, ivelo, cyc_prov = layer_cycling.cycling_geojson()
+        context, sensor, ctx_prov = layer_context.context_overlays(g, hotspots)
 
-        queue_features = []
-        for j, q in enumerate(g.queue_links):
-            zq = float(base.result.z[g.n_road + j])
-            s = float(base.params.s[j])
-            queue_features.append({
-                "type": "Feature",
-                "id": j,
-                "geometry": {"type": "Point", "coordinates": self._queue_point(j)},
-                "properties": {
-                    "id": q.id,
-                    "intersectionName": g.nodes[q.node]["name"],
-                    "inLinkId": q.in_link,
-                    "outLinkId": q.out_link,
-                    "control": q.control,
-                    "flow": round(zq, 1),
-                    "saturationS": round(s, 1),
-                    "isSaturated": zq >= s,
-                    "queueDelaySec": round(float(base.result.phi[g.n_road + j]) * 60.0, 1),
-                    "d0Sec": round(q.d0_s(), 1),
-                },
-            })
-
-        zones, zones_prov = pmt_client.get_zones()
-        _, pois_prov = pmt_client.get_pois()
-        _, events_prov = pmt_client.get_events()
-        _, parking_prov = pmt_client.get_parking()
-        pois = live_data.normalized_pois()
-        events = live_data.normalized_events()
-        lines_live = live_data.live_lines()
-        transit, transit_prov = pmt_client.get_transit_network()
-        cycling, cyc_prov = osm_overpass.get_cycling_layers()
-        nomen, nomen_prov = pmt_client.get_nomenclator()
-
-        def pt_features(items: list[dict], kind: str) -> list[dict]:
-            feats = []
-            for it in items:
-                c = it.get("coordinates")
-                if not c and "lat" in it and ("lng" in it or "lon" in it):
-                    c = [it.get("lng", it.get("lon")), it["lat"]]
-                if not c:
-                    continue
-                props = {k: v for k, v in it.items() if k != "coordinates"}
-                props["kind"] = kind
-                feats.append({"type": "Feature", "geometry": {"type": "Point", "coordinates": c}, "properties": props})
-            return feats
-
-        stpt = []
-        for l in seed.STPT_LINES:
-            live = lines_live.get(l["shortName"], {})
-            poly = (live.get("polylines") or {}).get(0)
-            stpt.append({
-                "type": "Feature",
-                "geometry": {"type": "LineString",
-                             "coordinates": poly or [g.nodes[n]["coordinates"] for n in l["nodes"]]},
-                "properties": {"routeId": live.get("routeId", l["routeId"]), "shortName": l["shortName"],
-                               "type": live.get("type", l["type"]), "color": live.get("color") or l["color"],
-                               "headsign": l["headsign"], "longName": live.get("longName"),
-                               "frequencyPerHour": l["frequencyPerHour"],
-                               "geometrySource": "SMTT GTFS (live)" if poly else "schematic"},
-            })
-        cycleways = [{
-            "type": "Feature",
-            "geometry": {"type": "LineString", "coordinates": c["coordinates"]},
-            "properties": {"id": c["id"], "name": c.get("name")},
-        } for c in cycling["cycleways"]]
-        timpark = live_data.timpark_features(g)
-        sesizari = []
-        for h in seed.HOTSPOTS:
-            summ, _ = pmt_client.get_sesizari_summary(h["center"][1], h["center"][0], 500)
-            sesizari.append({"type": "Feature", "geometry": {"type": "Point", "coordinates": h["center"]},
-                             "properties": {"hotspotId": h["id"], **summ}})
-        air = pt_features(seed.AIR_QUALITY, "air_quality")
-        sensor = {
-            **{k: v for k, v in seed.FIWARE_SENSOR.items() if k != "location_lat_lng"},
-            "coordinates": pmt_client.ngsi_point_to_lnglat(seed.FIWARE_SENSOR["location_lat_lng"]),
-        }
-
-        provenance = [p.as_dict() for p in (zones_prov, pois_prov, events_prov, transit_prov, cyc_prov, nomen_prov,
-                                            parking_prov)]
         out = {
             "preset": preset,
-            "roads": {"type": "FeatureCollection", "features": road_features},
-            "queues": {"type": "FeatureCollection", "features": queue_features},
+            "roads": roads,
+            "queues": queues,
             "overlays": {
-                "zones": zones,
-                "stptLines": {"type": "FeatureCollection", "features": stpt},
-                "osmCycleways": {"type": "FeatureCollection", "features": cycleways},
-                "iveloStations": {"type": "FeatureCollection", "features": pt_features(cycling["iveloStations"], "ivelo")},
-                "pois": {"type": "FeatureCollection", "features": pt_features(pois, "poi")},
-                "events": {"type": "FeatureCollection", "features": pt_features(events, "event")},
-                "timparkSegments": {"type": "FeatureCollection", "features": timpark},
-                "sesizariClusters": {"type": "FeatureCollection", "features": sesizari},
-                "airQuality": {"type": "FeatureCollection", "features": air},
+                "zones": context["zones"],
+                "stptLines": stpt,
+                "osmCycleways": cycleways,
+                "iveloStations": ivelo,
+                "pois": context["pois"],
+                "events": context["events"],
+                "timparkSegments": context["timparkSegments"],
+                "sesizariClusters": context["sesizariClusters"],
+                "airQuality": context["airQuality"],
             },
             "hotspots": self.hotspots(preset),
             "baselineMetrics": self.metrics(base, base).model_dump(by_alias=True),
@@ -306,14 +188,14 @@ class Simulator:
             "feedVersion": transit.get("feedVersion", config.GTFS_FEED_VERSION),
             "timparkTariffsEurH": pmt_client.timpark_tariffs(),
             "fares": dict(zip(("ticketRon", "dayPassRon"), live_data.fares())),
-            "osm": {"attribution": osm_overpass.ATTRIBUTION, "badge": osm_overpass.COMPLETENESS_BADGE},
+            "osm": layer_cycling.osm_badges(),
             "stats": {
                 "nodes": len(g.nodes), "roadLinks": g.n_road, "queueLinks": len(g.queue_links),
                 "odPairs": len(g.od_pairs), "paths": len(g.paths),
-                "braessCandidates": sum(1 for f in road_features if f["properties"]["isBraessCandidate"]),
+                "braessCandidates": sum(1 for f in roads["features"] if f["properties"]["isBraessCandidate"]),
                 "prescanned": len(scan),
             },
-            "provenance": provenance,
+            "provenance": ctx_prov + transit_prov + cyc_prov,
         }
         with self._lock:
             self._network_cache[preset] = out
@@ -370,7 +252,7 @@ class Simulator:
 
         updated_links = []
         for i, rl in enumerate(g.road_links):
-            p = self._link_props(sc, i)
+            p = self.link_props(sc, i)
             bf = float(base.result.z[i])
             updated_links.append(schemas.UpdatedLink(
                 id=rl.id, flow=p["flow"], baseline_flow=round(bf, 1), delta_flow=round(p["flow"] - bf, 1),
@@ -387,7 +269,7 @@ class Simulator:
                 baseline_queue_delay_sec=round(float(base.result.phi[g.n_road + j]) * 60, 1),
                 d0_sec=round(q.d0_s(), 1)))
 
-        hotspot = next((h for h in seed.HOTSPOTS if h["linkId"] in link_ids), None)
+        hotspot = next((h for h in self.resolved_hotspots if h["linkId"] in link_ids), None)
         if ivs:
             car = self.routes.car_routes(base, sc, link_ids)
             stpt = self.routes.stpt_routes(base, sc, link_ids)
@@ -398,7 +280,7 @@ class Simulator:
         # charts: hotspot's shared downstream queue, else the queue that changed most
         queue_chart = bpr_chart = None
         if ivs:
-            if hotspot:
+            if hotspot and hotspot["queueId"]:
                 qi = g.queue_index[hotspot["queueId"]]
             else:
                 dz = np.abs(sc.result.z[g.n_road:] - base.result.z[g.n_road:])

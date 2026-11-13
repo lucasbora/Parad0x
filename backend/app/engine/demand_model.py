@@ -14,6 +14,7 @@ the evening profile mirrors it through land use rather than by hand.
 """
 from __future__ import annotations
 
+from dataclasses import dataclass
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -98,3 +99,23 @@ def od_demand(graph: ExtendedGraph, preset: str, now: datetime | None = None) ->
         else:
             d += base * weight
     return d * level
+
+
+# ---------------------------------------------------------------------------
+# FROZEN INTERFACE (owner: Lucas). The engine consumes demand only through this.
+# Keys are NETWORK NODE IDS (see ExtendedGraph.node_table / snap_to_node), never link ids,
+# so the demand model keeps working when the road network is replaced.
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class ODDemand:
+    od_id: str
+    origin_node: str
+    destination_node: str
+    veh_h: float
+
+
+def build_od(graph: ExtendedGraph, preset: str, now: datetime | None = None) -> list[ODDemand]:
+    """Peak-hour car OD demand for ``preset`` on ``graph``."""
+    d = od_demand(graph, preset, now)
+    return [ODDemand(od.id, od.origin, od.destination, float(d[k])) for k, od in enumerate(graph.od_pairs)]

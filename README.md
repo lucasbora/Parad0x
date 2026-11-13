@@ -30,7 +30,7 @@ cd backend
 python -m venv .venv && .venv/Scripts/activate        # Windows  (Linux/macOS: source .venv/bin/activate)
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
-pytest -q                                             # 22 tests, hermetic (offline + temp cache)
+pytest -q                                             # 26 tests, hermetic (offline + temp cache)
 
 # frontend (Node 20+)
 cd frontend
@@ -48,9 +48,11 @@ backend/  (Rareș & Lucas)          FastAPI · Python
   app/main.py                      routes, CORS, gzip, background cache warm-up
   app/config.py                    env vars, polite User-Agent, cache TTLs, solver tolerances
   app/models/schemas.py            strict Pydantic v2 contracts (camelCase)
-  app/engine/   (Rareș)            extended_graph · beckmann_solver · braess_detector · route_recommender · demand_model
-  app/services/ (Lucas)            pmt_client · osm_overpass · green_scorer · seed_timisoara · live_data · simulator
-  tests/                           solver + API tests
+  app/engine/                      extended_graph · beckmann_solver · braess_detector · route_recommender (Rareș) · demand_model (Lucas)
+  app/seed/                        per-owner seed data: network, transit, hotspots (Rareș) · demand (Lucas) · cycling (Laura) · context (Adriana)
+  app/services/                    pmt_client · live_data · osm_overpass · green_scorer · simulator (assembler) · seed_timisoara (re-export facade)
+  app/services/layers/             /api/network layer builders: roads, transit (Rareș) · cycling (Laura) · context (Adriana)
+  tests/                           solver, API and frozen-interface tests
 frontend/ (Laura & Adriana)        React 18 · TypeScript · Vite · Tailwind · MapLibre GL JS · lucide-react
   src/types/simulator.ts           mirrors schemas.py
   src/i18n/translations.ts         RO (default) + EN
