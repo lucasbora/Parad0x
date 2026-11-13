@@ -130,3 +130,66 @@ def test_prescan_ranks_streets(engine):
     scan = engine.prescan("morning_rush")
     assert len(scan) > 10
     assert scan["LINK_CLUJ_01"]["V"] < 0
+
+
+# ---------------------------------------------------------------------------
+# Real OSM network (offline snapshot)
+# ---------------------------------------------------------------------------
+
+from app.seed import hotspots as _hotspots  # noqa: E402
+from app.seed.osm_network import load_snapshot, snapshot_available  # noqa: E402
+
+needs_snapshot = pytest.mark.skipif(not snapshot_available(), reason="OSM snapshot not built")
+
+
+@pytest.fixture(scope="module")
+def osm_graph():
+    return build_graph(network="osm")
+
+
+@needs_snapshot
+def test_osm_snapshot_is_consistent():
+    s = load_snapshot()
+    node_ids = {n["id"] for n in s["nodes"]}
+    assert len(node_ids) == len(s["nodes"]) > 1000
+    link_ids = {l["id"] for l in s["links"]}
+    assert len(link_ids) == len(s["links"])
+    for l in s["links"]:
+        assert l["from"] in node_ids and l["to"] in node_ids and l["from"] != l["to"]
+        assert l["length_m"] > 0 and l["speed_kmh"] > 0
+        assert "car" in l["lanes"] and set(l["lanes"]) <= {"car", "bus"}
+        assert l["twin"] is None or l["twin"] in link_ids
+    assert 0 < s["meta"]["n_signalized"] < len(s["nodes"])
+
+
+@needs_snapshot
+def test_osm_graph_keeps_frozen_interfaces(osm_graph):
+    g = osm_graph
+    table = g.node_table()
+    assert len(table) == len(g.nodes)
+    assert set(table[0]) == {"id", "name", "coordinates", "cartier"}
+    n = table[len(table) // 2]
+    assert g.snap_to_node(n["coordinates"][0] + 1e-6, n["coordinates"][1]) == n["id"]
+    for rl in g.road_links:
+        for lng, lat in rl.coords:
+            assert 21.15 < lng < 21.30 and 45.70 < lat < 45.80
+
+
+@needs_snapshot
+def test_osm_graph_every_od_is_routable_and_solves(osm_graph):
+    g = osm_graph
+    counts = np.bincount([p.od_index for p in g.paths], minlength=len(g.od_pairs))
+    assert (counts >= 1).all()
+    system = PathSystem(g.incidence(), np.array([p.od_index for p in g.paths]), len(g.od_pairs))
+    demand = np.full(len(g.od_pairs), 800.0)
+    res = solve_equilibrium(system, g.base_params(), demand, rel_gap=1e-5)
+    assert res.rel_gap < 1e-5
+    assert np.allclose(np.bincount(system.od_of_path, weights=res.x), demand)
+
+
+@needs_snapshot
+def test_osm_hotspots_resolve_to_the_named_street_or_are_dropped(osm_graph):
+    for h in _hotspots.HOTSPOTS:
+        lid = _hotspots.resolve_link_id(osm_graph, h)
+        if lid is not None:
+            assert h["streetHint"] in osm_graph.link(lid).street_name.lower()

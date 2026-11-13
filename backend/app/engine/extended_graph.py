@@ -10,6 +10,7 @@ Units used throughout the engine:
 """
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
 from typing import Iterable
 
@@ -277,7 +278,69 @@ class ExtendedGraph:
         return "Via " + " → ".join(names)
 
 
-def build_graph(k_paths: int = 6) -> ExtendedGraph:
+NETWORK_ENV = "TMBG_NETWORK"   # "seed" (default, hand-built graph) | "osm" (real OSM snapshot)
+
+
+def build_graph(k_paths: int = 6, network: str | None = None) -> ExtendedGraph:
+    """Build the network selected by ``network`` or ``$TMBG_NETWORK`` (default ``seed``)."""
+    network = (network or os.getenv(NETWORK_ENV, "seed")).lower()
+    if network == "osm":
+        return build_osm_graph(k_paths=k_paths)
+    if network != "seed":
+        raise ValueError(f"unknown network {network!r} (expected 'seed' or 'osm')")
+    return build_seed_graph(k_paths=k_paths)
+
+
+def _seed_od_pairs(snap=None) -> list[ODPair]:
+    """The seed OD pairs; with ``snap`` their endpoints are moved onto another network."""
+    out = []
+    for o in seed.OD_PAIRS:
+        origin, dest, paths = o["origin"], o["destination"], o.get("paths")
+        if snap is not None:
+            origin, dest, paths = snap(origin), snap(dest), None   # curated routes are seed-only
+        out.append(ODPair(o["id"], origin, dest, o["label"], o["corridor"], bool(o["inbound"]),
+                          float(o["base"]) if o.get("base") is not None else None, paths))
+    return out
+
+
+def build_osm_graph(k_paths: int = 6, snapshot_path: str | None = None) -> ExtendedGraph:
+    """Extended graph on the real OSM network (offline snapshot, see app.seed.osm_network).
+
+    No phantom queue links yet (the seed QUEUE_MOVEMENTS reference seed link ids); signalised
+    nodes are flagged so queue movements can be generated in the solver task. OD pairs are the
+    seed ones snapped to the nearest OSM node until the new demand model is plugged in.
+    """
+    from app.seed.osm_network import load_snapshot
+
+    snap_data = load_snapshot(snapshot_path)
+    nodes = {
+        n["id"]: {"id": n["id"], "name": n["name"], "coordinates": [n["lng"], n["lat"]],
+                  "cartier": n["cartier"], "signalized": bool(n["signalized"])}
+        for n in snap_data["nodes"]
+    }
+    road_links = [
+        RoadLink(
+            id=l["id"], tag=str(l["osm_way"]), from_node=l["from"], to_node=l["to"], street_name=l["street"],
+            cod_gis="", cartier=nodes[l["to"]]["cartier"], lanes=list(l["lanes"]),
+            length_m=float(l["length_m"]), speed_kmh=float(l["speed_kmh"]), coords=l["coords"],
+            lane_capacity=float(l.get("lane_capacity", DEFAULT_LANE_CAPACITY)), twin_id=l.get("twin"),
+        )
+        for l in snap_data["links"]
+    ]
+    road_index = {rl.id: i for i, rl in enumerate(road_links)}
+    g = ExtendedGraph(nodes, road_links, [], [], road_index, {}, {}, queues_by_in_link={})
+    seed_nodes = seed.NODES
+
+    def snap(seed_id: str) -> str:
+        _, lng, lat, _, _ = seed_nodes[seed_id]
+        return g.snap_to_node(lng, lat)
+
+    g.od_pairs = _seed_od_pairs(snap)
+    g.enumerate_paths(k=k_paths)
+    return g
+
+
+def build_seed_graph(k_paths: int = 6) -> ExtendedGraph:
     nodes = {
         nid: {"id": nid, "name": n[0], "coordinates": [n[1], n[2]], "cartier": n[3], "signalized": n[4]}
         for nid, n in seed.NODES.items()
@@ -315,11 +378,7 @@ def build_graph(k_paths: int = 6) -> ExtendedGraph:
     for j, q in enumerate(queue_links):
         by_in.setdefault(road_index[q.in_link], []).append(j)
 
-    od_pairs = [
-        ODPair(o["id"], o["origin"], o["destination"], o["label"], o["corridor"], bool(o["inbound"]),
-               float(o["base"]) if o.get("base") is not None else None, o.get("paths"))
-        for o in seed.OD_PAIRS
-    ]
+    od_pairs = _seed_od_pairs()
     g = ExtendedGraph(nodes, road_links, queue_links, od_pairs, road_index, queue_index, movement_queue,
                       queues_by_in_link=by_in)
     g.enumerate_paths(k=k_paths)
