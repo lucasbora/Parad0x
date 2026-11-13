@@ -1,0 +1,18 @@
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# polite cache of live PMT/SMTT/Overpass payloads (regenerated at runtime)
+backend/app/cache/*.json
+
+# Node
+frontend/node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

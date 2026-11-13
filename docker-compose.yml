@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      TMBG_OFFLINE: ${TMBG_OFFLINE:-0}
+      TMBG_CORS_ORIGINS: http://localhost:8080,http://localhost:5173
+    volumes:
+      - pmt-cache:/app/app/cache   # polite cache of PMT/SMTT/Overpass payloads
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "8080:8080"
+
+volumes:
+  pmt-cache:
