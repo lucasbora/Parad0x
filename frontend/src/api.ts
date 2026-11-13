@@ -1,4 +1,5 @@
 import type {
+  BaselineResponse,
   CalibrationResponse,
   Change,
   CorridorResponse,
@@ -28,15 +29,17 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const api = {
   corridor: () => request<CorridorResponse>("/api/corridor"),
-  simulate: (changes: Change[], demandScale = 1) =>
+  baseline: (testData: boolean) => request<BaselineResponse>(`/api/corridor/baseline?testData=${testData}`),
+  simulate: (changes: Change[], testData: boolean, signal?: AbortSignal) =>
     request<SimulateResponse>("/api/corridor/simulate", {
       method: "POST",
-      body: JSON.stringify({ changes, demandScale }),
+      body: JSON.stringify({ changes, demandScale: 1, testData }),
+      signal,
     }),
-  sensitivity: (changes: Change[]) =>
+  sensitivity: (changes: Change[], testData: boolean) =>
     request<SensitivityResponse>("/api/corridor/sensitivity", {
       method: "POST",
-      body: JSON.stringify({ changes }),
+      body: JSON.stringify({ changes, testData }),
     }),
   calibration: () => request<CalibrationResponse>("/api/corridor/calibration"),
 };

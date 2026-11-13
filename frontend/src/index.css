@@ -30,3 +30,16 @@ body,
     transition-duration: 0.001ms !important;
   }
 }
+
+/* travel-time pins on the map */
+.tmbg-pin { display: flex; flex-direction: column; align-items: center; pointer-events: none; }
+.tmbg-pin-card {
+  background: #fff; border: 2px solid #005bbc; border-radius: 10px; padding: 4px 8px;
+  box-shadow: 0 6px 16px -6px rgba(15, 23, 42, 0.45); font: 11px Inter, sans-serif; color: #0f172a;
+  white-space: nowrap; transition: border-color 0.4s, background-color 0.4s;
+}
+.tmbg-pin-title { font-weight: 600; max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+.tmbg-pin-time { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.tmbg-pin-stem { width: 2px; height: 10px; background: #005bbc; }
+.tmbg-pin-faster { border-color: #059669; background: #ecfdf5; }
+.tmbg-pin-slower { border-color: #ea580c; background: #fff7ed; }

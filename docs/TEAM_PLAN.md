@@ -15,7 +15,12 @@ not a promise.
 - [x] Demand from gate counts (Furness / doubly-constrained gravity) — no counts, no results.
 - [x] Live STPT lines map-matched to the corridor; buses/hour from real SMTT timetables.
 - [x] GEH calibration report and ±20 % sensitivity endpoints.
-- [x] Simple UI: sidebar (data status → pick street → change lanes → results) + map.
+- [x] UI: sidebar (search a street → pick direction → one dropdown per lane: car / bus / bike / sidewalk) and a
+      coloured congestion map (free-flowing → congested, width = traffic, animated flow, before/after toggle).
+      Every lane change re-runs the simulation automatically; travel-time pins on the map update live; a toast
+      fires when taking car capacity away lowers total time in traffic (Braess's paradox).
+- [x] Test mode (clearly labelled "TEST DATA — not real measurements"): demand = half the capacity of each entry
+      road, so the app can be tried before counts exist. It switches off by itself once `gate_counts.csv` has data.
 - [x] Field-data templates and reference lists in `backend/data/corridor/`; protocol in `docs/CORRIDOR_DATA.md`.
 
 ## Real-data findings so far (verify on site!)

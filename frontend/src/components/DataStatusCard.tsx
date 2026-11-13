@@ -3,10 +3,16 @@ import { AlertTriangle, CheckCircle2, ChevronDown, ChevronUp, Circle, ExternalLi
 import type { CorridorResponse } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
 
-export default function DataStatusCard({ data }: { data: CorridorResponse }) {
+interface Props {
+  data: CorridorResponse;
+  testMode: boolean;
+  onTestMode: (v: boolean) => void;
+}
+
+export default function DataStatusCard({ data, testMode, onTestMode }: Props) {
   const { t } = useI18n();
   const st = data.dataStatus;
-  const [open, setOpen] = useState(!st.ready);
+  const [open, setOpen] = useState(false);
   const [gatesOpen, setGatesOpen] = useState(false);
 
   return (
@@ -21,6 +27,15 @@ export default function DataStatusCard({ data }: { data: CorridorResponse }) {
         </span>
         {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
       </button>
+      {!st.ready && (
+        <label className="mt-2 flex cursor-pointer items-start gap-2 rounded-lg border border-amber-300 bg-white/80 p-2">
+          <input type="checkbox" className="mt-0.5 h-4 w-4 accent-amber-600" checked={testMode} onChange={(e) => onTestMode(e.target.checked)} />
+          <span>
+            <span className="block text-[12.5px] font-semibold text-slate-900">{t.testMode}</span>
+            <span className="block text-[11px] leading-snug text-slate-600">{t.testModeHint}</span>
+          </span>
+        </label>
+      )}
       {open && (
         <div className="mt-2 space-y-2">
           {!st.ready && <p className="text-[12px] leading-relaxed text-slate-700">{t.dataMissingBody}</p>}

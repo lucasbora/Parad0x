@@ -8,6 +8,7 @@ import SourceBadge from "./SourceBadge";
 interface Props {
   result: SimulateResponse | null;
   changes: Change[];
+  testData: boolean;
   onHoverBus: (b: BusResult | null) => void;
 }
 
@@ -26,7 +27,7 @@ function Delta({ before, after, unit, digits = 1, goodWhenLower = true }: {
   );
 }
 
-export default function ResultsPanel({ result, changes, onHoverBus }: Props) {
+export default function ResultsPanel({ result, changes, testData, onHoverBus }: Props) {
   const { t } = useI18n();
   const [sens, setSens] = useState<SensitivityRow[] | null>(null);
   const [sensBusy, setSensBusy] = useState(false);
@@ -44,7 +45,7 @@ export default function ResultsPanel({ result, changes, onHoverBus }: Props) {
   const runSens = async () => {
     setSensBusy(true);
     try {
-      const s = await api.sensitivity(changes);
+      const s = await api.sensitivity(changes, testData);
       if (s.status === "ok") setSens(s.rows);
     } finally {
       setSensBusy(false);
@@ -55,6 +56,9 @@ export default function ResultsPanel({ result, changes, onHoverBus }: Props) {
   return (
     <section className="space-y-4">
       <h2 className="text-[14px] font-semibold text-slate-900">{t.step3}</h2>
+      {r.testData && (
+        <p className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-1.5 text-[11.5px] font-semibold text-amber-800">{t.testBanner}</p>
+      )}
 
       <div className="rounded-lg bg-slate-50 p-3">
         <p className="text-[12px] text-slate-600">{t.totalTime}</p>
@@ -63,6 +67,9 @@ export default function ResultsPanel({ result, changes, onHoverBus }: Props) {
         </p>
         <p className="font-mono text-[11px] text-slate-500">
           {fmt(r.totals.vehMinBefore / 60, 0)} → {fmt(r.totals.vehMinAfter / 60, 0)} veh·h · {fmt(r.totals.demandVehH, 0)} {t.vehH}
+        </p>
+        <p className={`mt-1 text-[11.5px] ${r.braess.detected ? "font-semibold text-fuchsia-700" : "text-slate-500"}`}>
+          {r.braess.detected ? `${t.braessTitle} ${t.braessBody} ${fmt(Math.abs(r.braess.totalChangePct), 2)}%.` : t.noBraess}
         </p>
       </div>
 

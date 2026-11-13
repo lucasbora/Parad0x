@@ -146,3 +146,15 @@ def test_api_needs_data_then_ok(tmp_path, synthetic_inputs, monkeypatch):
         assert body["totals"]["vehMinBefore"] > 0
         s = c.post("/api/corridor/sensitivity", json={"changes": [{"linkId": lid, "carLanesAfter": 1, "use": "bus"}]})
         assert [row["demandScale"] for row in s.json()["rows"]] == [0.8, 1.0, 1.2]
+
+
+def test_test_mode_only_without_real_counts(tmp_path, synthetic_inputs):
+    empty = CorridorModel(input_dir=tmp_path / "none")
+    lid = next(l for l in empty.net.links if l.street == "Strada Cluj" and l.car_lanes >= 2)
+    r = empty.compare([LaneChange(lid.id, lid.car_lanes - 1, "bike")], test=True)
+    assert r["testData"] is True and r["totals"]["demandVehH"] > 0
+    assert "braess" in r and r["braess"]["carCapacityRemoved"] is True
+    b = empty.baseline(test=True)
+    assert b["testData"] is True and all(x["timeSec"] >= x["freeTimeSec"] - 1e-6 for x in b["links"])
+    real = CorridorModel(input_dir=synthetic_inputs)   # real counts present → test flag ignored
+    assert real.compare([LaneChange(lid.id, lid.car_lanes - 1, "bike")], test=True)["testData"] is False

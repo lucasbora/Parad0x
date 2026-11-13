@@ -22,6 +22,7 @@ class Change(BaseModel):
 class SimulateBody(BaseModel):
     changes: list[Change] = Field(..., min_length=1, max_length=12)
     demandScale: float = Field(1.0, ge=0.5, le=1.5)
+    testData: bool = False     # only honoured while no real gate counts exist
 
 
 def _changes(body_changes: list[Change]) -> list[LaneChange]:
@@ -125,7 +126,7 @@ def simulate(body: SimulateBody) -> dict[str, Any]:
     changes = _changes(body.changes)
     m = get_model()
     try:
-        result = m.compare(changes, body.demandScale)
+        result = m.compare(changes, body.demandScale, body.testData)
     except NeedsData as nd:
         return {"status": "needs_data", "dataStatus": nd.status}
     return {"status": "ok", **result, "warnings": m.status["warnings"]}
@@ -138,7 +139,7 @@ def sensitivity(body: SimulateBody) -> dict[str, Any]:
     rows = []
     try:
         for s in (0.8, 1.0, 1.2):
-            r = m.compare(changes, s)
+            r = m.compare(changes, s, body.testData)
             main = r["carRoutes"][0] if r["carRoutes"] else None
             bus = next((b for b in r["buses"] if b["usesChangedStreet"]), r["buses"][0] if r["buses"] else None)
             rows.append({"demandScale": s, "totalChangePct": r["totals"]["changePct"],
@@ -149,6 +150,15 @@ def sensitivity(body: SimulateBody) -> dict[str, Any]:
     except NeedsData as nd:
         return {"status": "needs_data", "dataStatus": nd.status}
     return {"status": "ok", "rows": rows}
+
+
+@router.get("/baseline")
+def baseline(testData: bool = False) -> dict[str, Any]:
+    m = get_model()
+    try:
+        return {"status": "ok", **m.baseline(testData)}
+    except NeedsData as nd:
+        return {"status": "needs_data", "dataStatus": nd.status}
 
 
 @router.get("/calibration")

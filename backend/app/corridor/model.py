@@ -95,7 +95,24 @@ class CorridorModel:
         dist = dijkstra(g, directed=True, indices=[self.node_idx[x.node] for x in gates])
         return {(a.id, b.id): float(dist[i, self.node_idx[b.node]]) for i, a in enumerate(gates) for b in gates}
 
-    def gate_matrix(self) -> GateMatrix:
+    def test_gate_flows(self) -> tuple[dict[str, float], dict[str, float]]:
+        """TEST DATA ONLY: half the capacity of every gate's entering/leaving road.
+
+        Used to try the app before field counts exist. Every response built on it carries
+        ``testData: true`` and the UI shows a "not real measurements" banner.
+        """
+        cap = self.costs([])[0].cap
+        g_in = {g.id: 0.5 * float(cap[self.net.link_index[g.in_link]]) for g in self.net.gates if g.in_link}
+        g_out = {g.id: 0.5 * float(cap[self.net.link_index[g.out_link]]) for g in self.net.gates if g.out_link}
+        return g_in, g_out
+
+    def gate_matrix(self, test: bool = False) -> GateMatrix:
+        if test and not self.status["ready"]:
+            if "matrix_test" not in self._cache:
+                g_in, g_out = self.test_gate_flows()
+                self._cache["matrix_test"] = furness(g_in, g_out, self.free_flow_gate_times(),
+                                                     ASSUMPTIONS["gravity_beta_per_min"])
+            return self._cache["matrix_test"]
         if not self.status["ready"]:
             raise NeedsData(self.status)
         if "matrix" not in self._cache:
@@ -103,32 +120,51 @@ class CorridorModel:
                                             ASSUMPTIONS["gravity_beta_per_min"])
         return self._cache["matrix"]
 
-    def ods(self, scale: float = 1.0) -> list[tuple[int, int, float]]:
-        m = self.gate_matrix()
+    def is_test(self, test: bool) -> bool:
+        """Test data is used only when asked for AND no real counts exist."""
+        return test and not self.status["ready"]
+
+    def ods(self, scale: float = 1.0, test: bool = False) -> list[tuple[int, int, float]]:
+        m = self.gate_matrix(test)
         gnode = {g.id: self.node_idx[g.node] for g in self.net.gates}
         return [(gnode[o], gnode[d], float(m.trips[i, j]) * scale)
                 for i, o in enumerate(m.origins) for j, d in enumerate(m.destinations) if m.trips[i, j] > 1e-6]
 
-    def solve(self, changes: list[LaneChange], scale: float = 1.0) -> AssignmentResult:
-        key = (tuple((c.link_id, c.car_lanes_after) for c in sorted(changes, key=lambda c: c.link_id)), round(scale, 4))
+    def solve(self, changes: list[LaneChange], scale: float = 1.0, test: bool = False) -> AssignmentResult:
+        test = self.is_test(test)
+        key = (tuple((c.link_id, c.car_lanes_after) for c in sorted(changes, key=lambda c: c.link_id)),
+               round(scale, 4), test)
         with self._lock:
             if key in self._cache:
                 return self._cache[key]
         costs, usable = self.costs(changes)
-        res = assign(self.solver_net, costs, self.ods(scale), usable=usable, rel_gap=1e-5, max_iter=400)
+        res = assign(self.solver_net, costs, self.ods(scale, test), usable=usable, rel_gap=1e-5, max_iter=400)
         with self._lock:
             self._cache[key] = res
         return res
 
     # ------------------------------------------------------------------ results
-    def compare(self, changes: list[LaneChange], scale: float = 1.0) -> dict[str, Any]:
+    def baseline(self, test: bool = False) -> dict[str, Any]:
+        """Current-state equilibrium: what the coloured map shows before any change."""
+        res = self.solve([], 1.0, test)
+        free = self.costs([])[0].fixed
+        return {
+            "testData": self.is_test(test),
+            "totalVehMin": round(res.total_time, 0),
+            "links": [{"id": l.id, "flow": round(float(res.flow[i]), 1), "timeSec": round(float(res.cost[i]) * 60, 1),
+                       "freeTimeSec": round(float(free[i]) * 60, 1)} for i, l in enumerate(self.net.links)],
+        }
+
+    def compare(self, changes: list[LaneChange], scale: float = 1.0, test: bool = False) -> dict[str, Any]:
         for c in changes:
             if c.link_id not in self.net.link_index:
                 raise KeyError(c.link_id)
             if c.use not in USES:
                 raise ValueError(f"use must be one of {USES}")
-        before = self.solve([], scale)
-        after = self.solve(changes, scale)
+        test = self.is_test(test)
+        before = self.solve([], scale, test)
+        after = self.solve(changes, scale, test)
+        free = self.costs([])[0].fixed
         net = self.net
         links = []
         for i, l in enumerate(net.links):
@@ -136,6 +172,7 @@ class CorridorModel:
                 "id": l.id, "flowBefore": round(float(before.flow[i]), 1), "flowAfter": round(float(after.flow[i]), 1),
                 "deltaFlow": round(float(after.flow[i] - before.flow[i]), 1),
                 "timeBeforeSec": round(float(before.cost[i]) * 60, 1), "timeAfterSec": round(float(after.cost[i]) * 60, 1),
+                "freeTimeSec": round(float(free[i]) * 60, 1),
             })
         # where traffic goes: biggest change per street + heading
         by_street: dict[tuple[str, str], dict] = {}
@@ -160,7 +197,7 @@ class CorridorModel:
                           "delayAfterSec": round(a, 1), "lng": n.lng, "lat": n.lat})
         inter.sort(key=lambda x: -abs(x["delayAfterSec"] - x["delayBeforeSec"]))
         # car travel time between the busiest gate pairs
-        m = self.gate_matrix()
+        m = self.gate_matrix(test)
         gates = {g.id: g for g in net.gates}
         pairs = sorted(((m.trips[i, j], o, d) for i, o in enumerate(m.origins) for j, d in enumerate(m.destinations)),
                        reverse=True)[:6]
@@ -170,12 +207,18 @@ class CorridorModel:
             routes.append({"from": f"{gates[o].street} ({gates[o].side})", "to": f"{gates[d].street} ({gates[d].side})",
                            "fromGate": o, "toGate": d, "vehH": round(float(q) * scale, 0),
                            "minutesBefore": round(before.od_time[key], 2), "minutesAfter": round(after.od_time[key], 2)})
+        removed = any(c.car_lanes_after < self.car_lanes(c.link_id)[0] for c in changes)
+        change_pct = (after.total_time - before.total_time) / before.total_time * 100
         return {
+            "testData": test,
             "totals": {
                 "vehMinBefore": round(before.total_time, 0), "vehMinAfter": round(after.total_time, 0),
-                "changePct": round((after.total_time - before.total_time) / before.total_time * 100, 2),
-                "demandVehH": round(sum(q for _, _, q in self.ods(scale)), 0),
+                "changePct": round(change_pct, 2),
+                "demandVehH": round(sum(q for _, _, q in self.ods(scale, test)), 0),
             },
+            # Braess's paradox: car capacity was taken away, yet total time in traffic went DOWN.
+            "braess": {"detected": bool(removed and change_pct < -0.05), "carCapacityRemoved": removed,
+                       "totalChangePct": round(change_pct, 2)},
             "carRoutes": routes,
             "trafficShifts": shifts[:8],
             "intersections": inter[:6],

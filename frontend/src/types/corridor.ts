@@ -102,6 +102,7 @@ export interface LinkResult {
   deltaFlow: number;
   timeBeforeSec: number;
   timeAfterSec: number;
+  freeTimeSec: number;
 }
 
 export interface CarRoute {
@@ -150,6 +151,8 @@ export interface BusResult {
 
 export interface SimulateOk {
   status: "ok";
+  testData: boolean;
+  braess: { detected: boolean; carCapacityRemoved: boolean; totalChangePct: number };
   totals: { vehMinBefore: number; vehMinAfter: number; changePct: number; demandVehH: number };
   carRoutes: CarRoute[];
   trafficShifts: TrafficShift[];
@@ -185,3 +188,22 @@ export interface CalibrationOk {
 }
 
 export type CalibrationResponse = CalibrationOk | NeedsData;
+
+export interface BaselineLink {
+  id: string;
+  flow: number;
+  timeSec: number;
+  freeTimeSec: number;
+}
+
+export type BaselineResponse =
+  | { status: "ok"; testData: boolean; totalVehMin: number; links: BaselineLink[] }
+  | NeedsData;
+
+/** UI lane type in the mixer. */
+export type LaneKind = "car" | "bus" | "bike" | "sidewalk";
+
+export interface Pin {
+  street: string;
+  heading: string;
+}
