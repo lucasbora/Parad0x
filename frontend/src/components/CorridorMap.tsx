@@ -433,7 +433,7 @@ export default function CorridorMap(props: Props) {
     <div className="absolute inset-0">
       <div ref={ref} className="h-full w-full" />
       {testData && (
-        <div className="pointer-events-none absolute left-1/2 top-4 -translate-x-1/2 rounded-full border border-amber-300 bg-amber-50/95 px-3 py-1 text-[11.5px] font-semibold text-amber-800 shadow-island backdrop-blur">
+        <div className="pointer-events-none absolute left-1/2 top-20 -translate-x-1/2 rounded-full border border-amber-300 bg-amber-50/95 px-3 py-1 text-[11.5px] font-semibold text-amber-800 shadow-island backdrop-blur">
           {t.testBanner}
         </div>
       )}

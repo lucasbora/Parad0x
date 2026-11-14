@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { HelpCircle, Loader2, RefreshCw } from "lucide-react";
+import { HelpCircle, Leaf, Loader2, Menu, RefreshCw, Search, Settings, X } from "lucide-react";
 import { api } from "./api";
 import { I18nContext, translations, type Lang } from "./i18n/translations";
 import type {
@@ -78,6 +78,28 @@ export default function App() {
   const [focusKey, setFocusKey] = useState(0);
   const [toastPct, setToastPct] = useState<number | null>(null);
   const [explainer, setExplainer] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [recommendedOpen, setRecommendedOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onDoc = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -131,7 +153,10 @@ export default function App() {
     setStreet(s);
     setHeading(h);
     setPinned(null);
-    if (s && h) setPins((ps) => (ps.some((p) => p.street === s && p.heading === h) ? ps : [...ps, { street: s, heading: h }]));
+    if (s && h) {
+      setSidebarOpen(true);
+      setPins((ps) => (ps.some((p) => p.street === s && p.heading === h) ? ps : [...ps, { street: s, heading: h }]));
+    }
   }, []);
 
   useEffect(() => {
@@ -269,23 +294,133 @@ export default function App() {
             highlight={hovered ?? pinned} focusKey={focusKey} highlightBus={hoverBus} onPickLink={pickLink} />
         )}
 
-        {/* floating glass sidebar */}
-        <aside className="glass pointer-events-auto absolute bottom-3 left-3 top-3 z-10 flex w-[410px] max-w-[calc(100vw-24px)] flex-col overflow-hidden rounded-2xl animate-slideIn">
-          <header className="flex items-center gap-2.5 border-b border-slate-200/80 px-4 py-3">
-            <div className="min-w-0 flex-1">
-              <h1 className="text-[15px] font-bold leading-tight tracking-tight">{t.appName}</h1>
+        {/* top-center pill header */}
+        <header className="glass pointer-events-auto absolute left-1/2 top-3 z-20 flex w-[min(640px,calc(100vw-24px))] -translate-x-1/2 items-center justify-between gap-6 rounded-full px-6 py-3">
+          <img
+            src="/pmt-logo.png"
+            alt="Primăria Municipiului Timișoara"
+            className="h-10 w-auto shrink-0 select-none object-contain mix-blend-multiply"
+          />
+          <h1 className="whitespace-nowrap text-[17px] font-bold leading-tight tracking-tight text-[#0F172A]">
+            {t.pillTitle}
+          </h1>
+          <div className="flex shrink-0 items-center gap-2">
+            <div ref={menuRef} className="relative">
+              <button
+                type="button"
+                onClick={() => setMenuOpen((open) => !open)}
+                aria-haspopup="menu"
+                aria-expanded={menuOpen}
+                aria-label="Menu"
+                className={`grid h-9 w-9 place-items-center rounded-full bg-white text-[#005BBC] shadow-sm transition duration-200 hover:bg-slate-50 ${
+                  menuOpen ? "ring-2 ring-[#005BBC]" : "border border-slate-200/80"
+                }`}
+              >
+                <Menu size={18} strokeWidth={2.2} />
+              </button>
+
+              {menuOpen && (
+                <div
+                  role="menu"
+                  className="absolute right-0 top-full z-30 mt-2 flex w-60 flex-col gap-1 rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-island animate-slideIn"
+                >
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      setExplainer(true);
+                      setMenuOpen(false);
+                    }}
+                    className="flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[12.5px] font-semibold text-[#0F172A] transition hover:bg-slate-50"
+                  >
+                    <HelpCircle size={16} className="shrink-0 text-[#005BBC]" strokeWidth={2.2} />
+                    <span className="truncate">{t.menuExplanation}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      setSidebarOpen((open) => !open);
+                      setMenuOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[12.5px] font-semibold text-[#0F172A] transition hover:bg-slate-50 ${
+                      sidebarOpen ? "ring-1 ring-[#005BBC]/35" : ""
+                    }`}
+                  >
+                    <Search size={16} className="shrink-0 text-[#005BBC]" strokeWidth={2.2} />
+                    <span className="truncate">{t.menuSearchPoints}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      setRecommendedOpen((open) => !open);
+                      setMenuOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[12.5px] font-semibold text-[#0F172A] transition hover:bg-slate-50 ${
+                      recommendedOpen ? "ring-1 ring-[#059669]/40" : ""
+                    }`}
+                  >
+                    <Leaf size={16} className="shrink-0 text-[#059669]" strokeWidth={2.2} />
+                    <span className="truncate">{t.menuRecommendedPoints}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[12.5px] font-semibold text-[#0F172A] transition hover:bg-slate-50"
+                  >
+                    <Settings size={16} className="shrink-0 text-[#005BBC]" strokeWidth={2.2} />
+                    <span className="truncate">{t.menuSettings}</span>
+                  </button>
+                </div>
+              )}
             </div>
-            <button onClick={() => setExplainer(true)} className="grid h-8 w-8 place-items-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-[#005BBC]" title={t.explain} aria-label={t.explain}>
-              <HelpCircle size={17} />
-            </button>
-            <div className="flex rounded-lg bg-slate-100 p-0.5 font-mono text-[11px]" role="radiogroup" aria-label={t.language}>
+
+            <div className="flex rounded-full bg-slate-100 p-0.5 font-mono text-[11px]" role="radiogroup" aria-label={t.language}>
               {(["ro", "en"] as const).map((l) => (
-                <button key={l} role="radio" aria-checked={lang === l} onClick={() => setLang(l)}
-                  className={`rounded-md px-2 py-1 font-semibold uppercase transition ${lang === l ? "bg-white text-[#005BBC] shadow-sm" : "text-slate-500 hover:text-slate-800"}`}>
+                <button
+                  key={l}
+                  type="button"
+                  role="radio"
+                  aria-checked={lang === l}
+                  onClick={() => setLang(l)}
+                  className={`rounded-full px-2.5 py-1 font-semibold uppercase transition ${
+                    lang === l ? "bg-white text-[#005BBC] shadow-sm" : "text-slate-500 hover:text-slate-800"
+                  }`}
+                >
                   {l}
                 </button>
               ))}
             </div>
+          </div>
+        </header>
+
+        {/* floating glass sidebar */}
+        <aside
+          aria-hidden={!sidebarOpen}
+          className={`glass absolute bottom-3 left-3 top-3 z-10 flex w-[410px] max-w-[calc(100vw-24px)] flex-col overflow-hidden rounded-2xl transition-[transform,opacity] duration-300 ease-out ${
+            sidebarOpen
+              ? "pointer-events-auto translate-x-0 opacity-100"
+              : "pointer-events-none -translate-x-[calc(100%+24px)] opacity-0"
+          }`}
+        >
+          <header className="flex items-center gap-2 border-b border-slate-200/80 px-4 py-3">
+            <div className="min-w-0 flex-1">
+              <h2 className="text-[15px] font-bold leading-tight tracking-tight">{t.appName}</h2>
+            </div>
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(false)}
+              className="grid h-8 w-8 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+              title={t.close}
+              aria-label={t.close}
+            >
+              <X size={17} />
+            </button>
           </header>
 
           <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
@@ -310,14 +445,34 @@ export default function App() {
                 <PinsPanel times={pinTimes} onRemove={(p) => setPins((ps) => ps.filter((x) => pinKey(x) !== pinKey(p)))} />
                 <ResultsPanel result={result} changes={changes} testData={useTest} onHoverBus={setHoverBus}
                   onHighlight={setHovered} onFocus={(h) => { setPinned(h); setFocusKey((k) => k + 1); }} />
-                {(scanRows || scanLoading) && <ScanCard rows={scanRows} loading={scanLoading} onPick={pickScan} />}
                 <ModelCheckCard data={data} calibration={calibration} />
               </>
             )}
           </div>
         </aside>
 
-        <div className="pointer-events-none absolute bottom-3 left-[436px] z-10 hidden md:block">
+        {/* top-right Recommended Points floating panel */}
+        <aside
+          aria-hidden={!recommendedOpen}
+          className={`absolute right-3 top-3 z-10 w-[360px] max-w-[calc(100vw-24px)] max-h-[calc(100vh-80px)] overflow-y-auto transition-[transform,opacity] duration-300 ease-out ${
+            recommendedOpen
+              ? "pointer-events-auto translate-x-0 opacity-100"
+              : "pointer-events-none translate-x-[calc(100%+24px)] opacity-0"
+          }`}
+        >
+          <ScanCard
+            rows={scanRows}
+            loading={scanLoading}
+            onPick={pickScan}
+            onClose={() => setRecommendedOpen(false)}
+          />
+        </aside>
+
+        <div
+          className={`pointer-events-none absolute bottom-3 z-10 hidden transition-[left] duration-300 ease-out md:block ${
+            sidebarOpen ? "left-[436px]" : "left-3"
+          }`}
+        >
           <LayersPill layers={layers} onChange={setLayers} showDelta={showDelta} onShowDelta={setShowDelta} hasResult={!!ok} />
         </div>
 

@@ -1,4 +1,4 @@
-import { Leaf, Loader2, Sparkles } from "lucide-react";
+import { Leaf, Loader2, Sparkles, X } from "lucide-react";
 import type { ScanRow } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
 import { signed } from "../api";
@@ -7,18 +7,32 @@ interface Props {
   rows: ScanRow[] | null;
   loading: boolean;
   onPick: (r: ScanRow) => void;
+  onClose?: () => void;
 }
 
 /** "Where is a green lane worth it?" — every street, one lane removed, ranked. */
-export default function ScanCard({ rows, loading, onPick }: Props) {
+export default function ScanCard({ rows, loading, onPick, onClose }: Props) {
   const { t } = useI18n();
   const braess = (rows ?? []).filter((r) => r.braess);
   const cheap = (rows ?? []).filter((r) => r.lowRegret && !r.braess).slice(0, 5);
   return (
-    <section className="rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-3">
-      <h3 className="flex items-center gap-1.5 text-[12.5px] font-semibold text-slate-900">
-        <Leaf size={14} className="text-[#059669]" /> {t.scanTitle}
-      </h3>
+    <section className="rounded-2xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50/95 via-white/95 to-white/95 p-3.5 shadow-island backdrop-blur">
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="flex items-center gap-1.5 text-[13.5px] font-bold text-slate-900">
+          <Leaf size={15} className="text-[#059669]" /> {t.scanTitle}
+        </h3>
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+            title={t.close}
+            aria-label={t.close}
+          >
+            <X size={15} />
+          </button>
+        )}
+      </div>
       <p className="mt-0.5 text-[11px] leading-snug text-slate-600">{t.scanBody}</p>
       {loading && <p className="mt-2 flex items-center gap-1.5 text-[11.5px] text-slate-500"><Loader2 size={12} className="animate-spin" /> {t.scanRunning}</p>}
       {rows && (

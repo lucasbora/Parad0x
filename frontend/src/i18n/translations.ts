@@ -5,6 +5,11 @@ export type Lang = "ro" | "en";
 
 const ro = {
   appName: "Timișoara Braess Paradox",
+  pillTitle: "Traffic Stress Tester",
+  menuExplanation: "Explicație",
+  menuSearchPoints: "Caută puncte Braess",
+  menuRecommendedPoints: "Puncte recomandate",
+  menuSettings: "Setări",
   subtitle: "Simulator pe un coridor real",
   peak: "vârf dimineață",
   explain: "Ce este paradoxul Braess?",
@@ -153,6 +158,11 @@ export type Dict = typeof ro;
 
 const en: Dict = {
   appName: "Timișoara Braess Paradox",
+  pillTitle: "Traffic Stress Tester",
+  menuExplanation: "Explanation",
+  menuSearchPoints: "Search Braess Points",
+  menuRecommendedPoints: "Recommended Points",
+  menuSettings: "Settings",
   subtitle: "Simulator on a real corridor",
   peak: "morning peak",
   explain: "What is Braess's paradox?",
