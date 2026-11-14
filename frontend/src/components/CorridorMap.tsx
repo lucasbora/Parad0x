@@ -4,6 +4,7 @@ import type { GeoJSONSource, Map as MLMap, MapLayerMouseEvent, StyleSpecificatio
 import type { BaselineLink, BusResult, CorridorResponse, Highlight, LngLat, MapLayers, ScanRow, SimulateOk } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
 import { fmt, signed } from "../api";
+import { TIMISOARA_BORDER_GEOJSON, TIMISOARA_MASK_GEOJSON } from "../data/timisoaraBoundary";
 
 type GJ = Parameters<GeoJSONSource["setData"]>[0];
 type LayerSpec = Parameters<MLMap["addLayer"]>[0];
@@ -21,6 +22,8 @@ const DASHES: number[][] = [
   [0, 0.5, 3, 3.5], [0, 1, 3, 3], [0, 1.5, 3, 2.5], [0, 2, 3, 2], [0, 2.5, 3, 1.5], [0, 3, 3, 1], [0, 3.5, 3, 0.5],
 ];
 
+export type MapTheme = "colored" | "dark";
+
 export interface MapPinView {
   key: string;
   label: string;
@@ -36,6 +39,7 @@ interface Props {
   result: SimulateOk | null;
   scanRows: ScanRow[] | null;
   layers: MapLayers;
+  mapTheme: MapTheme;
   showDelta: boolean;
   testData: boolean;
   selectedLinkIds: string[];
@@ -59,25 +63,44 @@ function deltaColor(d: number, max: number): string {
   return x < 0 ? (x < -0.35 ? "#1d4ed8" : "#60a5fa") : x > 0.35 ? "#c2410c" : "#fb923c";
 }
 
-/** Mute positron so the simulated network has maximum contrast; add 3D buildings. */
-function styleBasemap(map: MLMap) {
+/** Style basemap for either Coloured or Dark theme; add 3D buildings. */
+function styleBasemap(map: MLMap, theme: MapTheme) {
+  const isDark = theme === "dark";
   const style = map.getStyle();
   for (const l of style.layers ?? []) {
     const id = l.id.toLowerCase();
+    if (id.startsWith("tmbg-") || ["area-line", "glow-halo", "bus-line", "links-casing", "links-line", "glow-casing", "links-flow", "links-selected", "hl-ghost", "hl-casing", "hl-line", "links-hit", "gates-circle"].includes(l.id)) {
+      continue;
+    }
     try {
       if (l.type === "fill") {
-        if (id.includes("building")) map.setPaintProperty(l.id, "fill-opacity", 0.25);
-        else if (id.includes("water")) map.setPaintProperty(l.id, "fill-color", "#dbe4ee");
-        else if (id.includes("park") || id.includes("landuse") || id.includes("landcover") || id.includes("wood")) {
-          map.setPaintProperty(l.id, "fill-color", "#eef2f6");
+        if (id.includes("building")) {
+          map.setPaintProperty(l.id, "fill-color", isDark ? "#1e293b" : "#e2d9c8");
+          map.setPaintProperty(l.id, "fill-opacity", isDark ? 0.45 : 0.38);
+        } else if (id.includes("water")) {
+          map.setPaintProperty(l.id, "fill-color", isDark ? "#0f2942" : "#93c5fd");
+        } else if (id.includes("park") || id.includes("wood") || id.includes("grass") || id.includes("landcover")) {
+          map.setPaintProperty(l.id, "fill-color", isDark ? "#0f241d" : "#bbf7d0");
+        } else if (id.includes("landuse")) {
+          map.setPaintProperty(l.id, "fill-color", isDark ? "#111827" : "#ede9fe");
         }
       } else if (l.type === "line" && /road|highway|street|bridge|tunnel/.test(id)) {
-        map.setPaintProperty(l.id, "line-color", id.includes("casing") ? "#e2e8f0" : "#ffffff");
+        if (id.includes("casing")) {
+          map.setPaintProperty(l.id, "line-color", isDark ? "#0f172a" : "#cbd5e1");
+        } else if (/motorway|trunk|primary/.test(id)) {
+          map.setPaintProperty(l.id, "line-color", isDark ? "#263449" : "#fde68a");
+        } else {
+          map.setPaintProperty(l.id, "line-color", isDark ? "#1e293b" : "#ffffff");
+        }
       } else if (l.type === "symbol") {
-        if (id.includes("poi") || id.includes("housenumber")) map.setLayoutProperty(l.id, "visibility", "none");
-        else map.setPaintProperty(l.id, "text-color", "#94a3b8");
+        if (id.includes("poi") || id.includes("housenumber")) {
+          map.setLayoutProperty(l.id, "visibility", "none");
+        } else {
+          map.setPaintProperty(l.id, "text-color", isDark ? "#94a3b8" : "#475569");
+          map.setPaintProperty(l.id, "text-halo-color", isDark ? "#0f172a" : "#ffffff");
+        }
       } else if (l.type === "background") {
-        map.setPaintProperty(l.id, "background-color", "#f1f5f9");
+        map.setPaintProperty(l.id, "background-color", isDark ? "#0b1120" : "#f4f1ea");
       }
     } catch {
       /* layer without that property */
@@ -93,21 +116,50 @@ function styleBasemap(map: MLMap) {
         "source-layer": "building",
         minzoom: 14,
         paint: {
-          "fill-extrusion-color": "#e2e8f0",
+          "fill-extrusion-color": isDark ? "#1e293b" : "#d6d3d1",
           "fill-extrusion-height": ["coalesce", ["get", "render_height"], 10],
           "fill-extrusion-base": ["coalesce", ["get", "render_min_height"], 0],
-          "fill-extrusion-opacity": 0.55,
+          "fill-extrusion-opacity": isDark ? 0.72 : 0.6,
         },
       } as unknown as LayerSpec);
     } catch {
       /* style has no building source-layer */
+    }
+  } else if (map.getLayer("tmbg-buildings-3d")) {
+    try {
+      map.setPaintProperty("tmbg-buildings-3d", "fill-extrusion-color", isDark ? "#1e293b" : "#d6d3d1");
+      map.setPaintProperty("tmbg-buildings-3d", "fill-extrusion-opacity", isDark ? 0.72 : 0.6);
+    } catch {
+      /* ignore */
+    }
+  }
+  if (map.getLayer("links-casing")) {
+    try {
+      map.setPaintProperty("links-casing", "line-color", isDark ? "#0f172a" : "#ffffff");
+    } catch {
+      /* ignore */
+    }
+  }
+  if (map.getLayer("tmbg-city-mask")) {
+    try {
+      map.setPaintProperty("tmbg-city-mask", "fill-color", isDark ? "#020617" : "#334155");
+      map.setPaintProperty("tmbg-city-mask", "fill-opacity", isDark ? 0.58 : 0.36);
+    } catch {
+      /* ignore */
+    }
+  }
+  if (map.getLayer("tmbg-city-border-glow")) {
+    try {
+      map.setPaintProperty("tmbg-city-border-glow", "line-color", isDark ? "rgba(56, 189, 248, 0.25)" : "rgba(255, 255, 255, 0.7)");
+    } catch {
+      /* ignore */
     }
   }
 }
 
 export default function CorridorMap(props: Props) {
   const {
-    data, baseline, baselineJunctions, result, scanRows, layers, showDelta, testData, selectedLinkIds, pins,
+    data, baseline, baselineJunctions, result, scanRows, layers, mapTheme, showDelta, testData, selectedLinkIds, pins,
     highlight, focusKey, highlightBus, onPickLink,
   } = props;
   const { t } = useI18n();
@@ -118,6 +170,8 @@ export default function CorridorMap(props: Props) {
   pickRef.current = onPickLink;
   const tRef = useRef(t);
   tRef.current = t;
+  const themeRef = useRef(mapTheme);
+  themeRef.current = mapTheme;
   const popup = useRef<maplibregl.Popup | null>(null);
   const pinMarkers = useRef<maplibregl.Marker[]>([]);
   const hlMarkers = useRef<maplibregl.Marker[]>([]);
@@ -130,7 +184,7 @@ export default function CorridorMap(props: Props) {
     const m = new maplibregl.Map({
       container: ref.current,
       style: STYLE_URL,
-      center: [(w + e) / 2 - 0.004, (s + n) / 2],
+      center: [(w + e) / 2, (s + n) / 2],
       zoom: 15,
       pitch: 42,
       bearing: -12,
@@ -148,14 +202,14 @@ export default function CorridorMap(props: Props) {
     });
     let framed = false;
     m.on("style.load", () => {
-      styleBasemap(m);
+      styleBasemap(m, themeRef.current);
       setup(m);
+      styleBasemap(m, themeRef.current);
       if (!framed) {
         framed = true;
-        // keep the corridor clear of the floating sidebar on the left
         const narrow = window.innerWidth < 768;
         m.fitBounds([[w, s], [e, n]], {
-          padding: narrow ? 30 : { top: 70, bottom: 70, left: 450, right: 70 },
+          padding: narrow ? 30 : { top: 80, bottom: 70, left: 70, right: 70 },
           pitch: 42, bearing: -12, duration: 0,
         });
       }
@@ -167,12 +221,45 @@ export default function CorridorMap(props: Props) {
   }, []);
 
   function setup(m: MLMap) {
+    if (!m.getSource("city-mask")) m.addSource("city-mask", { type: "geojson", data: gj(TIMISOARA_MASK_GEOJSON) });
+    if (!m.getSource("city-border")) m.addSource("city-border", { type: "geojson", data: gj(TIMISOARA_BORDER_GEOJSON) });
     for (const id of ["area", "links", "glow", "bus", "gates", "highlight"]) {
       if (!m.getSource(id)) m.addSource(id, { type: "geojson", data: gj(EMPTY) });
     }
     const add = (spec: Record<string, unknown>) => {
       if (!m.getLayer(spec.id as string)) m.addLayer(spec as unknown as LayerSpec);
     };
+    const isDark = themeRef.current === "dark";
+    add({
+      id: "tmbg-city-mask",
+      type: "fill",
+      source: "city-mask",
+      paint: {
+        "fill-color": isDark ? "#020617" : "#334155",
+        "fill-opacity": isDark ? 0.58 : 0.36,
+      },
+    });
+    add({
+      id: "tmbg-city-border-glow",
+      type: "line",
+      source: "city-border",
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": isDark ? "rgba(56, 189, 248, 0.25)" : "rgba(255, 255, 255, 0.7)",
+        "line-width": 4.5,
+        "line-blur": 1,
+      },
+    });
+    add({
+      id: "tmbg-city-border",
+      type: "line",
+      source: "city-border",
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": "#005BBC",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 2, 14, 2.5, 17, 3.2],
+      },
+    });
     const offset = ["interpolate", ["linear"], ["zoom"], 14, 2, 18, 7];
     add({ id: "area-line", type: "line", source: "area", paint: { "line-color": "#94a3b8", "line-width": 1.2, "line-dasharray": [3, 2] } });
     // glow: emerald = low-regret, magenta = Braess
@@ -301,7 +388,13 @@ export default function CorridorMap(props: Props) {
     }));
   }, [map, ready, data, highlightBus]);
 
-  // ---------------------------------------------------------------- layer visibility
+  // ---------------------------------------------------------------- basemap theme + layer visibility
+  useEffect(() => {
+    if (!map || !ready) return;
+    styleBasemap(map, mapTheme);
+  }, [map, ready, mapTheme]);
+
+  const prev3d = useRef(layers.buildings3d);
   useEffect(() => {
     if (!map || !ready) return;
     const vis = (ids: string[], on: boolean) =>
@@ -311,6 +404,14 @@ export default function CorridorMap(props: Props) {
     vis(["glow-halo", "glow-casing"], layers.glow);
     vis(["gates-circle"], layers.gates);
     vis(["tmbg-buildings-3d"], layers.buildings3d);
+    if (prev3d.current !== layers.buildings3d) {
+      prev3d.current = layers.buildings3d;
+      map.easeTo({
+        pitch: layers.buildings3d ? 42 : 0,
+        bearing: layers.buildings3d ? -12 : 0,
+        duration: 450,
+      });
+    }
   }, [map, ready, layers]);
 
   // ---------------------------------------------------------------- pulsing intersection markers

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { HelpCircle, Leaf, Loader2, Menu, RefreshCw, Search, Settings, X } from "lucide-react";
+import { Box, HelpCircle, Leaf, Loader2, Menu, Palette, RefreshCw, Search, X } from "lucide-react";
 import { api } from "./api";
 import { I18nContext, translations, type Lang } from "./i18n/translations";
 import type {
@@ -17,7 +17,7 @@ import type {
   ScanRow,
   SimulateResponse,
 } from "./types/corridor";
-import CorridorMap, { type MapPinView } from "./components/CorridorMap";
+import CorridorMap, { type MapPinView, type MapTheme } from "./components/CorridorMap";
 import LayersPill from "./components/LayersPill";
 import DataStatusCard from "./components/DataStatusCard";
 import StreetSearch from "./components/StreetSearch";
@@ -39,6 +39,34 @@ function readLang(): Lang {
 
 const pinKey = (p: Pin) => `${p.street}|${p.heading}`;
 const DEFAULT_LAYERS: MapLayers = { traffic: true, glow: true, flow: true, intersections: true, gates: true, buildings3d: true };
+
+function DarkMapIcon() {
+  return (
+    <svg viewBox="0 0 32 32" className="h-7 w-7 rounded-md" aria-hidden="true">
+      <rect width="32" height="32" rx="6" fill="#0b1120" />
+      <path d="M0 7h12v10H0z" fill="#0f241d" />
+      <path d="M18 18h14v14H18z" fill="#131c31" />
+      <path d="M-2 23C6 21 12 15 17 16c6 1 9-5 17-7v8c-7 2-10 8-17 7-5-1-10 4-19 6z" fill="#0f2942" />
+      <path d="M11 0v32M0 13h32M22 0v32" stroke="#1e293b" strokeWidth="2.2" />
+      <path d="M3 30L29 4" stroke="#38bdf8" strokeWidth="2" strokeLinecap="round" />
+      <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" stroke="#334155" />
+    </svg>
+  );
+}
+
+function ColoredMapIcon() {
+  return (
+    <svg viewBox="0 0 32 32" className="h-7 w-7 rounded-md" aria-hidden="true">
+      <rect width="32" height="32" rx="6" fill="#f4f1ea" />
+      <path d="M0 0h13v13H0z" fill="#86efac" />
+      <path d="M19 19h13v13H19z" fill="#bbf7d0" />
+      <path d="M-2 23C6 21 12 15 17 16c6 1 9-5 17-7v8c-7 2-10 8-17 7-5-1-10 4-19 6z" fill="#60a5fa" />
+      <path d="M11 0v32M0 13h32M22 0v32" stroke="#ffffff" strokeWidth="2.4" />
+      <path d="M3 30L29 4" stroke="#fbbf24" strokeWidth="2.4" strokeLinecap="round" />
+      <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" stroke="#cbd5e1" />
+    </svg>
+  );
+}
 
 export default function App() {
   const [lang, setLangState] = useState<Lang>(readLang);
@@ -78,13 +106,18 @@ export default function App() {
   const [focusKey, setFocusKey] = useState(0);
   const [toastPct, setToastPct] = useState<number | null>(null);
   const [explainer, setExplainer] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [recommendedOpen, setRecommendedOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  const [mapTheme, setMapTheme] = useState<MapTheme>("colored");
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!menuOpen) return;
+    if (!menuOpen) {
+      setThemeMenuOpen(false);
+      return;
+    }
     const onDoc = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setMenuOpen(false);
@@ -104,6 +137,10 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("theme-dark", mapTheme === "dark");
+  }, [mapTheme]);
 
   // ------------------------------------------------------------ network + data status
   useEffect(() => {
@@ -285,23 +322,25 @@ export default function App() {
     if (s && s.directions.some((d) => d.heading === p.heading)) select(p.street, p.heading);
   }, [linkProps, data, select]);
 
+  const isDark = mapTheme === "dark";
+
   return (
     <I18nContext.Provider value={i18n}>
-      <div className="relative h-screen w-screen overflow-hidden bg-[#F8FAFC] text-[#0F172A]">
+      <div className={`relative h-screen w-screen overflow-hidden transition-colors duration-300 ${isDark ? "theme-dark bg-[#0B1120] text-slate-100" : "bg-[#F8FAFC] text-[#0F172A]"}`}>
         {data && (
           <CorridorMap data={data} baseline={baseline} baselineJunctions={baselineJunctions} result={ok} scanRows={scanRows}
-            layers={layers} showDelta={showDelta} testData={useTest && !!baseline} selectedLinkIds={selectedIds} pins={mapPins}
+            layers={layers} mapTheme={mapTheme} showDelta={showDelta} testData={useTest && !!baseline} selectedLinkIds={selectedIds} pins={mapPins}
             highlight={hovered ?? pinned} focusKey={focusKey} highlightBus={hoverBus} onPickLink={pickLink} />
         )}
 
         {/* top-center pill header */}
         <header className="glass pointer-events-auto absolute left-1/2 top-3 z-20 flex w-[min(640px,calc(100vw-24px))] -translate-x-1/2 items-center justify-between gap-6 rounded-full px-6 py-3">
           <img
-            src="/pmt-logo.png"
+            src={isDark ? "/pmt-logo-dark.png" : "/pmt-logo.png"}
             alt="Primăria Municipiului Timișoara"
-            className="h-10 w-auto shrink-0 select-none object-contain mix-blend-multiply"
+            className={`h-10 w-auto shrink-0 select-none object-contain ${isDark ? "" : "mix-blend-multiply"}`}
           />
-          <h1 className="whitespace-nowrap text-[17px] font-bold leading-tight tracking-tight text-[#0F172A]">
+          <h1 className={`whitespace-nowrap text-[17px] font-bold leading-tight tracking-tight ${isDark ? "text-slate-100" : "text-[#0F172A]"}`}>
             {t.pillTitle}
           </h1>
           <div className="flex shrink-0 items-center gap-2">
@@ -312,8 +351,10 @@ export default function App() {
                 aria-haspopup="menu"
                 aria-expanded={menuOpen}
                 aria-label="Menu"
-                className={`grid h-9 w-9 place-items-center rounded-full bg-white text-[#005BBC] shadow-sm transition duration-200 hover:bg-slate-50 ${
-                  menuOpen ? "ring-2 ring-[#005BBC]" : "border border-slate-200/80"
+                className={`grid h-9 w-9 place-items-center rounded-full shadow-sm transition duration-200 ${
+                  isDark
+                    ? `bg-slate-800 text-[#38BDF8] hover:bg-slate-700 ${menuOpen ? "ring-2 ring-[#38BDF8]" : "border border-slate-700"}`
+                    : `bg-white text-[#005BBC] hover:bg-slate-50 ${menuOpen ? "ring-2 ring-[#005BBC]" : "border border-slate-200/80"}`
                 }`}
               >
                 <Menu size={18} strokeWidth={2.2} />
@@ -322,7 +363,9 @@ export default function App() {
               {menuOpen && (
                 <div
                   role="menu"
-                  className="absolute right-0 top-full z-30 mt-2 flex w-60 flex-col gap-1 rounded-xl border border-slate-200/90 bg-white p-1.5 shadow-island animate-slideIn"
+                  className={`absolute right-0 top-full z-30 mt-2 flex w-60 flex-col gap-1 rounded-xl border p-1.5 shadow-island animate-slideIn ${
+                    isDark ? "border-slate-700/90 bg-slate-900" : "border-slate-200/90 bg-white"
+                  }`}
                 >
                   <button
                     type="button"
@@ -331,9 +374,11 @@ export default function App() {
                       setExplainer(true);
                       setMenuOpen(false);
                     }}
-                    className="flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[12.5px] font-semibold text-[#0F172A] transition hover:bg-slate-50"
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                      isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
+                    }`}
                   >
-                    <HelpCircle size={16} className="shrink-0 text-[#005BBC]" strokeWidth={2.2} />
+                    <HelpCircle size={16} className={`shrink-0 ${isDark ? "text-[#38BDF8]" : "text-[#005BBC]"}`} strokeWidth={2.2} />
                     <span className="truncate">{t.menuExplanation}</span>
                   </button>
 
@@ -344,11 +389,11 @@ export default function App() {
                       setSidebarOpen((open) => !open);
                       setMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[12.5px] font-semibold text-[#0F172A] transition hover:bg-slate-50 ${
-                      sidebarOpen ? "ring-1 ring-[#005BBC]/35" : ""
-                    }`}
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                      isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
+                    } ${sidebarOpen ? (isDark ? "ring-1 ring-[#38BDF8]/45" : "ring-1 ring-[#005BBC]/35") : ""}`}
                   >
-                    <Search size={16} className="shrink-0 text-[#005BBC]" strokeWidth={2.2} />
+                    <Search size={16} className={`shrink-0 ${isDark ? "text-[#38BDF8]" : "text-[#005BBC]"}`} strokeWidth={2.2} />
                     <span className="truncate">{t.menuSearchPoints}</span>
                   </button>
 
@@ -359,28 +404,88 @@ export default function App() {
                       setRecommendedOpen((open) => !open);
                       setMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[12.5px] font-semibold text-[#0F172A] transition hover:bg-slate-50 ${
-                      recommendedOpen ? "ring-1 ring-[#059669]/40" : ""
-                    }`}
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                      isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
+                    } ${recommendedOpen ? (isDark ? "ring-1 ring-[#10B981]/50" : "ring-1 ring-[#059669]/40") : ""}`}
                   >
-                    <Leaf size={16} className="shrink-0 text-[#059669]" strokeWidth={2.2} />
+                    <Leaf size={16} className={`shrink-0 ${isDark ? "text-[#10B981]" : "text-[#059669]"}`} strokeWidth={2.2} />
                     <span className="truncate">{t.menuRecommendedPoints}</span>
                   </button>
 
-                  <button
-                    type="button"
-                    role="menuitem"
-                    onClick={() => setMenuOpen(false)}
-                    className="flex w-full items-center gap-2.5 rounded-lg bg-white px-3 py-2 text-left text-[12.5px] font-semibold text-[#0F172A] transition hover:bg-slate-50"
-                  >
-                    <Settings size={16} className="shrink-0 text-[#005BBC]" strokeWidth={2.2} />
-                    <span className="truncate">{t.menuSettings}</span>
-                  </button>
+                  <div className="relative">
+                    <button
+                      type="button"
+                      role="menuitem"
+                      aria-expanded={themeMenuOpen}
+                      onClick={() => setThemeMenuOpen((open) => !open)}
+                      className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                        isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
+                      } ${themeMenuOpen ? (isDark ? "ring-1 ring-[#38BDF8]/45" : "ring-1 ring-[#005BBC]/35") : ""}`}
+                    >
+                      <Palette size={16} className={`shrink-0 ${isDark ? "text-[#38BDF8]" : "text-[#005BBC]"}`} strokeWidth={2.2} />
+                      <span className="truncate">{t.menuTheme}</span>
+                    </button>
+
+                    {themeMenuOpen && (
+                      <div
+                        role="group"
+                        aria-label={t.menuTheme}
+                        className={`absolute left-full top-1/2 z-40 ml-2 flex -translate-y-1/2 items-center gap-1.5 rounded-xl border p-1.5 shadow-island animate-slideIn ${
+                          isDark ? "border-slate-700/90 bg-slate-900" : "border-slate-200/90 bg-white"
+                        }`}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => setMapTheme("dark")}
+                          aria-label={t.themeDark}
+                          title={t.themeDark}
+                          aria-pressed={mapTheme === "dark"}
+                          className={`grid h-9 w-9 place-items-center rounded-lg transition hover:scale-105 ${
+                            isDark ? "bg-slate-800" : "bg-white"
+                          } ${mapTheme === "dark" ? (isDark ? "ring-2 ring-[#38BDF8] shadow-sm" : "ring-2 ring-[#005BBC] shadow-sm") : "opacity-80 hover:opacity-100"}`}
+                        >
+                          <DarkMapIcon />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setMapTheme("colored")}
+                          aria-label={t.themeColored}
+                          title={t.themeColored}
+                          aria-pressed={mapTheme === "colored"}
+                          className={`grid h-9 w-9 place-items-center rounded-lg transition hover:scale-105 ${
+                            isDark ? "bg-slate-800" : "bg-white"
+                          } ${mapTheme === "colored" ? (isDark ? "ring-2 ring-[#38BDF8] shadow-sm" : "ring-2 ring-[#005BBC] shadow-sm") : "opacity-80 hover:opacity-100"}`}
+                        >
+                          <ColoredMapIcon />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setLayers((l) => ({ ...l, buildings3d: !l.buildings3d }))}
+                          aria-label={t.theme3d}
+                          title={t.theme3d}
+                          aria-pressed={layers.buildings3d}
+                          className={`grid h-9 w-9 place-items-center rounded-lg transition hover:scale-105 ${
+                            layers.buildings3d
+                              ? isDark
+                                ? "bg-sky-950/80 text-[#38BDF8] ring-2 ring-[#38BDF8] shadow-sm"
+                                : "bg-blue-50/80 text-[#005BBC] ring-2 ring-[#005BBC] shadow-sm"
+                              : isDark
+                                ? "bg-slate-800 text-slate-400 hover:text-[#38BDF8]"
+                                : "bg-slate-50 text-slate-400 hover:text-[#005BBC]"
+                          }`}
+                        >
+                          <Box size={19} strokeWidth={2.2} />
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
 
-            <div className="flex rounded-full bg-slate-100 p-0.5 font-mono text-[11px]" role="radiogroup" aria-label={t.language}>
+            <div className={`flex rounded-full p-0.5 font-mono text-[11px] ${isDark ? "bg-slate-800" : "bg-slate-100"}`} role="radiogroup" aria-label={t.language}>
               {(["ro", "en"] as const).map((l) => (
                 <button
                   key={l}
@@ -389,7 +494,13 @@ export default function App() {
                   aria-checked={lang === l}
                   onClick={() => setLang(l)}
                   className={`rounded-full px-2.5 py-1 font-semibold uppercase transition ${
-                    lang === l ? "bg-white text-[#005BBC] shadow-sm" : "text-slate-500 hover:text-slate-800"
+                    lang === l
+                      ? isDark
+                        ? "bg-slate-700 text-[#38BDF8] shadow-sm"
+                        : "bg-white text-[#005BBC] shadow-sm"
+                      : isDark
+                        ? "text-slate-400 hover:text-slate-200"
+                        : "text-slate-500 hover:text-slate-800"
                   }`}
                 >
                   {l}
