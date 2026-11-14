@@ -390,7 +390,7 @@ export default function App() {
         )}
 
         {/* top-center pill header */}
-        <header className="glass pointer-events-auto absolute left-1/2 top-[60px] z-20 flex w-[min(640px,calc(100vw-24px))] -translate-x-1/2 items-center justify-between gap-6 rounded-full px-6 py-3">
+        <header className="glass pointer-events-auto absolute left-1/2 top-3 z-20 flex w-[min(640px,calc(100vw-24px))] -translate-x-1/2 items-center justify-between gap-6 rounded-full px-6 py-3">
           <img
             src={isDark ? "/pmt-logo-dark.png" : "/pmt-logo.png"}
             alt="Primăria Municipiului Timișoara"
@@ -581,11 +581,6 @@ export default function App() {
           </div>
         </header>
 
-        {data && data.profiles.length > 0 && (
-          <ProfileBar profiles={data.profiles} profile={profile} demandSource={demandSource} demandScale={demandInput}
-            demandVehH={demandVehH} onChange={setProfile} onDemandScale={setDemandInput} />
-        )}
-
         {/* floating glass sidebar */}
         <aside
           aria-hidden={!sidebarOpen}
@@ -677,6 +672,18 @@ export default function App() {
         >
           <LayersPill layers={layers} onChange={setLayers} showDelta={showDelta} onShowDelta={setShowDelta} hasResult={!!ok} />
         </div>
+
+        {/* bottom bar: time of day + demand level, centred in the free space right of the layers pill */}
+        {data && data.profiles.length > 0 && (
+          <div
+            className={`pointer-events-none absolute bottom-3 right-14 z-20 flex justify-center transition-[left] duration-300 ease-out ${
+              sidebarOpen ? "left-3 md:left-[712px]" : "left-3 md:left-[288px]"
+            }`}
+          >
+            <ProfileBar profiles={data.profiles} profile={profile} demandSource={demandSource} demandScale={demandInput}
+              demandVehH={demandVehH} onChange={setProfile} onDemandScale={setDemandInput} />
+          </div>
+        )}
 
         <BraessToast changePct={toastPct} estimated={demandSource === "estimated"} onClose={() => setToastPct(null)} />
       </div>

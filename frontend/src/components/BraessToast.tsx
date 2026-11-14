@@ -20,7 +20,7 @@ export default function BraessToast({ changePct, estimated, onClose }: Props) {
   if (changePct === null) return null;
   return (
     <div role="status" aria-live="polite"
-      className="pointer-events-auto absolute left-1/2 top-[140px] z-40 w-[min(460px,calc(100%-32px))] -translate-x-1/2 rounded-xl border border-fuchsia-300 bg-white p-3 shadow-xl">
+      className="pointer-events-auto absolute left-1/2 top-[88px] z-40 w-[min(460px,calc(100%-32px))] -translate-x-1/2 rounded-xl border border-fuchsia-300 bg-white p-3 shadow-xl">
       <div className="flex items-start gap-2.5">
         <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-fuchsia-100 text-fuchsia-700"><Sparkles size={17} /></span>
         <div className="flex-1">

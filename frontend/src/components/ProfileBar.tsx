@@ -13,13 +13,13 @@ interface Props {
   onDemandScale: (s: number) => void;
 }
 
-/** Floating time-of-day selector + demand level meter + where the demand comes from. */
+/** Bottom bar: time-of-day selector + demand level meter + where the demand comes from. */
 export default function ProfileBar({ profiles, profile, demandSource, demandScale, demandVehH, onChange, onDemandScale }: Props) {
   const { t, lang } = useI18n();
   const calibrated = demandSource === "calibrated";
   const pct = Math.round(demandScale * 100);
   return (
-    <div className="glass pointer-events-auto absolute left-1/2 top-3 z-20 flex max-w-[calc(100vw-24px)] -translate-x-1/2 flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-3xl px-2 py-1.5">
+    <div className="glass pointer-events-auto flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-3xl px-2 py-1.5">
       <div className="flex items-center gap-1">
         <Clock size={14} className="ml-1 shrink-0 text-[#005BBC]" aria-hidden="true" />
         <div className="flex gap-0.5" role="radiogroup" aria-label={t.profileLabel}>
