@@ -3,6 +3,7 @@ import type {
   CalibrationResponse,
   Change,
   CorridorResponse,
+  Profile,
   ScanResponse,
   SensitivityResponse,
   SimulateResponse,
@@ -30,20 +31,20 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const api = {
   corridor: () => request<CorridorResponse>("/api/corridor"),
-  baseline: (testData: boolean) => request<BaselineResponse>(`/api/corridor/baseline?testData=${testData}`),
-  simulate: (changes: Change[], testData: boolean, signal?: AbortSignal) =>
+  baseline: (profile: Profile) => request<BaselineResponse>(`/api/corridor/baseline?profile=${profile}`),
+  simulate: (changes: Change[], profile: Profile, signal?: AbortSignal) =>
     request<SimulateResponse>("/api/corridor/simulate", {
       method: "POST",
-      body: JSON.stringify({ changes, demandScale: 1, testData }),
+      body: JSON.stringify({ changes, demandScale: 1, profile }),
       signal,
     }),
-  sensitivity: (changes: Change[], testData: boolean) =>
+  sensitivity: (changes: Change[], profile: Profile) =>
     request<SensitivityResponse>("/api/corridor/sensitivity", {
       method: "POST",
-      body: JSON.stringify({ changes, testData }),
+      body: JSON.stringify({ changes, profile }),
     }),
-  calibration: () => request<CalibrationResponse>("/api/corridor/calibration"),
-  scan: (testData: boolean) => request<ScanResponse>(`/api/corridor/scan?testData=${testData}`),
+  calibration: (profile: Profile) => request<CalibrationResponse>(`/api/corridor/calibration?profile=${profile}`),
+  scan: (profile: Profile) => request<ScanResponse>(`/api/corridor/scan?profile=${profile}`),
 };
 
 export function fmt(n: number | null | undefined, digits = 1): string {

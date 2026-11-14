@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
-import type { BusResult, CarRoute, Change, Highlight, SensitivityRow, SimulateResponse } from "../types/corridor";
+import type { BusResult, CarRoute, Change, Highlight, Profile, SensitivityRow, SimulateResponse } from "../types/corridor";
 import { api, fmt, signed } from "../api";
 import { useI18n } from "../i18n/translations";
 import SourceBadge from "./SourceBadge";
@@ -8,7 +8,7 @@ import SourceBadge from "./SourceBadge";
 interface Props {
   result: SimulateResponse | null;
   changes: Change[];
-  testData: boolean;
+  profile: Profile;
   onHoverBus: (b: BusResult | null) => void;
   onHighlight: (h: Highlight | null) => void;
   onFocus: (h: Highlight) => void;
@@ -34,10 +34,11 @@ function Delta({ before, after, unit, digits = 1, goodWhenLower = true }: {
   );
 }
 
-export default function ResultsPanel({ result, changes, testData, onHoverBus, onHighlight, onFocus }: Props) {
+export default function ResultsPanel({ result, changes, profile, onHoverBus, onHighlight, onFocus }: Props) {
   const { t } = useI18n();
   const [sens, setSens] = useState<SensitivityRow[] | null>(null);
   const [sensBusy, setSensBusy] = useState(false);
+  useEffect(() => setSens(null), [result]);   // robustness table belongs to one scenario
 
   if (!result) return null;
   if (result.status === "needs_data") {
@@ -52,7 +53,7 @@ export default function ResultsPanel({ result, changes, testData, onHoverBus, on
   const runSens = async () => {
     setSensBusy(true);
     try {
-      const s = await api.sensitivity(changes, testData);
+      const s = await api.sensitivity(changes, profile);
       if (s.status === "ok") setSens(s.rows);
     } finally {
       setSensBusy(false);
@@ -63,8 +64,8 @@ export default function ResultsPanel({ result, changes, testData, onHoverBus, on
   return (
     <section className="space-y-4">
       <h2 className="text-[14px] font-semibold text-slate-900">{t.step3}</h2>
-      {r.testData && (
-        <p className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-1.5 text-[11.5px] font-semibold text-amber-800">{t.testBanner}</p>
+      {r.demandSource === "estimated" && (
+        <p className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-1.5 text-[11.5px] font-semibold text-amber-800">{t.estimatedBanner}</p>
       )}
 
       <div className="rounded-lg bg-slate-50 p-3">
@@ -156,7 +157,7 @@ export default function ResultsPanel({ result, changes, testData, onHoverBus, on
                 {sens.map((row) => (
                   <tr key={row.demandScale} className="border-t border-slate-100">
                     <td>{Math.round(row.demandScale * 100)}%</td>
-                    <td>{signed(row.totalChangePct, 1)}%</td>
+                    <td className={row.braess ? "font-semibold text-fuchsia-700" : ""}>{signed(row.totalChangePct, 2)}%</td>
                     <td>{row.mainRoute ? `${signed(row.mainRoute.minutesAfter - row.mainRoute.minutesBefore, 2)} ${t.min}` : "—"}</td>
                     <td>{row.bus ? `${row.bus.shortName}: ${signed(row.bus.minutesAfter - row.bus.minutesBefore, 2)}` : "—"}</td>
                   </tr>

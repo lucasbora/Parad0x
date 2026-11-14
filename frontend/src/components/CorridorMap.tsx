@@ -41,7 +41,6 @@ interface Props {
   layers: MapLayers;
   mapTheme: MapTheme;
   showDelta: boolean;
-  testData: boolean;
   selectedLinkIds: string[];
   pins: MapPinView[];
   highlight: Highlight | null;
@@ -159,7 +158,7 @@ function styleBasemap(map: MLMap, theme: MapTheme) {
 
 export default function CorridorMap(props: Props) {
   const {
-    data, baseline, baselineJunctions, result, scanRows, layers, mapTheme, showDelta, testData, selectedLinkIds, pins,
+    data, baseline, baselineJunctions, result, scanRows, layers, mapTheme, showDelta, selectedLinkIds, pins,
     highlight, focusKey, highlightBus, onPickLink,
   } = props;
   const { t } = useI18n();
@@ -533,11 +532,6 @@ export default function CorridorMap(props: Props) {
   return (
     <div className="absolute inset-0">
       <div ref={ref} className="h-full w-full" />
-      {testData && (
-        <div className="pointer-events-none absolute left-1/2 top-20 -translate-x-1/2 rounded-full border border-amber-300 bg-amber-50/95 px-3 py-1 text-[11.5px] font-semibold text-amber-800 shadow-island backdrop-blur">
-          {t.testBanner}
-        </div>
-      )}
     </div>
   );
 }

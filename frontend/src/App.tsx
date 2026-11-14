@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Box, HelpCircle, Leaf, Loader2, Menu, Palette, RefreshCw, Search, X } from "lucide-react";
-import { api } from "./api";
+import { Box, HelpCircle, Leaf, Loader2, Menu, Palette, RefreshCw, Search, Undo2, X } from "lucide-react";
+import { api, signed } from "./api";
 import { I18nContext, translations, type Lang } from "./i18n/translations";
 import type {
   BaselineLink,
@@ -8,12 +8,15 @@ import type {
   CalibrationResponse,
   Change,
   CorridorResponse,
+  DemandSource,
+  DemandSummary,
   Highlight,
   LaneKind,
   LaneUse,
   LngLat,
   MapLayers,
   Pin,
+  Profile,
   ScanRow,
   SimulateResponse,
 } from "./types/corridor";
@@ -27,6 +30,7 @@ import ScanCard from "./components/ScanCard";
 import ResultsPanel from "./components/ResultsPanel";
 import ModelCheckCard from "./components/ModelCheckCard";
 import BraessToast from "./components/BraessToast";
+import ProfileBar from "./components/ProfileBar";
 import CitizenBraessExplainerModal from "./components/CitizenBraessExplainerModal";
 
 function readLang(): Lang {
@@ -68,6 +72,12 @@ function ColoredMapIcon() {
   );
 }
 
+/** Mixer lanes that reproduce a scan row: −1 lane → last lane becomes a bike lane; a removal is a scenario, lanes untouched. */
+function scanLanes(r: ScanRow, original: LaneKind[]): LaneKind[] {
+  if (r.kind === "lane") return original.map((l, i) => (i === original.length - 1 ? "bike" : l));
+  return original;
+}
+
 export default function App() {
   const [lang, setLangState] = useState<Lang>(readLang);
   const setLang = useCallback((l: Lang) => {
@@ -85,11 +95,16 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [reload, setReload] = useState(0);
   const [calibration, setCalibration] = useState<CalibrationResponse | null>(null);
-  const [testMode, setTestMode] = useState(true);
+  const [profile, setProfile] = useState<Profile>("morning");
+  const [demandSource, setDemandSource] = useState<DemandSource | null>(null);
+  const [demandSummary, setDemandSummary] = useState<DemandSummary | null>(null);
   const [baseline, setBaseline] = useState<BaselineLink[] | null>(null);
   const [baselineJunctions, setBaselineJunctions] = useState<{ nodeId: string; delaySec: number }[] | null>(null);
   const [scanRows, setScanRows] = useState<ScanRow[] | null>(null);
   const [scanLoading, setScanLoading] = useState(false);
+  const [scanStats, setScanStats] = useState<{ tested: number; seconds: number } | null>(null);
+  /** A segment from the Braess search closed in BOTH directions (not expressible as lanes of one direction). */
+  const [scenario, setScenario] = useState<ScanRow | null>(null);
 
   const [street, setStreet] = useState<string | null>(null);
   const [heading, setHeading] = useState<string | null>(null);
@@ -148,32 +163,40 @@ export default function App() {
     api.corridor()
       .then((d) => {
         setData(d);
-        if (d.dataStatus.ready) setTestMode(false);
+        setProfile((p) => (d.profiles.some((x) => x.id === p) ? p : d.defaultProfile));
       })
       .catch((e: Error) => setError(e.message));
-    api.calibration().then(setCalibration).catch(() => setCalibration(null));
   }, [reload]);
 
-  const ready = !!data?.dataStatus.ready;
-  const useTest = testMode && !ready;
-
-  // current traffic (coloured map + intersection markers) and the street-by-street check
+  // current traffic (coloured map + intersection markers), the Braess search and the model check — per time of day.
+  // Demand is always available (estimated from OSM land use, calibrated when counts exist).
   useEffect(() => {
     if (!data) return;
+    let live = true;
     setBaseline(null);
     setBaselineJunctions(null);
     setScanRows(null);
-    if (!ready && !useTest) return;
-    api.baseline(useTest).then((b) => {
-      if (b.status === "ok") {
-        setBaseline(b.links);
-        setBaselineJunctions(b.junctions);
-      }
-    }).catch(() => undefined);
+    setScanStats(null);
+    setCalibration(null);
+    api.baseline(profile).then((b) => {
+      if (!live || b.status !== "ok") return;
+      setBaseline(b.links);
+      setBaselineJunctions(b.junctions);
+      setDemandSource(b.demandSource);
+      setDemandSummary(b.demandSummary);
+    }).catch((e: Error) => live && setError(e.message));
     setScanLoading(true);
-    api.scan(useTest).then((s) => setScanRows(s.status === "ok" ? s.rows : null)).catch(() => undefined)
-      .finally(() => setScanLoading(false));
-  }, [data, ready, useTest]);
+    api.scan(profile).then((s) => {
+      if (!live) return;
+      setScanRows(s.status === "ok" ? s.rows : null);
+      setScanStats(s.status === "ok" ? { tested: s.tested.removal + s.tested.lane, seconds: s.seconds } : null);
+    }).catch(() => undefined)
+      .finally(() => live && setScanLoading(false));
+    api.calibration(profile).then((c) => live && setCalibration(c)).catch(() => undefined);
+    return () => {
+      live = false;
+    };
+  }, [data, profile]);
 
   // ------------------------------------------------------------ selection
   const linkProps = useMemo(() => new Map((data?.links.features ?? []).map((f) => [f.properties.id, f])), [data]);
@@ -187,6 +210,7 @@ export default function App() {
   const lanesSource = selectedIds.some((id) => linkProps.get(id)?.properties.lanesSource === "field check") ? "field check" : "osm";
 
   const select = useCallback((s: string | null, h: string | null) => {
+    setScenario(null);
     setStreet(s);
     setHeading(h);
     setPinned(null);
@@ -200,20 +224,33 @@ export default function App() {
     const p = pendingScan.current;
     if (p && p.street === street && p.heading === heading) {
       pendingScan.current = null;
-      if (p.mode === "closure") setLanes(originalLanes.map(() => "bike"));
-      else setLanes(originalLanes.map((l, i) => (i === originalLanes.length - 1 ? "bike" : l)));
+      setLanes(scanLanes(p, originalLanes));
       return;
     }
     setLanes(originalLanes);
   }, [originalLanes, street, heading]);
 
+  // A scan row is applied exactly as it was tested: "removal" closes that one segment in both directions,
+  // "lane" takes one car lane off every multi-lane link of the street direction (−1 lane in the mixer).
   const pickScan = useCallback((r: ScanRow) => {
-    pendingScan.current = r;
+    if (r.street === street && r.heading === heading) setLanes(scanLanes(r, originalLanes));
+    else pendingScan.current = r;
     select(r.street, r.heading);
-  }, [select]);
+    if (r.kind === "removal") {
+      setScenario(r);
+      const coords = r.linkIds.map((id) => linkProps.get(id)?.geometry.coordinates ?? []).sort((a, b) => b.length - a.length)[0];
+      if (coords && coords.length > 1) {
+        setPinned({ coordinates: coords, color: "#c026d3", label: r.street, time: `${signed(r.changePct, 2)}%` });
+        setFocusKey((k) => k + 1);
+      }
+    }
+  }, [select, street, heading, originalLanes, linkProps]);
+
+  const focusIds = scenario ? scenario.linkIds : selectedIds;
 
   // ------------------------------------------------------------ lanes → changes → live simulation
   const changes: Change[] = useMemo(() => {
+    if (scenario) return scenario.linkIds.map((id) => ({ linkId: id, carLanesAfter: 0, use: "closed" as LaneUse }));
     const carAfter = lanes.filter((l) => l === "car").length;
     const removed = maxLanes - carAfter;
     if (removed <= 0) return [];
@@ -221,11 +258,12 @@ export default function App() {
     return selectedIds
       .map((id) => {
         const n = linkProps.get(id)?.properties.carLanes ?? 0;
-        const after = Math.max(0, n - removed);
-        return { linkId: id, carLanesAfter: after, use: (after === 0 ? "closed" : use) as LaneUse };
+        // keep at least one car lane on narrower stretches unless the whole street goes car-free
+        const after = carAfter === 0 ? 0 : Math.max(1, n - removed);
+        return { linkId: id, carLanesAfter: Math.min(after, n), use: (after === 0 ? "closed" : use) as LaneUse };
       })
       .filter((c) => c.carLanesAfter < (linkProps.get(c.linkId)?.properties.carLanes ?? 0));
-  }, [lanes, maxLanes, selectedIds, linkProps]);
+  }, [scenario, lanes, maxLanes, selectedIds, linkProps]);
   const changesKey = JSON.stringify(changes);
 
   const ctrl = useRef<AbortController | null>(null);
@@ -240,7 +278,7 @@ export default function App() {
     ctrl.current = c;
     setBusy(true);
     const id = window.setTimeout(() => {
-      api.simulate(changes, useTest, c.signal)
+      api.simulate(changes, profile, c.signal)
         .then((r) => {
           setResult(r);
           if (r.status === "ok" && r.braess.detected) setToastPct(r.braess.totalChangePct);
@@ -257,7 +295,7 @@ export default function App() {
       c.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changesKey, useTest]);
+  }, [changesKey, profile]);
 
   const ok = result && result.status === "ok" ? result : null;
   useEffect(() => {
@@ -273,14 +311,14 @@ export default function App() {
     const base = new Map((baseline ?? []).map((l) => [l.id, l]));
     let time = 0;
     let free = 0;
-    for (const id of selectedIds) {
+    for (const id of focusIds) {
       const r = res.get(id);
       const b = base.get(id);
       time += r ? r.timeAfterSec : b ? b.timeSec : 0;
       free += r ? r.freeTimeSec : b ? b.freeTimeSec : 0;
     }
     return free > 0 ? time / free : 1;
-  }, [ok, baseline, selectedIds]);
+  }, [ok, baseline, focusIds]);
 
   // ------------------------------------------------------------ pins
   const pinTimes: PinTime[] = useMemo(() => {
@@ -329,7 +367,7 @@ export default function App() {
       <div className={`relative h-screen w-screen overflow-hidden transition-colors duration-300 ${isDark ? "theme-dark bg-[#0B1120] text-slate-100" : "bg-[#F8FAFC] text-[#0F172A]"}`}>
         {data && (
           <CorridorMap data={data} baseline={baseline} baselineJunctions={baselineJunctions} result={ok} scanRows={scanRows}
-            layers={layers} mapTheme={mapTheme} showDelta={showDelta} testData={useTest && !!baseline} selectedLinkIds={selectedIds} pins={mapPins}
+            layers={layers} mapTheme={mapTheme} showDelta={showDelta} selectedLinkIds={focusIds} pins={mapPins}
             highlight={hovered ?? pinned} focusKey={focusKey} highlightBus={hoverBus} onPickLink={pickLink} />
         )}
 
@@ -510,6 +548,10 @@ export default function App() {
           </div>
         </header>
 
+        {data && data.profiles.length > 0 && (
+          <ProfileBar profiles={data.profiles} profile={profile} demandSource={demandSource} onChange={setProfile} />
+        )}
+
         {/* floating glass sidebar */}
         <aside
           aria-hidden={!sidebarOpen}
@@ -547,14 +589,26 @@ export default function App() {
             {!data && !error && <p className="flex items-center gap-2 text-[13px] text-slate-500"><Loader2 size={15} className="animate-spin" /> {t.loading}</p>}
             {data && (
               <>
-                <DataStatusCard data={data} testMode={testMode} onTestMode={setTestMode} />
+                <DataStatusCard data={data} profile={profile} demand={demandSummary} />
                 <StreetSearch data={data} street={street} heading={heading} onChange={select} />
+                {scenario && (
+                  <section className="rounded-xl border border-fuchsia-300 bg-fuchsia-50 p-3">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-fuchsia-700">{t.scenarioTitle}</p>
+                    <p className="mt-0.5 text-[12.5px] font-semibold text-slate-900">{t.scenarioClosed}</p>
+                    <p className="text-[11.5px] text-slate-600">{scenario.street}: {scenario.fromName} → {scenario.toName}</p>
+                    <button type="button" onClick={() => setScenario(null)}
+                      className="mt-1.5 flex items-center gap-1 rounded-md bg-white px-2 py-1 text-[11.5px] font-semibold text-[#005BBC] shadow-sm hover:bg-slate-50">
+                      <Undo2 size={12} /> {t.scenarioUndo}
+                    </button>
+                  </section>
+                )}
                 {selectedIds.length > 0 && (
                   <LaneMixer lanes={lanes} original={originalLanes} existingBusLane={existingBusLane} segments={selectedIds.length}
-                    lanesSource={lanesSource} slowness={slowness} busy={busy} onChange={setLanes} />
+                    lanesSource={lanesSource} slowness={slowness} busy={busy}
+                    onChange={(l) => { setScenario(null); setLanes(l); }} />
                 )}
                 <PinsPanel times={pinTimes} onRemove={(p) => setPins((ps) => ps.filter((x) => pinKey(x) !== pinKey(p)))} />
-                <ResultsPanel result={result} changes={changes} testData={useTest} onHoverBus={setHoverBus}
+                <ResultsPanel result={result} changes={changes} profile={profile} onHoverBus={setHoverBus}
                   onHighlight={setHovered} onFocus={(h) => { setPinned(h); setFocusKey((k) => k + 1); }} />
                 <ModelCheckCard data={data} calibration={calibration} />
               </>
@@ -574,6 +628,8 @@ export default function App() {
           <ScanCard
             rows={scanRows}
             loading={scanLoading}
+            demandSource={demandSource}
+            stats={scanStats}
             onPick={pickScan}
             onClose={() => setRecommendedOpen(false)}
           />
@@ -587,7 +643,7 @@ export default function App() {
           <LayersPill layers={layers} onChange={setLayers} showDelta={showDelta} onShowDelta={setShowDelta} hasResult={!!ok} />
         </div>
 
-        <BraessToast changePct={toastPct} testData={useTest} onClose={() => setToastPct(null)} />
+        <BraessToast changePct={toastPct} estimated={demandSource === "estimated"} onClose={() => setToastPct(null)} />
       </div>
       <CitizenBraessExplainerModal open={explainer} onClose={() => setExplainer(false)} />
     </I18nContext.Provider>

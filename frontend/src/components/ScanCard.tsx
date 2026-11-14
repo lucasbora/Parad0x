@@ -1,20 +1,24 @@
 import { Leaf, Loader2, Sparkles, X } from "lucide-react";
-import type { ScanRow } from "../types/corridor";
+import type { DemandSource, ScanRow } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
-import { signed } from "../api";
+import { fmt, signed } from "../api";
 
 interface Props {
   rows: ScanRow[] | null;
   loading: boolean;
+  demandSource: DemandSource | null;
+  stats: { tested: number; seconds: number } | null;
   onPick: (r: ScanRow) => void;
   onClose?: () => void;
 }
 
-/** "Where is a green lane worth it?" — every street, one lane removed, ranked. */
-export default function ScanCard({ rows, loading, onPick, onClose }: Props) {
+const rowKey = (r: ScanRow) => `${r.kind}|${r.linkIds.join(",")}`;
+
+/** "Where is a green lane worth it?" — every busy segment closed (both ways) + −1 lane per street, ranked. */
+export default function ScanCard({ rows, loading, demandSource, stats, onPick, onClose }: Props) {
   const { t } = useI18n();
   const braess = (rows ?? []).filter((r) => r.braess);
-  const cheap = (rows ?? []).filter((r) => r.lowRegret && !r.braess).slice(0, 5);
+  const cheap = (rows ?? []).filter((r) => r.lowRegret && !r.braess).slice(0, 6);
   return (
     <section className="rounded-2xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50/95 via-white/95 to-white/95 p-3.5 shadow-island backdrop-blur">
       <div className="flex items-center justify-between gap-2">
@@ -34,21 +38,31 @@ export default function ScanCard({ rows, loading, onPick, onClose }: Props) {
         )}
       </div>
       <p className="mt-0.5 text-[11px] leading-snug text-slate-600">{t.scanBody}</p>
+      {demandSource === "estimated" && (
+        <p className="mt-1 inline-block rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 font-mono text-[10px] font-semibold text-amber-800">
+          {t.estimatedBanner}
+        </p>
+      )}
       {loading && <p className="mt-2 flex items-center gap-1.5 text-[11.5px] text-slate-500"><Loader2 size={12} className="animate-spin" /> {t.scanRunning}</p>}
-      {rows && (
+      {rows && !loading && (
         <div className="mt-2 space-y-2">
           <div>
             <p className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-fuchsia-700"><Sparkles size={11} /> {t.scanBraess}</p>
             {braess.length === 0 ? (
               <p className="text-[11.5px] text-slate-500">{t.scanNoBraess}</p>
             ) : (
-              braess.map((r) => <Row key={`${r.street}|${r.heading}`} r={r} onPick={onPick} tone="braess" />)
+              braess.map((r) => <Row key={rowKey(r)} r={r} onPick={onPick} tone="braess" />)
             )}
           </div>
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-wide text-emerald-700">{t.scanLowRegret}</p>
-            {cheap.map((r) => <Row key={`${r.street}|${r.heading}`} r={r} onPick={onPick} tone="cheap" />)}
+            {cheap.map((r) => <Row key={rowKey(r)} r={r} onPick={onPick} tone="cheap" />)}
           </div>
+          {stats && (
+            <p className="font-mono text-[10.5px] text-slate-400">
+              {stats.tested} {t.scanStats} · {fmt(stats.seconds, 1)} s · Wardrop UE (CFW)
+            </p>
+          )}
         </div>
       )}
     </section>
@@ -57,15 +71,26 @@ export default function ScanCard({ rows, loading, onPick, onClose }: Props) {
 
 function Row({ r, onPick, tone }: { r: ScanRow; onPick: (r: ScanRow) => void; tone: "braess" | "cheap" }) {
   const { t } = useI18n();
+  const removal = r.kind === "removal";
+  const where = removal ? `${t.scanBothWays}` : `${t.heading[r.heading] ?? r.heading} · ${t.minusOneLane}`;
   return (
     <button onClick={() => onPick(r)}
+      title={removal ? `${r.fromName} → ${r.toName}` : undefined}
       className="mt-1 flex w-full items-center gap-2 rounded-lg border border-transparent bg-white/70 px-2 py-1.5 text-left transition hover:border-slate-200 hover:bg-white hover:shadow-sm">
       <span className={`h-2 w-2 shrink-0 rounded-full ${tone === "braess" ? "bg-fuchsia-500 shadow-[0_0_6px_2px_rgba(217,70,239,.5)]" : "bg-emerald-500 shadow-[0_0_6px_2px_rgba(16,185,129,.5)]"}`} />
       <span className="min-w-0 flex-1">
         <span className="block truncate text-[12px] text-slate-800">{r.street}</span>
-        <span className="block text-[10.5px] text-slate-500">{t.heading[r.heading] ?? r.heading} · {r.mode === "closure" ? t.closure : t.minusOneLane}</span>
+        <span className="block truncate text-[10.5px] text-slate-500">{where}</span>
+        {r.routeBraess && r.bestRouteGainPct > 0 && (
+          <span className="block truncate text-[10.5px] text-slate-500">
+            <span className="font-mono text-fuchsia-700">−{fmt(r.bestRouteGainPct, 1)}%</span> {t.scanRouteFaster}
+          </span>
+        )}
       </span>
-      <span className={`font-mono text-[11.5px] ${r.changePct < 0 ? "text-fuchsia-700" : "text-slate-600"}`}>{signed(r.changePct, 2)}%</span>
+      <span className="text-right">
+        <span className={`block font-mono text-[11.5px] ${r.changePct < 0 ? "text-fuchsia-700" : "text-slate-600"}`}>{signed(r.changePct, 2)}%</span>
+        {r.vehHSaved > 0.05 && <span className="block font-mono text-[10px] text-slate-500">{fmt(r.vehHSaved, 1)} veh·h</span>}
+      </span>
       <span className="text-[10.5px] font-semibold text-[#005BBC]">{t.scanApply} →</span>
     </button>
   );

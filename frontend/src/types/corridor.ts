@@ -2,6 +2,30 @@
 
 export type LngLat = [number, number];
 export type LaneUse = "bus" | "bike" | "sidewalk" | "closed";
+export type Profile = "morning" | "day" | "evening" | "sunday";
+/** "estimated" = demand from OSM land use only; "calibrated" = field counts loaded for that profile. */
+export type DemandSource = "estimated" | "calibrated";
+
+export interface ProfileMeta {
+  id: Profile;
+  labelRo: string;
+  labelEn: string;
+  start: string;
+  end: string;
+  day: "weekday" | "sunday";
+}
+
+export interface DemandSummary {
+  residents: number;
+  homeTripsVehH: number;
+  localTripsVehH: number;
+  gatewayInVehH: number;
+  gatewayOutVehH: number;
+  throughVehH: number;
+  totalVehH: number;
+  localMultiplier: number;
+  countedGates: string[];
+}
 
 export interface LinkProps {
   id: string;
@@ -14,6 +38,8 @@ export interface LinkProps {
   speedSource: string;
   busLane: boolean;
   isMainStreet: boolean;
+  roadClass: string;
+  isSideStreet: boolean;
   signalAtEnd: boolean;
   signalSource: string | null;
   fromName: string;
@@ -29,6 +55,7 @@ export interface GateProps {
   needsOut: boolean;
   countedIn: boolean;
   countedOut: boolean;
+  countedProfiles: Profile[];
   inVehH: number;
   outVehH: number;
   source: string | null;
@@ -53,8 +80,18 @@ export interface DataFile {
   purpose: string;
 }
 
+export interface ProfileDataStatus {
+  calibrated: boolean;
+  gatesCounted: number;
+  linkCounts: number;
+  turnCounts: number;
+  travelTimes: number;
+}
+
 export interface DataStatus {
   ready: boolean;
+  demandSource: DemandSource;
+  profiles: Record<Profile, ProfileDataStatus>;
   files: DataFile[];
   gatesCounted: number;
   gatesTotal: number;
@@ -74,8 +111,32 @@ export interface StreetChoice {
   directions: { heading: string; linkIds: string[] }[];
 }
 
+export interface ZoneProps {
+  id: string;
+  label: string;
+  residents: number;
+  activity: Record<string, number>;
+}
+
+export interface LandUseSummary {
+  buildings: number;
+  residentialBuildings: number;
+  levelsFromOsm: number;
+  residents: number;
+  pois: number;
+  untypedBuildings: number;
+  zones: number;
+  activityByCategory: Record<string, number>;
+  carShare: number;
+  carShareVerified: boolean;
+}
+
 export interface CorridorResponse {
   corridor: { id: string; name: string; bbox: number[]; mainStreets: string[]; peak: string };
+  profiles: ProfileMeta[];
+  defaultProfile: Profile;
+  zones: FC<{ type: "Point"; coordinates: LngLat }, ZoneProps>;
+  landUse: LandUseSummary;
   links: FC<{ type: "LineString"; coordinates: LngLat[] }, LinkProps>;
   gates: FC<{ type: "Point"; coordinates: LngLat }, GateProps>;
   junctions: FC<{ type: "Point"; coordinates: LngLat }, JunctionProps>;
@@ -85,7 +146,7 @@ export interface CorridorResponse {
   sources: {
     network: string;
     networkFetchedAt: string;
-    stats: { links: number; junctions: number; signalized: number; gates: number };
+    stats: { links: number; junctions: number; signalized: number; gates: number; sideStreetLinks: number; zones: number };
   };
 }
 
@@ -153,7 +214,8 @@ export interface BusResult {
 
 export interface SimulateOk {
   status: "ok";
-  testData: boolean;
+  profile: Profile;
+  demandSource: DemandSource;
   braess: { detected: boolean; carCapacityRemoved: boolean; totalChangePct: number };
   totals: { vehMinBefore: number; vehMinAfter: number; changePct: number; demandVehH: number };
   carRoutes: CarRoute[];
@@ -177,17 +239,33 @@ export type SimulateResponse = SimulateOk | NeedsData;
 export interface SensitivityRow {
   demandScale: number;
   totalChangePct: number;
+  braess: boolean;
   mainRoute: { name: string; minutesBefore: number; minutesAfter: number } | null;
   bus: { shortName: string; minutesBefore: number; minutesAfter: number } | null;
 }
 
-export type SensitivityResponse = { status: "ok"; rows: SensitivityRow[] } | NeedsData;
+export type SensitivityResponse = { status: "ok"; profile: Profile; demandSource: DemandSource; rows: SensitivityRow[] } | NeedsData;
+
+export interface FittedRow {
+  street: string;
+  counted: number;
+  model: number;
+  geh: number;
+}
 
 export interface CalibrationOk {
   status: "ok";
+  profile: Profile;
+  demandSource: DemandSource;
+  localMultiplier: number;
+  fitted: {
+    gates: (FittedRow & { gateId: string; direction: "in" | "out" })[];
+    links: (FittedRow & { linkId: string })[];
+    note: string;
+  };
   turns: { nodeId: string; intersection: string; from: string; to: string; counted: number; model: number; geh: number }[];
   travelTimes: { route: string; observedMin: number; modelMin: number; diffPct: number }[];
-  summary: { turnsCounted: number; gehUnder5: number; gehUnder5Pct: number | null; target: string };
+  summary: { turnsCounted: number; gehUnder5: number; gehUnder5Pct: number | null; travelTimesChecked: number; target: string };
 }
 
 export type CalibrationResponse = CalibrationOk | NeedsData;
@@ -200,7 +278,15 @@ export interface BaselineLink {
 }
 
 export type BaselineResponse =
-  | { status: "ok"; testData: boolean; totalVehMin: number; links: BaselineLink[]; junctions: { nodeId: string; delaySec: number }[] }
+  | {
+      status: "ok";
+      profile: Profile;
+      demandSource: DemandSource;
+      demandSummary: DemandSummary;
+      totalVehMin: number;
+      links: BaselineLink[];
+      junctions: { nodeId: string; delaySec: number }[];
+    }
   | NeedsData;
 
 /** UI lane type in the mixer. */
@@ -211,19 +297,42 @@ export interface Pin {
   heading: string;
 }
 
+/** One tested change from the Braess search.
+ *  kind "removal": one street segment closed to cars in BOTH directions (linkIds = both directions).
+ *  kind "lane":    one car lane taken from every multi-lane link of a street direction. */
 export interface ScanRow {
   street: string;
   heading: string;
   linkIds: string[];
   mode: "minus_one_lane" | "closure";
+  kind: "removal" | "lane";
+  scope: "both" | "one";
+  fromName: string;
+  toName: string;
   changePct: number;
   vehMinDelta: number;
+  vehHSaved: number;
   braess: boolean;
+  routeBraess: boolean;
+  bestRouteGainPct: number;
   lowRegret: boolean;
+  stage: "quick" | "verified";
+  baseFlow: number;
+  at: LngLat;
 }
 
 export type ScanResponse =
-  | { status: "ok"; testData: boolean; rows: ScanRow[]; braessCount: number; lowRegretCount: number }
+  | {
+      status: "ok";
+      profile: Profile;
+      demandSource: DemandSource;
+      rows: ScanRow[];
+      braessCount: number;
+      routeBraessCount: number;
+      lowRegretCount: number;
+      tested: { removal: number; lane: number; verified: number; skippedDisconnecting: number };
+      seconds: number;
+    }
   | NeedsData;
 
 export interface MapLayers {
