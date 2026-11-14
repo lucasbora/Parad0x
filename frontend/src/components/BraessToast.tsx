@@ -26,7 +26,7 @@ export default function BraessToast({ changePct, estimated, onClose }: Props) {
         <div className="flex-1">
           <p className="text-[14px] font-bold text-fuchsia-800">{t.braessTitle}</p>
           <p className="text-[12.5px] leading-snug text-slate-700">
-            {t.braessBody} <b className="font-mono">{fmt(Math.abs(changePct), 2)}%</b>.
+            {t.braessBody} <b className="font-secondary">{fmt(Math.abs(changePct), 2)}%</b>.
           </p>
           {estimated && <p className="mt-1 text-[11px] font-semibold text-amber-700">{t.estimatedBanner}</p>}
         </div>

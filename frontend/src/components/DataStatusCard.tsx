@@ -30,14 +30,14 @@ export default function DataStatusCard({ data, profile, demand }: Props) {
         <span className="flex-1">
           <span className="block text-[13px] font-semibold text-slate-900">
             {calibrated ? t.dataReady : t.dataMissing}
-            {meta && <span className="ml-1 font-mono text-[11px] font-normal text-slate-500">{lang === "ro" ? meta.labelRo : meta.labelEn} {meta.start}–{meta.end}</span>}
+            {meta && <span className="ml-1 font-secondary text-[11px] font-normal text-slate-500">{lang === "ro" ? meta.labelRo : meta.labelEn} {meta.start}–{meta.end}</span>}
           </span>
           {demand && (
-            <span className="block font-mono text-[11px] text-slate-600">
+            <span className="block font-secondary text-[11px] text-slate-600">
               {fmt(demand.totalVehH, 0)} {t.carsPerHour} · {t.throughTraffic} {fmt(demand.throughVehH, 0)}
             </span>
           )}
-          <span className="block font-mono text-[11px] text-slate-600">
+          <span className="block font-secondary text-[11px] text-slate-600">
             {ps?.gatesCounted ?? 0}/{st.gatesTotal} {t.gatesCounted}
           </span>
         </span>
@@ -49,7 +49,7 @@ export default function DataStatusCard({ data, profile, demand }: Props) {
 
           <div className="rounded-lg bg-white/70 p-2">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">{t.landUseTitle}</p>
-            <p className="mt-0.5 font-mono text-[11.5px] text-slate-700">
+            <p className="mt-0.5 font-secondary text-[11.5px] text-slate-700">
               ≈ {fmt(lu.residents, 0)} {t.residents} · {fmt(lu.buildings, 0)} {t.buildings} · {fmt(lu.pois, 0)} {t.pois} · {lu.zones} {t.zones}
             </p>
             <p className="mt-0.5 text-[10.5px] text-slate-500">© OpenStreetMap contributors (ODbL)</p>
@@ -67,7 +67,7 @@ export default function DataStatusCard({ data, profile, demand }: Props) {
                   <th className="font-normal">{t.countsTimes}</th>
                 </tr>
               </thead>
-              <tbody className="font-mono">
+              <tbody className="font-secondary">
                 {data.profiles.map((p) => {
                   const s = st.profiles[p.id];
                   return (
@@ -91,7 +91,7 @@ export default function DataStatusCard({ data, profile, demand }: Props) {
               <li key={f.file} className="flex items-start gap-2 text-[12px]">
                 {f.present ? <CheckCircle2 size={14} className="mt-0.5 shrink-0 text-emerald-600" /> : <Circle size={14} className="mt-0.5 shrink-0 text-slate-400" />}
                 <span>
-                  <span className="font-mono text-[11.5px] text-slate-900">{f.file}</span>{" "}
+                  <span className="font-secondary text-[11.5px] text-slate-900">{f.file}</span>{" "}
                   <span className="text-[10.5px] font-medium text-slate-500">
                     ({t.optional}{f.present ? ` · ${f.rows}` : ""})
                   </span>
@@ -117,9 +117,9 @@ export default function DataStatusCard({ data, profile, demand }: Props) {
                   return (
                     <li key={p.id} className="flex items-center gap-2 text-[11.5px]">
                       <span className={`h-2 w-2 shrink-0 rounded-full ${done ? "bg-emerald-600" : "bg-red-600"}`} />
-                      <span className="w-4 font-mono text-slate-500">{p.side}</span>
+                      <span className="w-4 font-secondary text-slate-500">{p.side}</span>
                       <span className="flex-1 truncate" title={p.street}>{p.street}</span>
-                      <span className="font-mono text-[10.5px] text-slate-500">
+                      <span className="font-secondary text-[10.5px] text-slate-500">
                         {[p.needsIn && t.inLabel, p.needsOut && t.outLabel].filter(Boolean).join("+")}
                       </span>
                       <a className="text-[#005BBC]" href={`https://maps.google.com/?q=${lat},${lng}`} target="_blank" rel="noreferrer" aria-label={`${p.street} ${t.openMap}`}>

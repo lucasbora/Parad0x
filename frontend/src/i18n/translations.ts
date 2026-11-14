@@ -5,9 +5,9 @@ export type Lang = "ro" | "en";
 
 const ro = {
   appName: "Timișoara Braess Paradox",
-  pillTitle: "Traffic Stress Tester",
+  pillTitle: "Test de Stres al Traficului",
   menuExplanation: "Explicație",
-  menuSearchPoints: "Caută puncte Braess",
+  menuSearchPoints: "Caută străzi",
   menuRecommendedPoints: "Puncte recomandate",
   menuTheme: "Temă",
   themeDark: "Hartă întunecată",
@@ -44,8 +44,8 @@ const ro = {
 
   layers: "Straturi",
   layerTraffic: "Trafic simulat",
-  layerGlow: "Străzi Braess / fără cost",
-  layerGlowHint: "unde o bandă auto poate fi luată fără să încetinească zona",
+  layerGlow: "Străzi Braess",
+  layerGlowHint: "unde închiderea unei străzi sau a unei benzi auto scade timpul total în trafic",
   layerFlow: "Animație flux",
   layerIntersections: "Așteptare la intersecții",
   layer3d: "Clădiri 3D",
@@ -61,7 +61,7 @@ const ro = {
   scanApply: "Încearcă",
   minusOneLane: "−1 bandă",
   closure: "închidere",
-  search: "Caută o stradă (fără diacritice)…",
+  search: "Caută o stradă",
   noMatches: "Nicio stradă cu acest nume în zonă",
   lanesTitle: "Benzile pe sensul ales",
   laneN: "Banda",
@@ -207,17 +207,29 @@ const ro = {
   countKindHint: { gate: "Calibrează traficul de tranzit. Începeți cu porțile cele mai aglomerate (sus în listă).", link: "Calibrează cererea locală: o stradă din interiorul zonei, un singur sens.", turn: "Verifică modelul (nu e folosit la calibrare): o singură mișcare la o intersecție." } as Record<string, string>,
 
   explainerIntro:
-    "Fiecare șofer alege drumul cel mai rapid pentru el. Uneori, o scurtătură atrage atât de mulți șoferi încât toată lumea ajunge mai târziu. Închide scurtătura și zona se mișcă mai repede!",
-  explainerDemand: "Cerere (vehicule/oră)",
-  explainerShortcut: "Scurtătura deschisă",
-  explainerTravelTime: "Timp de deplasare pentru fiecare șofer",
-  explainerTotal: "Timp total în rețea",
-  explainerUpper: "Ruta Nord",
-  explainerLower: "Ruta Sud",
-  explainerCut: "Scurtătura",
-  explainerParadox: "Paradox! Scurtătura încetinește pe toată lumea.",
-  explainerNoParadox: "Fără paradox la această cerere.",
-  explainerNote: "Exemplu clasic de manual, nu date din Timișoara.",
+    "Uneori un drum nou face ca fiecare călătorie să dureze mai mult. Fiecare șofer alege ruta cea mai rapidă pentru el, fără să se gândească la ceilalți. Dacă prea mulți aleg aceeași scurtătură, aglomerează drumurile din jurul ei și toată lumea ajunge mai târziu decât înainte.",
+  explainerStepWithout: "1. Fără scurtătură",
+  explainerStepWith: "2. Cu scurtătură",
+  explainerFlat: "Mereu 6 min",
+  explainerBusy: "Drum aglomerat",
+  explainerBusyRule: "t mașini → t min fiecare",
+  explainerShortcut: "Scurtătură",
+  explainerClosed: "închisă",
+  explainerWhatHappens: "Ce se întâmplă",
+  explainerWithoutBody:
+    "6 mașini merg din A în D. Jumătate urcă prin C, jumătate coboară prin B. Fiecare drum aglomerat are 3 mașini, deci durează 3 minute. Fiecare șofer face 3 + 6 = 9 minute.",
+  explainerWithBody:
+    "Se deschide o scurtătură de 1 minut de la B la C. Ruta A → B → C → D pare acum cea mai rapidă, așa că șoferii trec pe ea, iar fiecare adaugă trafic pe ambele drumuri aglomerate. Șoferii schimbă ruta până când nimeni nu mai câștigă timp singur: 4 iau scurtătura și câte 1 rămâne pe fiecare rută veche. Ambele drumuri aglomerate au acum 5 mașini, iar fiecare șofer face 11 minute.",
+  explainerTripTime: "Timp de drum pentru fiecare șofer",
+  explainerSlower: "min mai mult decât fără scurtătură",
+  explainerFaster: "min mai puțin decât cu scurtătura",
+  explainerRoute: "Rută",
+  explainerCars: "Mașini",
+  explainerTime: "Timp",
+  explainerTakeawayTitle: "Ce înseamnă asta pentru Timișoara",
+  explainerTakeaway:
+    "Dacă închidem scurtătura, toți șoferii câștigă înapoi 2 minute. Aplicația caută același efect pe străzile din Timișoara: străzi sau benzi auto care pot fi scoase fără să încetinească traficul, ca să devină benzi de autobuz, piste de biciclete sau trotuare.",
+  explainerNote: "Exemplu de manual cu numere inventate, nu date din Timișoara.",
 };
 
 export type Dict = typeof ro;
@@ -226,7 +238,7 @@ const en: Dict = {
   appName: "Timișoara Braess Paradox",
   pillTitle: "Traffic Stress Tester",
   menuExplanation: "Explanation",
-  menuSearchPoints: "Search Braess Points",
+  menuSearchPoints: "Search streets",
   menuRecommendedPoints: "Recommended Points",
   menuTheme: "Theme",
   themeDark: "Dark map",
@@ -263,8 +275,8 @@ const en: Dict = {
 
   layers: "Layers",
   layerTraffic: "Simulated traffic",
-  layerGlow: "Braess / no-cost streets",
-  layerGlowHint: "where a car lane can go without slowing the area down",
+  layerGlow: "Braess streets",
+  layerGlowHint: "where closing a street or taking away a car lane cuts the total time in traffic",
   layerFlow: "Flow animation",
   layerIntersections: "Intersection waiting",
   layer3d: "3D buildings",
@@ -280,7 +292,7 @@ const en: Dict = {
   scanApply: "Try it",
   minusOneLane: "−1 lane",
   closure: "closure",
-  search: "Search a street (no diacritics needed)…",
+  search: "Search a street",
   noMatches: "No street with that name in the area",
   lanesTitle: "Lanes in the chosen direction",
   laneN: "Lane",
@@ -426,17 +438,29 @@ const en: Dict = {
   countKindHint: { gate: "Calibrates through-traffic. Start with the busiest gates (top of the list).", link: "Calibrates local demand: one street inside the area, one direction.", turn: "Checks the model (never used for fitting): one movement at one intersection." },
 
   explainerIntro:
-    "Every driver picks the route that is fastest for them alone. Sometimes a shortcut attracts so many drivers that everyone arrives later. Close the shortcut and the area moves faster!",
-  explainerDemand: "Demand (vehicles/hour)",
-  explainerShortcut: "Shortcut open",
-  explainerTravelTime: "Travel time for every driver",
-  explainerTotal: "Total network time",
-  explainerUpper: "North route",
-  explainerLower: "South route",
-  explainerCut: "Shortcut",
-  explainerParadox: "Paradox! The shortcut slows everyone down.",
-  explainerNoParadox: "No paradox at this demand.",
-  explainerNote: "Textbook example, not Timișoara data.",
+    "Sometimes a new road makes every trip slower. Each driver picks the route that is fastest for them, without thinking about the others. When too many pick the same shortcut, they jam the roads around it, and everyone arrives later than before the shortcut existed.",
+  explainerStepWithout: "1. Without the shortcut",
+  explainerStepWith: "2. With the shortcut",
+  explainerFlat: "Always 6 min",
+  explainerBusy: "Busy road",
+  explainerBusyRule: "t cars → t min each",
+  explainerShortcut: "Shortcut",
+  explainerClosed: "closed",
+  explainerWhatHappens: "What happens",
+  explainerWithoutBody:
+    "6 cars drive from A to D. Half go up through C, half go down through B. Each busy road carries 3 cars, so it takes 3 minutes. Every driver needs 3 + 6 = 9 minutes.",
+  explainerWithBody:
+    "A 1-minute shortcut opens from B to C. Going A → B → C → D now looks fastest, so drivers switch to it, and each one adds traffic to both busy roads. Drivers keep switching until nobody can save time on their own: 4 take the shortcut and 1 stays on each old route. Both busy roads now carry 5 cars, and every driver needs 11 minutes.",
+  explainerTripTime: "Trip time for every driver",
+  explainerSlower: "min more than without the shortcut",
+  explainerFaster: "min less than with the shortcut",
+  explainerRoute: "Route",
+  explainerCars: "Cars",
+  explainerTime: "Time",
+  explainerTakeawayTitle: "What this means for Timișoara",
+  explainerTakeaway:
+    "Closing the shortcut gives every driver 2 minutes back. The app looks for the same effect on Timișoara's streets: streets or car lanes that can be taken away without slowing traffic, so they can become bus lanes, bike lanes or sidewalks.",
+  explainerNote: "Textbook example with made-up numbers, not Timișoara data.",
 };
 
 export const translations: Record<Lang, Dict> = { ro, en };

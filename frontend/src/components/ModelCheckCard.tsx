@@ -7,7 +7,7 @@ function GehTable({ rows }: { rows: (FittedRow & { label: string; title?: string
   return (
     <table className="mt-1 w-full text-left text-[11px]">
       <thead className="text-slate-500"><tr><th className="font-normal">—</th><th className="font-normal">{t.counted}</th><th className="font-normal">{t.model}</th><th className="font-normal">GEH</th></tr></thead>
-      <tbody className="font-mono">
+      <tbody className="font-secondary">
         {rows.map((r, i) => (
           <tr key={i} className="border-t border-slate-100">
             <td className="max-w-[150px] truncate font-sans" title={r.title ?? r.label}>{r.label}</td>
@@ -40,7 +40,7 @@ export default function ModelCheckCard({ data, calibration }: { data: CorridorRe
             <p className="text-[11.5px] font-semibold text-slate-700">{t.fittedTitle}</p>
             <p className="text-[11px] text-slate-500">{t.fittedNote}</p>
             {cal.localMultiplier !== 1 && (
-              <p className="mt-0.5 font-mono text-[11px] text-slate-600">{t.localMultiplier}: ×{fmt(cal.localMultiplier, 2)}</p>
+              <p className="mt-0.5 font-secondary text-[11px] text-slate-600">{t.localMultiplier}: ×{fmt(cal.localMultiplier, 2)}</p>
             )}
             <GehTable rows={fitted} />
           </div>
@@ -62,7 +62,7 @@ export default function ModelCheckCard({ data, calibration }: { data: CorridorRe
             {cal.travelTimes.length > 0 && (
               <ul className="mt-2 space-y-0.5 text-[11.5px]">
                 {cal.travelTimes.map((r) => (
-                  <li key={r.route}>{r.route}: {t.observed} <span className="font-mono">{fmt(r.observedMin, 1)}</span> · {t.model} <span className="font-mono">{fmt(r.modelMin, 1)}</span> {t.min} ({r.diffPct > 0 ? "+" : ""}{fmt(r.diffPct, 0)}%)</li>
+                  <li key={r.route}>{r.route}: {t.observed} <span className="font-secondary">{fmt(r.observedMin, 1)}</span> · {t.model} <span className="font-secondary">{fmt(r.modelMin, 1)}</span> {t.min} ({r.diffPct > 0 ? "+" : ""}{fmt(r.diffPct, 0)}%)</li>
                 ))}
               </ul>
             )}
@@ -75,7 +75,7 @@ export default function ModelCheckCard({ data, calibration }: { data: CorridorRe
         <ul className="mt-2 space-y-1.5">
           {data.assumptions.map((a) => (
             <li key={a.what} className="text-[11.5px] leading-snug">
-              <span className="font-medium text-slate-800">{a.what}:</span> <span className="font-mono text-slate-700">{a.value}</span>
+              <span className="font-medium text-slate-800">{a.what}:</span> <span className="font-secondary text-slate-700">{a.value}</span>
               <span className="block text-slate-500">{a.appliesTo} → {a.replaceWith}</span>
             </li>
           ))}

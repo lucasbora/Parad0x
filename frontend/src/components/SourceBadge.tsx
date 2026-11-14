@@ -14,12 +14,12 @@ const TONES: Record<Tone, string> = {
   gdpr: "border-sky-200 bg-sky-50 text-sky-800",
 };
 
-/** Compact monospace provenance pill: "SMTT GTFS v4.31 · Nov 2026". */
+/** Compact provenance pill (secondary font): "SMTT GTFS v4.31 · Nov 2026". */
 export default function SourceBadge({ label, tone = "neutral", title }: Props) {
   return (
     <span
       title={title ?? label}
-      className={`inline-flex max-w-full items-center gap-1 truncate rounded-full border px-2 py-[1px] font-mono text-[10px] leading-4 ${TONES[tone]}`}
+      className={`inline-flex max-w-full items-center gap-1 truncate rounded-full border px-2 py-[1px] font-secondary text-[10px] leading-4 ${TONES[tone]}`}
     >
       {(tone === "live" || tone === "seed") && (
         <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${tone === "live" ? "bg-emerald-500" : "bg-slate-400"}`} aria-hidden />

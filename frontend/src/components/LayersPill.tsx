@@ -42,8 +42,8 @@ export default function LayersPill({ layers, onChange, showDelta, onShowDelta, h
             <div className="ml-6 mr-1">
               <div className="h-2 rounded-full" style={{ background: delta
                 ? "linear-gradient(90deg,#1d4ed8,#60a5fa,#cbd5e1,#fb923c,#c2410c)"
-                : "linear-gradient(90deg,#10b981,#3b82f6,#f59e0b,#ef4444)" }} />
-              <div className="mt-0.5 flex justify-between font-mono text-[10.5px] text-slate-500">
+                : "linear-gradient(90deg,#10b981,#eab308,#ef4444,#7f1d1d)" }} />
+              <div className="mt-0.5 flex justify-between font-secondary text-[10.5px] text-slate-500">
                 <span>{delta ? t.legendLess : t.legendFast}</span>
                 <span>{delta ? t.legendMore : t.legendSlow}</span>
               </div>
@@ -59,10 +59,7 @@ export default function LayersPill({ layers, onChange, showDelta, onShowDelta, h
             </div>
           )}
           <Check on={layers.glow} set={set("glow")} label={t.layerGlow}>
-            <span className="flex gap-1">
-              <span className="h-2.5 w-4 rounded-full bg-[#10b981] shadow-[0_0_8px_2px_rgba(16,185,129,0.6)]" />
-              <span className="h-2.5 w-4 rounded-full bg-[#d946ef] shadow-[0_0_8px_2px_rgba(217,70,239,0.6)]" />
-            </span>
+            <span className="h-2.5 w-4 rounded-full bg-[#d946ef]" />
           </Check>
           <p className="ml-6 text-[10.5px] leading-tight text-slate-500">{t.layerGlowHint}</p>
           <Check on={layers.intersections} set={set("intersections")} label={t.layerIntersections}>

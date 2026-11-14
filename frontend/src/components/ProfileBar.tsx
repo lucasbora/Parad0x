@@ -38,7 +38,7 @@ export default function ProfileBar({ profiles, profile, demandSource, demandScal
                 }`}
               >
                 {lang === "ro" ? p.labelRo : p.labelEn}
-                <span className={`ml-1 font-mono text-[10.5px] font-normal ${on ? "text-white/80" : "text-slate-400"}`}>{p.start}</span>
+                <span className={`ml-1 font-secondary text-[10.5px] font-normal ${on ? "text-white/80" : "text-slate-400"}`}>{p.start}</span>
               </button>
             );
           })}
@@ -60,18 +60,18 @@ export default function ProfileBar({ profiles, profile, demandSource, demandScal
           aria-valuetext={`${pct}%`}
           className="h-1.5 w-24 cursor-pointer accent-[#005BBC]"
         />
-        <span className={`w-10 font-mono text-[11px] font-semibold ${pct === 100 ? "text-slate-600" : pct > 100 ? "text-orange-700" : "text-emerald-700"}`}>
+        <span className={`w-10 font-secondary text-[11px] font-semibold ${pct === 100 ? "text-slate-600" : pct > 100 ? "text-orange-700" : "text-emerald-700"}`}>
           {pct}%
         </span>
         {demandVehH !== null && (
-          <span className="hidden font-mono text-[10.5px] text-slate-500 sm:inline">{fmt(demandVehH, 0)} {t.vehH}</span>
+          <span className="hidden font-secondary text-[10.5px] text-slate-500 sm:inline">{fmt(demandVehH, 0)} {t.vehH}</span>
         )}
       </label>
 
       {demandSource && (
         <span
           title={calibrated ? t.demandCalibratedHint : t.demandEstimatedHint}
-          className={`flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 font-mono text-[10.5px] font-semibold ${
+          className={`flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 font-secondary text-[10.5px] font-semibold ${
             calibrated ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-amber-300 bg-amber-50 text-amber-800"
           }`}
         >

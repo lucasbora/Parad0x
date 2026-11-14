@@ -117,7 +117,7 @@ export default function StreetSearch({ data, street, heading, onChange }: Props)
               >
                 <MapPin size={13} className={data.corridor.mainStreets.includes(s.street) ? "text-[#005BBC]" : "text-slate-400"} />
                 <span className="flex-1 truncate">{s.street}</span>
-                <span className="font-mono text-[10.5px] text-slate-400">{s.directions.map((d) => d.heading).join(" · ")}</span>
+                <span className="font-secondary text-[10.5px] text-slate-400">{s.directions.map((d) => d.heading).join(" · ")}</span>
               </li>
             ))}
           </ul>

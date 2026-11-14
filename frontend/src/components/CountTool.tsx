@@ -182,7 +182,7 @@ export default function CountTool({ open, data, profile, baseline, onClose }: Pr
             <h2 id="count-title" className="text-[17px] font-bold text-slate-900">{t.countTitle}</h2>
             <p className="mt-0.5 text-[12px] leading-snug text-slate-600">{t.countIntro}</p>
             {meta && (
-              <p className="mt-1 font-mono text-[11px] text-slate-500">
+              <p className="mt-1 font-secondary text-[11px] text-slate-500">
                 {lang === "ro" ? meta.labelRo : meta.labelEn} · {meta.start}–{meta.end} ({meta.day === "sunday" ? t.countSunday : t.countWeekday})
               </p>
             )}
@@ -264,7 +264,7 @@ export default function CountTool({ open, data, profile, baseline, onClose }: Pr
             </button>
           ) : (
             <>
-              <p className={`font-mono text-[13px] ${elapsed >= INTERVAL_S ? "font-bold text-emerald-700" : "text-slate-600"}`}>
+              <p className={`font-secondary text-[13px] ${elapsed >= INTERVAL_S ? "font-bold text-emerald-700" : "text-slate-600"}`}>
                 {String(Math.floor(elapsed / 60)).padStart(2, "0")}:{String(elapsed % 60).padStart(2, "0")} / 15:00
                 {elapsed >= INTERVAL_S && ` · ${t.countDone}`}
               </p>
@@ -273,7 +273,7 @@ export default function CountTool({ open, data, profile, baseline, onClose }: Pr
                   className="grid h-14 w-14 place-items-center rounded-xl border border-slate-300 bg-white text-slate-700"><Minus size={20} /></button>
                 <button ref={plusRef} onClick={() => setCount((c) => c + 1)} aria-label="+1"
                   className="grid h-24 w-40 place-items-center rounded-2xl bg-[#005BBC] text-white shadow-md active:scale-95">
-                  <span className="flex items-center gap-1 font-mono text-[34px] font-bold"><Plus size={22} />{count}</span>
+                  <span className="flex items-center gap-1 font-secondary text-[34px] font-bold"><Plus size={22} />{count}</span>
                 </button>
                 <button onClick={stop} aria-label={t.countStop}
                   className="grid h-14 w-14 place-items-center rounded-xl border border-slate-300 bg-white text-red-700"><Square size={18} /></button>
@@ -290,13 +290,13 @@ export default function CountTool({ open, data, profile, baseline, onClose }: Pr
             <ul className="mt-1 max-h-40 divide-y divide-slate-100 overflow-y-auto text-[11.5px]">
               {rows.map((r, i) => (
                 <li key={i} className="flex items-center gap-2 py-1">
-                  <span className="font-mono text-[10.5px] text-slate-500">{r.file.replace("_counts.csv", "")}</span>
+                  <span className="font-secondary text-[10.5px] text-slate-500">{r.file.replace("_counts.csv", "")}</span>
                   <span className="min-w-0 flex-1 truncate text-slate-700">
                     {r.values.gate_id ? `${gates.find((g) => g.id === r.values.gate_id)?.street ?? r.values.gate_id} (${r.values.direction})`
                       : r.values.link_id ? label(r.values.link_id) : `${label(r.values.from_link_id)} → ${label(r.values.to_link_id)}`}
                   </span>
-                  <span className="font-mono text-slate-600">{r.values.profile} {r.values.start}–{r.values.end}</span>
-                  <b className="w-10 text-right font-mono text-slate-900">{r.values.vehicles}</b>
+                  <span className="font-secondary text-slate-600">{r.values.profile} {r.values.start}–{r.values.end}</span>
+                  <b className="w-10 text-right font-secondary text-slate-900">{r.values.vehicles}</b>
                   <button onClick={() => setStore((s) => ({ ...s, rows: s.rows.filter((_, j) => j !== i) }))} aria-label={t.removePin}
                     className="text-slate-400 hover:text-red-700"><X size={13} /></button>
                 </li>
@@ -305,7 +305,7 @@ export default function CountTool({ open, data, profile, baseline, onClose }: Pr
             <div className="mt-2 flex flex-wrap gap-1.5">
               {files.map((f) => (
                 <button key={f} onClick={() => download(f)}
-                  className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2 py-1 font-mono text-[11px] text-slate-800 hover:bg-slate-50">
+                  className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2 py-1 font-secondary text-[11px] text-slate-800 hover:bg-slate-50">
                   <Download size={12} /> {f}
                 </button>
               ))}

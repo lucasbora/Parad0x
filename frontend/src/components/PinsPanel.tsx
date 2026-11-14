@@ -32,7 +32,7 @@ export default function PinsPanel({ times, onRemove }: Props) {
                 <span className="block truncate text-[12px] text-slate-800">{pin.street}</span>
                 <span className="block text-[10.5px] text-slate-500">{t.heading[pin.heading] ?? pin.heading}</span>
               </span>
-              <span className="whitespace-nowrap font-mono text-[12px]">
+              <span className="whitespace-nowrap font-secondary text-[12px]">
                 {beforeSec === null ? "—" : `${fmt(beforeSec / 60, 2)}`}
                 {changed && (
                   <>

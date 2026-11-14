@@ -49,11 +49,12 @@ interface Props {
   onPickLink: (linkId: string) => void;
 }
 
+/** Traffic colour by how much slower than free flow: green good, yellow medium, red bad, very dark red very bad. */
 function slownessColor(r: number): string {
   if (r < 1.06) return "#10b981";
-  if (r < 1.18) return "#3b82f6";
-  if (r < 1.45) return "#f59e0b";
-  return "#ef4444";
+  if (r < 1.18) return "#eab308";
+  if (r < 1.45) return "#ef4444";
+  return "#7f1d1d";
 }
 
 function deltaColor(d: number, max: number): string {
@@ -68,7 +69,7 @@ function styleBasemap(map: MLMap, theme: MapTheme) {
   const style = map.getStyle();
   for (const l of style.layers ?? []) {
     const id = l.id.toLowerCase();
-    if (id.startsWith("tmbg-") || ["area-line", "glow-halo", "bus-line", "links-casing", "links-line", "glow-casing", "links-flow", "links-selected", "hl-ghost", "hl-casing", "hl-line", "links-hit", "gates-circle"].includes(l.id)) {
+    if (id.startsWith("tmbg-") || ["area-line", "bus-line", "links-casing", "links-line", "glow-casing", "links-flow", "links-selected", "hl-ghost", "hl-casing", "hl-line", "links-hit", "gates-circle"].includes(l.id)) {
       continue;
     }
     try {
@@ -143,13 +144,6 @@ function styleBasemap(map: MLMap, theme: MapTheme) {
     try {
       map.setPaintProperty("tmbg-city-mask", "fill-color", isDark ? "#020617" : "#334155");
       map.setPaintProperty("tmbg-city-mask", "fill-opacity", isDark ? 0.58 : 0.36);
-    } catch {
-      /* ignore */
-    }
-  }
-  if (map.getLayer("tmbg-city-border-glow")) {
-    try {
-      map.setPaintProperty("tmbg-city-border-glow", "line-color", isDark ? "rgba(56, 189, 248, 0.25)" : "rgba(255, 255, 255, 0.7)");
     } catch {
       /* ignore */
     }
@@ -239,17 +233,6 @@ export default function CorridorMap(props: Props) {
       },
     });
     add({
-      id: "tmbg-city-border-glow",
-      type: "line",
-      source: "city-border",
-      layout: { "line-cap": "round", "line-join": "round" },
-      paint: {
-        "line-color": isDark ? "rgba(56, 189, 248, 0.25)" : "rgba(255, 255, 255, 0.7)",
-        "line-width": 4.5,
-        "line-blur": 1,
-      },
-    });
-    add({
       id: "tmbg-city-border",
       type: "line",
       source: "city-border",
@@ -261,16 +244,13 @@ export default function CorridorMap(props: Props) {
     });
     const offset = ["interpolate", ["linear"], ["zoom"], 14, 2, 18, 7];
     add({ id: "area-line", type: "line", source: "area", paint: { "line-color": "#94a3b8", "line-width": 1.2, "line-dasharray": [3, 2] } });
-    // glow: emerald = low-regret, magenta = Braess
-    add({ id: "glow-halo", type: "line", source: "glow", layout: { "line-cap": "round", "line-join": "round" },
-      paint: { "line-color": ["case", ["get", "braess"], "#d946ef", "#10b981"], "line-width": ["interpolate", ["linear"], ["zoom"], 14, 12, 18, 30],
-        "line-blur": 8, "line-opacity": 0.45, "line-offset": offset } });
     add({ id: "bus-line", type: "line", source: "bus", layout: { "line-cap": "round" },
       paint: { "line-color": ["get", "color"], "line-width": 14, "line-opacity": 0.35, "line-offset": offset } });
     add({ id: "links-casing", type: "line", source: "links", layout: { "line-cap": "round", "line-join": "round" },
       paint: { "line-color": "#ffffff", "line-width": ["+", 3, ["get", "w"]], "line-offset": offset } });
     add({ id: "links-line", type: "line", source: "links", layout: { "line-cap": "round", "line-join": "round" },
       paint: { "line-color": ["get", "color"], "line-width": ["get", "w"], "line-offset": offset } });
+    // Braess streets: thin magenta outline, no glow (no-cost streets are only listed in the scan panel)
     add({ id: "glow-casing", type: "line", source: "glow", filter: ["==", ["get", "braess"], true],
       paint: { "line-color": "#d946ef", "line-width": 1.2, "line-gap-width": 10, "line-offset": offset } });
     add({ id: "links-flow", type: "line", source: "links", filter: [">", ["get", "flow"], 80],
@@ -308,7 +288,7 @@ export default function CorridorMap(props: Props) {
         `<div class="text-[12px] leading-snug"><div class="font-semibold text-slate-900">${String(p.street)}</div>` +
         `<div class="text-slate-500">${tt.heading[String(p.heading)] ?? p.heading} · ${String(p.carLanes)} ${tt.carLanesNow}</div>` +
         (p.hasFlow === true
-          ? `<div class="mt-1 font-mono text-[11px] text-slate-700">${fmt(Number(p.flow), 0)} ${tt.vehH} · ${fmt(Number(p.timeSec), 0)} ${tt.s}` +
+          ? `<div class="mt-1 font-secondary text-[11px] text-slate-700">${fmt(Number(p.flow), 0)} ${tt.vehH} · ${fmt(Number(p.timeSec), 0)} ${tt.s}` +
             (Math.abs(d) >= 1 ? `<br/>Δ ${signed(d, 0)} ${tt.vehH}` : "") + `</div>`
           : "") +
         `</div>`;
@@ -400,7 +380,7 @@ export default function CorridorMap(props: Props) {
       ids.forEach((id) => map.getLayer(id) && map.setLayoutProperty(id, "visibility", on ? "visible" : "none"));
     vis(["links-casing", "links-line"], layers.traffic);
     vis(["links-flow"], layers.traffic && layers.flow);
-    vis(["glow-halo", "glow-casing"], layers.glow);
+    vis(["glow-casing"], layers.glow);
     vis(["gates-circle"], layers.gates);
     vis(["tmbg-buildings-3d"], layers.buildings3d);
     if (prev3d.current !== layers.buildings3d) {
@@ -413,7 +393,7 @@ export default function CorridorMap(props: Props) {
     }
   }, [map, ready, layers]);
 
-  // ---------------------------------------------------------------- pulsing intersection markers
+  // ---------------------------------------------------------------- intersection markers
   useEffect(() => {
     if (!map || !ready) return;
     const store = junctionMarkers.current;
@@ -437,12 +417,12 @@ export default function CorridorMap(props: Props) {
         }
         const relieved = r && now < was - 3;
         const worse = r && now > was + 3;
-        // the base red-light wait (~14 s at a 90 s cycle) is normal; only queueing on top of it glows
+        // the base red-light wait (~14 s at a 90 s cycle) is normal; only queueing on top of it turns the marker amber or red
         const state = now >= 35 ? "saturated" : now >= 20 ? "busy" : "free";
         entry.el.className = `maplibregl-marker queue-pillar queue-${relieved ? "resolved" : state}${worse ? " queue-worse" : ""}`;
         entry.el.style.setProperty("--qsize", `${Math.min(44, 16 + now / 2)}px`);
         entry.el.title = `${p.name}\n${fmt(was, 0)} s → ${fmt(now, 0)} s`;
-        entry.el.innerHTML = `<span class="queue-ring"></span><span class="queue-core">${Math.round(now)}<small>s</small></span>`;
+        entry.el.innerHTML = `<span class="queue-core">${Math.round(now)}<small>s</small></span>`;
       }
     }
     store.forEach((entry, id) => {
@@ -512,7 +492,7 @@ export default function CorridorMap(props: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusKey]);
 
-  // ---------------------------------------------------------------- animation: flow dashes + glow pulse
+  // ---------------------------------------------------------------- animation: flow dashes
   useEffect(() => {
     if (!map || !ready) return;
     let raf = 0;
@@ -521,7 +501,6 @@ export default function CorridorMap(props: Props) {
       if (ts - last > 55) {
         last = ts;
         if (map.getLayer("links-flow")) map.setPaintProperty("links-flow", "line-dasharray", DASHES[Math.floor(ts / 55) % DASHES.length]);
-        if (map.getLayer("glow-halo")) map.setPaintProperty("glow-halo", "line-opacity", 0.22 + 0.3 * (0.5 + 0.5 * Math.sin(ts / 450)));
       }
       raf = requestAnimationFrame(tick);
     };

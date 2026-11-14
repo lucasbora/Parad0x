@@ -25,7 +25,7 @@ function Delta({ before, after, unit, digits = 1, goodWhenLower = true }: {
   const d = after - before;
   const tone = Math.abs(d) < 0.5 * 10 ** -digits ? "text-slate-500" : (d < 0) === goodWhenLower ? "text-emerald-700" : "text-orange-700";
   return (
-    <span className="whitespace-nowrap font-mono text-[12px]">
+    <span className="whitespace-nowrap font-secondary text-[12px]">
       <span className="text-slate-500">{fmt(before, digits)}</span>
       <ArrowRight size={11} className="mx-1 inline text-slate-400" />
       <b className="text-slate-900">{fmt(after, digits)}</b> {unit}{" "}
@@ -70,10 +70,10 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
 
       <div className="rounded-lg bg-slate-50 p-3">
         <p className="text-[12px] text-slate-600">{t.totalTime}</p>
-        <p className={`font-mono text-[22px] font-semibold ${r.totals.changePct <= 0 ? "text-emerald-700" : "text-orange-700"}`}>
+        <p className={`font-secondary text-[22px] font-semibold ${r.totals.changePct <= 0 ? "text-emerald-700" : "text-orange-700"}`}>
           {signed(r.totals.changePct, 1)}%
         </p>
-        <p className="font-mono text-[11px] text-slate-500">
+        <p className="font-secondary text-[11px] text-slate-500">
           {fmt(r.totals.vehMinBefore / 60, 0)} → {fmt(r.totals.vehMinAfter / 60, 0)} veh·h · {fmt(r.totals.demandVehH, 0)} {t.vehH}
           {r.demandScale !== 1 && ` · ${t.demandMeter} ${Math.round(r.demandScale * 100)}%`}
         </p>
@@ -123,12 +123,12 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
             <li key={`${b.routeId}-${b.direction}`} onMouseEnter={() => onHoverBus(b)} onMouseLeave={() => onHoverBus(null)}
               className="rounded-lg border border-slate-200 p-2">
               <div className="flex items-center gap-2">
-                <span className="rounded px-1.5 py-0.5 font-mono text-[12px] font-bold text-white" style={{ background: b.color }}>{b.shortName}</span>
+                <span className="rounded px-1.5 py-0.5 font-secondary text-[12px] font-bold text-white" style={{ background: b.color }}>{b.shortName}</span>
                 <span className="flex-1 truncate text-[11.5px] text-slate-600">{b.longName}</span>
               </div>
               <div className="mt-1"><Delta before={b.minutesBefore} after={b.minutesAfter} unit={t.min} digits={2} /></div>
               <div className="mt-1 flex flex-wrap items-center gap-1 text-[11px] text-slate-600">
-                {b.busesPerHour !== null && <span className="font-mono">{b.busesPerHour} {t.busesPerHour}</span>}
+                {b.busesPerHour !== null && <span className="font-secondary">{b.busesPerHour} {t.busesPerHour}</span>}
                 <SourceBadge label={b.busesPerHourSource} tone={b.busesPerHour !== null ? "live" : "seed"} />
               </div>
             </li>
@@ -143,7 +143,7 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
           {r.trafficShifts.map((s) => (
             <li key={`${s.street}-${s.heading}`} className="flex items-center justify-between gap-2 py-1 text-[12px]">
               <span className="truncate text-slate-700">{s.street} <span className="text-slate-400">· {t.heading[s.heading] ?? s.heading}</span></span>
-              <span className={`font-mono ${s.deltaFlow < 0 ? "text-blue-700" : "text-orange-700"}`}>{signed(s.deltaFlow, 0)} {t.vehH}</span>
+              <span className={`font-secondary ${s.deltaFlow < 0 ? "text-blue-700" : "text-orange-700"}`}>{signed(s.deltaFlow, 0)} {t.vehH}</span>
             </li>
           ))}
         </ul>
@@ -169,7 +169,7 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
         {sens && (
           <div className="mt-2">
             <p className="text-[11.5px] text-slate-600">{t.sensitivityTitle}</p>
-            <table className="mt-1 w-full text-left font-mono text-[11px]">
+            <table className="mt-1 w-full text-left font-secondary text-[11px]">
               <thead className="text-slate-500">
                 <tr><th className="font-normal">{t.demand}</th><th className="font-normal">{t.total}</th><th className="font-normal">{t.mainRoute}</th><th className="font-normal">{t.bus}</th></tr>
               </thead>
@@ -189,7 +189,7 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
       </div>
 
       {r.warnings.map((w) => <p key={w} className="rounded bg-amber-50 px-2 py-1 text-[11px] text-amber-800">{w}</p>)}
-      <p className="font-mono text-[10.5px] text-slate-400">
+      <p className="font-secondary text-[10.5px] text-slate-400">
         Wardrop UE · CFW gap {r.solver.gapAfter.toExponential(0)} · {r.solver.iterationsAfter} it · {fmt(r.solver.msAfter, 0)} ms
       </p>
     </section>

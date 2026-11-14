@@ -427,21 +427,6 @@ export default function App() {
                     type="button"
                     role="menuitem"
                     onClick={() => {
-                      setExplainer(true);
-                      setMenuOpen(false);
-                    }}
-                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
-                      isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
-                    }`}
-                  >
-                    <HelpCircle size={16} className={`shrink-0 ${isDark ? "text-[#38BDF8]" : "text-[#005BBC]"}`} strokeWidth={2.2} />
-                    <span className="truncate">{t.menuExplanation}</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    role="menuitem"
-                    onClick={() => {
                       setSidebarOpen((open) => !open);
                       setMenuOpen(false);
                     }}
@@ -468,21 +453,6 @@ export default function App() {
                     <span className="truncate">{t.menuRecommendedPoints}</span>
                   </button>
 
-                  <button
-                    type="button"
-                    role="menuitem"
-                    onClick={() => {
-                      setCountOpen(true);
-                      setMenuOpen(false);
-                    }}
-                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
-                      isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
-                    }`}
-                  >
-                    <ClipboardList size={16} className={`shrink-0 ${isDark ? "text-[#38BDF8]" : "text-[#005BBC]"}`} strokeWidth={2.2} />
-                    <span className="truncate">{t.menuCount}</span>
-                  </button>
-
                   <div className="relative">
                     <button
                       type="button"
@@ -498,10 +468,13 @@ export default function App() {
                     </button>
 
                     {themeMenuOpen && (
+                      // centred by a static flex wrapper: the slide-in animation sets `transform`,
+                      // which used to cancel a -translate-y-1/2 and make the flyout jump when it appeared
+                      <div className="absolute inset-y-0 left-full z-40 ml-2 flex items-center">
                       <div
                         role="group"
                         aria-label={t.menuTheme}
-                        className={`absolute left-full top-1/2 z-40 ml-2 flex -translate-y-1/2 items-center gap-1.5 rounded-xl border p-1.5 shadow-island animate-slideIn ${
+                        className={`flex items-center gap-1.5 rounded-xl border p-1.5 shadow-island animate-slideIn ${
                           isDark ? "border-slate-700/90 bg-slate-900" : "border-slate-200/90 bg-white"
                         }`}
                       >
@@ -550,13 +523,44 @@ export default function App() {
                           <Box size={19} strokeWidth={2.2} />
                         </button>
                       </div>
+                      </div>
                     )}
                   </div>
+
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      setExplainer(true);
+                      setMenuOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                      isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
+                    }`}
+                  >
+                    <HelpCircle size={16} className={`shrink-0 ${isDark ? "text-[#38BDF8]" : "text-[#005BBC]"}`} strokeWidth={2.2} />
+                    <span className="truncate">{t.menuExplanation}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      setCountOpen(true);
+                      setMenuOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                      isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
+                    }`}
+                  >
+                    <ClipboardList size={16} className={`shrink-0 ${isDark ? "text-[#38BDF8]" : "text-[#005BBC]"}`} strokeWidth={2.2} />
+                    <span className="truncate">{t.menuCount}</span>
+                  </button>
                 </div>
               )}
             </div>
 
-            <div className={`flex rounded-full p-0.5 font-mono text-[11px] ${isDark ? "bg-slate-800" : "bg-slate-100"}`} role="radiogroup" aria-label={t.language}>
+            <div className={`flex rounded-full p-0.5 font-secondary text-[11px] ${isDark ? "bg-slate-800" : "bg-slate-100"}`} role="radiogroup" aria-label={t.language}>
               {(["ro", "en"] as const).map((l) => (
                 <button
                   key={l}
@@ -609,7 +613,7 @@ export default function App() {
             {error && (
               <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-[12.5px] text-red-800">
                 {t.backendDown}
-                <p className="mt-1 font-mono text-[11px]">{error}</p>
+                <p className="mt-1 font-secondary text-[11px]">{error}</p>
                 <button onClick={() => setReload((r) => r + 1)} className="mt-2 flex items-center gap-1 rounded bg-white px-2 py-1 text-[12px] shadow-sm">
                   <RefreshCw size={12} /> {t.retry}
                 </button>
@@ -645,10 +649,10 @@ export default function App() {
           </div>
         </aside>
 
-        {/* top-right Recommended Points floating panel */}
+        {/* top-right Recommended Points floating panel (padding leaves room for the card's drop shadow inside the scroll area) */}
         <aside
           aria-hidden={!recommendedOpen}
-          className={`absolute right-3 top-3 z-10 w-[360px] max-w-[calc(100vw-24px)] max-h-[calc(100vh-80px)] overflow-y-auto transition-[transform,opacity] duration-300 ease-out ${
+          className={`absolute right-0 top-0 z-10 w-[384px] max-w-[100vw] max-h-[calc(100vh-36px)] overflow-y-auto p-3 pb-8 transition-[transform,opacity] duration-300 ease-out ${
             recommendedOpen
               ? "pointer-events-auto translate-x-0 opacity-100"
               : "pointer-events-none translate-x-[calc(100%+24px)] opacity-0"

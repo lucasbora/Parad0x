@@ -49,7 +49,7 @@ function LaneStrip({
 
   const content = (
     <>
-      {showDivider && !isSidewalk && (
+      {showDivider && k === "bike" && (
         <div
           className="absolute inset-y-0 right-0 w-[2px]"
           style={{
@@ -120,6 +120,8 @@ export default function LaneMixer({
   const [menuFor, setMenuFor] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const changed = lanes.some((l, i) => l !== original[i]);
+  // with more than three lane strips the dropdown is too narrow for the names, so it shows icons only
+  const iconOnly = lanes.length + (existingBusLane ? 1 : 0) > 3;
 
   useEffect(() => {
     if (menuFor === null) return;
@@ -205,6 +207,8 @@ export default function LaneMixer({
                           type="button"
                           role="menuitemradio"
                           aria-checked={active}
+                          aria-label={iconOnly ? t.laneKinds[opt] : undefined}
+                          title={iconOnly ? t.laneKinds[opt] : undefined}
                           onClick={() => {
                             const next = [...lanes];
                             next[i] = opt;
@@ -222,7 +226,7 @@ export default function LaneMixer({
                             style={{ color: optSidewalk ? "#047857" : "#ffffff" }}
                             strokeWidth={2.2}
                           />
-                          <span className="truncate">{t.laneKinds[opt]}</span>
+                          {!iconOnly && <span className="truncate">{t.laneKinds[opt]}</span>}
                         </button>
                       );
                     })}
