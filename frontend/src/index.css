@@ -25,10 +25,45 @@ body,
   -webkit-backdrop-filter: blur(14px) saturate(1.3);
 }
 
+.theme-dark .glass {
+  background: rgba(15, 23, 42, 0.88);
+  border-color: rgba(51, 65, 85, 0.85);
+  box-shadow: 0 14px 36px -12px rgba(0, 0, 0, 0.7), 0 2px 8px -2px rgba(0, 0, 0, 0.45);
+  color: #f8fafc;
+}
+
 .maplibregl-popup-content {
   border-radius: 12px;
   padding: 8px 10px;
   box-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.45);
+}
+
+.theme-dark .maplibregl-popup-content {
+  background: #0f172a;
+  color: #f1f5f9;
+  border: 1px solid #334155;
+  box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.75);
+}
+.theme-dark .maplibregl-popup-tip {
+  border-top-color: #0f172a !important;
+  border-bottom-color: #0f172a !important;
+}
+.theme-dark .maplibregl-ctrl-group {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid #334155;
+}
+.theme-dark .maplibregl-ctrl-group button + button {
+  border-top-color: #334155;
+}
+.theme-dark .maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+  filter: invert(0.9) hue-rotate(180deg);
+}
+.theme-dark .maplibregl-ctrl-attrib {
+  background: rgba(15, 23, 42, 0.85) !important;
+  color: #94a3b8 !important;
+}
+.theme-dark .maplibregl-ctrl-attrib a {
+  color: #cbd5e1 !important;
 }
 
 /* vehicles driving up the animated lane strips */
@@ -122,6 +157,141 @@ body,
 .tmbg-pin-stem { width: 2px; height: 10px; background: #005bbc; }
 .tmbg-pin-faster { border-color: #059669; background: #ecfdf5; }
 .tmbg-pin-slower { border-color: #ea580c; background: #fff7ed; }
+
+.theme-dark .tmbg-pin-card {
+  background: #0f172a;
+  border-color: #38bdf8;
+  color: #f8fafc;
+}
+.theme-dark .tmbg-pin-faster {
+  border-color: #10b981;
+  background: #064e3b;
+  color: #ecfdf5;
+}
+.theme-dark .tmbg-pin-slower {
+  border-color: #f97316;
+  background: #7c2d12;
+  color: #fff7ed;
+}
+.theme-dark .route-callout {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #334155;
+}
+
+/* UI dark mode overrides for cards, inputs, tables, and text contrast */
+.theme-dark .bg-white {
+  background-color: #0f172a !important;
+}
+.theme-dark .bg-white\/80,
+.theme-dark .bg-white\/70 {
+  background-color: rgba(15, 23, 42, 0.85) !important;
+}
+.theme-dark .bg-slate-50 {
+  background-color: #1e293b !important;
+}
+.theme-dark .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+.theme-dark .bg-amber-50,
+.theme-dark .bg-amber-50\/95 {
+  background-color: rgba(69, 26, 3, 0.82) !important;
+}
+.theme-dark .bg-emerald-50 {
+  background-color: rgba(6, 78, 59, 0.65) !important;
+}
+.theme-dark .bg-red-50 {
+  background-color: rgba(127, 29, 29, 0.65) !important;
+}
+.theme-dark .bg-fuchsia-50 {
+  background-color: rgba(112, 26, 117, 0.55) !important;
+}
+.theme-dark .from-emerald-50\/95 {
+  --tw-gradient-from: rgba(6, 78, 59, 0.92) var(--tw-gradient-from-position) !important;
+}
+.theme-dark .via-white\/95 {
+  --tw-gradient-to: rgba(15, 23, 42, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), rgba(15, 23, 42, 0.95) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+.theme-dark .to-white\/95 {
+  --tw-gradient-to: rgba(15, 23, 42, 0.96) var(--tw-gradient-to-position) !important;
+}
+
+.theme-dark .border-slate-200,
+.theme-dark .border-slate-200\/80,
+.theme-dark .border-slate-200\/90,
+.theme-dark .border-slate-300,
+.theme-dark .border-slate-100 {
+  border-color: rgba(51, 65, 85, 0.85) !important;
+}
+.theme-dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(51, 65, 85, 0.7) !important;
+}
+.theme-dark .border-amber-300,
+.theme-dark .border-amber-200 {
+  border-color: rgba(217, 119, 6, 0.65) !important;
+}
+.theme-dark .border-emerald-200,
+.theme-dark .border-emerald-200\/90 {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+}
+.theme-dark .border-fuchsia-300 {
+  border-color: rgba(217, 70, 239, 0.6) !important;
+}
+
+.theme-dark .text-\[\#0F172A\],
+.theme-dark .text-slate-900,
+.theme-dark .text-slate-800 {
+  color: #f8fafc !important;
+}
+.theme-dark .text-slate-700,
+.theme-dark .text-slate-600 {
+  color: #cbd5e1 !important;
+}
+.theme-dark .fill-slate-700 {
+  fill: #cbd5e1 !important;
+}
+.theme-dark .text-slate-500,
+.theme-dark .text-slate-400 {
+  color: #94a3b8 !important;
+}
+.theme-dark .text-\[\#005BBC\],
+.theme-dark .text-blue-700 {
+  color: #38bdf8 !important;
+}
+.theme-dark .text-amber-900,
+.theme-dark .text-amber-800,
+.theme-dark .text-amber-700,
+.theme-dark .text-amber-600 {
+  color: #fcd34d !important;
+}
+.theme-dark .text-emerald-800,
+.theme-dark .text-emerald-700,
+.theme-dark .text-emerald-600 {
+  color: #34d399 !important;
+}
+.theme-dark .text-orange-700 {
+  color: #fb923c !important;
+}
+.theme-dark .text-red-800,
+.theme-dark .text-red-700 {
+  color: #fca5a5 !important;
+}
+.theme-dark .text-fuchsia-800,
+.theme-dark .text-fuchsia-700 {
+  color: #f0abfc !important;
+}
+
+.theme-dark .hover\:bg-slate-50:hover,
+.theme-dark .hover\:bg-slate-100:hover,
+.theme-dark .hover\:bg-blue-50:hover,
+.theme-dark .hover\:bg-white:hover {
+  background-color: #1e293b !important;
+}
+.theme-dark .hover\:text-slate-900:hover,
+.theme-dark .hover\:text-slate-800:hover {
+  color: #f8fafc !important;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,

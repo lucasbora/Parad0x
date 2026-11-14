@@ -61,13 +61,13 @@ function LaneStrip({
       <div className="flex flex-col items-center justify-center gap-1.5 px-1">
         <Icon
           size={22}
-          className={isSidewalk ? "text-emerald-700" : "text-white drop-shadow-sm"}
+          className={isSidewalk ? "" : "drop-shadow-sm"}
+          style={{ color: isSidewalk ? "#047857" : "#ffffff" }}
           strokeWidth={2.2}
         />
         <span
-          className={`text-center text-[11px] font-semibold leading-tight ${
-            isSidewalk ? "text-slate-800" : "text-white"
-          }`}
+          className="text-center text-[11px] font-semibold leading-tight"
+          style={{ color: isSidewalk ? "#0f172a" : "#ffffff" }}
         >
           {typeName}
         </span>
@@ -165,7 +165,7 @@ export default function LaneMixer({
             }`}
             style={{ backgroundColor: SURFACE.sidewalk }}
           >
-            {!firstIsSidewalk && <TreeDeciduous size={15} className="text-emerald-700" />}
+            {!firstIsSidewalk && <TreeDeciduous size={15} style={{ color: "#047857" }} />}
           </div>
 
           {lanes.map((l, i) => {
@@ -212,13 +212,14 @@ export default function LaneMixer({
                             setMenuFor(null);
                           }}
                           className={`flex w-full items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-[11.5px] font-semibold transition hover:brightness-110 ${
-                            optSidewalk ? "text-slate-800" : "text-white"
-                          } ${active ? "ring-2 ring-[#005BBC] ring-offset-1" : ""}`}
-                          style={{ backgroundColor: SURFACE[opt] }}
+                            active ? "ring-2 ring-[#005BBC] ring-offset-1" : ""
+                          }`}
+                          style={{ backgroundColor: SURFACE[opt], color: optSidewalk ? "#0f172a" : "#ffffff" }}
                         >
                           <OptIcon
                             size={15}
-                            className={`shrink-0 ${optSidewalk ? "text-emerald-700" : "text-white"}`}
+                            className="shrink-0"
+                            style={{ color: optSidewalk ? "#047857" : "#ffffff" }}
                             strokeWidth={2.2}
                           />
                           <span className="truncate">{t.laneKinds[opt]}</span>
@@ -248,7 +249,7 @@ export default function LaneMixer({
             }`}
             style={{ backgroundColor: SURFACE.sidewalk }}
           >
-            {!lastIsSidewalk && <TreeDeciduous size={15} className="text-emerald-700" />}
+            {!lastIsSidewalk && <TreeDeciduous size={15} style={{ color: "#047857" }} />}
           </div>
         </div>
       </div>

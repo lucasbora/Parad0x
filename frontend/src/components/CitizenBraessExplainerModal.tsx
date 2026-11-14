@@ -103,12 +103,12 @@ export default function CitizenBraessExplainerModal({ open, onClose }: Props) {
               <text x={P[k][0]} y={P[k][1] + 4} textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700">{k}</text>
             </g>
           ))}
-          <g fontSize="10" className="font-mono" fill="#334155">
+          <g fontSize="10" className="fill-slate-700 font-mono">
             <text x="95" y="78">z/100 min</text>
             <text x="300" y="78">45 min</text>
             <text x="95" y="215">45 min</text>
             <text x="300" y="215">z/100 min</text>
-            <text x="218" y="145" fill={shortcut ? "#a21caf" : "#94a3b8"}>{C_SHORTCUT} min</text>
+            <text x="218" y="145" fill={shortcut ? "#d946ef" : "#94a3b8"}>{C_SHORTCUT} min</text>
           </g>
         </svg>
 
