@@ -30,7 +30,11 @@ from app.corridor import config
 from app.corridor.osm_network import compass, street_directions
 
 QUICK_GAP, QUICK_ITER = 3e-4, 80
-PRECISE_GAP, PRECISE_ITER = 2e-5, 400
+# verified rows are solved exactly like a click in the UI (same tolerance, same warm start from the
+# base), so the percentage in the list is the percentage the user sees after applying it
+from app.corridor.model import BASE_GAP, BASE_MAX_ITER  # noqa: E402
+
+PRECISE_GAP, PRECISE_ITER = BASE_GAP, BASE_MAX_ITER
 VERIFY_TOP, PER_STREET = 24, 6
 VERIFY_KEEP_IMP = -0.0008      # stage 1 keeps anything not clearly worse (L. Zhao's cut-off)
 VERIFY_MAX = 60
@@ -150,6 +154,8 @@ def _run_all(m, base, ods_demand, cands, profile, gap, max_iter, workers) -> lis
 def _signature(m, profile: str) -> str:
     h = hashlib.sha1()
     h.update(m.net.source["fetchedAt"].encode())
+    h.update(config.MODEL_VERSION.encode())
+    h.update(repr(config.TURNS).encode())
     h.update(repr(sorted((p.name, p.stat().st_mtime_ns) for p in m.input_dir.glob("*.csv"))).encode()
              if m.input_dir.exists() else b"")
     h.update(repr((config.ASSUMPTIONS, config.LANDUSE, config.PROFILES[profile], config.POI_WEIGHTS,

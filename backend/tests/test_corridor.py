@@ -42,20 +42,17 @@ def test_wardrop_two_routes_bpr():
 
 
 def _path_loading(net, cost, ods):
-    """Reference: load each OD pair along its own shortest path (the old method)."""
+    """Reference: load each OD pair along its own shortest path, one pair at a time."""
     origins = sorted({o for o, _, _ in ods})
-    dist, pred = net.shortest_paths(cost, origins, np.ones(net.n_links, bool))
+    _, pred = net.shortest_paths(cost, origins, np.ones(net.n_links, bool))
     row = {o: i for i, o in enumerate(origins)}
     y, ym = np.zeros(net.n_links), np.zeros(len(net.movements))
     for o, d, q in ods:
-        prev, v = None, d
-        while v != o:
-            u = pred[row[o], v]
-            e = net.edge_link[(u, v)]
+        path = net.path_links(pred[row[o]], d)
+        for e in path:
             y[e] += q
-            if prev is not None:
-                ym[net.movements[(e, prev)]] += q
-            prev, v = e, u
+        for a, b in zip(path[:-1], path[1:]):
+            ym[net.movements[(a, b)]] += q
     return y, ym
 
 
@@ -75,6 +72,19 @@ def test_tree_loading_equals_path_loading():
     y, ym, _ = _all_or_nothing(net, cost, ods, np.ones(len(edges), bool))
     y2, ym2 = _path_loading(net, cost, ods)
     assert np.allclose(y, y2) and np.allclose(ym, ym2)
+
+
+def test_banned_turn_forces_detour():
+    """0→1→3 is fastest, but the turn (0→1) → (1→3) is banned: drivers must go 0→2→3."""
+    links = [(0, 1), (1, 3), (0, 2), (2, 3)]
+    cost = np.array([1.0, 1.0, 2.0, 2.0])
+    free = Network(4, [a for a, _ in links], [b for _, b in links])
+    banned = Network(4, [a for a, _ in links], [b for _, b in links], banned={(0, 1)})
+    y, _, t = _all_or_nothing(free, cost, [(0, 3, 10.0)], np.ones(4, bool))
+    assert t[(0, 3)] == pytest.approx(2.0) and list(y) == [10, 10, 0, 0]
+    y, ym, t = _all_or_nothing(banned, cost, [(0, 3, 10.0)], np.ones(4, bool))
+    assert t[(0, 3)] == pytest.approx(4.0) and list(y) == [0, 0, 10, 10]
+    assert (0, 1) not in banned.movements and ym[banned.movements[(2, 3)]] == pytest.approx(10.0)
 
 
 def test_furness_and_geh():
@@ -97,6 +107,15 @@ def test_network_has_side_streets_and_gateways():
         assert s in {l.street for l in net.links}
     assert not any(l.speed_source.startswith("assumed") and "RO:urban" in l.speed_source for l in net.links)
     assert len(net.core_nodes) > 100
+
+
+def test_osm_turn_restrictions_applied():
+    m = CorridorModel()
+    st = m.turn_stats
+    assert st["applied"] >= 20 and st["uTurnsBanned"] > 0
+    assert st["applied"] + st["skippedDisconnecting"] + st["outsideNetwork"] + st["viaWaySkipped"] <= st["relations"]
+    assert all(mv not in m.solver_net.movements for mv in m.banned)
+    assert m._connected(m.banned)
 
 
 def test_landuse_zones_on_core_nodes():
@@ -148,6 +167,14 @@ def test_solve_is_fast_and_conserves_flow(estimated):
         assert inflow - outflow == pytest.approx(ends.get(k, 0.0) - starts.get(k, 0.0), abs=1e-3)
 
 
+def test_through_traffic_follows_time_of_day(estimated):
+    m = estimated
+    t = {p: m.od_table(p).summary["throughVehH"] for p in config.PROFILES}
+    assert t["sunday"] < t["day"] < t["morning"] < t["evening"]
+    ref = config.LANDUSE["through_reference_profile"]
+    assert m.od_table(ref).summary["throughScale"] == pytest.approx(1.0)
+
+
 def test_lane_change_and_closure(estimated):
     m = estimated
     cluj = max((l for l in m.net.links if l.street == "Strada Cluj"), key=lambda l: l.car_lanes)
@@ -181,6 +208,10 @@ def test_scan_deterministic_and_flags_only_verified(estimated, tmp_path, monkeyp
     assert {r["kind"] for r in a["rows"]} == {"removal", "lane"}
     assert all(r["stage"] == "verified" for r in a["rows"] if r["braess"] or r["routeBraess"])
     assert a["tested"]["removal"] > 50
+    # a verified row shows exactly what the user gets when applying it
+    row = next(r for r in a["rows"] if r["stage"] == "verified" and r["kind"] == "removal")
+    res = m.compare([LaneChange(i, 0, "closed") for i in row["linkIds"]])
+    assert res["totals"]["changePct"] == pytest.approx(row["changePct"], abs=0.006)
 
 
 # ---------------------------------------------------------------- calibration with counts

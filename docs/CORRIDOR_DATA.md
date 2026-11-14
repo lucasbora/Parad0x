@@ -40,6 +40,14 @@ flagged with a warning. Sunday counts calibrate **only** the Sunday profile; wee
 Regenerate after changing the corridor box: `cd backend && python scripts/write_corridor_templates.py`.
 Refetch OSM: `python scripts/fetch_osm_corridor.py`.
 
+## Counting on site: the app's counter
+
+Menu → **Numărătoare teren**: pick a gate / street / turn (gates are listed busiest first by the model
+estimate), type your name, press **Start 15 minutes** and tap **+1** for every car (Space/Enter also count,
+Backspace undoes). **Stop** saves a row with the real start/end time, the current profile and
+`source = tally <name> <date>`. Rows stay on the phone until you download the CSV and put it here.
+Count in the profile's window (shown in the counter) — rows outside it are accepted with a warning.
+
 ## What to collect
 
 ### 1. `gate_counts.csv` — calibrates through-traffic (most important)
@@ -124,9 +132,11 @@ link_id,car_lanes,bus_lane,source
 | Residents per building | 30 m² floor / resident; untyped buildings 50 % housing; default floors by type | census / `link_counts` |
 | Car trips per resident | 2.3 trips/day × hour share × car share 44 % (**PMUD, unverified**) ÷ 1.3 people/car | PMUD / `link_counts` |
 | Destinations | OSM POI + building weights per activity, scaled per profile | `link_counts` |
-| Through-traffic | 25 % of each gateway road's capacity | `gate_counts` |
+| Through-traffic | 25 % of each gateway road's capacity at the morning peak; other profiles × hour share × trip level (day 0.76, evening 1.06, Sunday 0.66) | `gate_counts` |
 | Share of local trips leaving the area | 60 % | `gate_counts` |
 | Signal timing | cycle 90 s, green 45 % | `signal_timings.csv` |
 | Saturation flow | 1800 veh/h/lane (HCM); side streets 600 | calibration |
 | Congestion curve | BPR α 0.15, β 4 | calibration |
 | Bus vs car free-flow time | ×1.15 | — |
+| People per car (people-hours) | 1.3 | survey / PMUD |
+| Turning rules | OSM restrictions (39 applied) + no U-turns except dead ends | `turn_counts` (check) |

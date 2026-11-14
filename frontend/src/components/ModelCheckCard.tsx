@@ -87,6 +87,12 @@ export default function ModelCheckCard({ data, calibration }: { data: CorridorRe
         {data.sources.stats.links} links ({data.sources.stats.sideStreetLinks} side streets) · {data.sources.stats.junctions} intersections ({data.sources.stats.signalized} signals) ·{" "}
         {data.sources.stats.zones} land-use zones · SMTT live
       </div>
+      {data.sources.turns && (
+        <div className="text-[11px] text-slate-500">
+          <span className="font-semibold">{t.turnRules}:</span> OSM {data.sources.turns.applied}/{data.sources.turns.relations} ·
+          U-turn {data.sources.turns.uTurnsBanned} · {data.sources.turns.bannedMovements} / {data.sources.turns.bannedMovements + data.sources.turns.allowedMovements} movements banned
+        </div>
+      )}
     </div>
   );
 }

@@ -22,6 +22,7 @@ export interface DemandSummary {
   gatewayInVehH: number;
   gatewayOutVehH: number;
   throughVehH: number;
+  throughScale: number;
   totalVehH: number;
   localMultiplier: number;
   countedGates: string[];
@@ -147,6 +148,16 @@ export interface CorridorResponse {
     network: string;
     networkFetchedAt: string;
     stats: { links: number; junctions: number; signalized: number; gates: number; sideStreetLinks: number; zones: number };
+    turns: {
+      relations: number;
+      applied: number;
+      outsideNetwork: number;
+      viaWaySkipped: number;
+      skippedDisconnecting: number;
+      uTurnsBanned: number;
+      bannedMovements: number;
+      allowedMovements: number;
+    };
   };
 }
 
@@ -218,6 +229,15 @@ export interface SimulateOk {
   demandSource: DemandSource;
   braess: { detected: boolean; carCapacityRemoved: boolean; totalChangePct: number };
   totals: { vehMinBefore: number; vehMinAfter: number; changePct: number; demandVehH: number };
+  people: {
+    carOccupancy: number;
+    carOccupancySource: string;
+    carPersonHoursBefore: number;
+    carPersonHoursAfter: number;
+    busHoursBefore: number;
+    busHoursAfter: number;
+    busLinesCounted: number;
+  };
   carRoutes: CarRoute[];
   junctions: { nodeId: string; delayBeforeSec: number; delayAfterSec: number }[];
   trafficShifts: TrafficShift[];
@@ -283,6 +303,8 @@ export type BaselineResponse =
       profile: Profile;
       demandSource: DemandSource;
       demandSummary: DemandSummary;
+      demandScale: number;
+      demandVehH: number;
       totalVehMin: number;
       links: BaselineLink[];
       junctions: { nodeId: string; delaySec: number }[];

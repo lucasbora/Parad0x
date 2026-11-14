@@ -8,6 +8,7 @@ interface Props {
   loading: boolean;
   demandSource: DemandSource | null;
   stats: { tested: number; seconds: number } | null;
+  demandScale: number;
   onPick: (r: ScanRow) => void;
   onClose?: () => void;
 }
@@ -15,7 +16,7 @@ interface Props {
 const rowKey = (r: ScanRow) => `${r.kind}|${r.linkIds.join(",")}`;
 
 /** "Where is a green lane worth it?" — every busy segment closed (both ways) + −1 lane per street, ranked. */
-export default function ScanCard({ rows, loading, demandSource, stats, onPick, onClose }: Props) {
+export default function ScanCard({ rows, loading, demandSource, stats, demandScale, onPick, onClose }: Props) {
   const { t } = useI18n();
   const braess = (rows ?? []).filter((r) => r.braess);
   const cheap = (rows ?? []).filter((r) => r.lowRegret && !r.braess).slice(0, 6);
@@ -43,6 +44,7 @@ export default function ScanCard({ rows, loading, demandSource, stats, onPick, o
           {t.estimatedBanner}
         </p>
       )}
+      {demandScale !== 1 && <p className="mt-1 text-[10.5px] leading-snug text-slate-500">{t.scanAtFullDemand}</p>}
       {loading && <p className="mt-2 flex items-center gap-1.5 text-[11.5px] text-slate-500"><Loader2 size={12} className="animate-spin" /> {t.scanRunning}</p>}
       {rows && !loading && (
         <div className="mt-2 space-y-2">

@@ -31,11 +31,12 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const api = {
   corridor: () => request<CorridorResponse>("/api/corridor"),
-  baseline: (profile: Profile) => request<BaselineResponse>(`/api/corridor/baseline?profile=${profile}`),
-  simulate: (changes: Change[], profile: Profile, signal?: AbortSignal) =>
+  baseline: (profile: Profile, demandScale = 1) =>
+    request<BaselineResponse>(`/api/corridor/baseline?profile=${profile}&demandScale=${demandScale}`),
+  simulate: (changes: Change[], profile: Profile, demandScale = 1, signal?: AbortSignal) =>
     request<SimulateResponse>("/api/corridor/simulate", {
       method: "POST",
-      body: JSON.stringify({ changes, demandScale: 1, profile }),
+      body: JSON.stringify({ changes, demandScale, profile }),
       signal,
     }),
   sensitivity: (changes: Change[], profile: Profile) =>

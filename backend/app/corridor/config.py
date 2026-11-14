@@ -97,6 +97,15 @@ CLASS_DEFAULTS = {
 }
 SIDE_STREET_CLASSES = ("residential", "living_street", "unclassified")
 
+# Turning rules at intersections
+TURNS = {
+    "apply_osm_restrictions": True,   # no_left_turn, only_straight_on, … relations from the OSM snapshot
+    "ban_u_turns": True,              # no U-turns at intersections (allowed only where a road dead-ends)
+}
+
+# bump when the model changes in a way that invalidates cached Braess searches
+MODEL_VERSION = "v3-turns"
+
 # Land use → trips. Sources: typical European urban values; replace when PMT data is found.
 LANDUSE = {
     "m2_floor_per_resident": 30.0,       # gross floor area per resident (useful area ≈ 20 m², +walls/stairs)
@@ -108,7 +117,9 @@ LANDUSE = {
     "car_share_verified": False,
     "car_occupancy": 1.3,
     "external_share": 0.6,               # share of local trips that leave the box (small area)
-    "through_share_of_capacity": 0.25,   # gateway through-traffic until counted
+    "through_share_of_capacity": 0.25,   # gateway through-traffic in the REFERENCE profile, until counted
+    # other profiles scale through-traffic like local trips: hour share × trip level relative to it
+    "through_reference_profile": "morning",
     "zone_cell_m": 150.0,
     "max_zones": 32,
 }

@@ -48,7 +48,7 @@ def _warm() -> None:
 
 
 def _warm_corridor() -> None:
-    """Corridor: base state for every profile + the morning Braess search (cached on disk)."""
+    """Corridor: base state for every profile, then every profile's Braess search (cached on disk)."""
     t = time.perf_counter()
     try:
         from app.corridor.model import get_model
@@ -56,7 +56,8 @@ def _warm_corridor() -> None:
         m = get_model()
         for profile in ("morning", "day", "evening", "sunday"):
             m.baseline(profile=profile)
-        m.scan(profile="morning")
+        for profile in ("morning", "evening", "day", "sunday"):   # busiest first
+            m.scan(profile=profile)
         log.info("corridor warm-up complete in %.1fs", time.perf_counter() - t)
     except Exception:  # never take the API down because of warm-up
         log.exception("corridor warm-up failed")

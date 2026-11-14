@@ -21,7 +21,8 @@ from app.corridor.assignment import AssignmentResult, LinkCosts, Network, assign
 from app.corridor.config import ASSUMPTIONS, DEFAULT_PROFILE, LANDUSE, PROFILES, SIDE_STREET_CLASSES
 from app.corridor.demand import ODTable, landuse_od
 from app.corridor.landuse import LandUse, load_landuse
-from app.corridor.osm_network import CorridorNetwork, compass, load_network
+from app.corridor.osm_network import (CorridorNetwork, compass, load_network, restriction_movements,
+                                      u_turn_movements)
 
 USES = ("bus", "bike", "sidewalk", "closed")
 BASE_GAP = 1e-5          # base state and user edits
@@ -57,13 +58,52 @@ class CorridorModel:
         self.landuse: LandUse = load_landuse()
         ids = list(self.net.nodes)
         self.node_idx = {nid: i for i, nid in enumerate(ids)}
-        self.solver_net = Network(len(ids), [self.node_idx[l.from_node] for l in self.net.links],
-                                  [self.node_idx[l.to_node] for l in self.net.links])
+        self.banned, self.turn_stats = self._turn_rules()
+        self.solver_net = self._network(self.banned)
         self.fd = inputs.load_field_data(self.net, self.input_dir)
         self.status = inputs.data_status(self.net, self.fd, self.input_dir)
         self._cache: dict[Any, Any] = {}
         self._incoming: dict[str, np.ndarray] = {}
         self._lock = threading.Lock()
+
+    # ------------------------------------------------------------------ turning rules
+    def _network(self, banned: set[tuple[int, int]]) -> Network:
+        return Network(len(self.node_idx), [self.node_idx[l.from_node] for l in self.net.links],
+                       [self.node_idx[l.to_node] for l in self.net.links], banned=banned)
+
+    def _connected(self, banned: set[tuple[int, int]]) -> bool:
+        """Can every zone / entry gate still reach every zone / exit gate?"""
+        sn = self._network(banned)
+        src = sorted({self.node_idx[z.node] for z in self.landuse.zones} |
+                     {self.node_idx[g.node] for g in self.net.gates if g.in_link})
+        dst = sorted({self.node_idx[z.node] for z in self.landuse.zones} |
+                     {self.node_idx[g.node] for g in self.net.gates if g.out_link})
+        dist, _ = sn.shortest_paths(np.ones(sn.n_links), src, np.ones(sn.n_links, dtype=bool))
+        L, N = sn.n_links, sn.n_nodes
+        sub = dist[:, [L + N + d for d in dst]]
+        same = np.array(src)[:, None] == np.array(dst)[None, :]
+        return bool(np.all(np.isfinite(sub) | same))
+
+    def _turn_rules(self) -> tuple[set[tuple[int, int]], dict[str, Any]]:
+        """OSM turn restrictions + no U-turns. A restriction is applied only if the modelled area stays
+        connected with it: side streets are cut at the box edge, so the legal way round sometimes
+        lies outside the model — such restrictions are skipped and counted."""
+        groups, stats = restriction_movements(self.net)
+        use_osm, no_u = config.TURNS["apply_osm_restrictions"], config.TURNS["ban_u_turns"]
+        banned: set[tuple[int, int]] = set()
+        applied = skipped = 0
+        for g in groups if use_osm else []:
+            trial = banned | g["pairs"]
+            if self._connected(trial | (u_turn_movements(self.net, trial) if no_u else set())):
+                banned, applied = trial, applied + 1
+            else:
+                skipped += 1
+        u_turns = u_turn_movements(self.net, banned) if no_u else set()
+        if u_turns and not self._connected(banned | u_turns):
+            u_turns = set()
+        stats.update(applied=applied, skippedDisconnecting=skipped, bannedByRestrictions=len(banned),
+                     uTurnsBanned=len(u_turns - banned))
+        return banned | u_turns, stats
 
     # ------------------------------------------------------------------ network inputs
     def car_lanes(self, link_id: str) -> tuple[int, str]:
@@ -123,6 +163,13 @@ class CorridorModel:
     def demand_source(self, profile: str) -> str:
         return "calibrated" if self.fd.calibrated(profile) else "estimated"
 
+    @staticmethod
+    def through_scale(profile: str) -> float:
+        """Through-traffic follows the same time-of-day curve as local trips (hour share × trip
+        level), relative to the reference profile where ``through_share_of_capacity`` applies."""
+        p, ref = PROFILES[profile], PROFILES[LANDUSE["through_reference_profile"]]
+        return (p.hour_share * p.trip_level) / (ref.hour_share * ref.trip_level)
+
     def _od_table(self, profile: str, local_multiplier: float) -> ODTable:
         cap = self.costs([])[0].cap
         dist = self._free_dist()
@@ -132,7 +179,7 @@ class CorridorModel:
             {g.id: float(cap[self.net.link_index[g.out_link]]) for g in self.net.gates if g.out_link},
             PROFILES[profile], LANDUSE,
             counted_in=self.fd.gate_in.get(profile), counted_out=self.fd.gate_out.get(profile),
-            local_multiplier=local_multiplier)
+            local_multiplier=local_multiplier, through_scale=self.through_scale(profile))
 
     def od_table(self, profile: str = DEFAULT_PROFILE) -> ODTable:
         profile = check_profile(profile)
@@ -209,16 +256,9 @@ class CorridorModel:
     def path_coords(self, cost: np.ndarray, usable: np.ndarray, o: int, d: int) -> list[list[float]]:
         """Geometry of the shortest path o → d at the given link costs."""
         _, pred = self.solver_net.shortest_paths(cost, [o], usable)
-        nodes = [d]
-        while nodes[-1] != o:
-            u = int(pred[0, nodes[-1]])
-            if u < 0:
-                return []
-            nodes.append(u)
-        nodes.reverse()
         coords: list[list[float]] = []
-        for u, v in zip(nodes[:-1], nodes[1:]):
-            g = self.net.links[self.solver_net.edge_link[(u, v)]].geometry
+        for i in self.solver_net.path_links(pred[0], d):
+            g = self.net.links[i].geometry
             coords.extend(g if not coords else g[1:])
         return coords
 
@@ -228,10 +268,10 @@ class CorridorModel:
 
         return run_scan(self, check_profile(profile), workers=workers)
 
-    def baseline(self, test: bool = False, profile: str = DEFAULT_PROFILE) -> dict[str, Any]:
+    def baseline(self, test: bool = False, profile: str = DEFAULT_PROFILE, scale: float = 1.0) -> dict[str, Any]:
         """Current-state equilibrium: what the coloured map shows before any change."""
         profile = check_profile(profile)
-        res = self.solve([], 1.0, profile=profile)
+        res = self.solve([], scale, profile=profile)
         free = self.costs([])[0].fixed
         jd = self.junction_delays(res)
         od = self.od_table(profile)
@@ -240,6 +280,8 @@ class CorridorModel:
             "profile": profile,
             "demandSource": self.demand_source(profile),
             "demandSummary": od.summary,
+            "demandScale": scale,
+            "demandVehH": round(sum(q for _, _, q in self.ods(scale, profile)), 0),
             "totalVehMin": round(res.total_time, 0),
             "solver": {"gap": res.rel_gap, "iterations": res.iterations, "ms": round(res.elapsed_ms, 1)},
             "junctions": [{"nodeId": k, "delaySec": round(v, 1)} for k, v in jd.items()],
@@ -299,6 +341,11 @@ class CorridorModel:
                            "pathAfter": self.path_coords(after.cost, usable_after, *key)})
         removed = any(c.car_lanes_after < self.car_lanes(c.link_id)[0] for c in changes)
         change_pct = (after.total_time - before.total_time) / before.total_time * 100
+        buses = self.bus_results(changes, before, after)
+        occ = LANDUSE["car_occupancy"]
+        scheduled = [b for b in buses if b["busesPerHour"]]
+        bus_h_before = sum(b["busesPerHour"] * b["minutesBefore"] for b in scheduled) / 60.0
+        bus_h_after = sum(b["busesPerHour"] * b["minutesAfter"] for b in scheduled) / 60.0
         return {
             "testData": False,
             "profile": profile,
@@ -311,11 +358,21 @@ class CorridorModel:
             # Braess's paradox: car capacity was taken away, yet total time in traffic went DOWN.
             "braess": {"detected": bool(removed and change_pct < -0.05), "carCapacityRemoved": removed,
                        "totalChangePct": round(change_pct, 2)},
+            # time spent by PEOPLE: car occupants (occupancy is the same assumption the demand uses) and
+            # STPT bus time (bus-hours from the timetable; passengers per bus are not measured, so no
+            # passenger-hours are claimed)
+            "people": {
+                "carOccupancy": occ, "carOccupancySource": "assumption (same as demand)",
+                "carPersonHoursBefore": round(before.total_time / 60 * occ, 1),
+                "carPersonHoursAfter": round(after.total_time / 60 * occ, 1),
+                "busHoursBefore": round(bus_h_before, 2), "busHoursAfter": round(bus_h_after, 2),
+                "busLinesCounted": len(scheduled),
+            },
             "carRoutes": routes,
             "junctions": [{"nodeId": k, "delayBeforeSec": round(jb[k], 1), "delayAfterSec": round(ja[k], 1)} for k in jb],
             "trafficShifts": shifts[:8],
             "intersections": inter[:6],
-            "buses": self.bus_results(changes, before, after),
+            "buses": buses,
             "links": links,
             "solver": {"gapBefore": before.rel_gap, "gapAfter": after.rel_gap, "iterationsAfter": after.iterations,
                        "msAfter": round(after.elapsed_ms, 1)},
@@ -375,8 +432,16 @@ class CorridorModel:
             {"what": "Car trips per resident", "value": f"{LANDUSE['trips_per_resident_day']} trips/day × car share "
                      f"{car_share} ÷ {LANDUSE['car_occupancy']} people/car",
              "appliesTo": "local demand", "replaceWith": "PMUD Timișoara / link_counts.csv"},
-            {"what": "Through traffic at gateways", "value": f"{LANDUSE['through_share_of_capacity']:.0%} of the road's capacity",
+            {"what": "Through traffic at gateways",
+             "value": f"{LANDUSE['through_share_of_capacity']:.0%} of the road's capacity at "
+                      f"{PROFILES[LANDUSE['through_reference_profile']].label_en.lower()} peak; other profiles × "
+                      + ", ".join(f"{p.label_en.lower()} {self.through_scale(k):.2f}" for k, p in PROFILES.items()),
              "appliesTo": f"{len(self.net.gates)} gateways", "replaceWith": "gate_counts.csv"},
+            {"what": "Turn restrictions",
+             "value": f"OSM: {self.turn_stats['applied']}/{self.turn_stats['relations']} relations applied; "
+                      f"U-turns {'banned except at dead ends' if config.TURNS['ban_u_turns'] else 'allowed'}",
+             "appliesTo": f"{self.solver_net.n_banned} banned movements, {len(self.solver_net.movements)} allowed",
+             "replaceWith": "turn_counts.csv (check) / site visit"},
             {"what": "Signal timings", "value": f"cycle {ASSUMPTIONS['signal_cycle_s']:.0f} s, green {ASSUMPTIONS['green_ratio']:.0%}",
              "appliesTo": f"{sig_assumed}/{sig_total} signalized approaches", "replaceWith": "signal_timings.csv"},
             {"what": "Lane counts", "value": f"OpenStreetMap ({lanes_assumed} from road-class defaults)",

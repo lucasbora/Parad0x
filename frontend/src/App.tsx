@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Box, HelpCircle, Leaf, Loader2, Menu, Palette, RefreshCw, Search, Undo2, X } from "lucide-react";
+import { Box, ClipboardList, HelpCircle, Leaf, Loader2, Menu, Palette, RefreshCw, Search, Undo2, X } from "lucide-react";
 import { api, signed } from "./api";
 import { I18nContext, translations, type Lang } from "./i18n/translations";
 import type {
@@ -31,6 +31,7 @@ import ResultsPanel from "./components/ResultsPanel";
 import ModelCheckCard from "./components/ModelCheckCard";
 import BraessToast from "./components/BraessToast";
 import ProfileBar from "./components/ProfileBar";
+import CountTool from "./components/CountTool";
 import CitizenBraessExplainerModal from "./components/CitizenBraessExplainerModal";
 
 function readLang(): Lang {
@@ -98,6 +99,10 @@ export default function App() {
   const [profile, setProfile] = useState<Profile>("morning");
   const [demandSource, setDemandSource] = useState<DemandSource | null>(null);
   const [demandSummary, setDemandSummary] = useState<DemandSummary | null>(null);
+  const [demandInput, setDemandInput] = useState(1);        // slider position (moves instantly)
+  const [demandScale, setDemandScale] = useState(1);        // applied after a short pause
+  const [demandVehH, setDemandVehH] = useState<number | null>(null);
+  const [countOpen, setCountOpen] = useState(false);
   const [baseline, setBaseline] = useState<BaselineLink[] | null>(null);
   const [baselineJunctions, setBaselineJunctions] = useState<{ nodeId: string; delaySec: number }[] | null>(null);
   const [scanRows, setScanRows] = useState<ScanRow[] | null>(null);
@@ -168,23 +173,19 @@ export default function App() {
       .catch((e: Error) => setError(e.message));
   }, [reload]);
 
+  useEffect(() => {
+    const id = window.setTimeout(() => setDemandScale(demandInput), 300);
+    return () => window.clearTimeout(id);
+  }, [demandInput]);
+
   // current traffic (coloured map + intersection markers), the Braess search and the model check — per time of day.
   // Demand is always available (estimated from OSM land use, calibrated when counts exist).
   useEffect(() => {
     if (!data) return;
     let live = true;
-    setBaseline(null);
-    setBaselineJunctions(null);
     setScanRows(null);
     setScanStats(null);
     setCalibration(null);
-    api.baseline(profile).then((b) => {
-      if (!live || b.status !== "ok") return;
-      setBaseline(b.links);
-      setBaselineJunctions(b.junctions);
-      setDemandSource(b.demandSource);
-      setDemandSummary(b.demandSummary);
-    }).catch((e: Error) => live && setError(e.message));
     setScanLoading(true);
     api.scan(profile).then((s) => {
       if (!live) return;
@@ -197,6 +198,23 @@ export default function App() {
       live = false;
     };
   }, [data, profile]);
+
+  // the coloured map follows both the time of day and the demand level
+  useEffect(() => {
+    if (!data) return;
+    let live = true;
+    api.baseline(profile, demandScale).then((b) => {
+      if (!live || b.status !== "ok") return;
+      setBaseline(b.links);
+      setBaselineJunctions(b.junctions);
+      setDemandSource(b.demandSource);
+      setDemandSummary(b.demandSummary);
+      setDemandVehH(b.demandVehH);
+    }).catch((e: Error) => live && setError(e.message));
+    return () => {
+      live = false;
+    };
+  }, [data, profile, demandScale]);
 
   // ------------------------------------------------------------ selection
   const linkProps = useMemo(() => new Map((data?.links.features ?? []).map((f) => [f.properties.id, f])), [data]);
@@ -278,7 +296,7 @@ export default function App() {
     ctrl.current = c;
     setBusy(true);
     const id = window.setTimeout(() => {
-      api.simulate(changes, profile, c.signal)
+      api.simulate(changes, profile, demandScale, c.signal)
         .then((r) => {
           setResult(r);
           if (r.status === "ok" && r.braess.detected) setToastPct(r.braess.totalChangePct);
@@ -295,7 +313,7 @@ export default function App() {
       c.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changesKey, profile]);
+  }, [changesKey, profile, demandScale]);
 
   const ok = result && result.status === "ok" ? result : null;
   useEffect(() => {
@@ -450,6 +468,21 @@ export default function App() {
                     <span className="truncate">{t.menuRecommendedPoints}</span>
                   </button>
 
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      setCountOpen(true);
+                      setMenuOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                      isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
+                    }`}
+                  >
+                    <ClipboardList size={16} className={`shrink-0 ${isDark ? "text-[#38BDF8]" : "text-[#005BBC]"}`} strokeWidth={2.2} />
+                    <span className="truncate">{t.menuCount}</span>
+                  </button>
+
                   <div className="relative">
                     <button
                       type="button"
@@ -549,7 +582,8 @@ export default function App() {
         </header>
 
         {data && data.profiles.length > 0 && (
-          <ProfileBar profiles={data.profiles} profile={profile} demandSource={demandSource} onChange={setProfile} />
+          <ProfileBar profiles={data.profiles} profile={profile} demandSource={demandSource} demandScale={demandInput}
+            demandVehH={demandVehH} onChange={setProfile} onDemandScale={setDemandInput} />
         )}
 
         {/* floating glass sidebar */}
@@ -630,6 +664,7 @@ export default function App() {
             loading={scanLoading}
             demandSource={demandSource}
             stats={scanStats}
+            demandScale={demandScale}
             onPick={pickScan}
             onClose={() => setRecommendedOpen(false)}
           />
@@ -646,6 +681,11 @@ export default function App() {
         <BraessToast changePct={toastPct} estimated={demandSource === "estimated"} onClose={() => setToastPct(null)} />
       </div>
       <CitizenBraessExplainerModal open={explainer} onClose={() => setExplainer(false)} />
+      {data && (
+        <div className={isDark ? "theme-dark" : ""}>
+          <CountTool open={countOpen} data={data} profile={profile} baseline={baseline} onClose={() => setCountOpen(false)} />
+        </div>
+      )}
     </I18nContext.Provider>
   );
 }

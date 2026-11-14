@@ -100,14 +100,15 @@ def balance(seed: np.ndarray, row_tot: np.ndarray, col_tot: np.ndarray, max_iter
 def landuse_od(zones: list, gates: list, node_of: dict[str, int], free_time: "Callable[[int, int], float]",
                gate_cap_in: dict[str, float], gate_cap_out: dict[str, float], profile, landuse: dict,
                counted_in: dict[str, float] | None = None, counted_out: dict[str, float] | None = None,
-               local_multiplier: float = 1.0) -> ODTable:
+               local_multiplier: float = 1.0, through_scale: float = 1.0) -> ODTable:
     """Trips for one profile from homes (residents) and activities, plus gateway traffic.
 
     home-end car trips  H_i = residents × trips/day × level × hour share × car share ÷ occupancy
     activity ends       A_i ∝ Σ_cat weight_cat(profile) × activity_i,cat   (scaled so ΣA = ΣH)
     origins  O_i = H_i(1+dir)/2 + A_i(1−dir)/2     destinations D_i = H_i(1−dir)/2 + A_i(1+dir)/2
     A share ``external_share`` of local trips leaves/enters through the gateways (by capacity);
-    through-traffic = ``through_share_of_capacity`` × gateway capacity. Counted gates replace
+    through-traffic = ``through_share_of_capacity`` × gateway capacity × ``through_scale`` (time of day,
+    relative to the reference profile). Counted gates replace
     the estimate for that gate. Then a gravity seed exp(−β t) is balanced to all totals.
     """
     per_res = (landuse["trips_per_resident_day"] * profile.trip_level * profile.hour_share
@@ -124,7 +125,7 @@ def landuse_od(zones: list, gates: list, node_of: dict[str, int], free_time: "Ca
     gout = [g for g in gates if g.out_link]
     cin = np.array([gate_cap_in[g.id] for g in gin])
     cout = np.array([gate_cap_out[g.id] for g in gout])
-    through = landuse["through_share_of_capacity"] * cin.sum()
+    through = landuse["through_share_of_capacity"] * cin.sum() * through_scale
     g_in = ext * D.sum() * cin / cin.sum() + through * cin / cin.sum()
     g_out = ext * O.sum() * cout / cout.sum() + through * cout / cout.sum()
     estimated_in, estimated_out = g_in.copy(), g_out.copy()
@@ -167,6 +168,7 @@ def landuse_od(zones: list, gates: list, node_of: dict[str, int], free_time: "Ca
         "gatewayOutVehH": round(float(g_out.sum())),
         "estimatedGatewayInVehH": round(float(estimated_in.sum())),
         "throughVehH": round(float(through)),
+        "throughScale": round(float(through_scale), 3),
         "totalVehH": round(float(T.sum())),
         "imbalancePct": round(imbalance, 2),
         "localMultiplier": round(local_multiplier, 3),

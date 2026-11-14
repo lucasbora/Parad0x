@@ -96,6 +96,7 @@ class CorridorNetwork:
     source: dict[str, Any]
     link_index: dict[str, int] = field(default_factory=dict)
     core_nodes: set[str] = field(default_factory=set)   # strongly connected: zones snap here
+    restrictions: list[dict] = field(default_factory=list)  # OSM turn-restriction relations (raw)
 
     def link(self, link_id: str) -> Link:
         return self.links[self.link_index[link_id]]
@@ -341,11 +342,77 @@ def load_network() -> CorridorNetwork:
     del by_node_in
     gates.sort(key=lambda g: ("NESW".index(g.side), g.street))
 
+    restrictions = []
+    for el in raw["elements"]:
+        if el["type"] != "relation" or el.get("tags", {}).get("type") != "restriction":
+            continue
+        tags = el["tags"]
+        kind = tags.get("restriction") or next((v for k, v in tags.items() if k.startswith("restriction:")), "")
+        role = {r: [m for m in el["members"] if m["role"] == r] for r in ("from", "via", "to")}
+        restrictions.append({
+            "id": el["id"], "kind": kind,
+            "from": [m["ref"] for m in role["from"] if m["type"] == "way"],
+            "to": [m["ref"] for m in role["to"] if m["type"] == "way"],
+            "viaNode": next((str(m["ref"]) for m in role["via"] if m["type"] == "node"), None),
+            "viaWay": any(m["type"] == "way" for m in role["via"]),
+        })
+
     net = CorridorNetwork(nodes, link_list, gates, {
         "osm": raw["source"], "fetchedAt": raw["fetchedAt"], "bbox": list(CORRIDOR.bbox),
-    }, core_nodes=core_nodes)
+    }, core_nodes=core_nodes, restrictions=restrictions)
     net.link_index = {l.id: i for i, l in enumerate(net.links)}
     return net
+
+
+def restriction_movements(net: CorridorNetwork) -> tuple[list[dict], dict]:
+    """Each OSM turn restriction as the set of (in_link index, out_link index) movements it bans.
+
+    * ``no_*``: the from-way → to-way turn at the via node.
+    * ``only_*``: every other turn from the from-way at the via node.
+    Restrictions whose via is a way (rare) or whose via node is outside the modelled network are skipped.
+    """
+    incoming, outgoing = _incident(net)
+    groups = []
+    stats = {"relations": len(net.restrictions), "viaWaySkipped": 0, "outsideNetwork": 0}
+    for r in net.restrictions:
+        if r["viaWay"] or not r["viaNode"]:
+            stats["viaWaySkipped"] += 1
+            continue
+        v = r["viaNode"]
+        frm = [i for i in incoming.get(v, []) if set(r["from"]) & set(net.links[i].osm_way_ids)]
+        to = [j for j in outgoing.get(v, []) if set(r["to"]) & set(net.links[j].osm_way_ids)]
+        if not frm or not to:
+            stats["outsideNetwork"] += 1
+            continue
+        if r["kind"].startswith("only_"):
+            pairs = {(i, j) for i in frm for j in outgoing[v] if j not in to}
+        else:
+            pairs = {(i, j) for i in frm for j in to}
+        if pairs:
+            groups.append({"id": r["id"], "kind": r["kind"], "node": v, "pairs": pairs})
+    return groups, stats
+
+
+def u_turn_movements(net: CorridorNetwork, banned: set[tuple[int, int]]) -> set[tuple[int, int]]:
+    """U-turns (straight back along the same street), except where nothing else is allowed."""
+    incoming, outgoing = _incident(net)
+    out: set[tuple[int, int]] = set()
+    for v, ins in incoming.items():
+        outs = outgoing.get(v, [])
+        for i in ins:
+            back = [j for j in outs if net.links[j].to_node == net.links[i].from_node]
+            if any(j not in back and (i, j) not in banned for j in outs):
+                out.update((i, j) for j in back)
+    return out
+
+
+def _incident(net: CorridorNetwork) -> tuple[dict[str, list[int]], dict[str, list[int]]]:
+    incoming: dict[str, list[int]] = {}
+    outgoing: dict[str, list[int]] = {}
+    for i, l in enumerate(net.links):
+        incoming.setdefault(l.to_node, []).append(i)
+        outgoing.setdefault(l.from_node, []).append(i)
+    return incoming, outgoing
 
 
 def street_directions(net: CorridorNetwork) -> dict[str, dict[str, list[str]]]:

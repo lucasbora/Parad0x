@@ -121,7 +121,9 @@ def corridor() -> dict[str, Any]:
                     "stats": {"links": len(net.links), "junctions": len(net.junctions),
                               "signalized": sum(1 for n in net.junctions if n.signalized), "gates": len(net.gates),
                               "sideStreetLinks": sum(1 for l in net.links if l.highway in config.SIDE_STREET_CLASSES),
-                              "zones": len(m.landuse.zones)}},
+                              "zones": len(m.landuse.zones)},
+                    "turns": {**m.turn_stats, "bannedMovements": m.solver_net.n_banned,
+                              "allowedMovements": len(m.solver_net.movements)}},
     }
 
 
@@ -141,7 +143,7 @@ def demand(profile: ProfileQ = Query(DEFAULT_PROFILE)) -> dict[str, Any]:
 def simulate(body: SimulateBody) -> dict[str, Any]:
     changes = _changes(body.changes)
     m = get_model()
-    result = m.compare(changes, body.demandScale, profile=body.profile)
+    result = m.compare(changes, round(body.demandScale, 2), profile=body.profile)
     return {"status": "ok", **result, "warnings": m.status["warnings"]}
 
 
@@ -164,8 +166,9 @@ def sensitivity(body: SimulateBody) -> dict[str, Any]:
 
 
 @router.get("/baseline")
-def baseline(profile: ProfileQ = Query(DEFAULT_PROFILE), testData: bool = False) -> dict[str, Any]:
-    return {"status": "ok", **get_model().baseline(profile=profile)}
+def baseline(profile: ProfileQ = Query(DEFAULT_PROFILE), demandScale: float = Query(1.0, ge=0.5, le=1.5),
+             testData: bool = False) -> dict[str, Any]:
+    return {"status": "ok", **get_model().baseline(profile=profile, scale=round(demandScale, 2))}
 
 
 @router.get("/scan")
