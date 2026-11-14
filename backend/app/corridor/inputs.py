@@ -1,15 +1,17 @@
 """Field-data inputs (CSV files in backend/data/corridor/) and the data-status checklist.
 
-Nothing in here invents a number. If a file is missing or empty, the corresponding part
-of the model either falls back to a documented textbook ASSUMPTION (signals, lanes) or the
-results are blocked entirely (traffic counts).
+Nothing in here invents a number. Demand is ESTIMATED from OpenStreetMap land use; counts are
+optional and CALIBRATE it (gate + link counts) or CHECK it (turn counts + travel times, never
+used for fitting). Every count row belongs to a time-of-day profile (morning / day / evening /
+sunday, see config.PROFILES); a missing ``profile`` column means ``morning``.
 
 Files (UTF-8 CSV, header row required):
-  gate_counts.csv     gate_id,direction,start,end,vehicles,source,notes          REQUIRED
-  turn_counts.csv     node_id,from_link_id,to_link_id,start,end,vehicles,source   calibration
-  signal_timings.csv  node_id,approach_link_id,cycle_s,green_s,source            recommended
-  lane_checks.csv     link_id,car_lanes,bus_lane,source                           recommended
-  travel_times.csv    route,from_gate_id,to_gate_id,start,minutes,source         validation
+  gate_counts.csv     gate_id,direction,profile,start,end,vehicles,source,notes        calibration
+  link_counts.csv     link_id,profile,start,end,vehicles,source,notes                  calibration
+  turn_counts.csv     node_id,from_link_id,to_link_id,profile,start,end,vehicles,source check (GEH)
+  travel_times.csv    route,from_gate_id,to_gate_id,profile,start,minutes,source       check
+  signal_timings.csv  node_id,approach_link_id,cycle_s,green_s,source                  replaces assumption
+  lane_checks.csv     link_id,car_lanes,bus_lane,source                                replaces OSM
 Reference lists generated from OSM (what/where to count): gates.csv, intersections.csv, links.csv
 """
 from __future__ import annotations
@@ -20,26 +22,32 @@ from pathlib import Path
 from typing import Any
 
 from app.corridor import config
+from app.corridor.config import DEFAULT_PROFILE, PROFILES
 from app.corridor.osm_network import CorridorNetwork, compass
 
 SCHEMAS: dict[str, list[str]] = {
-    "gate_counts.csv": ["gate_id", "direction", "start", "end", "vehicles", "source", "notes"],
-    "turn_counts.csv": ["node_id", "from_link_id", "to_link_id", "start", "end", "vehicles", "source"],
+    "gate_counts.csv": ["gate_id", "direction", "profile", "start", "end", "vehicles", "source", "notes"],
+    "link_counts.csv": ["link_id", "profile", "start", "end", "vehicles", "source", "notes"],
+    "turn_counts.csv": ["node_id", "from_link_id", "to_link_id", "profile", "start", "end", "vehicles", "source"],
+    "travel_times.csv": ["route", "from_gate_id", "to_gate_id", "profile", "start", "minutes", "source"],
     "signal_timings.csv": ["node_id", "approach_link_id", "cycle_s", "green_s", "source"],
     "lane_checks.csv": ["link_id", "car_lanes", "bus_lane", "source"],
-    "travel_times.csv": ["route", "from_gate_id", "to_gate_id", "start", "minutes", "source"],
 }
+OPTIONAL_COLUMNS = {"profile", "notes"}
 
 PURPOSE = {
-    "gate_counts.csv": "Cars entering (in) and leaving (out) the area at every gate, morning peak hour. Without "
-                       "these the model has no real demand and shows no results.",
-    "turn_counts.csv": "Left/straight/right counts at 2–3 key intersections. Used only to check the model (GEH).",
+    "gate_counts.csv": "Cars entering (in) and leaving (out) the area at each main-road gate. Replaces the "
+                       "estimated through-traffic for that profile (calibration).",
+    "link_counts.csv": "Cars per hour on a street inside the area (mid-block). Scales the estimated local "
+                       "demand for that profile (calibration).",
+    "turn_counts.csv": "Left/straight/right counts at 2–3 key intersections. Never used for fitting — only to "
+                       "check the model (GEH).",
+    "travel_times.csv": "GPS travel times between two gates. Never used for fitting — only to check the model.",
     "signal_timings.csv": "Cycle and green time per approach (stopwatch on video is fine). Otherwise a textbook "
                           "default is used and labelled as an assumption.",
     "lane_checks.csv": "Car lanes verified on site / Street View where OpenStreetMap is wrong or unsure.",
-    "travel_times.csv": "GPS travel times along the corridor and its alternative. Used only to check the model.",
 }
-REQUIRED = {"gate_counts.csv"}
+REQUIRED: set[str] = set()     # demand comes from land use; counts only improve / check it
 
 
 class InputError(ValueError):
@@ -57,26 +65,37 @@ def read_csv(name: str, input_dir: Path | None = None) -> list[dict[str, str]]:
         return []
     with path.open(encoding="utf-8-sig", newline="") as f:
         reader = csv.DictReader(f)
-        missing = [c for c in SCHEMAS[name] if c not in (reader.fieldnames or [])]
+        missing = [c for c in SCHEMAS[name] if c not in OPTIONAL_COLUMNS and c not in (reader.fieldnames or [])]
         if missing:
             raise InputError(f"{name}: missing columns {missing}")
-        return [r for r in reader if any((v or "").strip() for v in r.values())]
+        return [r for r in reader if any((v or "").strip() for v in r.values() if isinstance(v, str))]
+
+
+def _profile(row: dict[str, str], fname: str) -> str:
+    p = (row.get("profile") or "").strip() or DEFAULT_PROFILE
+    if p not in PROFILES:
+        raise InputError(f"{fname}: unknown profile {p!r} (use one of {', '.join(PROFILES)})")
+    return p
 
 
 @dataclass
 class FieldData:
-    gate_in: dict[str, float] = field(default_factory=dict)     # gate_id → veh/h entering
-    gate_out: dict[str, float] = field(default_factory=dict)    # gate_id → veh/h leaving
+    gate_in: dict[str, dict[str, float]] = field(default_factory=dict)    # profile → gate → veh/h in
+    gate_out: dict[str, dict[str, float]] = field(default_factory=dict)   # profile → gate → veh/h out
     gate_sources: dict[str, str] = field(default_factory=dict)
+    link_counts: dict[str, dict[str, float]] = field(default_factory=dict)  # profile → link → veh/h
     turns: list[dict[str, Any]] = field(default_factory=list)
+    travel_times: list[dict[str, Any]] = field(default_factory=list)
     signals: dict[tuple[str, str], tuple[float, float, str]] = field(default_factory=dict)
     lanes: dict[str, tuple[int, bool, str]] = field(default_factory=dict)
-    travel_times: list[dict[str, Any]] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
+
+    def calibrated(self, profile: str) -> bool:
+        return bool(self.gate_in.get(profile) or self.gate_out.get(profile) or self.link_counts.get(profile))
 
 
 def _hourly(rows: list[dict[str, str]], key_fields: tuple[str, ...], fname: str, warnings: list[str]) -> dict:
-    """Sum interval counts per key and scale to veh/h if fewer than 60 minutes were counted."""
+    """Sum interval counts per (profile, key) and scale to veh/h if fewer than 60 minutes were counted."""
     acc: dict[tuple, list[float]] = {}
     for r in rows:
         try:
@@ -86,7 +105,11 @@ def _hourly(rows: list[dict[str, str]], key_fields: tuple[str, ...], fname: str,
             raise InputError(f"{fname}: bad row {r} ({exc})") from exc
         if dur <= 0 or veh < 0:
             raise InputError(f"{fname}: bad interval/vehicles in row {r}")
-        key = tuple(r[k].strip() for k in key_fields)
+        prof = _profile(r, fname)
+        pr = PROFILES[prof]
+        if not (_minutes(pr.start) - 30 <= _minutes(r["start"]) <= _minutes(pr.end) + 30):
+            warnings.append(f"{fname}: {r['start']}–{r['end']} is outside the {prof} window {pr.start}–{pr.end}")
+        key = (prof,) + tuple(r[k].strip() for k in key_fields)
         a = acc.setdefault(key, [0.0, 0.0])
         a[0] += veh
         a[1] += dur
@@ -100,26 +123,35 @@ def _hourly(rows: list[dict[str, str]], key_fields: tuple[str, ...], fname: str,
 
 def load_field_data(net: CorridorNetwork, input_dir: Path | None = None) -> FieldData:
     fd = FieldData()
-    gate_ids = {g.id for g in net.gates}
+    gates = {g.id: g for g in net.gates}
 
     rows = read_csv("gate_counts.csv", input_dir)
     for r in rows:
-        if r["gate_id"].strip() not in gate_ids:
-            raise InputError(f"gate_counts.csv: unknown gate_id {r['gate_id']!r} (see gates.csv)")
-        if r["direction"].strip() not in ("in", "out"):
-            raise InputError(f"gate_counts.csv: direction must be 'in' or 'out', got {r['direction']!r}")
-    hourly = _hourly(rows, ("gate_id", "direction"), "gate_counts.csv", fd.warnings)
-    for (gid, d), v in hourly.items():
-        (fd.gate_in if d == "in" else fd.gate_out)[gid] = v
-    for r in rows:
-        fd.gate_sources.setdefault(r["gate_id"].strip(), r.get("source", "").strip())
+        gid = r["gate_id"].strip()
+        if gid not in gates:
+            raise InputError(f"gate_counts.csv: unknown gate_id {gid!r} (see gates.csv)")
+        d = r["direction"].strip()
+        if d not in ("in", "out"):
+            raise InputError(f"gate_counts.csv: direction must be 'in' or 'out', got {d!r}")
+        if (d == "in" and not gates[gid].in_link) or (d == "out" and not gates[gid].out_link):
+            raise InputError(f"gate_counts.csv: gate {gid} has no '{d}' direction (see gates.csv counts_needed)")
+        fd.gate_sources.setdefault(gid, r.get("source", "").strip())
+    for (prof, gid, d), v in _hourly(rows, ("gate_id", "direction"), "gate_counts.csv", fd.warnings).items():
+        (fd.gate_in if d == "in" else fd.gate_out).setdefault(prof, {})[gid] = v
 
-    for (nid, fl, tl), v in _hourly(read_csv("turn_counts.csv", input_dir), ("node_id", "from_link_id", "to_link_id"),
-                                    "turn_counts.csv", fd.warnings).items():
+    for (prof, lid), v in _hourly(read_csv("link_counts.csv", input_dir), ("link_id",), "link_counts.csv",
+                                  fd.warnings).items():
+        if lid not in net.link_index:
+            raise InputError(f"link_counts.csv: unknown link {lid!r} (see links.csv)")
+        fd.link_counts.setdefault(prof, {})[lid] = v
+
+    for (prof, nid, fl, tl), v in _hourly(read_csv("turn_counts.csv", input_dir),
+                                          ("node_id", "from_link_id", "to_link_id"), "turn_counts.csv",
+                                          fd.warnings).items():
         for lid in (fl, tl):
             if lid not in net.link_index:
                 raise InputError(f"turn_counts.csv: unknown link {lid!r} (see intersections.csv)")
-        fd.turns.append({"node_id": nid, "from_link_id": fl, "to_link_id": tl, "veh_h": v})
+        fd.turns.append({"profile": prof, "node_id": nid, "from_link_id": fl, "to_link_id": tl, "veh_h": v})
 
     for r in read_csv("signal_timings.csv", input_dir):
         lid = r["approach_link_id"].strip()
@@ -138,13 +170,15 @@ def load_field_data(net: CorridorNetwork, input_dir: Path | None = None) -> Fiel
                          r.get("source", "").strip())
 
     for r in read_csv("travel_times.csv", input_dir):
-        fd.travel_times.append({**r, "minutes": float(r["minutes"])})
+        fd.travel_times.append({**r, "profile": _profile(r, "travel_times.csv"), "minutes": float(r["minutes"])})
 
-    missing_gates = [g.id for g in net.gates if (g.in_link and g.id not in fd.gate_in) or
-                     (g.out_link and g.id not in fd.gate_out)]
-    if fd.gate_in and missing_gates:
-        fd.warnings.append(f"{len(missing_gates)} gate(s) without counts are treated as 0 veh/h: "
-                           + ", ".join(missing_gates))
+    for prof in PROFILES:
+        gi, go = fd.gate_in.get(prof, {}), fd.gate_out.get(prof, {})
+        if gi or go:
+            missing = [g.id for g in net.gates if (g.in_link and g.id not in gi) or (g.out_link and g.id not in go)]
+            if missing:
+                fd.warnings.append(f"{prof}: {len(missing)} gate direction(s) not counted — they keep the "
+                                   f"land-use estimate: {', '.join(missing)}")
     return fd
 
 
@@ -155,13 +189,24 @@ def data_status(net: CorridorNetwork, fd: FieldData, input_dir: Path | None = No
         rows = read_csv(name, d) if (d / name).exists() else []
         files.append({"file": name, "present": bool(rows), "rows": len(rows), "required": name in REQUIRED,
                       "purpose": PURPOSE[name]})
-    counted = sorted(set(fd.gate_in) | set(fd.gate_out))
-    countable = [g.id for g in net.gates]
+    profiles = {}
+    for prof in PROFILES:
+        counted = set(fd.gate_in.get(prof, {})) | set(fd.gate_out.get(prof, {}))
+        profiles[prof] = {
+            "calibrated": fd.calibrated(prof),
+            "gatesCounted": len(counted),
+            "linkCounts": len(fd.link_counts.get(prof, {})),
+            "turnCounts": sum(1 for t in fd.turns if t["profile"] == prof),
+            "travelTimes": sum(1 for t in fd.travel_times if t["profile"] == prof),
+        }
     return {
-        "ready": bool(fd.gate_in) and bool(fd.gate_out),
+        # kept for the current UI: True once ANY profile has counts
+        "ready": any(v["calibrated"] for v in profiles.values()),
+        "demandSource": "calibrated" if any(v["calibrated"] for v in profiles.values()) else "estimated",
+        "profiles": profiles,
         "files": files,
-        "gatesCounted": len(counted),
-        "gatesTotal": len(countable),
+        "gatesCounted": max((v["gatesCounted"] for v in profiles.values()), default=0),
+        "gatesTotal": len(net.gates),
         "warnings": fd.warnings,
         "inputDir": str(d),
     }

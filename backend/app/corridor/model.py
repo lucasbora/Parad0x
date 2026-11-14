@@ -1,4 +1,10 @@
-"""Corridor model: real OSM network + field data → before/after results for one lane change."""
+"""Corridor model: OSM network + land-use demand (+ counts) → equilibrium, scenarios, results.
+
+Demand per time-of-day profile is ESTIMATED from OpenStreetMap buildings and points of
+interest (app.corridor.landuse / demand.landuse_od). Field counts CALIBRATE it:
+gate counts replace the gateway estimate, link counts scale local demand. Turn counts and
+travel times are kept apart to CHECK the model (calibration.py).
+"""
 from __future__ import annotations
 
 import threading
@@ -12,11 +18,14 @@ from scipy.sparse.csgraph import dijkstra
 
 from app.corridor import config, inputs
 from app.corridor.assignment import AssignmentResult, LinkCosts, Network, assign
-from app.corridor.config import ASSUMPTIONS
-from app.corridor.demand import GateMatrix, furness
-from app.corridor.osm_network import CorridorNetwork, compass, load_network, street_directions
+from app.corridor.config import ASSUMPTIONS, DEFAULT_PROFILE, LANDUSE, PROFILES, SIDE_STREET_CLASSES
+from app.corridor.demand import ODTable, landuse_od
+from app.corridor.landuse import LandUse, load_landuse
+from app.corridor.osm_network import CorridorNetwork, compass, load_network
 
 USES = ("bus", "bike", "sidewalk", "closed")
+BASE_GAP = 1e-5          # base state and user edits
+BASE_MAX_ITER = 400
 
 
 @dataclass
@@ -27,15 +36,25 @@ class LaneChange:
 
 
 class NeedsData(Exception):
+    """Raised only where field data is indispensable (e.g. a calibration report)."""
+
     def __init__(self, status: dict[str, Any]):
         super().__init__("field data missing")
         self.status = status
+
+
+def check_profile(profile: str | None) -> str:
+    p = profile or DEFAULT_PROFILE
+    if p not in PROFILES:
+        raise ValueError(f"unknown profile {p!r}; use one of {', '.join(PROFILES)}")
+    return p
 
 
 class CorridorModel:
     def __init__(self, input_dir: Path | None = None):
         self.input_dir = input_dir or config.INPUT_DIR
         self.net: CorridorNetwork = load_network()
+        self.landuse: LandUse = load_landuse()
         ids = list(self.net.nodes)
         self.node_idx = {nid: i for i, nid in enumerate(ids)}
         self.solver_net = Network(len(ids), [self.node_idx[l.from_node] for l in self.net.links],
@@ -46,7 +65,7 @@ class CorridorModel:
         self._incoming: dict[str, np.ndarray] = {}
         self._lock = threading.Lock()
 
-    # ------------------------------------------------------------------ inputs
+    # ------------------------------------------------------------------ network inputs
     def car_lanes(self, link_id: str) -> tuple[int, str]:
         if link_id in self.fd.lanes:
             return self.fd.lanes[link_id][0], "field check"
@@ -79,72 +98,100 @@ class CorridorModel:
                 per_lane = ASSUMPTIONS["saturation_flow_veh_h_per_lane"] * g
             else:
                 uniform_delay_min = 0.0
-                per_lane = ASSUMPTIONS["unsignalized_capacity_veh_h_per_lane"]
+                per_lane = (ASSUMPTIONS["side_street_capacity_veh_h_per_lane"] if l.highway in SIDE_STREET_CLASSES
+                            else ASSUMPTIONS["unsignalized_capacity_veh_h_per_lane"])
             fixed[i] = t0 + uniform_delay_min
             k[i] = ASSUMPTIONS["bpr_alpha"] * t0
-            cap[i] = max(lanes, 0) * per_lane if lanes > 0 else 1.0
+            cap[i] = lanes * per_lane if lanes > 0 else 1.0
             if lanes <= 0:
                 usable[i] = False
         return LinkCosts(fixed, k, cap, beta), usable
 
-    def free_flow_gate_times(self) -> dict[tuple[str, str], float]:
-        costs, usable = self.costs([])
-        w = costs.fixed
-        g = csr_matrix((w[usable], (self.solver_net.link_from[usable], self.solver_net.link_to[usable])),
-                       shape=(self.solver_net.n_nodes,) * 2)
-        gates = self.net.gates
-        dist = dijkstra(g, directed=True, indices=[self.node_idx[x.node] for x in gates])
-        return {(a.id, b.id): float(dist[i, self.node_idx[b.node]]) for i, a in enumerate(gates) for b in gates}
+    def _free_dist(self) -> dict[int, np.ndarray]:
+        """Free-flow travel time (min) from every zone/gate node to every node."""
+        if "free_dist" not in self._cache:
+            costs, usable = self.costs([])
+            g = csr_matrix((costs.fixed[usable], (self.solver_net.link_from[usable], self.solver_net.link_to[usable])),
+                           shape=(self.solver_net.n_nodes,) * 2)
+            src = sorted({self.node_idx[z.node] for z in self.landuse.zones} |
+                         {self.node_idx[gt.node] for gt in self.net.gates})
+            dist = dijkstra(g, directed=True, indices=src)
+            self._cache["free_dist"] = {s: dist[i] for i, s in enumerate(src)}
+        return self._cache["free_dist"]
 
-    def test_gate_flows(self) -> tuple[dict[str, float], dict[str, float]]:
-        """TEST DATA ONLY: half the capacity of every gate's entering/leaving road.
+    # ------------------------------------------------------------------ demand
+    def demand_source(self, profile: str) -> str:
+        return "calibrated" if self.fd.calibrated(profile) else "estimated"
 
-        Used to try the app before field counts exist. Every response built on it carries
-        ``testData: true`` and the UI shows a "not real measurements" banner.
-        """
+    def _od_table(self, profile: str, local_multiplier: float) -> ODTable:
         cap = self.costs([])[0].cap
-        g_in = {g.id: 0.5 * float(cap[self.net.link_index[g.in_link]]) for g in self.net.gates if g.in_link}
-        g_out = {g.id: 0.5 * float(cap[self.net.link_index[g.out_link]]) for g in self.net.gates if g.out_link}
-        return g_in, g_out
+        dist = self._free_dist()
+        return landuse_od(
+            self.landuse.zones, self.net.gates, self.node_idx, lambda a, b: float(dist[a][b]),
+            {g.id: float(cap[self.net.link_index[g.in_link]]) for g in self.net.gates if g.in_link},
+            {g.id: float(cap[self.net.link_index[g.out_link]]) for g in self.net.gates if g.out_link},
+            PROFILES[profile], LANDUSE,
+            counted_in=self.fd.gate_in.get(profile), counted_out=self.fd.gate_out.get(profile),
+            local_multiplier=local_multiplier)
 
-    def gate_matrix(self, test: bool = False) -> GateMatrix:
-        if test and not self.status["ready"]:
-            if "matrix_test" not in self._cache:
-                g_in, g_out = self.test_gate_flows()
-                self._cache["matrix_test"] = furness(g_in, g_out, self.free_flow_gate_times(),
-                                                     ASSUMPTIONS["gravity_beta_per_min"])
-            return self._cache["matrix_test"]
-        if not self.status["ready"]:
-            raise NeedsData(self.status)
-        if "matrix" not in self._cache:
-            self._cache["matrix"] = furness(self.fd.gate_in, self.fd.gate_out, self.free_flow_gate_times(),
-                                            ASSUMPTIONS["gravity_beta_per_min"])
-        return self._cache["matrix"]
+    def od_table(self, profile: str = DEFAULT_PROFILE) -> ODTable:
+        profile = check_profile(profile)
+        key = ("od", profile)
+        if key not in self._cache:
+            k = self.calibrate_local(profile) if self.fd.link_counts.get(profile) else 1.0
+            self._cache[key] = self._od_table(profile, k)
+        return self._cache[key]
 
-    def is_test(self, test: bool) -> bool:
-        """Test data is used only when asked for AND no real counts exist."""
-        return test and not self.status["ready"]
+    def calibrate_local(self, profile: str, iterations: int = 4) -> float:
+        """Scale local (land-use) demand so modelled flow matches link_counts.csv on those links."""
+        counts = self.fd.link_counts[profile]
+        idx = [self.net.link_index[l] for l in counts]
+        target = sum(counts.values())
+        k = 1.0
+        for _ in range(iterations):
+            od = self._od_table(profile, k)
+            costs, usable = self.costs([])
+            res = assign(self.solver_net, costs, self._ods_from(od, 1.0), usable=usable, rel_gap=1e-4, max_iter=200)
+            modelled = float(res.flow[idx].sum())
+            if modelled <= 1e-6:
+                break
+            k = float(np.clip(k * target / modelled, 0.2, 5.0))
+        return k
 
-    def ods(self, scale: float = 1.0, test: bool = False) -> list[tuple[int, int, float]]:
-        m = self.gate_matrix(test)
-        gnode = {g.id: self.node_idx[g.node] for g in self.net.gates}
-        return [(gnode[o], gnode[d], float(m.trips[i, j]) * scale)
-                for i, o in enumerate(m.origins) for j, d in enumerate(m.destinations) if m.trips[i, j] > 1e-6]
+    @staticmethod
+    def _ods_from(od: ODTable, scale: float) -> list[tuple[int, int, float]]:
+        acc: dict[tuple[int, int], float] = {}
+        for i, r in enumerate(od.rows):
+            for j, c in enumerate(od.cols):
+                q = float(od.trips[i, j])
+                if q > 1e-6 and r.node != c.node:
+                    acc[(r.node, c.node)] = acc.get((r.node, c.node), 0.0) + q * scale
+        return [(o, d, q) for (o, d), q in acc.items()]
 
-    def solve(self, changes: list[LaneChange], scale: float = 1.0, test: bool = False) -> AssignmentResult:
-        test = self.is_test(test)
+    def ods(self, scale: float = 1.0, profile: str = DEFAULT_PROFILE, test: bool = False) -> list[tuple[int, int, float]]:
+        return self._ods_from(self.od_table(profile), scale)
+
+    # ------------------------------------------------------------------ solving
+    def solve(self, changes: list[LaneChange], scale: float = 1.0, test: bool = False, profile: str = DEFAULT_PROFILE,
+              rel_gap: float = BASE_GAP, max_iter: int = BASE_MAX_ITER,
+              x0: tuple[np.ndarray, np.ndarray] | None = None) -> AssignmentResult:
+        """Equilibrium for a set of lane changes. ``test`` is accepted for old callers and ignored."""
+        profile = check_profile(profile)
         key = (tuple((c.link_id, c.car_lanes_after) for c in sorted(changes, key=lambda c: c.link_id)),
-               round(scale, 4), test)
+               round(scale, 4), profile, rel_gap)
         with self._lock:
             if key in self._cache:
                 return self._cache[key]
         costs, usable = self.costs(changes)
-        res = assign(self.solver_net, costs, self.ods(scale, test), usable=usable, rel_gap=1e-5, max_iter=400)
+        if x0 is None and changes:
+            base = self.solve([], scale, profile=profile)
+            x0 = (base.flow, base.movement_flow)
+        res = assign(self.solver_net, costs, self.ods(scale, profile), usable=usable, rel_gap=rel_gap,
+                     max_iter=max_iter, x0=x0)
         with self._lock:
             self._cache[key] = res
         return res
 
-    # ------------------------------------------------------------------ results
     # ------------------------------------------------------------------ helpers for the map
     def junction_delays(self, res: AssignmentResult) -> dict[str, float]:
         """Flow-weighted extra wait (s) on the approaches of every intersection."""
@@ -175,61 +222,41 @@ class CorridorModel:
             coords.extend(g if not coords else g[1:])
         return coords
 
-    def scan(self, test: bool = False) -> dict[str, Any]:
-        """Remove one car lane (or close, if only one) on every street direction; rank by total time.
+    # ------------------------------------------------------------------ results
+    def scan(self, test: bool = False, profile: str = DEFAULT_PROFILE, workers: int | None = None) -> dict[str, Any]:
+        from app.corridor.scan import run_scan
 
-        changePct < 0 → Braess's paradox (less capacity, less total time).
-        |changePct| < 0.5 → low-regret: the lane can go to buses/bikes at almost no cost to cars.
-        """
-        test = self.is_test(test)
-        key = ("scan", test)
-        if key in self._cache:
-            return self._cache[key]
-        base = self.solve([], 1.0, test)
-        rows = []
-        for street, dirs in street_directions(self.net).items():
-            for heading, ids in dirs.items():
-                lanes = {i: self.car_lanes(i)[0] for i in ids}
-                multi = [i for i, n in lanes.items() if n >= 2]
-                ch = ([LaneChange(i, lanes[i] - 1, "bike") for i in multi] if multi
-                      else [LaneChange(i, 0, "closed") for i in ids])
-                try:
-                    res = self.solve(ch, 1.0, test)
-                except ValueError:      # closing it would cut a gate off — not a valid scenario
-                    continue
-                pct = (res.total_time - base.total_time) / base.total_time * 100
-                rows.append({"street": street, "heading": heading, "linkIds": ids,
-                             "mode": "minus_one_lane" if multi else "closure",
-                             "changePct": round(pct, 3), "vehMinDelta": round(res.total_time - base.total_time, 1),
-                             "braess": pct < -0.05, "lowRegret": abs(pct) < 0.5})
-        rows.sort(key=lambda r: r["changePct"])
-        out = {"testData": test, "rows": rows,
-               "braessCount": sum(r["braess"] for r in rows), "lowRegretCount": sum(r["lowRegret"] for r in rows)}
-        self._cache[key] = out
-        return out
+        return run_scan(self, check_profile(profile), workers=workers)
 
-    def baseline(self, test: bool = False) -> dict[str, Any]:
+    def baseline(self, test: bool = False, profile: str = DEFAULT_PROFILE) -> dict[str, Any]:
         """Current-state equilibrium: what the coloured map shows before any change."""
-        res = self.solve([], 1.0, test)
+        profile = check_profile(profile)
+        res = self.solve([], 1.0, profile=profile)
         free = self.costs([])[0].fixed
         jd = self.junction_delays(res)
+        od = self.od_table(profile)
         return {
-            "testData": self.is_test(test),
+            "testData": False,
+            "profile": profile,
+            "demandSource": self.demand_source(profile),
+            "demandSummary": od.summary,
             "totalVehMin": round(res.total_time, 0),
+            "solver": {"gap": res.rel_gap, "iterations": res.iterations, "ms": round(res.elapsed_ms, 1)},
             "junctions": [{"nodeId": k, "delaySec": round(v, 1)} for k, v in jd.items()],
             "links": [{"id": l.id, "flow": round(float(res.flow[i]), 1), "timeSec": round(float(res.cost[i]) * 60, 1),
                        "freeTimeSec": round(float(free[i]) * 60, 1)} for i, l in enumerate(self.net.links)],
         }
 
-    def compare(self, changes: list[LaneChange], scale: float = 1.0, test: bool = False) -> dict[str, Any]:
+    def compare(self, changes: list[LaneChange], scale: float = 1.0, test: bool = False,
+                profile: str = DEFAULT_PROFILE) -> dict[str, Any]:
+        profile = check_profile(profile)
         for c in changes:
             if c.link_id not in self.net.link_index:
                 raise KeyError(c.link_id)
             if c.use not in USES:
                 raise ValueError(f"use must be one of {USES}")
-        test = self.is_test(test)
-        before = self.solve([], scale, test)
-        after = self.solve(changes, scale, test)
+        before = self.solve([], scale, profile=profile)
+        after = self.solve(changes, scale, profile=profile)
         free = self.costs([])[0].fixed
         net = self.net
         links = []
@@ -250,42 +277,36 @@ class CorridorModel:
                                   "flowBefore": round(float(before.flow[i]), 0), "flowAfter": round(float(after.flow[i]), 0),
                                   "linkId": l.id}
         shifts = sorted((v for v in by_street.values() if abs(v["deltaFlow"]) >= 20), key=lambda v: -abs(v["deltaFlow"]))
-        # intersections: flow-weighted extra delay on approaches
-        inter = []
-        for n in net.junctions:
-            inc = [i for i, l in enumerate(net.links) if l.to_node == n.id]
-            def avg(res):
-                f = res.flow[inc]
-                extra = (res.cost[inc] - np.array([net.links[i].t0_min for i in inc])) * 60
-                return float(np.dot(f, extra) / f.sum()) if f.sum() > 1 else 0.0
-            b, a = avg(before), avg(after)
-            inter.append({"nodeId": n.id, "name": n.name, "signalized": n.signalized, "delayBeforeSec": round(b, 1),
-                          "delayAfterSec": round(a, 1), "lng": n.lng, "lat": n.lat})
+        jb, ja = self.junction_delays(before), self.junction_delays(after)
+        inter = [{"nodeId": n.id, "name": n.name, "signalized": n.signalized, "delayBeforeSec": round(jb[n.id], 1),
+                  "delayAfterSec": round(ja[n.id], 1), "lng": n.lng, "lat": n.lat} for n in net.junctions]
         inter.sort(key=lambda x: -abs(x["delayAfterSec"] - x["delayBeforeSec"]))
-        # car travel time between the busiest gate pairs
-        m = self.gate_matrix(test)
-        gates = {g.id: g for g in net.gates}
-        pairs = sorted(((m.trips[i, j], o, d) for i, o in enumerate(m.origins) for j, d in enumerate(m.destinations)),
-                       reverse=True)[:6]
-        routes = []
+        # car travel time for the busiest origin–destination pairs
+        od = self.od_table(profile)
+        pairs = sorted(((float(od.trips[i, j]), r, c) for i, r in enumerate(od.rows) for j, c in enumerate(od.cols)
+                        if r.node != c.node), key=lambda t: -t[0])[:6]
         _, usable_before = self.costs([])
         _, usable_after = self.costs(changes)
-        for q, o, d in pairs:
-            key = (self.node_idx[gates[o].node], self.node_idx[gates[d].node])
-            routes.append({"from": f"{gates[o].street} ({gates[o].side})", "to": f"{gates[d].street} ({gates[d].side})",
-                           "fromGate": o, "toGate": d, "vehH": round(float(q) * scale, 0),
+        routes = []
+        for q, r, c in pairs:
+            key = (r.node, c.node)
+            if key not in before.od_time or key not in after.od_time:
+                continue
+            routes.append({"from": r.label, "to": c.label, "fromGate": r.id, "toGate": c.id,
+                           "vehH": round(q * scale, 0),
                            "minutesBefore": round(before.od_time[key], 2), "minutesAfter": round(after.od_time[key], 2),
                            "pathBefore": self.path_coords(before.cost, usable_before, *key),
                            "pathAfter": self.path_coords(after.cost, usable_after, *key)})
-        jb, ja = self.junction_delays(before), self.junction_delays(after)
         removed = any(c.car_lanes_after < self.car_lanes(c.link_id)[0] for c in changes)
         change_pct = (after.total_time - before.total_time) / before.total_time * 100
         return {
-            "testData": test,
+            "testData": False,
+            "profile": profile,
+            "demandSource": self.demand_source(profile),
             "totals": {
                 "vehMinBefore": round(before.total_time, 0), "vehMinAfter": round(after.total_time, 0),
                 "changePct": round(change_pct, 2),
-                "demandVehH": round(sum(q for _, _, q in self.ods(scale, test)), 0),
+                "demandVehH": round(sum(q for _, _, q in self.ods(scale, profile)), 0),
             },
             # Braess's paradox: car capacity was taken away, yet total time in traffic went DOWN.
             "braess": {"detected": bool(removed and change_pct < -0.05), "carCapacityRemoved": removed,
@@ -340,20 +361,33 @@ class CorridorModel:
         sig_assumed = sum(1 for l in self.net.links if (s := self.signal(l.id)) and s[2] == "assumption")
         sig_total = sum(1 for l in self.net.links if self.signal(l.id))
         lanes_unverified = sum(1 for l in self.net.links if l.id not in self.fd.lanes)
-        speed_assumed = sum(1 for l in self.net.links if l.speed_source != "osm")
+        lanes_assumed = sum(1 for l in self.net.links if l.lanes_source == "assumed" and l.id not in self.fd.lanes)
+        speed_assumed = sum(1 for l in self.net.links if l.speed_source.startswith("assumed"))
+        lu = self.landuse.summary
+        car_share = f"{LANDUSE['car_share']:.0%}" + ("" if LANDUSE["car_share_verified"] else " (PMUD, unverified)")
         return [
+            {"what": "Demand (where trips start and end)", "value": "OSM buildings + POIs → gravity model",
+             "appliesTo": "all profiles without counts", "replaceWith": "gate_counts.csv / link_counts.csv"},
+            {"what": "Residents per building", "value": f"{LANDUSE['m2_floor_per_resident']:.0f} m² floor / resident; "
+                     f"untyped buildings {LANDUSE['yes_building_residential_share']:.0%} housing",
+             "appliesTo": f"{lu.get('residentialBuildings', 0)} buildings ({lu.get('levelsFromOsm', 0)} with floors in OSM)",
+             "replaceWith": "INS census / link_counts.csv"},
+            {"what": "Car trips per resident", "value": f"{LANDUSE['trips_per_resident_day']} trips/day × car share "
+                     f"{car_share} ÷ {LANDUSE['car_occupancy']} people/car",
+             "appliesTo": "local demand", "replaceWith": "PMUD Timișoara / link_counts.csv"},
+            {"what": "Through traffic at gateways", "value": f"{LANDUSE['through_share_of_capacity']:.0%} of the road's capacity",
+             "appliesTo": f"{len(self.net.gates)} gateways", "replaceWith": "gate_counts.csv"},
             {"what": "Signal timings", "value": f"cycle {ASSUMPTIONS['signal_cycle_s']:.0f} s, green {ASSUMPTIONS['green_ratio']:.0%}",
              "appliesTo": f"{sig_assumed}/{sig_total} signalized approaches", "replaceWith": "signal_timings.csv"},
-            {"what": "Lane counts not checked on site", "value": "OpenStreetMap",
-             "appliesTo": f"{lanes_unverified}/{len(self.net.links)} links", "replaceWith": "lane_checks.csv"},
-            {"what": "Speed limit missing in OSM", "value": "50 km/h (RO urban)",
+            {"what": "Lane counts", "value": f"OpenStreetMap ({lanes_assumed} from road-class defaults)",
+             "appliesTo": f"{lanes_unverified}/{len(self.net.links)} links not checked on site", "replaceWith": "lane_checks.csv"},
+            {"what": "Speed limit missing in OSM", "value": "road-class default",
              "appliesTo": f"{speed_assumed}/{len(self.net.links)} links", "replaceWith": "OSM edit / lane_checks"},
-            {"what": "Saturation flow", "value": f"{ASSUMPTIONS['saturation_flow_veh_h_per_lane']:.0f} veh/h/lane (HCM)",
-             "appliesTo": "all signalized approaches", "replaceWith": "calibration"},
+            {"what": "Saturation flow", "value": f"{ASSUMPTIONS['saturation_flow_veh_h_per_lane']:.0f} veh/h/lane (HCM); "
+                     f"side streets {ASSUMPTIONS['side_street_capacity_veh_h_per_lane']:.0f}",
+             "appliesTo": "all links", "replaceWith": "calibration"},
             {"what": "Congestion curve", "value": f"BPR α={ASSUMPTIONS['bpr_alpha']}, β={ASSUMPTIONS['bpr_beta']}",
              "appliesTo": "all links", "replaceWith": "calibration"},
-            {"what": "Which gate cars leave by", "value": f"gravity model, β={ASSUMPTIONS['gravity_beta_per_min']}/min",
-             "appliesTo": "OD split between counted gates", "replaceWith": "turn_counts.csv (calibration)"},
         ]
 
 

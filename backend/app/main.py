@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import os
 import threading
 import time
 from contextlib import asynccontextmanager
@@ -46,10 +47,27 @@ def _warm() -> None:
         log.exception("warm-up failed")
 
 
+def _warm_corridor() -> None:
+    """Corridor: base state for every profile + the morning Braess search (cached on disk)."""
+    t = time.perf_counter()
+    try:
+        from app.corridor.model import get_model
+
+        m = get_model()
+        for profile in ("morning", "day", "evening", "sunday"):
+            m.baseline(profile=profile)
+        m.scan(profile="morning")
+        log.info("corridor warm-up complete in %.1fs", time.perf_counter() - t)
+    except Exception:  # never take the API down because of warm-up
+        log.exception("corridor warm-up failed")
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     get_engine()  # build graph + path system synchronously (fast)
     threading.Thread(target=_warm, name="tmbg-warmup", daemon=True).start()
+    if os.getenv("TMBG_OFFLINE", "0") not in ("1", "true", "yes"):
+        threading.Thread(target=_warm_corridor, name="tmbg-corridor-warmup", daemon=True).start()
     yield
 
 

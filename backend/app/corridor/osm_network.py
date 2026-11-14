@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 from functools import lru_cache
 from typing import Any
 
-from app.corridor.config import ASSUMPTIONS, CORRIDOR, OSM_SNAPSHOT
+from app.corridor.config import ASSUMPTIONS, CLASS_DEFAULTS, CORRIDOR, GATEWAY_CLASSES, OSM_SNAPSHOT
 
 
 def haversine_m(a: tuple[float, float], b: tuple[float, float]) -> float:
@@ -95,6 +95,7 @@ class CorridorNetwork:
     gates: list[Gate]
     source: dict[str, Any]
     link_index: dict[str, int] = field(default_factory=dict)
+    core_nodes: set[str] = field(default_factory=set)   # strongly connected: zones snap here
 
     def link(self, link_id: str) -> Link:
         return self.links[self.link_index[link_id]]
@@ -115,28 +116,40 @@ class CorridorNetwork:
 # ---------------------------------------------------------------------------
 
 def _lanes(tags: dict[str, str], oneway: int) -> tuple[int, int, str]:
-    """(forward, backward, source). oneway: 1 forward-only, -1 backward-only, 0 two-way."""
+    """(forward, backward, source). oneway: 1 forward-only, -1 backward-only, 0 two-way.
+
+    Missing lane tags fall back to the road class default (see config.CLASS_DEFAULTS)."""
     def num(key):
         m = re.match(r"\d+", tags.get(key, ""))
         return int(m.group()) if m else None
 
     total, fwd, bwd = num("lanes"), num("lanes:forward"), num("lanes:backward")
+    default = CLASS_DEFAULTS.get(tags.get("highway", ""), (50, 1))[1]
     if oneway != 0:
-        n = total if total else 1
+        n = total if total else default
         return (n, 0, "osm" if total else "assumed") if oneway == 1 else (0, n, "osm" if total else "assumed")
     if fwd and bwd:
         return fwd, bwd, "osm"
     if total:
         f = max(1, total // 2)
         return f, max(1, total - f), "osm" if total % 2 == 0 else "osm (split assumed)"
-    return 1, 1, "assumed"
+    return default, default, "assumed"
+
+
+# Romanian implicit speed limits written as maxspeed=RO:… (legal values, i.e. real data)
+_RO_IMPLICIT = {"RO:urban": 50.0, "RO:rural": 90.0, "RO:trunk": 100.0, "RO:motorway": 130.0,
+                "RO:living_street": 20.0}
 
 
 def _speed(tags: dict[str, str]) -> tuple[float, str]:
-    m = re.match(r"\d+", tags.get("maxspeed", ""))
+    raw = tags.get("maxspeed", "")
+    m = re.match(r"\d+", raw)
     if m:
         return float(m.group()), "osm"
-    return ASSUMPTIONS["default_speed_kmh"], "assumed (RO:urban 50)"
+    if raw in _RO_IMPLICIT:
+        return _RO_IMPLICIT[raw], f"osm ({raw})"
+    default = CLASS_DEFAULTS.get(tags.get("highway", ""), (ASSUMPTIONS["default_speed_kmh"], 1))[0]
+    return float(default), f"assumed (class default {default})"
 
 
 def _oneway(tags: dict[str, str]) -> int:
@@ -167,19 +180,22 @@ def load_network() -> CorridorNetwork:
     ways = []
     signals: list[tuple[float, float]] = []
     for el in raw["elements"]:
-        if el["type"] == "way" and el.get("tags", {}).get("highway") in CORRIDOR.highways:
+        if el["type"] == "way" and el.get("tags", {}).get("highway") in CORRIDOR.highways and "nodes" in el:
             for nid, g in zip(el["nodes"], el["geometry"]):
                 coords[nid] = (g["lon"], g["lat"])
             ways.append(el)
         elif el["type"] == "node" and el.get("tags", {}).get("highway") == "traffic_signals":
             signals.append((el["lon"], el["lat"]))
 
-    # 1. keep node pairs with at least one end inside the corridor box
+    # 1. keep node pairs inside the box; only main roads may cross the edge (→ gateways),
+    #    side streets are cut at the edge because they only serve the neighbourhood
     pairs = []          # (a, b, way)
     for wy in ways:
         nds = wy["nodes"]
+        main_road = wy["tags"].get("highway") in GATEWAY_CLASSES
         for a, b in zip(nds[:-1], nds[1:]):
-            if inside(*coords[a]) or inside(*coords[b]):
+            ia, ib = inside(*coords[a]), inside(*coords[b])
+            if (ia and ib) or ((ia or ib) and main_road):
                 pairs.append((a, b, wy))
     adj: dict[int, list[int]] = {}
     for idx, (a, b, _) in enumerate(pairs):
@@ -269,30 +285,26 @@ def load_network() -> CorridorNetwork:
             for nid in (u, v):
                 nodes[nid].streets.append(street)
 
-    # 4. keep the largest weakly connected component
-    comp: dict[str, int] = {}
-    nbrs: dict[str, set] = {}
-    for (u, v) in links:
-        nbrs.setdefault(u, set()).add(v)
-        nbrs.setdefault(v, set()).add(u)
-    cid = 0
-    for start in nbrs:
-        if start in comp:
-            continue
-        stack = [start]
-        comp[start] = cid
-        while stack:
-            x = stack.pop()
-            for y in nbrs[x]:
-                if y not in comp:
-                    comp[y] = cid
-                    stack.append(y)
-        cid += 1
-    sizes: dict[int, int] = {}
-    for c in comp.values():
-        sizes[c] = sizes.get(c, 0) + 1
-    main = max(sizes, key=sizes.get)
-    link_list = sorted((l for (u, v), l in links.items() if comp[u] == main), key=lambda l: l.id)
+    # 4. keep the largest (weakly) connected network so every gateway survives; remember its
+    #    strongly connected core — zones are only placed on core nodes (reachable both ways)
+    from scipy.sparse import csr_matrix
+    from scipy.sparse.csgraph import connected_components
+
+    ids = sorted({x for uv in links for x in uv})
+    pos = {x: i for i, x in enumerate(ids)}
+    g = csr_matrix(([1] * len(links), ([pos[u] for u, _ in links], [pos[v] for _, v in links])),
+                   shape=(len(ids), len(ids)))
+    _, weak = connected_components(g, directed=True, connection="weak")
+    main = max(set(weak.tolist()), key=weak.tolist().count)
+    link_list = sorted((l for (u, v), l in links.items() if weak[pos[u]] == main), key=lambda l: l.id)
+    inner = [(l.from_node, l.to_node) for l in link_list if nodes[l.from_node].inside and nodes[l.to_node].inside]
+    inner_ids = sorted({x for uv in inner for x in uv})
+    ipos = {x: i for i, x in enumerate(inner_ids)}
+    gi = csr_matrix(([1] * len(inner), ([ipos[u] for u, _ in inner], [ipos[v] for _, v in inner])),
+                    shape=(len(inner_ids), len(inner_ids)))
+    _, strong = connected_components(gi, directed=True, connection="strong")
+    biggest = max(set(strong.tolist()), key=strong.tolist().count)
+    core_nodes = {x for x in inner_ids if strong[ipos[x]] == biggest}
     keep_nodes = {l.from_node for l in link_list} | {l.to_node for l in link_list}
     nodes = {k: v for k, v in nodes.items() if k in keep_nodes}
 
@@ -331,7 +343,7 @@ def load_network() -> CorridorNetwork:
 
     net = CorridorNetwork(nodes, link_list, gates, {
         "osm": raw["source"], "fetchedAt": raw["fetchedAt"], "bbox": list(CORRIDOR.bbox),
-    })
+    }, core_nodes=core_nodes)
     net.link_index = {l.id: i for i, l in enumerate(net.links)}
     return net
 

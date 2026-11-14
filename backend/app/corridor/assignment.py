@@ -77,30 +77,63 @@ class Network:
         return dijkstra(g, directed=True, indices=origins, return_predecessors=True)
 
 
-def _all_or_nothing(net: Network, cost: np.ndarray, ods: list[tuple[int, int, float]], usable: np.ndarray):
-    origins = sorted({o for o, _, _ in ods})
-    dist, pred = net.shortest_paths(cost, origins, usable)
-    row = {o: r for r, o in enumerate(origins)}
+class _ODIndex:
+    """Demand grouped by origin as dense node vectors (built once per assign call)."""
+
+    def __init__(self, net: Network, ods: list[tuple[int, int, float]]):
+        self.origins = sorted({o for o, _, _ in ods})
+        self.row = {o: r for r, o in enumerate(self.origins)}
+        self.demand = np.zeros((len(self.origins), net.n_nodes))
+        self.pairs = ods
+        for o, d, q in ods:
+            self.demand[self.row[o], d] += max(q, 0.0)
+
+
+def _edge_index(net: Network) -> np.ndarray:
+    if not hasattr(net, "_edge_idx"):
+        idx = np.full((net.n_nodes, net.n_nodes), -1, dtype=np.int64)
+        idx[net.link_from, net.link_to] = np.arange(net.n_links)
+        net._edge_idx = idx  # type: ignore[attr-defined]
+    return net._edge_idx  # type: ignore[attr-defined]
+
+
+def _all_or_nothing(net: Network, cost: np.ndarray, ods: "list[tuple[int, int, float]] | _ODIndex",
+                    usable: np.ndarray):
+    """All-or-nothing loading by shortest-path TREES: one backward sweep per origin.
+
+    For each origin the demand of every destination is pushed back up the shortest-path tree
+    (nodes in decreasing distance), so each link is touched once per origin instead of once per
+    OD pair. Turning-movement flows fall out of the same sweep: flow on tree edge u→v arrived
+    at u through u's own tree edge.
+    """
+    idx = ods if isinstance(ods, _ODIndex) else _ODIndex(net, ods)
+    dist, pred = net.shortest_paths(cost, idx.origins, usable)
+    edge = _edge_index(net)
     y = np.zeros(net.n_links)
     ym = np.zeros(len(net.movements))
-    od_time = {}
-    for o, d, q in ods:
-        r = row[o]
-        if not np.isfinite(dist[r, d]):
-            raise ValueError(f"no route from node {o} to node {d}")
-        od_time[(o, d)] = float(dist[r, d])
-        if q <= 0:
-            continue
-        prev_link = None
-        v = d
-        while v != o:
-            u = pred[r, v]
-            li = net.edge_link[(u, v)]
-            y[li] += q
-            if prev_link is not None:
-                ym[net.movements[(li, prev_link)]] += q
-            prev_link = li
-            v = u
+    mov = net.movements
+    for r, o in enumerate(idx.origins):
+        dem = idx.demand[r]
+        need = np.nonzero(dem > 0)[0]
+        if len(need) and not np.all(np.isfinite(dist[r, need])):
+            bad = int(need[~np.isfinite(dist[r, need])][0])
+            raise ValueError(f"no route from node {o} to node {bad}")
+        acc = dem.copy()
+        pr = pred[r]
+        reach = np.nonzero(np.isfinite(dist[r]) & (acc >= 0))[0]
+        order = reach[np.argsort(-dist[r, reach], kind="stable")]
+        for v in order:
+            q = acc[v]
+            if q <= 0 or v == o:
+                continue
+            u = pr[v]
+            e = edge[u, v]
+            y[e] += q
+            pu = pr[u]
+            if pu >= 0:
+                ym[mov[(int(edge[pu, u]), int(e))]] += q
+            acc[u] += q
+    od_time = {(o, d): float(dist[idx.row[o], d]) for o, d, _ in idx.pairs}
     return y, ym, od_time
 
 
@@ -131,11 +164,26 @@ def _line_search(costs: LinkCosts, z: np.ndarray, dz: np.ndarray) -> float:
 
 
 def assign(net: Network, costs: LinkCosts, ods: list[tuple[int, int, float]], usable: np.ndarray | None = None,
-           rel_gap: float = 1e-5, max_iter: int = 500) -> AssignmentResult:
-    """User equilibrium for OD demand ``ods`` = [(origin_node, dest_node, veh_h)]."""
+           rel_gap: float = 1e-5, max_iter: int = 500,
+           x0: "tuple[np.ndarray, np.ndarray] | None" = None) -> AssignmentResult:
+    """User equilibrium for OD demand ``ods`` = [(origin_node, dest_node, veh_h)].
+
+    ``x0`` = (link flows, movement flows) of a previous solution to warm-start from (e.g. the
+    base state when testing a closure). Flows on unusable links are first re-routed.
+    """
     t_start = time.perf_counter()
     usable = np.ones(net.n_links, dtype=bool) if usable is None else usable
-    z, zm, _ = _all_or_nothing(net, costs.cost(np.zeros(net.n_links)), ods, usable)
+    idx = _ODIndex(net, ods)
+    ods = idx  # type: ignore[assignment]
+    if x0 is not None and not np.any(x0[0][~usable] > 1e-9):
+        z, zm = x0[0].copy(), x0[1].copy()
+    elif x0 is not None:
+        # closed links carry flow in the warm start: blend toward a feasible AON so the CFW
+        # line search can move it off (convex combination keeps demand consistent)
+        y0, ym0, _ = _all_or_nothing(net, costs.cost(x0[0] * usable), ods, usable)
+        z, zm = y0, ym0
+    else:
+        z, zm, _ = _all_or_nothing(net, costs.cost(np.zeros(net.n_links)), ods, usable)
     s_prev = sm_prev = None
     gap = np.inf
     it = 0

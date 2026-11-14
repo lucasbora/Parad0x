@@ -1,6 +1,10 @@
 node_id,intersection,signalized,from_link_id,from,to_link_id,to,lat,lng
 25497659,Aleea F.C. Ripensia,yes,L2348326092_25497659,Aleea F.C. Ripensia (heading W),L25497659_25638202,Aleea F.C. Ripensia (heading W),45.749000,21.236853
 25497659,Aleea F.C. Ripensia,yes,L2348326092_25497659,Aleea F.C. Ripensia (heading W),L25497659_25638207,(fără nume) (heading N),45.749000,21.236853
+2476943639,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,yes,L2476941578_2476943639,Strada 1 Decembrie 1918 (heading NE),L2476943639_2263447221,Strada 1 Decembrie 1918 (heading NE),45.745244,21.241392
+2476943639,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,yes,L2476941578_2476943639,Strada 1 Decembrie 1918 (heading NE),L2476943639_2651466932,Aleea F.C. Ripensia (heading NW),45.745244,21.241392
+2476943639,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,yes,L25497638_2476943639,Aleea F.C. Ripensia (heading NW),L2476943639_2263447221,Strada 1 Decembrie 1918 (heading NE),45.745244,21.241392
+2476943639,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,yes,L25497638_2476943639,Aleea F.C. Ripensia (heading NW),L2476943639_2651466932,Aleea F.C. Ripensia (heading NW),45.745244,21.241392
 25638202,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,yes,L25497659_25638202,Aleea F.C. Ripensia (heading W),L25638202_256019786,Piața Leonardo da Vinci (heading W),45.749054,21.236525
 25638202,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,yes,L25497659_25638202,Aleea F.C. Ripensia (heading W),L25638202_25638207,Bulevardul Corneliu Coposu (heading NE),45.749054,21.236525
 25638202,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,yes,L255724621_25638202,Piața Leonardo da Vinci (heading NE),L25638202_256019786,Piața Leonardo da Vinci (heading W),45.749054,21.236525
@@ -20,20 +24,11 @@ node_id,intersection,signalized,from_link_id,from,to_link_id,to,lat,lng
 29119260,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L2105405166_29119260,Bulevardul Liviu Rebreanu (heading E),L29119260_6431559102,Bulevardul Liviu Rebreanu (heading E),45.738505,21.238285
 29119260,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L6959616673_29119260,Calea Martirilor 1989 (heading N),L29119260_4443823116,Calea Martirilor 1989 (heading N),45.738505,21.238285
 29119260,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,yes,L6959616673_29119260,Calea Martirilor 1989 (heading N),L29119260_6431559102,Bulevardul Liviu Rebreanu (heading E),45.738505,21.238285
-25478346,Bulevardul Liviu Rebreanu / Strada Arieș,yes,L262632090_25478346,Bulevardul Liviu Rebreanu (heading W),L25478346_25530087,Strada Arieș (heading SE),45.738416,21.240702
-25478346,Bulevardul Liviu Rebreanu / Strada Arieș,yes,L262632090_25478346,Bulevardul Liviu Rebreanu (heading W),L25478346_6428488571,Bulevardul Liviu Rebreanu (heading W),45.738416,21.240702
-25478346,Bulevardul Liviu Rebreanu / Strada Arieș,yes,L6428488575_25478346,Strada Arieș (heading SE),L25478346_25530087,Strada Arieș (heading SE),45.738416,21.240702
-25478346,Bulevardul Liviu Rebreanu / Strada Arieș,yes,L6428488575_25478346,Strada Arieș (heading SE),L25478346_6428488571,Bulevardul Liviu Rebreanu (heading W),45.738416,21.240702
-2350920093,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L2350919309_2350920093,Bulevardul Doctor Victor Babeș (heading W),L2350920093_25478406,Bulevardul Mihai Viteazu (heading S),45.744610,21.225587
-2350920093,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L25497633_2350920093,Bulevardul Mihai Viteazu (heading S),L2350920093_2350919309,Bulevardul Doctor Victor Babeș (heading E),45.744610,21.225587
-2350920093,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L25497633_2350920093,Bulevardul Mihai Viteazu (heading S),L2350920093_25478406,Bulevardul Mihai Viteazu (heading S),45.744610,21.225587
-2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L1236258899_2350919309,Bulevardul Doctor Victor Babeș (heading W),L2350919309_2350920093,Bulevardul Doctor Victor Babeș (heading W),45.744613,21.225730
-2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L1236258899_2350919309,Bulevardul Doctor Victor Babeș (heading W),L2350919309_415272696,Bulevardul Mihai Viteazu (heading N),45.744613,21.225730
-2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L2350920093_2350919309,Bulevardul Doctor Victor Babeș (heading E),L2350919309_1236258899,Bulevardul Doctor Victor Babeș (heading E),45.744613,21.225730
-2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L2350920093_2350919309,Bulevardul Doctor Victor Babeș (heading E),L2350919309_415272696,Bulevardul Mihai Viteazu (heading N),45.744613,21.225730
-2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),L2350919309_1236258899,Bulevardul Doctor Victor Babeș (heading E),45.744613,21.225730
-2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),L2350919309_2350920093,Bulevardul Doctor Victor Babeș (heading W),45.744613,21.225730
-2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),L2350919309_415272696,Bulevardul Mihai Viteazu (heading N),45.744613,21.225730
+2350918084,Bulevardul Mihai Viteazu,yes,L2350919309_2350918084,Bulevardul Mihai Viteazu (heading N),L2350918084_267483277,(fără nume) (heading W),45.745176,21.225638
+2350918084,Bulevardul Mihai Viteazu,yes,L2350919309_2350918084,Bulevardul Mihai Viteazu (heading N),L2350918084_415272696,Bulevardul Mihai Viteazu (heading N),45.745176,21.225638
+2350920093,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L2350919309_2350920093,Bulevardul Doctor Victor Babeș (heading W),L2350920093_389884493,Bulevardul Mihai Viteazu (heading S),45.744610,21.225587
+2350920093,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L267483277_2350920093,Bulevardul Mihai Viteazu (heading S),L2350920093_2350919309,Bulevardul Doctor Victor Babeș (heading E),45.744610,21.225587
+2350920093,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,yes,L267483277_2350920093,Bulevardul Mihai Viteazu (heading S),L2350920093_389884493,Bulevardul Mihai Viteazu (heading S),45.744610,21.225587
 263839960,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,yes,L263152841_263839960,Bulevardul Regele Ferdinand I (heading S),L263839960_21515988,Splaiul Tudor Vladimirescu (heading W),45.748001,21.225449
 263839960,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,yes,L263152841_263839960,Bulevardul Regele Ferdinand I (heading S),L263839960_25497634,Bulevardul Mihai Viteazu (heading S),45.748001,21.225449
 263839960,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,yes,L263839948_263839960,Bulevardul Vasile Pârvan (heading W),L263839960_21515988,Splaiul Tudor Vladimirescu (heading W),45.748001,21.225449
@@ -42,6 +37,10 @@ node_id,intersection,signalized,from_link_id,from,to_link_id,to,lat,lng
 25497634,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,yes,L21515988_25497634,Splaiul Tudor Vladimirescu (heading E),L25497634_262642060,Bulevardul Vasile Pârvan (heading E),45.747901,21.225414
 25497634,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,yes,L263839960_25497634,Bulevardul Mihai Viteazu (heading S),L25497634_25497633,Bulevardul Mihai Viteazu (heading S),45.747901,21.225414
 25497634,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,yes,L263839960_25497634,Bulevardul Mihai Viteazu (heading S),L25497634_262642060,Bulevardul Vasile Pârvan (heading E),45.747901,21.225414
+267483277,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,yes,L2350918084_267483277,(fără nume) (heading W),L267483277_2350920093,Bulevardul Mihai Viteazu (heading S),45.745171,21.225505
+267483277,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,yes,L2350918084_267483277,(fără nume) (heading W),L267483277_297463552,Strada Sfânta Rosalia (heading W),45.745171,21.225505
+267483277,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,yes,L25497633_267483277,Bulevardul Mihai Viteazu (heading S),L267483277_2350920093,Bulevardul Mihai Viteazu (heading S),45.745171,21.225505
+267483277,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,yes,L25497633_267483277,Bulevardul Mihai Viteazu (heading S),L267483277_297463552,Strada Sfânta Rosalia (heading W),45.745171,21.225505
 263839948,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,yes,L1133482449_263839948,Bulevardul Vasile Pârvan (heading W),L263839948_263152841,Bulevardul Regele Ferdinand I (heading N),45.747989,21.225558
 263839948,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,yes,L1133482449_263839948,Bulevardul Vasile Pârvan (heading W),L263839948_263839960,Bulevardul Vasile Pârvan (heading W),45.747989,21.225558
 263839948,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,yes,L262642060_263839948,Bulevardul Regele Ferdinand I (heading N),L263839948_263152841,Bulevardul Regele Ferdinand I (heading N),45.747989,21.225558
@@ -68,8 +67,10 @@ node_id,intersection,signalized,from_link_id,from,to_link_id,to,lat,lng
 255724417,Piața Leonardo da Vinci / Strada Michelangelo,yes,L25638344_255724417,Piața Leonardo da Vinci (heading SW),L255724417_5014433131,Bulevardul Vasile Pârvan (heading W),45.748937,21.235417
 255724417,Piața Leonardo da Vinci / Strada Michelangelo,yes,L4281788870_255724417,Strada Michelangelo (heading S),L255724417_256019138,Piața Leonardo da Vinci (heading S),45.748937,21.235417
 255724417,Piața Leonardo da Vinci / Strada Michelangelo,yes,L4281788870_255724417,Strada Michelangelo (heading S),L255724417_5014433131,Bulevardul Vasile Pârvan (heading W),45.748937,21.235417
-3581040750,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),L3581040750_262632090,Strada Arieș (heading NW),45.738210,21.240985
-3581040750,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),L3581040750_6431276606,Bulevardul Liviu Rebreanu (heading E),45.738210,21.240985
+25478346,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L262632090_25478346,Bulevardul Liviu Rebreanu (heading W),L25478346_25530087,Strada Arieș (heading SE),45.738416,21.240702
+25478346,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L262632090_25478346,Bulevardul Liviu Rebreanu (heading W),L25478346_6428488571,Bulevardul Liviu Rebreanu (heading W),45.738416,21.240702
+25478346,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L6428488575_25478346,Strada Arieș (heading SE),L25478346_25530087,Strada Arieș (heading SE),45.738416,21.240702
+25478346,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L6428488575_25478346,Strada Arieș (heading SE),L25478346_6428488571,Bulevardul Liviu Rebreanu (heading W),45.738416,21.240702
 262632090,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L14015200349_262632090,Bulevardul Liviu Rebreanu (heading W),L262632090_25478346,Bulevardul Liviu Rebreanu (heading W),45.738397,21.240862
 262632090,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L14015200349_262632090,Bulevardul Liviu Rebreanu (heading W),L262632090_4846641045,Strada Arieș (heading NW),45.738397,21.240862
 262632090,Strada Arieș / Bulevardul Liviu Rebreanu,yes,L3581040750_262632090,Strada Arieș (heading NW),L262632090_25478346,Bulevardul Liviu Rebreanu (heading W),45.738397,21.240862
@@ -84,35 +85,105 @@ node_id,intersection,signalized,from_link_id,from,to_link_id,to,lat,lng
 604969830,Strada Arieș / Strada Ștefan Covaci,yes,L386486228_604969830,Strada Ștefan Covaci (heading W),L604969830_1112954247,Strada Arieș (heading NW),45.740255,21.239406
 604969830,Strada Arieș / Strada Ștefan Covaci,yes,L386486228_604969830,Strada Ștefan Covaci (heading W),L604969830_4846641045,Strada Arieș (heading SE),45.740255,21.239406
 604969830,Strada Arieș / Strada Ștefan Covaci,yes,L4846641045_604969830,Strada Arieș (heading NW),L604969830_1112954247,Strada Arieș (heading NW),45.740255,21.239406
-25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L1236258899_25507163,Bulevardul Doctor Victor Babeș (heading E),L25507163_2476973917,Strada Cluj (heading SE),45.745312,21.235923
-25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L1236258899_25507163,Bulevardul Doctor Victor Babeș (heading E),L25507163_5676019160,Bulevardul Eroilor de la Tisa (heading NE),45.745312,21.235923
-25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L2267824959_25507163,Strada Cluj (heading S),L25507163_1236258899,Bulevardul Doctor Victor Babeș (heading W),45.745312,21.235923
-25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L2267824959_25507163,Strada Cluj (heading S),L25507163_2476973917,Strada Cluj (heading SE),45.745312,21.235923
-25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L2267824959_25507163,Strada Cluj (heading S),L25507163_5676019160,Bulevardul Eroilor de la Tisa (heading NE),45.745312,21.235923
-25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L5676019160_25507163,Bulevardul Eroilor de la Tisa (heading SW),L25507163_1236258899,Bulevardul Doctor Victor Babeș (heading W),45.745312,21.235923
-25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L5676019160_25507163,Bulevardul Eroilor de la Tisa (heading SW),L25507163_2476973917,Strada Cluj (heading SE),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L266969520_25507163,Bulevardul Eroilor de la Tisa (heading SW),L25507163_267486052,Strada Cluj (heading S),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L266969520_25507163,Bulevardul Eroilor de la Tisa (heading SW),L25507163_267639416,Bulevardul Doctor Victor Babeș (heading W),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L267639416_25507163,Bulevardul Doctor Victor Babeș (heading E),L25507163_266969520,Bulevardul Eroilor de la Tisa (heading NE),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L267639416_25507163,Bulevardul Doctor Victor Babeș (heading E),L25507163_267486052,Strada Cluj (heading S),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L414931325_25507163,Strada Cluj (heading S),L25507163_266969520,Bulevardul Eroilor de la Tisa (heading NE),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L414931325_25507163,Strada Cluj (heading S),L25507163_267486052,Strada Cluj (heading S),45.745312,21.235923
+25507163,Strada Cluj / Bulevardul Eroilor de la Tisa,yes,L414931325_25507163,Strada Cluj (heading S),L25507163_267639416,Bulevardul Doctor Victor Babeș (heading W),45.745312,21.235923
 25507159,Strada Cluj / Piața Leonardo da Vinci,yes,L25507156_25507159,Bulevardul Vasile Pârvan (heading E),L25507159_1203989461,Piața Leonardo da Vinci (heading E),45.748615,21.235451
 25507159,Strada Cluj / Piața Leonardo da Vinci,yes,L25507156_25507159,Bulevardul Vasile Pârvan (heading E),L25507159_2267824959,Strada Cluj (heading S),45.748615,21.235451
 25507159,Strada Cluj / Piața Leonardo da Vinci,yes,L256019138_25507159,Piața Leonardo da Vinci (heading S),L25507159_1203989461,Piața Leonardo da Vinci (heading E),45.748615,21.235451
 25507159,Strada Cluj / Piața Leonardo da Vinci,yes,L256019138_25507159,Piața Leonardo da Vinci (heading S),L25507159_2267824959,Strada Cluj (heading S),45.748615,21.235451
+2476973917,Strada Cluj / Strada Arieș,yes,L290897218_2476973917,Strada Cluj (heading SE),L2476973917_2267824975,Strada Arieș (heading SE),45.743651,21.236983
+2476973917,Strada Cluj / Strada Arieș,yes,L290897218_2476973917,Strada Cluj (heading SE),L2476973917_4483967509,Strada 1 Decembrie 1918 (heading NE),45.743651,21.236983
+2476973917,Strada Cluj / Strada Arieș,yes,L7029583648_2476973917,Strada 1 Decembrie 1918 (heading NE),L2476973917_2267824975,Strada Arieș (heading SE),45.743651,21.236983
+2476973917,Strada Cluj / Strada Arieș,yes,L7029583648_2476973917,Strada 1 Decembrie 1918 (heading NE),L2476973917_4483967509,Strada 1 Decembrie 1918 (heading NE),45.743651,21.236983
+262639843,Strada Diaconul Coresi / Calea Martirilor 1989,yes,L2105405142_262639843,Calea Martirilor 1989 (heading S),L262639843_25478357,Strada Diaconul Coresi (heading SW),45.740053,21.238405
+262639843,Strada Diaconul Coresi / Calea Martirilor 1989,yes,L2105405142_262639843,Calea Martirilor 1989 (heading S),L262639843_3815408390,Calea Martirilor 1989 (heading S),45.740053,21.238405
+262639843,Strada Diaconul Coresi / Calea Martirilor 1989,yes,L3815408390_262639843,Calea Martirilor 1989 (heading N),L262639843_2105405142,Calea Martirilor 1989 (heading N),45.740053,21.238405
+262639843,Strada Diaconul Coresi / Calea Martirilor 1989,yes,L3815408390_262639843,Calea Martirilor 1989 (heading N),L262639843_25478357,Strada Diaconul Coresi (heading SW),45.740053,21.238405
+25499013,Strada Traian Lalescu / Strada Doctor Aurel Cândea,yes,L21516001_25499013,Bulevardul Doctor Victor Babeș (heading W),L25499013_21515998,Strada Traian Lalescu (heading N),45.744443,21.229895
+25499013,Strada Traian Lalescu / Strada Doctor Aurel Cândea,yes,L21516001_25499013,Bulevardul Doctor Victor Babeș (heading W),L25499013_267639842,Bulevardul Doctor Victor Babeș (heading W),45.744443,21.229895
+25499013,Strada Traian Lalescu / Strada Doctor Aurel Cândea,yes,L267639842_25499013,Bulevardul Doctor Victor Babeș (heading E),L25499013_21515998,Strada Traian Lalescu (heading N),45.744443,21.229895
+25499013,Strada Traian Lalescu / Strada Doctor Aurel Cândea,yes,L267639842_25499013,Bulevardul Doctor Victor Babeș (heading E),L25499013_21516001,Bulevardul Doctor Victor Babeș (heading E),45.744443,21.229895
+25499013,Strada Traian Lalescu / Strada Doctor Aurel Cândea,yes,L357951927_25499013,Strada Doctor Aurel Cândea (heading NW),L25499013_21515998,Strada Traian Lalescu (heading N),45.744443,21.229895
+25499013,Strada Traian Lalescu / Strada Doctor Aurel Cândea,yes,L357951927_25499013,Strada Doctor Aurel Cândea (heading NW),L25499013_21516001,Bulevardul Doctor Victor Babeș (heading E),45.744443,21.229895
+25499013,Strada Traian Lalescu / Strada Doctor Aurel Cândea,yes,L357951927_25499013,Strada Doctor Aurel Cândea (heading NW),L25499013_267639842,Bulevardul Doctor Victor Babeș (heading W),45.744443,21.229895
+389884493,Strada Virgil Onițiu / Bulevardul Mihai Viteazu,yes,L2350920093_389884493,Bulevardul Mihai Viteazu (heading S),L389884493_10116016152,Strada Virgil Onițiu (heading SW),45.744438,21.225615
+389884493,Strada Virgil Onițiu / Bulevardul Mihai Viteazu,yes,L2350920093_389884493,Bulevardul Mihai Viteazu (heading S),L389884493_25478406,Bulevardul Mihai Viteazu (heading S),45.744438,21.225615
 3931142598,Aleea F.C. Ripensia,no,L3931142600_3931142598,(fără nume) (heading NW),L3931142598_3931135801,Aleea F.C. Ripensia (heading NW),45.742746,21.243220
 3931142598,Aleea F.C. Ripensia,no,L3931142600_3931142598,(fără nume) (heading NW),L3931142598_3931136571,(fără nume) (heading SW),45.742746,21.243220
 3931136571,Aleea F.C. Ripensia,no,L3931135800_3931136571,Aleea F.C. Ripensia (heading SE),L3931136571_4615919089,(fără nume) (heading S),45.742692,21.243057
 3931136571,Aleea F.C. Ripensia,no,L3931142598_3931136571,(fără nume) (heading SW),L3931136571_4615919089,(fără nume) (heading S),45.742692,21.243057
-25497638,Aleea F.C. Ripensia,no,L3931135800_25497638,Aleea F.C. Ripensia (heading N),L25497638_2651466932,Aleea F.C. Ripensia (heading NW),45.743230,21.242814
-25497638,Aleea F.C. Ripensia,no,L3931135801_25497638,Aleea F.C. Ripensia (heading NW),L25497638_2651466932,Aleea F.C. Ripensia (heading NW),45.743230,21.242814
-358406089,Aleea F.C. Ripensia,no,L3354796213_358406089,Aleea F.C. Ripensia (heading N),L358406089_2348326092,Aleea F.C. Ripensia (heading NW),45.747043,21.240249
-358406089,Aleea F.C. Ripensia,no,L4067925189_358406089,(fără nume) (heading NW),L358406089_2348326092,Aleea F.C. Ripensia (heading NW),45.747043,21.240249
+25497638,Aleea F.C. Ripensia,no,L3931135800_25497638,Aleea F.C. Ripensia (heading N),L25497638_2476943639,Aleea F.C. Ripensia (heading NW),45.743230,21.242814
+25497638,Aleea F.C. Ripensia,no,L3931135801_25497638,Aleea F.C. Ripensia (heading NW),L25497638_2476943639,Aleea F.C. Ripensia (heading NW),45.743230,21.242814
+358406089,Aleea F.C. Ripensia,no,L3354796213_358406089,Aleea F.C. Ripensia (heading N),L358406089_1873311433,Aleea F.C. Ripensia (heading NW),45.747043,21.240249
+358406089,Aleea F.C. Ripensia,no,L4067925189_358406089,(fără nume) (heading NW),L358406089_1873311433,Aleea F.C. Ripensia (heading NW),45.747043,21.240249
+258825738,Aleea F.C. Ripensia / Strada Socrate,no,L1840363227_258825738,Strada Socrate (heading SW),L258825738_2348326092,Aleea F.C. Ripensia (heading W),45.748782,21.237830
+258825738,Aleea F.C. Ripensia / Strada Socrate,no,L1873311433_258825738,Aleea F.C. Ripensia (heading NW),L258825738_2348326092,Aleea F.C. Ripensia (heading W),45.748782,21.237830
+3931135801,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,no,L3931142598_3931135801,Aleea F.C. Ripensia (heading NW),L3931135801_1259637554,Strada Surorile Martir Caceu (heading NE),45.742953,21.243061
+3931135801,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,no,L3931142598_3931135801,Aleea F.C. Ripensia (heading NW),L3931135801_25497638,Aleea F.C. Ripensia (heading NW),45.742953,21.243061
+3931135800,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,no,L266969553_3931135800,Strada Surorile Martir Caceu (heading NE),L3931135800_25497638,Aleea F.C. Ripensia (heading N),45.742974,21.242698
+3931135800,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,no,L266969553_3931135800,Strada Surorile Martir Caceu (heading NE),L3931135800_3931136571,Aleea F.C. Ripensia (heading SE),45.742974,21.242698
 25638207,Bulevardul Corneliu Coposu,no,L25497659_25638207,(fără nume) (heading N),L25638207_25638253,Bulevardul Corneliu Coposu (heading NE),45.749238,21.236716
 25638207,Bulevardul Corneliu Coposu,no,L25638202_25638207,Bulevardul Corneliu Coposu (heading NE),L25638207_25638253,Bulevardul Corneliu Coposu (heading NE),45.749238,21.236716
+267639416,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,no,L25507163_267639416,Bulevardul Doctor Victor Babeș (heading W),L267639416_267639461,Strada Béla Bartók (heading S),45.745101,21.234535
+267639416,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,no,L25507163_267639416,Bulevardul Doctor Victor Babeș (heading W),L267639416_356674698,Bulevardul Doctor Victor Babeș (heading W),45.745101,21.234535
+267639416,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,no,L356674698_267639416,Bulevardul Doctor Victor Babeș (heading E),L267639416_25507163,Bulevardul Doctor Victor Babeș (heading E),45.745101,21.234535
+267639416,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,no,L356674698_267639416,Bulevardul Doctor Victor Babeș (heading E),L267639416_267639461,Strada Béla Bartók (heading S),45.745101,21.234535
+267639416,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,no,L357958410_267639416,Strada Béla Bartók (heading S),L267639416_25507163,Bulevardul Doctor Victor Babeș (heading E),45.745101,21.234535
+267639416,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,no,L357958410_267639416,Strada Béla Bartók (heading S),L267639416_267639461,Strada Béla Bartók (heading S),45.745101,21.234535
+267639416,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,no,L357958410_267639416,Strada Béla Bartók (heading S),L267639416_356674698,Bulevardul Doctor Victor Babeș (heading W),45.745101,21.234535
+267639842,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,no,L25499007_267639842,Bulevardul Doctor Victor Babeș (heading E),L267639842_25499013,Bulevardul Doctor Victor Babeș (heading E),45.744417,21.228494
+267639842,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,no,L25499007_267639842,Bulevardul Doctor Victor Babeș (heading E),L267639842_4596030344,Strada Evliya Celebi (heading S),45.744417,21.228494
+267639842,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,no,L25499013_267639842,Bulevardul Doctor Victor Babeș (heading W),L267639842_25499007,Bulevardul Doctor Victor Babeș (heading W),45.744417,21.228494
+267639842,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,no,L25499013_267639842,Bulevardul Doctor Victor Babeș (heading W),L267639842_4596030344,Strada Evliya Celebi (heading S),45.744417,21.228494
+21516001,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,no,L21516000_21516001,Strada Petre Râmneanțu (heading S),L21516001_25499013,Bulevardul Doctor Victor Babeș (heading W),45.744766,21.232148
+21516001,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,no,L21516000_21516001,Strada Petre Râmneanțu (heading S),L21516001_356674698,Bulevardul Doctor Victor Babeș (heading E),45.744766,21.232148
+21516001,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,no,L21516000_21516001,Strada Petre Râmneanțu (heading S),L21516001_357951930,Strada Petre Râmneanțu (heading S),45.744766,21.232148
+21516001,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,no,L25499013_21516001,Bulevardul Doctor Victor Babeș (heading E),L21516001_356674698,Bulevardul Doctor Victor Babeș (heading E),45.744766,21.232148
+21516001,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,no,L25499013_21516001,Bulevardul Doctor Victor Babeș (heading E),L21516001_357951930,Strada Petre Râmneanțu (heading S),45.744766,21.232148
+21516001,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,no,L356674698_21516001,Bulevardul Doctor Victor Babeș (heading W),L21516001_25499013,Bulevardul Doctor Victor Babeș (heading W),45.744766,21.232148
+21516001,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,no,L356674698_21516001,Bulevardul Doctor Victor Babeș (heading W),L21516001_357951930,Strada Petre Râmneanțu (heading S),45.744766,21.232148
+25499007,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,no,L1236258899_25499007,Bulevardul Doctor Victor Babeș (heading E),L25499007_267639842,Bulevardul Doctor Victor Babeș (heading E),45.744557,21.226988
+25499007,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,no,L267639842_25499007,Bulevardul Doctor Victor Babeș (heading W),L25499007_1236258899,Bulevardul Doctor Victor Babeș (heading W),45.744557,21.226988
+25499007,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,no,L267643973_25499007,Strada Sorin Titel (heading N),L25499007_1236258899,Bulevardul Doctor Victor Babeș (heading W),45.744557,21.226988
+25499007,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,no,L267643973_25499007,Strada Sorin Titel (heading N),L25499007_267639842,Bulevardul Doctor Victor Babeș (heading E),45.744557,21.226988
+357945651,Bulevardul Eroilor de la Tisa,no,L357945084_357945651,Bulevardul Eroilor de la Tisa (heading NE),L357945651_13236671511,(fără nume) (heading W),45.746324,21.238987
+357945651,Bulevardul Eroilor de la Tisa,no,L357945084_357945651,Bulevardul Eroilor de la Tisa (heading NE),L357945651_5676019160,Bulevardul Eroilor de la Tisa (heading NE),45.746324,21.238987
+357945651,Bulevardul Eroilor de la Tisa,no,L5676019160_357945651,Bulevardul Eroilor de la Tisa (heading SW),L357945651_13236671511,(fără nume) (heading W),45.746324,21.238987
+357945651,Bulevardul Eroilor de la Tisa,no,L5676019160_357945651,Bulevardul Eroilor de la Tisa (heading SW),L357945651_357945084,Bulevardul Eroilor de la Tisa (heading SW),45.746324,21.238987
 4067925189,Bulevardul Eroilor de la Tisa,no,L11297495796_4067925189,Bulevardul Eroilor de la Tisa (heading SW),L4067925189_3354796213,Bulevardul Eroilor de la Tisa (heading SW),45.746905,21.240622
 4067925189,Bulevardul Eroilor de la Tisa,no,L11297495796_4067925189,Bulevardul Eroilor de la Tisa (heading SW),L4067925189_358406089,(fără nume) (heading NW),45.746905,21.240622
 4067925189,Bulevardul Eroilor de la Tisa,no,L3354796213_4067925189,Bulevardul Eroilor de la Tisa (heading NE),L4067925189_11297495796,Bulevardul Eroilor de la Tisa (heading NE),45.746905,21.240622
 4067925189,Bulevardul Eroilor de la Tisa,no,L3354796213_4067925189,Bulevardul Eroilor de la Tisa (heading NE),L4067925189_358406089,(fără nume) (heading NW),45.746905,21.240622
-25530087,Bulevardul Liviu Rebreanu / Strada Arieș,no,L25478346_25530087,Strada Arieș (heading SE),L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),45.738226,21.240846
-25530087,Bulevardul Liviu Rebreanu / Strada Arieș,no,L6431559102_25530087,Bulevardul Liviu Rebreanu (heading E),L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),45.738226,21.240846
+357945084,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,no,L13236671511_357945084,Strada Mihail Jora (heading SE),L357945084_266969520,Bulevardul Eroilor de la Tisa (heading SW),45.745769,21.237377
+357945084,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,no,L13236671511_357945084,Strada Mihail Jora (heading SE),L357945084_357945651,Bulevardul Eroilor de la Tisa (heading NE),45.745769,21.237377
+357945084,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,no,L266969520_357945084,Bulevardul Eroilor de la Tisa (heading NE),L357945084_357945651,Bulevardul Eroilor de la Tisa (heading NE),45.745769,21.237377
+357945084,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,no,L357945651_357945084,Bulevardul Eroilor de la Tisa (heading SW),L357945084_266969520,Bulevardul Eroilor de la Tisa (heading SW),45.745769,21.237377
+3581040750,Bulevardul Liviu Rebreanu / Strada Arieș,no,L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),L3581040750_2009209760,Bulevardul Liviu Rebreanu (heading E),45.738210,21.240985
+3581040750,Bulevardul Liviu Rebreanu / Strada Arieș,no,L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),L3581040750_262632090,Strada Arieș (heading NW),45.738210,21.240985
+3581040750,Bulevardul Liviu Rebreanu / Strada Arieș,no,L4271981214_3581040750,Strada Arieș (heading NW),L3581040750_2009209760,Bulevardul Liviu Rebreanu (heading E),45.738210,21.240985
+3581040750,Bulevardul Liviu Rebreanu / Strada Arieș,no,L4271981214_3581040750,Strada Arieș (heading NW),L3581040750_262632090,Strada Arieș (heading NW),45.738210,21.240985
 6428488571,Bulevardul Liviu Rebreanu / Strada Arieș,no,L25478346_6428488571,Bulevardul Liviu Rebreanu (heading W),L6428488571_13309089601,Bulevardul Liviu Rebreanu (heading W),45.738457,21.240294
 6428488571,Bulevardul Liviu Rebreanu / Strada Arieș,no,L6428488575_6428488571,Strada Arieș (heading SW),L6428488571_13309089601,Bulevardul Liviu Rebreanu (heading W),45.738457,21.240294
+2009209760,Bulevardul Liviu Rebreanu / Strada Doctor Ioan Mureșan,no,L3581040750_2009209760,Bulevardul Liviu Rebreanu (heading E),L2009209760_6428488569,Strada Doctor Ioan Mureșan (heading S),45.738118,21.241877
+2009209760,Bulevardul Liviu Rebreanu / Strada Doctor Ioan Mureșan,no,L3581040750_2009209760,Bulevardul Liviu Rebreanu (heading E),L2009209760_6431276606,Bulevardul Liviu Rebreanu (heading E),45.738118,21.241877
+2009209760,Bulevardul Liviu Rebreanu / Strada Doctor Ioan Mureșan,no,L6428488569_2009209760,Strada Doctor Ioan Mureșan (heading N),L2009209760_6431276606,Bulevardul Liviu Rebreanu (heading E),45.738118,21.241877
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,no,L1236258899_2350919309,Bulevardul Doctor Victor Babeș (heading W),L2350919309_2350918084,Bulevardul Mihai Viteazu (heading N),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,no,L1236258899_2350919309,Bulevardul Doctor Victor Babeș (heading W),L2350919309_2350920093,Bulevardul Doctor Victor Babeș (heading W),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,no,L2350920093_2350919309,Bulevardul Doctor Victor Babeș (heading E),L2350919309_1236258899,Bulevardul Doctor Victor Babeș (heading E),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,no,L2350920093_2350919309,Bulevardul Doctor Victor Babeș (heading E),L2350919309_2350918084,Bulevardul Mihai Viteazu (heading N),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,no,L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),L2350919309_1236258899,Bulevardul Doctor Victor Babeș (heading E),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,no,L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),L2350919309_2350918084,Bulevardul Mihai Viteazu (heading N),45.744613,21.225730
+2350919309,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,no,L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),L2350919309_2350920093,Bulevardul Doctor Victor Babeș (heading W),45.744613,21.225730
+267643174,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,no,L2567646677_267643174,Strada Protopop George Dragomir (heading NW),L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),45.742249,21.226057
+267643174,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,no,L263151549_267643174,Piața Nicolae Bălcescu (heading N),L267643174_2350919309,Bulevardul Mihai Viteazu (heading N),45.742249,21.226057
+25497633,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,no,L1223274615_25497633,Strada Virgil Madgearu (heading E),L25497633_267483277,Bulevardul Mihai Viteazu (heading S),45.746895,21.225294
+25497633,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,no,L25497634_25497633,Bulevardul Mihai Viteazu (heading S),L25497633_1223274615,Strada Virgil Madgearu (heading W),45.746895,21.225294
+25497633,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,no,L25497634_25497633,Bulevardul Mihai Viteazu (heading S),L25497633_267483277,Bulevardul Mihai Viteazu (heading S),45.746895,21.225294
 2052012003,Bulevardul Regele Ferdinand I,no,L2052011839_2052012003,Bulevardul Regele Ferdinand I (heading S),L2052012003_2051947965,Bulevardul Regele Ferdinand I (heading S),45.749681,21.225505
 2052012003,Bulevardul Regele Ferdinand I,no,L2052011839_2052012003,Bulevardul Regele Ferdinand I (heading S),L2052012003_2052012082,Bulevardul Regele Ferdinand I (heading E),45.749681,21.225505
 263152841,Bulevardul Regele Ferdinand I / Podul Mihai Viteazul,no,L2051947965_263152841,Podul Mihai Viteazul (heading S),L263152841_263839960,Bulevardul Regele Ferdinand I (heading S),45.748448,21.225596
@@ -120,26 +191,45 @@ node_id,intersection,signalized,from_link_id,from,to_link_id,to,lat,lng
 263152841,Bulevardul Regele Ferdinand I / Podul Mihai Viteazul,no,L263839948_263152841,Bulevardul Regele Ferdinand I (heading N),L263152841_263839960,Bulevardul Regele Ferdinand I (heading S),45.748448,21.225596
 2052012082,Bulevardul Regele Ferdinand I / Strada 20 Decembrie 1989,no,L2051947965_2052012082,Strada 20 Decembrie 1989 (heading NE),L2052012082_4485472265,Strada 20 Decembrie 1989 (heading NE),45.749621,21.226187
 2052012082,Bulevardul Regele Ferdinand I / Strada 20 Decembrie 1989,no,L2052012003_2052012082,Bulevardul Regele Ferdinand I (heading E),L2052012082_4485472265,Strada 20 Decembrie 1989 (heading NE),45.749621,21.226187
-1133482449,Bulevardul Vasile Pârvan,no,L25507156_1133482449,Bulevardul Vasile Pârvan (heading W),L1133482449_263839948,Bulevardul Vasile Pârvan (heading W),45.747771,21.227001
-1133482449,Bulevardul Vasile Pârvan,no,L262642060_1133482449,Bulevardul Vasile Pârvan (heading E),L1133482449_25507156,Bulevardul Vasile Pârvan (heading E),45.747771,21.227001
+1133482449,Bulevardul Vasile Pârvan,no,L21515996_1133482449,Bulevardul Vasile Pârvan (heading W),L1133482449_263839948,Bulevardul Vasile Pârvan (heading W),45.747771,21.227001
+1133482449,Bulevardul Vasile Pârvan,no,L262642060_1133482449,Bulevardul Vasile Pârvan (heading E),L1133482449_21515996,Bulevardul Vasile Pârvan (heading E),45.747771,21.227001
 1133482449,Bulevardul Vasile Pârvan,no,L262642060_1133482449,Bulevardul Vasile Pârvan (heading E),L1133482449_263839948,Bulevardul Vasile Pârvan (heading W),45.747771,21.227001
-25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L1133482449_25507156,Bulevardul Vasile Pârvan (heading E),L25507156_2272193101,Pasajul Michelangelo (heading NE),45.748139,21.232178
-25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L1133482449_25507156,Bulevardul Vasile Pârvan (heading E),L25507156_25507159,Bulevardul Vasile Pârvan (heading E),45.748139,21.232178
-25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L2272193101_25507156,Pasajul Michelangelo (heading SW),L25507156_1133482449,Bulevardul Vasile Pârvan (heading W),45.748139,21.232178
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L21515996_25507156,Bulevardul Vasile Pârvan (heading E),L25507156_2272193101,Pasajul Michelangelo (heading NE),45.748139,21.232178
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L21515996_25507156,Bulevardul Vasile Pârvan (heading E),L25507156_25507159,Bulevardul Vasile Pârvan (heading E),45.748139,21.232178
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L2272193101_25507156,Pasajul Michelangelo (heading SW),L25507156_21515996,Bulevardul Vasile Pârvan (heading W),45.748139,21.232178
 25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L2272193101_25507156,Pasajul Michelangelo (heading SW),L25507156_25507159,Bulevardul Vasile Pârvan (heading E),45.748139,21.232178
-25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L5014433131_25507156,Bulevardul Vasile Pârvan (heading SW),L25507156_1133482449,Bulevardul Vasile Pârvan (heading W),45.748139,21.232178
+25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L5014433131_25507156,Bulevardul Vasile Pârvan (heading SW),L25507156_21515996,Bulevardul Vasile Pârvan (heading W),45.748139,21.232178
 25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L5014433131_25507156,Bulevardul Vasile Pârvan (heading SW),L25507156_2272193101,Pasajul Michelangelo (heading NE),45.748139,21.232178
 25507156,Bulevardul Vasile Pârvan / Pasajul Michelangelo,no,L5014433131_25507156,Bulevardul Vasile Pârvan (heading SW),L25507156_25507159,Bulevardul Vasile Pârvan (heading E),45.748139,21.232178
+2105405142,Calea Martirilor 1989,no,L1112954238_2105405142,Calea Martirilor 1989 (heading S),L2105405142_1112954247,(fără nume) (heading E),45.740723,21.238498
+2105405142,Calea Martirilor 1989,no,L1112954238_2105405142,Calea Martirilor 1989 (heading S),L2105405142_262639843,Calea Martirilor 1989 (heading S),45.740723,21.238498
+2105405142,Calea Martirilor 1989,no,L262639843_2105405142,Calea Martirilor 1989 (heading N),L2105405142_1112954238,Calea Martirilor 1989 (heading N),45.740723,21.238498
+2105405142,Calea Martirilor 1989,no,L262639843_2105405142,Calea Martirilor 1989 (heading N),L2105405142_1112954247,(fără nume) (heading E),45.740723,21.238498
+3815408390,Calea Martirilor 1989,no,L262639843_3815408390,Calea Martirilor 1989 (heading S),L3815408390_4462010368,Calea Martirilor 1989 (heading S),45.739002,21.238295
+3815408390,Calea Martirilor 1989,no,L4443823116_3815408390,Calea Martirilor 1989 (heading N),L3815408390_262639843,Calea Martirilor 1989 (heading N),45.739002,21.238295
+3815408390,Calea Martirilor 1989,no,L4443823116_3815408390,Calea Martirilor 1989 (heading N),L3815408390_4462010368,Calea Martirilor 1989 (heading S),45.739002,21.238295
 1112954238,Calea Martirilor 1989,no,L1112954234_1112954238,Calea Martirilor 1989 (heading S),L1112954238_1203996268,Calea Martirilor 1989 (heading N),45.740752,21.238500
 1112954238,Calea Martirilor 1989,no,L1112954234_1112954238,Calea Martirilor 1989 (heading S),L1112954238_2105405142,Calea Martirilor 1989 (heading S),45.740752,21.238500
 1112954238,Calea Martirilor 1989,no,L2105405142_1112954238,Calea Martirilor 1989 (heading N),L1112954238_1203996268,Calea Martirilor 1989 (heading N),45.740752,21.238500
-2105405142,Calea Martirilor 1989,no,L1112954238_2105405142,Calea Martirilor 1989 (heading S),L2105405142_1112954247,(fără nume) (heading E),45.740723,21.238498
-2105405142,Calea Martirilor 1989,no,L1112954238_2105405142,Calea Martirilor 1989 (heading S),L2105405142_3815408390,Calea Martirilor 1989 (heading S),45.740723,21.238498
-2105405142,Calea Martirilor 1989,no,L3815408390_2105405142,Calea Martirilor 1989 (heading N),L2105405142_1112954238,Calea Martirilor 1989 (heading N),45.740723,21.238498
-2105405142,Calea Martirilor 1989,no,L3815408390_2105405142,Calea Martirilor 1989 (heading N),L2105405142_1112954247,(fără nume) (heading E),45.740723,21.238498
-3815408390,Calea Martirilor 1989,no,L2105405142_3815408390,Calea Martirilor 1989 (heading S),L3815408390_4462010368,Calea Martirilor 1989 (heading S),45.739002,21.238295
-3815408390,Calea Martirilor 1989,no,L4443823116_3815408390,Calea Martirilor 1989 (heading N),L3815408390_2105405142,Calea Martirilor 1989 (heading N),45.739002,21.238295
-3815408390,Calea Martirilor 1989,no,L4443823116_3815408390,Calea Martirilor 1989 (heading N),L3815408390_4462010368,Calea Martirilor 1989 (heading S),45.739002,21.238295
+357960884,Piața Axente Sever / Strada Cozia,no,L267482556_357960884,Strada Cozia (heading W),L357960884_264631153,Piața Axente Sever (heading SW),45.739039,21.230908
+357960884,Piața Axente Sever / Strada Cozia,no,L267482556_357960884,Strada Cozia (heading W),L357960884_357960887,Strada Aron Pumnul (heading NW),45.739039,21.230908
+357960884,Piața Axente Sever / Strada Cozia,no,L357960887_357960884,Strada Aron Pumnul (heading SE),L357960884_264631153,Piața Axente Sever (heading SW),45.739039,21.230908
+267644355,Piața Bisericii / Strada Mitropolit Varlaam,no,L267639137_267644355,Strada Mitropolit Varlaam (heading SW),L267644355_267644353,Piața Bisericii (heading W),45.742753,21.230093
+267644355,Piața Bisericii / Strada Mitropolit Varlaam,no,L267644356_267644355,Piața Bisericii (heading N),L267644355_267644353,Piața Bisericii (heading W),45.742753,21.230093
+267644358,Piața Bisericii / Strada Protopop George Dragomir,no,L25478378_267644358,Strada Protopop George Dragomir (heading E),L267644358_267644356,Piața Bisericii (heading E),45.742228,21.229277
+267644358,Piața Bisericii / Strada Protopop George Dragomir,no,L267644353_267644358,Piața Bisericii (heading S),L267644358_25478378,Strada Protopop George Dragomir (heading W),45.742228,21.229277
+267644358,Piața Bisericii / Strada Protopop George Dragomir,no,L267644353_267644358,Piața Bisericii (heading S),L267644358_267644356,Piața Bisericii (heading E),45.742228,21.229277
+267644358,Piața Bisericii / Strada Protopop George Dragomir,no,L267644356_267644358,Piața Bisericii (heading W),L267644358_25478378,Strada Protopop George Dragomir (heading W),45.742228,21.229277
+267644356,Piața Bisericii / Strada Protopop George Dragomir,no,L267644358_267644356,Piața Bisericii (heading E),L267644356_267644355,Piața Bisericii (heading N),45.742245,21.230127
+267644356,Piața Bisericii / Strada Protopop George Dragomir,no,L267644358_267644356,Piața Bisericii (heading E),L267644356_267644648,Strada Protopop George Dragomir (heading E),45.742245,21.230127
+267644356,Piața Bisericii / Strada Protopop George Dragomir,no,L267644648_267644356,Strada Protopop George Dragomir (heading W),L267644356_267644355,Piața Bisericii (heading N),45.742245,21.230127
+267644356,Piața Bisericii / Strada Protopop George Dragomir,no,L267644648_267644356,Strada Protopop George Dragomir (heading W),L267644356_267644358,Piața Bisericii (heading W),45.742245,21.230127
+1673947747,Piața Karlsruhe / Strada Bucegi,no,L1673947709_1673947747,Piața Karlsruhe (heading W),L1673947747_1864884623,Strada Bucegi (heading S),45.745682,21.243856
+1673947747,Piața Karlsruhe / Strada Bucegi,no,L1673947709_1673947747,Piața Karlsruhe (heading W),L1673947747_2263447221,Strada Bucegi (heading NW),45.745682,21.243856
+1673947747,Piața Karlsruhe / Strada Bucegi,no,L1864884623_1673947747,Strada Bucegi (heading N),L1673947747_1673947709,Piața Karlsruhe (heading E),45.745682,21.243856
+1673947747,Piața Karlsruhe / Strada Bucegi,no,L1864884623_1673947747,Strada Bucegi (heading N),L1673947747_2263447221,Strada Bucegi (heading NW),45.745682,21.243856
+1673947747,Piața Karlsruhe / Strada Bucegi,no,L2263447221_1673947747,Strada Bucegi (heading SE),L1673947747_1673947709,Piața Karlsruhe (heading E),45.745682,21.243856
+1673947747,Piața Karlsruhe / Strada Bucegi,no,L2263447221_1673947747,Strada Bucegi (heading SE),L1673947747_1864884623,Strada Bucegi (heading S),45.745682,21.243856
 256019138,Piața Leonardo da Vinci,no,L255724417_256019138,Piața Leonardo da Vinci (heading S),L256019138_1203989461,Piața Leonardo da Vinci (heading SE),45.748862,21.235430
 256019138,Piața Leonardo da Vinci,no,L255724417_256019138,Piața Leonardo da Vinci (heading S),L256019138_25507159,Piața Leonardo da Vinci (heading S),45.748862,21.235430
 1203989459,Piața Leonardo da Vinci,no,L1203989461_1203989459,Piața Leonardo da Vinci (heading NE),L1203989459_255724621,Piața Leonardo da Vinci (heading NE),45.748743,21.235919
@@ -148,22 +238,62 @@ node_id,intersection,signalized,from_link_id,from,to_link_id,to,lat,lng
 25638344,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,no,L13891255589_25638344,Bulevardul Corneliu Coposu (heading SW),L25638344_4281788870,Strada Michelangelo (heading NW),45.749172,21.235934
 25638344,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,no,L256019786_25638344,Piața Leonardo da Vinci (heading W),L25638344_255724417,Piața Leonardo da Vinci (heading SW),45.749172,21.235934
 25638344,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,no,L256019786_25638344,Piața Leonardo da Vinci (heading W),L25638344_4281788870,Strada Michelangelo (heading NW),45.749172,21.235934
-2408666126,Piața Nicolae Bălcescu,no,L25478406_2408666126,Piața Nicolae Bălcescu (heading SW),L2408666126_29120255,Piața Nicolae Bălcescu (heading SW),45.741951,21.225640
-2408666126,Piața Nicolae Bălcescu,no,L792223260_2408666126,Piața Nicolae Bălcescu (heading NW),L2408666126_29120255,Piața Nicolae Bălcescu (heading SW),45.741951,21.225640
+2408666126,Piața Nicolae Bălcescu,no,L25478406_2408666126,Piața Nicolae Bălcescu (heading SW),L2408666126_3041936177,Piața Nicolae Bălcescu (heading SW),45.741951,21.225640
+2408666126,Piața Nicolae Bălcescu,no,L792223260_2408666126,Piața Nicolae Bălcescu (heading NW),L2408666126_3041936177,Piața Nicolae Bălcescu (heading SW),45.741951,21.225640
 792223260,Piața Nicolae Bălcescu,no,L2408666141_792223260,Piața Nicolae Bălcescu (heading NE),L792223260_2408666107,Piața Nicolae Bălcescu (heading NE),45.741689,21.225864
 792223260,Piața Nicolae Bălcescu,no,L2408666141_792223260,Piața Nicolae Bălcescu (heading NE),L792223260_2408666126,Piața Nicolae Bălcescu (heading NW),45.741689,21.225864
+1236363778,Piața Nicolae Bălcescu / Strada 1 Decembrie 1918,no,L6274787022_1236363778,Piața Nicolae Bălcescu (heading E),L1236363778_11195796839,Strada 1 Decembrie 1918 (heading SE),45.741347,21.225530
+1236363778,Piața Nicolae Bălcescu / Strada 1 Decembrie 1918,no,L6274787022_1236363778,Piața Nicolae Bălcescu (heading E),L1236363778_2408666141,Piața Nicolae Bălcescu (heading NE),45.741347,21.225530
 29120256,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,no,L263151277_29120256,Strada Ciprian Porumbescu (heading E),L29120256_6274787022,Piața Nicolae Bălcescu (heading E),45.741327,21.225347
 29120256,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,no,L29120255_29120256,Piața Nicolae Bălcescu (heading SE),L29120256_6274787022,Piața Nicolae Bălcescu (heading E),45.741327,21.225347
-29120255,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,no,L2408666126_29120255,Piața Nicolae Bălcescu (heading SW),L29120255_263151277,Strada Ciprian Porumbescu (heading S),45.741527,21.225179
-29120255,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,no,L2408666126_29120255,Piața Nicolae Bălcescu (heading SW),L29120255_29120256,Piața Nicolae Bălcescu (heading SE),45.741527,21.225179
-6274787022,Piața Nicolae Bălcescu / Strada Independenței,no,L11195796846_6274787022,Strada Independenței (heading N),L6274787022_2408666141,Piața Nicolae Bălcescu (heading NE),45.741326,21.225425
-6274787022,Piața Nicolae Bălcescu / Strada Independenței,no,L29120256_6274787022,Piața Nicolae Bălcescu (heading E),L6274787022_2408666141,Piața Nicolae Bălcescu (heading NE),45.741326,21.225425
+29120255,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,no,L3041936177_29120255,Piața Nicolae Bălcescu (heading S),L29120255_263151277,Strada Ciprian Porumbescu (heading S),45.741527,21.225179
+29120255,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,no,L3041936177_29120255,Piața Nicolae Bălcescu (heading S),L29120255_29120256,Piața Nicolae Bălcescu (heading SE),45.741527,21.225179
+6274787022,Piața Nicolae Bălcescu / Strada Independenței,no,L11195796845_6274787022,Strada Independenței (heading N),L6274787022_1236363778,Piața Nicolae Bălcescu (heading E),45.741326,21.225425
+6274787022,Piața Nicolae Bălcescu / Strada Independenței,no,L29120256_6274787022,Piața Nicolae Bălcescu (heading E),L6274787022_1236363778,Piața Nicolae Bălcescu (heading E),45.741326,21.225425
+263151549,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,no,L2408666107_263151549,Piața Nicolae Bălcescu (heading N),L263151549_2567646677,Strada Protopop George Dragomir (heading NE),45.742035,21.226074
+263151549,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,no,L2408666107_263151549,Piața Nicolae Bălcescu (heading N),L263151549_267643174,Piața Nicolae Bălcescu (heading N),45.742035,21.226074
+267482821,Piața Tineretului / Strada Craiova,no,L267482822_267482821,Piața Tineretului (heading NW),L267482821_267482659,Strada Craiova (heading SW),45.742659,21.239012
+267482821,Piața Tineretului / Strada Craiova,no,L267482822_267482821,Piața Tineretului (heading NW),L267482821_267482942,Strada Craiova (heading NE),45.742659,21.239012
+267482821,Piața Tineretului / Strada Craiova,no,L267482942_267482821,Strada Craiova (heading SW),L267482821_267482659,Strada Craiova (heading SW),45.742659,21.239012
+267482821,Piața Tineretului / Strada Craiova,no,L267482942_267482821,Strada Craiova (heading SW),L267482821_267482822,Piața Tineretului (heading SE),45.742659,21.239012
+267482822,Piața Tineretului / Strada Surorile Martir Caceu,no,L11834892321_267482822,Strada Surorile Martir Caceu (heading NE),L267482822_266969553,Strada Surorile Martir Caceu (heading NE),45.741906,21.239551
+267482822,Piața Tineretului / Strada Surorile Martir Caceu,no,L11834892321_267482822,Strada Surorile Martir Caceu (heading NE),L267482822_267482821,Piața Tineretului (heading NW),45.741906,21.239551
+267482822,Piața Tineretului / Strada Surorile Martir Caceu,no,L267482821_267482822,Piața Tineretului (heading SE),L267482822_266969553,Strada Surorile Martir Caceu (heading NE),45.741906,21.239551
 21515988,Splaiul Tudor Vladimirescu,no,L21515986_21515988,Splaiul Tudor Vladimirescu (heading E),L21515988_25497634,Splaiul Tudor Vladimirescu (heading E),45.748057,21.224798
 21515988,Splaiul Tudor Vladimirescu,no,L263839960_21515988,Splaiul Tudor Vladimirescu (heading W),L21515988_21515986,Splaiul Tudor Vladimirescu (heading W),45.748057,21.224798
 21515988,Splaiul Tudor Vladimirescu,no,L263839960_21515988,Splaiul Tudor Vladimirescu (heading W),L21515988_25497634,Splaiul Tudor Vladimirescu (heading E),45.748057,21.224798
+11195796839,Strada 1 Decembrie 1918,no,L11195796845_11195796839,Strada 1 Decembrie 1918 (heading E),L11195796839_2409737939,Strada 1 Decembrie 1918 (heading SE),45.741261,21.225783
+11195796839,Strada 1 Decembrie 1918,no,L1236363778_11195796839,Strada 1 Decembrie 1918 (heading SE),L11195796839_2409737939,Strada 1 Decembrie 1918 (heading SE),45.741261,21.225783
+2109009391,Strada 1 Decembrie 1918 / Strada Constanța,no,L2008645432_2109009391,Strada Constanța (heading SE),L2109009391_2109009392,Strada 1 Decembrie 1918 (heading NE),45.744006,21.237920
+2109009391,Strada 1 Decembrie 1918 / Strada Constanța,no,L4483967509_2109009391,Strada 1 Decembrie 1918 (heading NE),L2109009391_2008645432,Strada Constanța (heading NW),45.744006,21.237920
+2109009391,Strada 1 Decembrie 1918 / Strada Constanța,no,L4483967509_2109009391,Strada 1 Decembrie 1918 (heading NE),L2109009391_2109009392,Strada 1 Decembrie 1918 (heading NE),45.744006,21.237920
+2109009369,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,no,L2476965959_2109009369,Strada 1 Decembrie 1918 (heading E),L2109009369_2476958621,Strada 1 Decembrie 1918 (heading NE),45.741439,21.231347
+2109009369,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,no,L2476965959_2109009369,Strada 1 Decembrie 1918 (heading E),L2109009369_267644646,Strada Martir Sorinel Leia (heading SE),45.741439,21.231347
+2109009369,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,no,L267644648_2109009369,Strada Martir Sorinel Leia (heading SE),L2109009369_2476958621,Strada 1 Decembrie 1918 (heading NE),45.741439,21.231347
+2109009369,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,no,L267644648_2109009369,Strada Martir Sorinel Leia (heading SE),L2109009369_267644646,Strada Martir Sorinel Leia (heading SE),45.741439,21.231347
+2109009386,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,no,L2476958621_2109009386,Strada 1 Decembrie 1918 (heading NE),L2109009386_2109009387,Strada 1 Decembrie 1918 (heading NE),45.742792,21.234433
+2109009386,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,no,L2476958621_2109009386,Strada 1 Decembrie 1918 (heading NE),L2109009386_267639464,Strada Mitropolit Varlaam (heading NW),45.742792,21.234433
+2109009386,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,no,L267639464_2109009386,Strada Mitropolit Varlaam (heading SE),L2109009386_2109009387,Strada 1 Decembrie 1918 (heading NE),45.742792,21.234433
+2109009394,Strada 1 Decembrie 1918 / Strada Retezat,no,L2109009393_2109009394,Strada 1 Decembrie 1918 (heading NE),L2109009394_2476941578,Strada 1 Decembrie 1918 (heading NE),45.744356,21.238906
+2109009394,Strada 1 Decembrie 1918 / Strada Retezat,no,L2109009393_2109009394,Strada 1 Decembrie 1918 (heading NE),L2109009394_289675943,Strada Retezat (heading SE),45.744356,21.238906
+2109009394,Strada 1 Decembrie 1918 / Strada Retezat,no,L289675943_2109009394,Strada Retezat (heading NW),L2109009394_2476941578,Strada 1 Decembrie 1918 (heading NE),45.744356,21.238906
+2109009393,Strada 1 Decembrie 1918 / Strada Vâlcea,no,L2008645426_2109009393,Strada Vâlcea (heading SE),L2109009393_2109009394,Strada 1 Decembrie 1918 (heading NE),45.744185,21.238445
+2109009393,Strada 1 Decembrie 1918 / Strada Vâlcea,no,L2109009392_2109009393,Strada 1 Decembrie 1918 (heading NE),L2109009393_2008645426,Strada Vâlcea (heading NW),45.744185,21.238445
+2109009393,Strada 1 Decembrie 1918 / Strada Vâlcea,no,L2109009392_2109009393,Strada 1 Decembrie 1918 (heading NE),L2109009393_2109009394,Strada 1 Decembrie 1918 (heading NE),45.744185,21.238445
 2051947965,Strada 20 Decembrie 1989 / Podul Mihai Viteazul,no,L2052012003_2051947965,Bulevardul Regele Ferdinand I (heading S),L2051947965_2052012082,Strada 20 Decembrie 1989 (heading NE),45.748929,21.225714
 2051947965,Strada 20 Decembrie 1989 / Podul Mihai Viteazul,no,L2052012003_2051947965,Bulevardul Regele Ferdinand I (heading S),L2051947965_263152841,Podul Mihai Viteazul (heading S),45.748929,21.225714
 2051947965,Strada 20 Decembrie 1989 / Podul Mihai Viteazul,no,L263152841_2051947965,Podul Mihai Viteazul (heading N),L2051947965_2052012082,Strada 20 Decembrie 1989 (heading NE),45.748929,21.225714
+1873311433,Strada Alexandru Vaida Voievod / Aleea F.C. Ripensia,no,L358406089_1873311433,Aleea F.C. Ripensia (heading NW),L1873311433_258825738,Aleea F.C. Ripensia (heading NW),45.747833,21.239629
+1873311433,Strada Alexandru Vaida Voievod / Aleea F.C. Ripensia,no,L358406089_1873311433,Aleea F.C. Ripensia (heading NW),L1873311433_258825749,Strada Alexandru Vaida Voievod (heading NE),45.747833,21.239629
+258825749,Strada Alexandru Vaida Voievod / Strada Caraș,no,L1873311433_258825749,Strada Alexandru Vaida Voievod (heading NE),L258825749_258825754,Strada Alexandru Vaida Voievod (heading NE),45.748574,21.241180
+258825749,Strada Alexandru Vaida Voievod / Strada Caraș,no,L258825750_258825749,Strada Caraș (heading NW),L258825749_258825754,Strada Alexandru Vaida Voievod (heading NE),45.748574,21.241180
+258825754,Strada Alexandru Vaida Voievod / Strada Daliei,no,L258825749_258825754,Strada Alexandru Vaida Voievod (heading NE),L258825754_2186456496,Strada Alexandru Vaida Voievod (heading NE),45.749386,21.243186
+258825754,Strada Alexandru Vaida Voievod / Strada Daliei,no,L258825749_258825754,Strada Alexandru Vaida Voievod (heading NE),L258825754_4452311618,Strada Daliei (heading SE),45.749386,21.243186
+2267824975,Strada Anghel Saligny / Strada Arieș,no,L2476973917_2267824975,Strada Arieș (heading SE),L2267824975_266969556,Strada Anghel Saligny (heading NE),45.743003,21.237438
+2267824975,Strada Anghel Saligny / Strada Arieș,no,L2476973917_2267824975,Strada Arieș (heading SE),L2267824975_267482659,Strada Arieș (heading SE),45.743003,21.237438
+2267824975,Strada Anghel Saligny / Strada Arieș,no,L266969556_2267824975,Strada Anghel Saligny (heading SW),L2267824975_267482659,Strada Arieș (heading SE),45.743003,21.237438
+267639461,Strada Argeș / Strada Béla Bartók,no,L267639416_267639461,Strada Béla Bartók (heading S),L267639461_267639464,Strada Argeș (heading SW),45.743910,21.234880
+267639461,Strada Argeș / Strada Béla Bartók,no,L290897218_267639461,Strada Argeș (heading SW),L267639461_267639464,Strada Argeș (heading SW),45.743910,21.234880
 4846641045,Strada Arieș,no,L262632090_4846641045,Strada Arieș (heading NW),L4846641045_604969830,Strada Arieș (heading NW),45.739110,21.240250
 4846641045,Strada Arieș,no,L262632090_4846641045,Strada Arieș (heading NW),L4846641045_6428488575,Strada Arieș (heading SE),45.739110,21.240250
 4846641045,Strada Arieș,no,L604969830_4846641045,Strada Arieș (heading SE),L4846641045_6428488575,Strada Arieș (heading SE),45.739110,21.240250
@@ -174,16 +304,164 @@ node_id,intersection,signalized,from_link_id,from,to_link_id,to,lat,lng
 1112954247,Strada Arieș,no,L604969830_1112954247,Strada Arieș (heading NW),L1112954247_1112986405,Strada Arieș (heading N),45.740801,21.239027
 6428488575,Strada Arieș,no,L4846641045_6428488575,Strada Arieș (heading SE),L6428488575_25478346,Strada Arieș (heading SE),45.738706,21.240493
 6428488575,Strada Arieș,no,L4846641045_6428488575,Strada Arieș (heading SE),L6428488575_6428488571,Strada Arieș (heading SW),45.738706,21.240493
-1112986414,Strada Arieș / Strada Surorile Martir Caceu,no,L2476973917_1112986414,Strada Arieș (heading SE),L1112986414_1112954234,Strada Arieș (heading SE),45.741654,21.238423
-1112986414,Strada Arieș / Strada Surorile Martir Caceu,no,L2476973917_1112986414,Strada Arieș (heading SE),L1112986414_11834892321,Strada Surorile Martir Caceu (heading E),45.741654,21.238423
+25530087,Strada Arieș / Bulevardul Liviu Rebreanu,no,L25478346_25530087,Strada Arieș (heading SE),L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),45.738226,21.240846
+25530087,Strada Arieș / Bulevardul Liviu Rebreanu,no,L25478346_25530087,Strada Arieș (heading SE),L25530087_4271981213,Strada Arieș (heading SE),45.738226,21.240846
+25530087,Strada Arieș / Bulevardul Liviu Rebreanu,no,L6431559102_25530087,Bulevardul Liviu Rebreanu (heading E),L25530087_3581040750,Bulevardul Liviu Rebreanu (heading E),45.738226,21.240846
+25530087,Strada Arieș / Bulevardul Liviu Rebreanu,no,L6431559102_25530087,Bulevardul Liviu Rebreanu (heading E),L25530087_4271981213,Strada Arieș (heading SE),45.738226,21.240846
+357958410,Strada Béla Bartók / Strada Ion Vidu,no,L267639382_357958410,Strada Béla Bartók (heading S),L357958410_267639416,Strada Béla Bartók (heading S),45.746107,21.234139
+357958410,Strada Béla Bartók / Strada Ion Vidu,no,L267639382_357958410,Strada Béla Bartók (heading S),L357958410_357956604,Strada Ion Vidu (heading W),45.746107,21.234139
+357958410,Strada Béla Bartók / Strada Ion Vidu,no,L414931325_357958410,Strada Ion Vidu (heading W),L357958410_267639416,Strada Béla Bartók (heading S),45.746107,21.234139
+357958410,Strada Béla Bartók / Strada Ion Vidu,no,L414931325_357958410,Strada Ion Vidu (heading W),L357958410_357956604,Strada Ion Vidu (heading W),45.746107,21.234139
+258825750,Strada Caraș / Bulevardul Eroilor de la Tisa,no,L11297495796_258825750,Bulevardul Eroilor de la Tisa (heading NE),L258825750_245150448,Bulevardul Eroilor de la Tisa (heading NE),45.747385,21.241996
+258825750,Strada Caraș / Bulevardul Eroilor de la Tisa,no,L11297495796_258825750,Bulevardul Eroilor de la Tisa (heading NE),L258825750_258825749,Strada Caraș (heading NW),45.747385,21.241996
+258825750,Strada Caraș / Bulevardul Eroilor de la Tisa,no,L245150448_258825750,Bulevardul Eroilor de la Tisa (heading SW),L258825750_11297495796,Bulevardul Eroilor de la Tisa (heading SW),45.747385,21.241996
+258825750,Strada Caraș / Bulevardul Eroilor de la Tisa,no,L245150448_258825750,Bulevardul Eroilor de la Tisa (heading SW),L258825750_258825749,Strada Caraș (heading NW),45.747385,21.241996
 263151277,Strada Ciprian Porumbescu,no,L11195796867_263151277,Strada Ciprian Porumbescu (heading NE),L263151277_29120256,Strada Ciprian Porumbescu (heading E),45.741261,21.225027
 263151277,Strada Ciprian Porumbescu,no,L29120255_263151277,Strada Ciprian Porumbescu (heading S),L263151277_11195796867,Strada Ciprian Porumbescu (heading SW),45.741261,21.225027
 263151277,Strada Ciprian Porumbescu,no,L29120255_263151277,Strada Ciprian Porumbescu (heading S),L263151277_29120256,Strada Ciprian Porumbescu (heading E),45.741261,21.225027
 2267824959,Strada Cluj / Piața Leonardo da Vinci,no,L25507159_2267824959,Strada Cluj (heading S),L2267824959_1203989459,Piața Leonardo da Vinci (heading NE),45.748278,21.235395
-2267824959,Strada Cluj / Piața Leonardo da Vinci,no,L25507159_2267824959,Strada Cluj (heading S),L2267824959_25507163,Strada Cluj (heading S),45.748278,21.235395
+2267824959,Strada Cluj / Piața Leonardo da Vinci,no,L25507159_2267824959,Strada Cluj (heading S),L2267824959_414931325,Strada Cluj (heading S),45.748278,21.235395
+290897218,Strada Cluj / Strada Argeș,no,L267486052_290897218,Strada Cluj (heading SE),L290897218_2476973917,Strada Cluj (heading SE),45.744413,21.236421
+290897218,Strada Cluj / Strada Argeș,no,L267486052_290897218,Strada Cluj (heading SE),L290897218_267639461,Strada Argeș (heading SW),45.744413,21.236421
+414931325,Strada Cluj / Strada Ion Vidu,no,L2267824959_414931325,Strada Cluj (heading S),L414931325_25507163,Strada Cluj (heading S),45.746408,21.235480
+414931325,Strada Cluj / Strada Ion Vidu,no,L2267824959_414931325,Strada Cluj (heading S),L414931325_357958410,Strada Ion Vidu (heading W),45.746408,21.235480
+2109009392,Strada Constanța / Strada 1 Decembrie 1918,no,L2109009391_2109009392,Strada 1 Decembrie 1918 (heading NE),L2109009392_2109009393,Strada 1 Decembrie 1918 (heading NE),45.744054,21.238061
+2109009392,Strada Constanța / Strada 1 Decembrie 1918,no,L2109009391_2109009392,Strada 1 Decembrie 1918 (heading NE),L2109009392_266969556,Strada Constanța (heading SE),45.744054,21.238061
+2109009392,Strada Constanța / Strada 1 Decembrie 1918,no,L266969556_2109009392,Strada Constanța (heading NW),L2109009392_2109009393,Strada 1 Decembrie 1918 (heading NE),45.744054,21.238061
+266969556,Strada Constanța / Strada Anghel Saligny,no,L2109009392_266969556,Strada Constanța (heading SE),L266969556_2267824975,Strada Anghel Saligny (heading SW),45.743385,21.238533
+266969556,Strada Constanța / Strada Anghel Saligny,no,L2109009392_266969556,Strada Constanța (heading SE),L266969556_267482942,Strada Anghel Saligny (heading SE),45.743385,21.238533
+266969556,Strada Constanța / Strada Anghel Saligny,no,L2267824975_266969556,Strada Anghel Saligny (heading NE),L266969556_2109009392,Strada Constanța (heading NW),45.743385,21.238533
+266969556,Strada Constanța / Strada Anghel Saligny,no,L2267824975_266969556,Strada Anghel Saligny (heading NE),L266969556_267482942,Strada Anghel Saligny (heading SE),45.743385,21.238533
+266969556,Strada Constanța / Strada Anghel Saligny,no,L267482942_266969556,Strada Anghel Saligny (heading NW),L266969556_2109009392,Strada Constanța (heading NW),45.743385,21.238533
+266969556,Strada Constanța / Strada Anghel Saligny,no,L267482942_266969556,Strada Anghel Saligny (heading NW),L266969556_2267824975,Strada Anghel Saligny (heading SW),45.743385,21.238533
+2008645432,Strada Constanța / Strada Vâlcea,no,L2008645421_2008645432,Strada Constanța (heading SE),L2008645432_2008645426,Strada Vâlcea (heading NE),45.744252,21.237752
+2008645432,Strada Constanța / Strada Vâlcea,no,L2008645421_2008645432,Strada Constanța (heading SE),L2008645432_2109009391,Strada Constanța (heading SE),45.744252,21.237752
+2008645432,Strada Constanța / Strada Vâlcea,no,L2008645426_2008645432,Strada Vâlcea (heading SW),L2008645432_2109009391,Strada Constanța (heading SE),45.744252,21.237752
+2008645432,Strada Constanța / Strada Vâlcea,no,L2109009391_2008645432,Strada Constanța (heading NW),L2008645432_2008645426,Strada Vâlcea (heading NE),45.744252,21.237752
+267482556,Strada Cosminului / Strada Cozia,no,L25478357_267482556,Strada Cosminului (heading N),L267482556_267482606,Piața Vasile Adamachi (heading N),45.739382,21.232215
+267482556,Strada Cosminului / Strada Cozia,no,L25478357_267482556,Strada Cosminului (heading N),L267482556_357960884,Strada Cozia (heading W),45.739382,21.232215
+267482556,Strada Cosminului / Strada Cozia,no,L267482664_267482556,Strada Cozia (heading SW),L267482556_267482606,Piața Vasile Adamachi (heading N),45.739382,21.232215
+267482556,Strada Cosminului / Strada Cozia,no,L267482664_267482556,Strada Cozia (heading SW),L267482556_357960884,Strada Cozia (heading W),45.739382,21.232215
+264631159,Strada Cozia / Strada Arieș,no,L267482659_264631159,Strada Arieș (heading SE),L264631159_1112986414,Strada Arieș (heading SE),45.741749,21.238358
+264631159,Strada Cozia / Strada Arieș,no,L267482659_264631159,Strada Arieș (heading SE),L264631159_267482664,Strada Cozia (heading SW),45.741749,21.238358
+267482942,Strada Craiova / Strada Anghel Saligny,no,L266969556_267482942,Strada Anghel Saligny (heading SE),L267482942_267482821,Strada Craiova (heading SW),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L266969556_267482942,Strada Anghel Saligny (heading SE),L267482942_268020331,Strada Anghel Saligny (heading SE),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L266969556_267482942,Strada Anghel Saligny (heading SE),L267482942_289675943,Strada Craiova (heading NE),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L267482821_267482942,Strada Craiova (heading NE),L267482942_266969556,Strada Anghel Saligny (heading NW),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L267482821_267482942,Strada Craiova (heading NE),L267482942_268020331,Strada Anghel Saligny (heading SE),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L267482821_267482942,Strada Craiova (heading NE),L267482942_289675943,Strada Craiova (heading NE),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L268020331_267482942,Strada Anghel Saligny (heading NW),L267482942_266969556,Strada Anghel Saligny (heading NW),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L268020331_267482942,Strada Anghel Saligny (heading NW),L267482942_267482821,Strada Craiova (heading SW),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L268020331_267482942,Strada Anghel Saligny (heading NW),L267482942_289675943,Strada Craiova (heading NE),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L289675943_267482942,Strada Craiova (heading SW),L267482942_266969556,Strada Anghel Saligny (heading NW),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L289675943_267482942,Strada Craiova (heading SW),L267482942_267482821,Strada Craiova (heading SW),45.743078,21.239356
+267482942,Strada Craiova / Strada Anghel Saligny,no,L289675943_267482942,Strada Craiova (heading SW),L267482942_268020331,Strada Anghel Saligny (heading SE),45.743078,21.239356
+267482659,Strada Craiova / Strada Memorandului,no,L2267824975_267482659,Strada Arieș (heading SE),L267482659_264631159,Strada Arieș (heading SE),45.742302,21.237929
+267482659,Strada Craiova / Strada Memorandului,no,L267482660_267482659,Strada Memorandului (heading NE),L267482659_264631159,Strada Arieș (heading SE),45.742302,21.237929
+267482659,Strada Craiova / Strada Memorandului,no,L267482821_267482659,Strada Craiova (heading SW),L267482659_264631159,Strada Arieș (heading SE),45.742302,21.237929
+25478357,Strada Diaconul Coresi / Strada Cosminului,no,L11304565993_25478357,Strada Cosminului (heading N),L25478357_11304540537,Strada Diaconul Coresi (heading SW),45.738304,21.232769
+25478357,Strada Diaconul Coresi / Strada Cosminului,no,L11304565993_25478357,Strada Cosminului (heading N),L25478357_267482556,Strada Cosminului (heading N),45.738304,21.232769
+25478357,Strada Diaconul Coresi / Strada Cosminului,no,L262639843_25478357,Strada Diaconul Coresi (heading SW),L25478357_11304540537,Strada Diaconul Coresi (heading SW),45.738304,21.232769
+25478357,Strada Diaconul Coresi / Strada Cosminului,no,L262639843_25478357,Strada Diaconul Coresi (heading SW),L25478357_267482556,Strada Cosminului (heading N),45.738304,21.232769
+267486052,Strada Diana / Strada Cluj,no,L2008645421_267486052,Strada Diana (heading SW),L267486052_290897218,Strada Cluj (heading SE),45.744577,21.236311
+267486052,Strada Diana / Strada Cluj,no,L25507163_267486052,Strada Cluj (heading S),L267486052_2008645421,Strada Diana (heading NE),45.744577,21.236311
+267486052,Strada Diana / Strada Cluj,no,L25507163_267486052,Strada Cluj (heading S),L267486052_290897218,Strada Cluj (heading SE),45.744577,21.236311
+2008645421,Strada Diana / Strada Constanța,no,L266969545_2008645421,Strada Diana (heading W),L2008645421_2008645432,Strada Constanța (heading SE),45.744916,21.237249
+2008645421,Strada Diana / Strada Constanța,no,L266969545_2008645421,Strada Diana (heading W),L2008645421_267486052,Strada Diana (heading SW),45.744916,21.237249
+2008645421,Strada Diana / Strada Constanța,no,L267486052_2008645421,Strada Diana (heading NE),L2008645421_2008645432,Strada Constanța (heading SE),45.744916,21.237249
+2008645421,Strada Diana / Strada Constanța,no,L267486052_2008645421,Strada Diana (heading NE),L2008645421_266969545,Strada Diana (heading E),45.744916,21.237249
+266969545,Strada Diana / Strada Minerva,no,L2008645421_266969545,Strada Diana (heading E),L266969545_357944582,Strada Diana (heading NE),45.745044,21.237692
+266969545,Strada Diana / Strada Minerva,no,L266969520_266969545,Strada Minerva (heading SE),L266969545_2008645421,Strada Diana (heading W),45.745044,21.237692
+266969545,Strada Diana / Strada Minerva,no,L266969520_266969545,Strada Minerva (heading SE),L266969545_357944582,Strada Diana (heading NE),45.745044,21.237692
+266969545,Strada Diana / Strada Minerva,no,L357944582_266969545,Strada Diana (heading SW),L266969545_2008645421,Strada Diana (heading W),45.745044,21.237692
+2476958621,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,no,L2109009369_2476958621,Strada 1 Decembrie 1918 (heading NE),L2476958621_2109009386,Strada 1 Decembrie 1918 (heading NE),45.741853,21.232415
+2476958621,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,no,L2109009369_2476958621,Strada 1 Decembrie 1918 (heading NE),L2476958621_357967050,Strada Doctor Aurel Cândea (heading NW),45.741853,21.232415
+2476958621,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,no,L267482662_2476958621,Strada Sava Petrovici (heading NW),L2476958621_2109009386,Strada 1 Decembrie 1918 (heading NE),45.741853,21.232415
+2476958621,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,no,L267482662_2476958621,Strada Sava Petrovici (heading NW),L2476958621_357967050,Strada Doctor Aurel Cândea (heading NW),45.741853,21.232415
+267639137,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,no,L356674696_267639137,Strada Mitropolit Varlaam (heading W),L267639137_267644355,Strada Mitropolit Varlaam (heading SW),45.743106,21.230953
+267639137,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,no,L356674696_267639137,Strada Mitropolit Varlaam (heading W),L267639137_357951927,Strada Doctor Aurel Cândea (heading NW),45.743106,21.230953
+267639137,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,no,L791672886_267639137,Strada Doctor Aurel Cândea (heading NW),L267639137_267644355,Strada Mitropolit Varlaam (heading SW),45.743106,21.230953
+267639137,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,no,L791672886_267639137,Strada Doctor Aurel Cândea (heading NW),L267639137_357951927,Strada Doctor Aurel Cândea (heading NW),45.743106,21.230953
+357967050,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,no,L2476958621_357967050,Strada Doctor Aurel Cândea (heading NW),L357967050_357967045,Strada Petre Râmneanțu (heading NE),45.742154,21.231920
+357967050,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,no,L2476958621_357967050,Strada Doctor Aurel Cândea (heading NW),L357967050_791672886,Strada Doctor Aurel Cândea (heading NW),45.742154,21.231920
+357967050,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,no,L357967045_357967050,Strada Petre Râmneanțu (heading SW),L357967050_791672886,Strada Doctor Aurel Cândea (heading NW),45.742154,21.231920
+791672886,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,no,L357967050_791672886,Strada Doctor Aurel Cândea (heading NW),L791672886_267639137,Strada Doctor Aurel Cândea (heading NW),45.742537,21.231420
+791672886,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,no,L357967050_791672886,Strada Doctor Aurel Cândea (heading NW),L791672886_267644648,Strada Protopop George Dragomir (heading SW),45.742537,21.231420
+357951927,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,no,L267639137_357951927,Strada Doctor Aurel Cândea (heading NW),L357951927_25499013,Strada Doctor Aurel Cândea (heading NW),45.743696,21.230495
+357951927,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,no,L267639137_357951927,Strada Doctor Aurel Cândea (heading NW),L357951927_357951930,Strada Protopop George Popovici (heading E),45.743696,21.230495
+357951927,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,no,L4596030344_357951927,Strada Protopop George Popovici (heading E),L357951927_25499013,Strada Doctor Aurel Cândea (heading NW),45.743696,21.230495
+357951927,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,no,L4596030344_357951927,Strada Protopop George Popovici (heading E),L357951927_357951930,Strada Protopop George Popovici (heading E),45.743696,21.230495
+265072813,Strada Drubeta / Strada Memorandului,no,L255872252_265072813,Strada Drubeta (heading N),L265072813_262644268,Strada Drubeta (heading NE),45.738341,21.225019
+265072813,Strada Drubeta / Strada Memorandului,no,L255872252_265072813,Strada Drubeta (heading N),L265072813_5065811284,Strada Memorandului (heading W),45.738341,21.225019
+267644353,Strada Evliya Celebi / Piața Bisericii,no,L267644355_267644353,Piața Bisericii (heading W),L267644353_267644358,Piața Bisericii (heading S),45.742665,21.229198
+267644353,Strada Evliya Celebi / Piața Bisericii,no,L4596030344_267644353,Strada Evliya Celebi (heading S),L267644353_267644358,Piața Bisericii (heading S),45.742665,21.229198
+4596030344,Strada Evliya Celebi / Strada Protopop George Popovici,no,L267639842_4596030344,Strada Evliya Celebi (heading S),L4596030344_267644353,Strada Evliya Celebi (heading S),45.743380,21.228981
+4596030344,Strada Evliya Celebi / Strada Protopop George Popovici,no,L267639842_4596030344,Strada Evliya Celebi (heading S),L4596030344_357951927,Strada Protopop George Popovici (heading E),45.743380,21.228981
+2409737939,Strada Feldioara / Strada 1 Decembrie 1918,no,L11195796839_2409737939,Strada 1 Decembrie 1918 (heading SE),L2409737939_2476965959,Strada 1 Decembrie 1918 (heading E),45.740893,21.226888
+2409737939,Strada Feldioara / Strada 1 Decembrie 1918,no,L11195796839_2409737939,Strada 1 Decembrie 1918 (heading SE),L2409737939_25478370,Strada Feldioara (heading SE),45.740893,21.226888
+25478370,Strada Feldioara / Strada Grigore Constantin Moisil,no,L2409737939_25478370,Strada Feldioara (heading SE),L25478370_2476965959,Strada Grigore Constantin Moisil (heading N),45.740533,21.227417
+25478370,Strada Feldioara / Strada Grigore Constantin Moisil,no,L2409737939_25478370,Strada Feldioara (heading SE),L25478370_25478364,Strada Feldioara (heading SE),45.740533,21.227417
+25478370,Strada Feldioara / Strada Grigore Constantin Moisil,no,L2476965959_25478370,Strada Grigore Constantin Moisil (heading S),L25478370_25478364,Strada Feldioara (heading SE),45.740533,21.227417
+25478364,Strada Feldioara / Strada Memorandului,no,L25478370_25478364,Strada Feldioara (heading SE),L25478364_264631153,Strada Feldioara (heading SE),45.739333,21.228403
+25478364,Strada Feldioara / Strada Memorandului,no,L25478370_25478364,Strada Feldioara (heading SE),L25478364_357960887,Strada Memorandului (heading NE),45.739333,21.228403
+25478364,Strada Feldioara / Strada Memorandului,no,L262644268_25478364,Strada Memorandului (heading E),L25478364_264631153,Strada Feldioara (heading SE),45.739333,21.228403
+25478364,Strada Feldioara / Strada Memorandului,no,L262644268_25478364,Strada Memorandului (heading E),L25478364_357960887,Strada Memorandului (heading NE),45.739333,21.228403
+268020331,Strada Feleacul / Strada Anghel Saligny,no,L266969553_268020331,Strada Anghel Saligny (heading NW),L268020331_267482942,Strada Anghel Saligny (heading NW),45.742591,21.240631
+268020331,Strada Feleacul / Strada Anghel Saligny,no,L266969553_268020331,Strada Anghel Saligny (heading NW),L268020331_268020334,Strada Feleacul (heading NE),45.742591,21.240631
+268020331,Strada Feleacul / Strada Anghel Saligny,no,L267482942_268020331,Strada Anghel Saligny (heading SE),L268020331_266969553,Strada Anghel Saligny (heading SE),45.742591,21.240631
+268020331,Strada Feleacul / Strada Anghel Saligny,no,L267482942_268020331,Strada Anghel Saligny (heading SE),L268020331_268020334,Strada Feleacul (heading NE),45.742591,21.240631
+268020331,Strada Feleacul / Strada Anghel Saligny,no,L268020334_268020331,Strada Feleacul (heading SW),L268020331_266969553,Strada Anghel Saligny (heading SE),45.742591,21.240631
+268020331,Strada Feleacul / Strada Anghel Saligny,no,L268020334_268020331,Strada Feleacul (heading SW),L268020331_267482942,Strada Anghel Saligny (heading NW),45.742591,21.240631
+3041936177,Strada Gheorghe Doja / Piața Nicolae Bălcescu,no,L2408666126_3041936177,Piața Nicolae Bălcescu (heading SW),L3041936177_29120255,Piața Nicolae Bălcescu (heading S),45.741723,21.225153
+3041936177,Strada Gheorghe Doja / Piața Nicolae Bălcescu,no,L2408666126_3041936177,Piața Nicolae Bălcescu (heading SW),L3041936177_3041936192,Strada Gheorghe Doja (heading NW),45.741723,21.225153
+3041936177,Strada Gheorghe Doja / Piața Nicolae Bălcescu,no,L3041936192_3041936177,Strada Gheorghe Doja (heading SE),L3041936177_29120255,Piața Nicolae Bălcescu (heading S),45.741723,21.225153
+2476965959,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,no,L2409737939_2476965959,Strada 1 Decembrie 1918 (heading E),L2476965959_2109009369,Strada 1 Decembrie 1918 (heading E),45.740752,21.227505
+2476965959,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,no,L2409737939_2476965959,Strada 1 Decembrie 1918 (heading E),L2476965959_25478370,Strada Grigore Constantin Moisil (heading S),45.740752,21.227505
+2476965959,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,no,L2409737939_2476965959,Strada 1 Decembrie 1918 (heading E),L2476965959_25478375,Strada Grigore Constantin Moisil (heading N),45.740752,21.227505
+2476965959,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,no,L25478370_2476965959,Strada Grigore Constantin Moisil (heading N),L2476965959_2109009369,Strada 1 Decembrie 1918 (heading E),45.740752,21.227505
+2476965959,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,no,L25478370_2476965959,Strada Grigore Constantin Moisil (heading N),L2476965959_25478375,Strada Grigore Constantin Moisil (heading N),45.740752,21.227505
+25478375,Strada Grigore Constantin Moisil / Strada Wilhelm Mühle,no,L2476965959_25478375,Strada Grigore Constantin Moisil (heading N),L25478375_25478378,Strada Grigore Constantin Moisil (heading N),45.741569,21.227600
+25478375,Strada Grigore Constantin Moisil / Strada Wilhelm Mühle,no,L2476965959_25478375,Strada Grigore Constantin Moisil (heading N),L25478375_797051732,Strada Wilhelm Mühle (heading E),45.741569,21.227600
+25478375,Strada Grigore Constantin Moisil / Strada Wilhelm Mühle,no,L797051732_25478375,Strada Wilhelm Mühle (heading W),L25478375_25478378,Strada Grigore Constantin Moisil (heading N),45.741569,21.227600
+11195796845,Strada Independenței / Strada 1 Decembrie 1918,no,L11195796846_11195796845,Strada Independenței (heading N),L11195796845_11195796839,Strada 1 Decembrie 1918 (heading E),45.741147,21.225387
+11195796845,Strada Independenței / Strada 1 Decembrie 1918,no,L11195796846_11195796845,Strada Independenței (heading N),L11195796845_6274787022,Strada Independenței (heading N),45.741147,21.225387
+21516000,Strada Ioan Curea / Strada Petre Râmneanțu,no,L21515998_21516000,Strada Ioan Curea (heading E),L21516000_21516001,Strada Petre Râmneanțu (heading S),45.745421,21.231950
+21516000,Strada Ioan Curea / Strada Petre Râmneanțu,no,L21515998_21516000,Strada Ioan Curea (heading E),L21516000_357958368,Strada Petre Râmneanțu (heading N),45.745421,21.231950
+21516000,Strada Ioan Curea / Strada Petre Râmneanțu,no,L357958368_21516000,Strada Petre Râmneanțu (heading S),L21516000_21516001,Strada Petre Râmneanțu (heading S),45.745421,21.231950
+357956604,Strada Ion Vidu / Strada Putna,no,L356674698_357956604,Strada Putna (heading N),L357956604_357958368,Strada Ion Vidu (heading W),45.745852,21.233048
+357956604,Strada Ion Vidu / Strada Putna,no,L357958410_357956604,Strada Ion Vidu (heading W),L357956604_356674698,Strada Putna (heading S),45.745852,21.233048
+357956604,Strada Ion Vidu / Strada Putna,no,L357958410_357956604,Strada Ion Vidu (heading W),L357956604_357958368,Strada Ion Vidu (heading W),45.745852,21.233048
+267644646,Strada Martir Sorinel Leia / Strada Memorandului,no,L2109009369_267644646,Strada Martir Sorinel Leia (heading SE),L267644646_267482662,Strada Memorandului (heading NE),45.740495,21.231981
+267644646,Strada Martir Sorinel Leia / Strada Memorandului,no,L267482606_267644646,Strada Memorandului (heading NE),L267644646_267482662,Strada Memorandului (heading NE),45.740495,21.231981
+267482606,Strada Memorandului / Piața Vasile Adamachi,no,L267482556_267482606,Piața Vasile Adamachi (heading N),L267482606_267644646,Strada Memorandului (heading NE),45.740383,21.231701
+267482606,Strada Memorandului / Piața Vasile Adamachi,no,L357960887_267482606,Strada Memorandului (heading NE),L267482606_267644646,Strada Memorandului (heading NE),45.740383,21.231701
+357960887,Strada Memorandului / Strada Aron Pumnul,no,L25478364_357960887,Strada Memorandului (heading NE),L357960887_267482606,Strada Memorandului (heading NE),45.739954,21.230346
+357960887,Strada Memorandului / Strada Aron Pumnul,no,L25478364_357960887,Strada Memorandului (heading NE),L357960887_357960884,Strada Aron Pumnul (heading SE),45.739954,21.230346
+357960887,Strada Memorandului / Strada Aron Pumnul,no,L357960884_357960887,Strada Aron Pumnul (heading NW),L357960887_267482606,Strada Memorandului (heading NE),45.739954,21.230346
+262644268,Strada Memorandului / Strada Drubeta,no,L265072813_262644268,Strada Drubeta (heading NE),L262644268_11195796846,Strada Independenței (heading N),45.738481,21.225117
+262644268,Strada Memorandului / Strada Drubeta,no,L265072813_262644268,Strada Drubeta (heading NE),L262644268_25478364,Strada Memorandului (heading E),45.738481,21.225117
 4281788870,Strada Michelangelo,no,L2026197626_4281788870,Strada Michelangelo (heading SE),L4281788870_255724417,Strada Michelangelo (heading S),45.749767,21.235162
 4281788870,Strada Michelangelo,no,L25638344_4281788870,Strada Michelangelo (heading NW),L4281788870_2026197626,Strada Michelangelo (heading NW),45.749767,21.235162
 4281788870,Strada Michelangelo,no,L25638344_4281788870,Strada Michelangelo (heading NW),L4281788870_255724417,Strada Michelangelo (heading S),45.749767,21.235162
+266969520,Strada Minerva / Bulevardul Eroilor de la Tisa,no,L25507163_266969520,Bulevardul Eroilor de la Tisa (heading NE),L266969520_266969545,Strada Minerva (heading SE),45.745715,21.237220
+266969520,Strada Minerva / Bulevardul Eroilor de la Tisa,no,L25507163_266969520,Bulevardul Eroilor de la Tisa (heading NE),L266969520_357945084,Bulevardul Eroilor de la Tisa (heading NE),45.745715,21.237220
+266969520,Strada Minerva / Bulevardul Eroilor de la Tisa,no,L357945084_266969520,Bulevardul Eroilor de la Tisa (heading SW),L266969520_25507163,Bulevardul Eroilor de la Tisa (heading SW),45.745715,21.237220
+266969520,Strada Minerva / Bulevardul Eroilor de la Tisa,no,L357945084_266969520,Bulevardul Eroilor de la Tisa (heading SW),L266969520_266969545,Strada Minerva (heading SE),45.745715,21.237220
+267639464,Strada Mitropolit Varlaam / Strada Argeș,no,L2109009386_267639464,Strada Mitropolit Varlaam (heading NW),L267639464_357954293,Strada Mitropolit Varlaam (heading NW),45.743139,21.233909
+267639464,Strada Mitropolit Varlaam / Strada Argeș,no,L267639461_267639464,Strada Argeș (heading SW),L267639464_2109009386,Strada Mitropolit Varlaam (heading SE),45.743139,21.233909
+267639464,Strada Mitropolit Varlaam / Strada Argeș,no,L267639461_267639464,Strada Argeș (heading SW),L267639464_357954293,Strada Mitropolit Varlaam (heading NW),45.743139,21.233909
+356674696,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,no,L357951930_356674696,Strada Petre Râmneanțu (heading S),L356674696_267639137,Strada Mitropolit Varlaam (heading W),45.743249,21.232395
+356674696,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,no,L357954293_356674696,Strada Mitropolit Varlaam (heading W),L356674696_267639137,Strada Mitropolit Varlaam (heading W),45.743249,21.232395
+357954293,Strada Mitropolit Varlaam / Strada Putna,no,L267639464_357954293,Strada Mitropolit Varlaam (heading NW),L357954293_356674696,Strada Mitropolit Varlaam (heading W),45.743327,21.233603
+357954293,Strada Mitropolit Varlaam / Strada Putna,no,L267639464_357954293,Strada Mitropolit Varlaam (heading NW),L357954293_356674698,Strada Putna (heading N),45.743327,21.233603
+357958368,Strada Petre Râmneanțu / Strada Ion Vidu,no,L21516000_357958368,Strada Petre Râmneanțu (heading N),L357958368_357959052,Strada Petre Râmneanțu (heading N),45.745593,21.231903
+357958368,Strada Petre Râmneanțu / Strada Ion Vidu,no,L357956604_357958368,Strada Ion Vidu (heading W),L357958368_21516000,Strada Petre Râmneanțu (heading S),45.745593,21.231903
+357958368,Strada Petre Râmneanțu / Strada Ion Vidu,no,L357956604_357958368,Strada Ion Vidu (heading W),L357958368_357959052,Strada Petre Râmneanțu (heading N),45.745593,21.231903
+357951930,Strada Petre Râmneanțu / Strada Protopop George Popovici,no,L21516001_357951930,Strada Petre Râmneanțu (heading S),L357951930_356674696,Strada Petre Râmneanțu (heading S),45.744107,21.232267
+357951930,Strada Petre Râmneanțu / Strada Protopop George Popovici,no,L357951927_357951930,Strada Protopop George Popovici (heading E),L357951930_356674696,Strada Petre Râmneanțu (heading S),45.744107,21.232267
+357959052,Strada Plautius Andronescu / Strada Petre Râmneanțu,no,L357958368_357959052,Strada Petre Râmneanțu (heading N),L357959052_267639382,Strada Plautius Andronescu (heading E),45.746576,21.231646
+357959052,Strada Plautius Andronescu / Strada Petre Râmneanțu,no,L357958368_357959052,Strada Petre Râmneanțu (heading N),L357959052_9389583336,Strada Plautius Andronescu (heading W),45.746576,21.231646
+357959052,Strada Plautius Andronescu / Strada Petre Râmneanțu,no,L9389583336_357959052,Strada Plautius Andronescu (heading E),L357959052_267639382,Strada Plautius Andronescu (heading E),45.746576,21.231646
 3931145968,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L6428626919_3931145968,(fără nume) (heading NE),L3931145968_1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu (heading NE),45.742572,21.243340
 3931145968,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L6428626919_3931145968,(fără nume) (heading NE),L3931145968_3931142600,(fără nume) (heading N),45.742572,21.243340
 1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L11717009034_1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu (heading W),L1259637376_3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu (heading W),45.742656,21.243565
@@ -191,12 +469,70 @@ node_id,intersection,signalized,from_link_id,from,to_link_id,to,lat,lng
 1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L3931145968_1259637376,Strada Profesor Doctor Aurel Păunescu Podeanu (heading NE),L1259637376_3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu (heading W),45.742656,21.243565
 3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L1259637376_3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu (heading W),L3931142600_3931142598,(fără nume) (heading NW),45.742692,21.243338
 3931142600,Strada Profesor Doctor Aurel Păunescu Podeanu,no,L3931145968_3931142600,(fără nume) (heading N),L3931142600_3931142598,(fără nume) (heading NW),45.742692,21.243338
-11834892321,Strada Surorile Martir Caceu,no,L1112986405_11834892321,Strada Surorile Martir Caceu (heading NE),L11834892321_3931135800,Strada Surorile Martir Caceu (heading NE),45.741834,21.239386
-11834892321,Strada Surorile Martir Caceu,no,L1112986414_11834892321,Strada Surorile Martir Caceu (heading E),L11834892321_3931135800,Strada Surorile Martir Caceu (heading NE),45.741834,21.239386
-3931135800,Strada Surorile Martir Caceu / Aleea F.C. Ripensia,no,L11834892321_3931135800,Strada Surorile Martir Caceu (heading NE),L3931135800_25497638,Aleea F.C. Ripensia (heading N),45.742974,21.242698
-3931135800,Strada Surorile Martir Caceu / Aleea F.C. Ripensia,no,L11834892321_3931135800,Strada Surorile Martir Caceu (heading NE),L3931135800_3931136571,Aleea F.C. Ripensia (heading SE),45.742974,21.242698
+2567646677,Strada Protopop George Dragomir,no,L263151549_2567646677,Strada Protopop George Dragomir (heading NE),L2567646677_267643174,Strada Protopop George Dragomir (heading NW),45.742187,21.226222
+2567646677,Strada Protopop George Dragomir,no,L263151549_2567646677,Strada Protopop George Dragomir (heading NE),L2567646677_267643973,Strada Protopop George Dragomir (heading E),45.742187,21.226222
+2567646677,Strada Protopop George Dragomir,no,L267643973_2567646677,Strada Protopop George Dragomir (heading W),L2567646677_267643174,Strada Protopop George Dragomir (heading NW),45.742187,21.226222
+25478378,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,no,L25478375_25478378,Strada Grigore Constantin Moisil (heading N),L25478378_267643973,Strada Protopop George Dragomir (heading W),45.742208,21.227580
+25478378,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,no,L25478375_25478378,Strada Grigore Constantin Moisil (heading N),L25478378_267644358,Strada Protopop George Dragomir (heading E),45.742208,21.227580
+25478378,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,no,L267643973_25478378,Strada Protopop George Dragomir (heading E),L25478378_267644358,Strada Protopop George Dragomir (heading E),45.742208,21.227580
+25478378,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,no,L267644358_25478378,Strada Protopop George Dragomir (heading W),L25478378_267643973,Strada Protopop George Dragomir (heading W),45.742208,21.227580
+267644648,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,no,L267644356_267644648,Strada Protopop George Dragomir (heading E),L267644648_2109009369,Strada Martir Sorinel Leia (heading SE),45.742258,21.230739
+267644648,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,no,L791672886_267644648,Strada Protopop George Dragomir (heading SW),L267644648_2109009369,Strada Martir Sorinel Leia (heading SE),45.742258,21.230739
+267644648,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,no,L791672886_267644648,Strada Protopop George Dragomir (heading SW),L267644648_267644356,Strada Protopop George Dragomir (heading W),45.742258,21.230739
+356674698,Strada Putna / Bulevardul Doctor Victor Babeș,no,L21516001_356674698,Bulevardul Doctor Victor Babeș (heading E),L356674698_267639416,Bulevardul Doctor Victor Babeș (heading E),45.744938,21.233333
+356674698,Strada Putna / Bulevardul Doctor Victor Babeș,no,L21516001_356674698,Bulevardul Doctor Victor Babeș (heading E),L356674698_357956604,Strada Putna (heading N),45.744938,21.233333
+356674698,Strada Putna / Bulevardul Doctor Victor Babeș,no,L267639416_356674698,Bulevardul Doctor Victor Babeș (heading W),L356674698_21516001,Bulevardul Doctor Victor Babeș (heading W),45.744938,21.233333
+356674698,Strada Putna / Bulevardul Doctor Victor Babeș,no,L267639416_356674698,Bulevardul Doctor Victor Babeș (heading W),L356674698_357956604,Strada Putna (heading N),45.744938,21.233333
+356674698,Strada Putna / Bulevardul Doctor Victor Babeș,no,L357954293_356674698,Strada Putna (heading N),L356674698_21516001,Bulevardul Doctor Victor Babeș (heading W),45.744938,21.233333
+356674698,Strada Putna / Bulevardul Doctor Victor Babeș,no,L357954293_356674698,Strada Putna (heading N),L356674698_267639416,Bulevardul Doctor Victor Babeș (heading E),45.744938,21.233333
+356674698,Strada Putna / Bulevardul Doctor Victor Babeș,no,L357954293_356674698,Strada Putna (heading N),L356674698_357956604,Strada Putna (heading N),45.744938,21.233333
+356674698,Strada Putna / Bulevardul Doctor Victor Babeș,no,L357956604_356674698,Strada Putna (heading S),L356674698_21516001,Bulevardul Doctor Victor Babeș (heading W),45.744938,21.233333
+356674698,Strada Putna / Bulevardul Doctor Victor Babeș,no,L357956604_356674698,Strada Putna (heading S),L356674698_267639416,Bulevardul Doctor Victor Babeș (heading E),45.744938,21.233333
+289675943,Strada Retezat / Strada Craiova,no,L2109009394_289675943,Strada Retezat (heading SE),L289675943_267482942,Strada Craiova (heading SW),45.743913,21.239997
+289675943,Strada Retezat / Strada Craiova,no,L2109009394_289675943,Strada Retezat (heading SE),L289675943_268020334,Strada Retezat (heading SE),45.743913,21.239997
+289675943,Strada Retezat / Strada Craiova,no,L267482942_289675943,Strada Craiova (heading NE),L289675943_2109009394,Strada Retezat (heading NW),45.743913,21.239997
+289675943,Strada Retezat / Strada Craiova,no,L267482942_289675943,Strada Craiova (heading NE),L289675943_268020334,Strada Retezat (heading SE),45.743913,21.239997
+289675943,Strada Retezat / Strada Craiova,no,L268020334_289675943,Strada Retezat (heading NW),L289675943_2109009394,Strada Retezat (heading NW),45.743913,21.239997
+289675943,Strada Retezat / Strada Craiova,no,L268020334_289675943,Strada Retezat (heading NW),L289675943_267482942,Strada Craiova (heading SW),45.743913,21.239997
+267482662,Strada Sava Petrovici / Strada Memorandului,no,L267644646_267482662,Strada Memorandului (heading NE),L267482662_2476958621,Strada Sava Petrovici (heading NW),45.741209,21.233567
+267482662,Strada Sava Petrovici / Strada Memorandului,no,L267644646_267482662,Strada Memorandului (heading NE),L267482662_267482660,Strada Memorandului (heading E),45.741209,21.233567
+2109009387,Strada Severin / Strada 1 Decembrie 1918,no,L2109009386_2109009387,Strada 1 Decembrie 1918 (heading NE),L2109009387_267482660,Strada Severin (heading SE),45.743307,21.235917
+2109009387,Strada Severin / Strada 1 Decembrie 1918,no,L2109009386_2109009387,Strada 1 Decembrie 1918 (heading NE),L2109009387_7029583648,Strada 1 Decembrie 1918 (heading NE),45.743307,21.235917
+267482664,Strada Severin / Strada Cozia,no,L264631159_267482664,Strada Cozia (heading SW),L267482664_267482556,Strada Cozia (heading SW),45.741292,21.237520
+267482664,Strada Severin / Strada Cozia,no,L264631159_267482664,Strada Cozia (heading SW),L267482664_267482660,Strada Severin (heading NW),45.741292,21.237520
+267482664,Strada Severin / Strada Cozia,no,L267482660_267482664,Strada Severin (heading SE),L267482664_267482556,Strada Cozia (heading SW),45.741292,21.237520
+267482660,Strada Severin / Strada Memorandului,no,L2109009387_267482660,Strada Severin (heading SE),L267482660_267482659,Strada Memorandului (heading NE),45.741943,21.236777
+267482660,Strada Severin / Strada Memorandului,no,L2109009387_267482660,Strada Severin (heading SE),L267482660_267482664,Strada Severin (heading SE),45.741943,21.236777
+267482660,Strada Severin / Strada Memorandului,no,L267482662_267482660,Strada Memorandului (heading E),L267482660_267482659,Strada Memorandului (heading NE),45.741943,21.236777
+267482660,Strada Severin / Strada Memorandului,no,L267482662_267482660,Strada Memorandului (heading E),L267482660_267482664,Strada Severin (heading SE),45.741943,21.236777
+267482660,Strada Severin / Strada Memorandului,no,L267482664_267482660,Strada Severin (heading NW),L267482660_267482659,Strada Memorandului (heading NE),45.741943,21.236777
+267643973,Strada Sorin Titel / Strada Protopop George Dragomir,no,L25478378_267643973,Strada Protopop George Dragomir (heading W),L267643973_25499007,Strada Sorin Titel (heading N),45.742206,21.227296
+267643973,Strada Sorin Titel / Strada Protopop George Dragomir,no,L25478378_267643973,Strada Protopop George Dragomir (heading W),L267643973_2567646677,Strada Protopop George Dragomir (heading W),45.742206,21.227296
+267643973,Strada Sorin Titel / Strada Protopop George Dragomir,no,L2567646677_267643973,Strada Protopop George Dragomir (heading E),L267643973_25478378,Strada Protopop George Dragomir (heading E),45.742206,21.227296
+267643973,Strada Sorin Titel / Strada Protopop George Dragomir,no,L2567646677_267643973,Strada Protopop George Dragomir (heading E),L267643973_25499007,Strada Sorin Titel (heading N),45.742206,21.227296
+11834892321,Strada Surorile Martir Caceu,no,L1112986405_11834892321,Strada Surorile Martir Caceu (heading NE),L11834892321_267482822,Strada Surorile Martir Caceu (heading NE),45.741834,21.239386
+11834892321,Strada Surorile Martir Caceu,no,L1112986414_11834892321,Strada Surorile Martir Caceu (heading E),L11834892321_267482822,Strada Surorile Martir Caceu (heading NE),45.741834,21.239386
 1112986405,Strada Surorile Martir Caceu / Calea Martirilor 1989,no,L1112954247_1112986405,Strada Arieș (heading N),L1112986405_11834892321,Strada Surorile Martir Caceu (heading NE),45.741383,21.238732
 1112986405,Strada Surorile Martir Caceu / Calea Martirilor 1989,no,L1203996268_1112986405,Calea Martirilor 1989 (heading N),L1112986405_11834892321,Strada Surorile Martir Caceu (heading NE),45.741383,21.238732
+266969553,Strada Surorile Martir Caceu / Strada Anghel Saligny,no,L267482822_266969553,Strada Surorile Martir Caceu (heading NE),L266969553_268020331,Strada Anghel Saligny (heading NW),45.742333,21.240807
+266969553,Strada Surorile Martir Caceu / Strada Anghel Saligny,no,L267482822_266969553,Strada Surorile Martir Caceu (heading NE),L266969553_3931135800,Strada Surorile Martir Caceu (heading NE),45.742333,21.240807
+266969553,Strada Surorile Martir Caceu / Strada Anghel Saligny,no,L268020331_266969553,Strada Anghel Saligny (heading SE),L266969553_3931135800,Strada Surorile Martir Caceu (heading NE),45.742333,21.240807
+1112986414,Strada Surorile Martir Caceu / Strada Arieș,no,L264631159_1112986414,Strada Arieș (heading SE),L1112986414_1112954234,Strada Arieș (heading SE),45.741654,21.238423
+1112986414,Strada Surorile Martir Caceu / Strada Arieș,no,L264631159_1112986414,Strada Arieș (heading SE),L1112986414_11834892321,Strada Surorile Martir Caceu (heading E),45.741654,21.238423
+21515996,Strada Traian Lalescu / Bulevardul Vasile Pârvan,no,L11304546892_21515996,Strada Traian Lalescu (heading N),L21515996_1133482449,Bulevardul Vasile Pârvan (heading W),45.747795,21.229233
+21515996,Strada Traian Lalescu / Bulevardul Vasile Pârvan,no,L11304546892_21515996,Strada Traian Lalescu (heading N),L21515996_25507156,Bulevardul Vasile Pârvan (heading E),45.747795,21.229233
+21515996,Strada Traian Lalescu / Bulevardul Vasile Pârvan,no,L1133482449_21515996,Bulevardul Vasile Pârvan (heading E),L21515996_11304546892,Strada Traian Lalescu (heading S),45.747795,21.229233
+21515996,Strada Traian Lalescu / Bulevardul Vasile Pârvan,no,L1133482449_21515996,Bulevardul Vasile Pârvan (heading E),L21515996_25507156,Bulevardul Vasile Pârvan (heading E),45.747795,21.229233
+21515996,Strada Traian Lalescu / Bulevardul Vasile Pârvan,no,L25507156_21515996,Bulevardul Vasile Pârvan (heading W),L21515996_11304546892,Strada Traian Lalescu (heading S),45.747795,21.229233
+21515996,Strada Traian Lalescu / Bulevardul Vasile Pârvan,no,L25507156_21515996,Bulevardul Vasile Pârvan (heading W),L21515996_1133482449,Bulevardul Vasile Pârvan (heading W),45.747795,21.229233
+21515998,Strada Traian Lalescu / Strada Ioan Curea,no,L25499013_21515998,Strada Traian Lalescu (heading N),L21515998_11304546892,Strada Traian Lalescu (heading N),45.745122,21.229726
+21515998,Strada Traian Lalescu / Strada Ioan Curea,no,L25499013_21515998,Strada Traian Lalescu (heading N),L21515998_21516000,Strada Ioan Curea (heading E),45.745122,21.229726
+2008645426,Strada Vâlcea,no,L2008645432_2008645426,Strada Vâlcea (heading NE),L2008645426_2008645434,Strada Vâlcea (heading NE),45.744439,21.238289
+2008645426,Strada Vâlcea,no,L2008645432_2008645426,Strada Vâlcea (heading NE),L2008645426_2109009393,Strada Vâlcea (heading SE),45.744439,21.238289
+2008645426,Strada Vâlcea,no,L2008645434_2008645426,Strada Vâlcea (heading SW),L2008645426_2008645432,Strada Vâlcea (heading SW),45.744439,21.238289
+2008645426,Strada Vâlcea,no,L2008645434_2008645426,Strada Vâlcea (heading SW),L2008645426_2109009393,Strada Vâlcea (heading SE),45.744439,21.238289
+2008645426,Strada Vâlcea,no,L2109009393_2008645426,Strada Vâlcea (heading NW),L2008645426_2008645432,Strada Vâlcea (heading SW),45.744439,21.238289
+2008645426,Strada Vâlcea,no,L2109009393_2008645426,Strada Vâlcea (heading NW),L2008645426_2008645434,Strada Vâlcea (heading NE),45.744439,21.238289
 6428626919,Strada Ștefan Covaci,no,L4615919089_6428626919,(fără nume) (heading SE),L6428626919_3931145968,(fără nume) (heading NE),45.742516,21.243195
 6428626919,Strada Ștefan Covaci,no,L6548138207_6428626919,Strada Ștefan Covaci (heading NE),L6428626919_3931145968,(fără nume) (heading NE),45.742516,21.243195
 4615919089,Strada Ștefan Covaci,no,L3931136571_4615919089,(fără nume) (heading S),L4615919089_6428626919,(fără nume) (heading SE),45.742569,21.243058

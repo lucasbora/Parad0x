@@ -13,6 +13,7 @@ they entered are not allowed. β is an ASSUMPTION until calibrated against turn 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Callable
 
 import numpy as np
 
@@ -55,3 +56,120 @@ def furness(inflow: dict[str, float], outflow: dict[str, float], free_time: dict
             break
     return GateMatrix(origins, dests, T, float(O.sum()), float(sum(outflow[g] for g in dests)),
                       float(imbalance), it)
+
+# ---------------------------------------------------------------------------
+# Land-use demand (default) — homes, destinations and gateways for one profile
+# ---------------------------------------------------------------------------
+
+@dataclass
+class Endpoint:
+    id: str              # zone id ("Z…") or gate id ("G…")
+    node: int            # solver node index
+    label: str
+    kind: str            # "zone" | "gate"
+
+
+@dataclass
+class ODTable:
+    rows: list[Endpoint]
+    cols: list[Endpoint]
+    trips: np.ndarray            # veh/h
+    summary: dict
+
+
+def balance(seed: np.ndarray, row_tot: np.ndarray, col_tot: np.ndarray, max_iter: int = 300,
+            tol: float = 1e-7) -> tuple[np.ndarray, float]:
+    """Doubly-constrained balancing (Furness / IPF). Returns (matrix, column imbalance % before)."""
+    imbalance = (col_tot.sum() - row_tot.sum()) / max(row_tot.sum(), 1e-9) * 100.0
+    col = col_tot * (row_tot.sum() / max(col_tot.sum(), 1e-9))
+    T = seed.astype(float).copy()
+    live_r, live_c = row_tot > 0, col > 0
+    T[~live_r, :] = 0
+    T[:, ~live_c] = 0
+    for _ in range(max_iter):
+        rs = T.sum(axis=1)
+        T *= np.where(rs > 0, row_tot / np.where(rs > 0, rs, 1), 0)[:, None]
+        cs = T.sum(axis=0)
+        T *= np.where(cs > 0, col / np.where(cs > 0, cs, 1), 0)[None, :]
+        rs = T.sum(axis=1)
+        if np.max(np.abs(rs - row_tot) / np.maximum(row_tot, 1e-9) * live_r) < tol:
+            break
+    return T, float(imbalance)
+
+
+def landuse_od(zones: list, gates: list, node_of: dict[str, int], free_time: "Callable[[int, int], float]",
+               gate_cap_in: dict[str, float], gate_cap_out: dict[str, float], profile, landuse: dict,
+               counted_in: dict[str, float] | None = None, counted_out: dict[str, float] | None = None,
+               local_multiplier: float = 1.0) -> ODTable:
+    """Trips for one profile from homes (residents) and activities, plus gateway traffic.
+
+    home-end car trips  H_i = residents × trips/day × level × hour share × car share ÷ occupancy
+    activity ends       A_i ∝ Σ_cat weight_cat(profile) × activity_i,cat   (scaled so ΣA = ΣH)
+    origins  O_i = H_i(1+dir)/2 + A_i(1−dir)/2     destinations D_i = H_i(1−dir)/2 + A_i(1+dir)/2
+    A share ``external_share`` of local trips leaves/enters through the gateways (by capacity);
+    through-traffic = ``through_share_of_capacity`` × gateway capacity. Counted gates replace
+    the estimate for that gate. Then a gravity seed exp(−β t) is balanced to all totals.
+    """
+    per_res = (landuse["trips_per_resident_day"] * profile.trip_level * profile.hour_share
+               * landuse["car_share"] / landuse["car_occupancy"])
+    H = np.array([z.residents * per_res for z in zones]) * local_multiplier
+    act = np.array([sum(z.activity.get(k, 0.0) * profile.activity.get(k, 0.0) for k in profile.activity)
+                    for z in zones])
+    A = act / max(act.sum(), 1e-9) * H.sum()
+    d = profile.direction
+    O = H * (1 + d) / 2 + A * (1 - d) / 2
+    D = H * (1 - d) / 2 + A * (1 + d) / 2
+    ext = landuse["external_share"]
+    gin = [g for g in gates if g.in_link]
+    gout = [g for g in gates if g.out_link]
+    cin = np.array([gate_cap_in[g.id] for g in gin])
+    cout = np.array([gate_cap_out[g.id] for g in gout])
+    through = landuse["through_share_of_capacity"] * cin.sum()
+    g_in = ext * D.sum() * cin / cin.sum() + through * cin / cin.sum()
+    g_out = ext * O.sum() * cout / cout.sum() + through * cout / cout.sum()
+    estimated_in, estimated_out = g_in.copy(), g_out.copy()
+    for i, g in enumerate(gin):
+        if counted_in and g.id in counted_in:
+            g_in[i] = counted_in[g.id]
+    for j, g in enumerate(gout):
+        if counted_out and g.id in counted_out:
+            g_out[j] = counted_out[g.id]
+
+    rows = [Endpoint(z.id, node_of[z.node], z.label, "zone") for z in zones] + \
+           [Endpoint(g.id, node_of[g.node], f"{g.street} ({g.side})", "gate") for g in gin]
+    cols = [Endpoint(z.id, node_of[z.node], z.label, "zone") for z in zones] + \
+           [Endpoint(g.id, node_of[g.node], f"{g.street} ({g.side})", "gate") for g in gout]
+    beta = profile.gravity_beta
+    seed = np.zeros((len(rows), len(cols)))
+    for i, r in enumerate(rows):
+        for j, c in enumerate(cols):
+            if r.node == c.node:
+                continue                              # no trips that start and end at the same point
+            t = free_time(r.node, c.node)
+            if not np.isfinite(t):
+                continue
+            if r.kind == "gate" and c.kind == "gate":
+                seed[i, j] = 1.0                       # through traffic: any other gateway
+            elif r.kind == "gate" or c.kind == "gate":
+                seed[i, j] = np.exp(-beta * 0.5 * t)   # trip continues outside the box
+            else:
+                seed[i, j] = np.exp(-beta * t)
+    # zone rows/cols carry ALL their trips (the gateway columns/rows absorb the external share
+    # because their totals were set to ext·ΣO / ext·ΣD plus through-traffic above)
+    row_tot = np.concatenate([O, g_in])
+    col_tot = np.concatenate([D, g_out])
+    T, imbalance = balance(seed, row_tot, col_tot)
+    summary = {
+        "residents": round(float(sum(z.residents for z in zones))),
+        "homeTripsVehH": round(float(H.sum())),
+        "localTripsVehH": round(float(O.sum())),
+        "gatewayInVehH": round(float(g_in.sum())),
+        "gatewayOutVehH": round(float(g_out.sum())),
+        "estimatedGatewayInVehH": round(float(estimated_in.sum())),
+        "throughVehH": round(float(through)),
+        "totalVehH": round(float(T.sum())),
+        "imbalancePct": round(imbalance, 2),
+        "localMultiplier": round(local_multiplier, 3),
+        "countedGates": sorted(set(counted_in or {}) | set(counted_out or {})),
+    }
+    return ODTable(rows, cols, T, summary)
