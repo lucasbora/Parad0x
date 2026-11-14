@@ -229,15 +229,6 @@ export interface SimulateOk {
   demandSource: DemandSource;
   braess: { detected: boolean; carCapacityRemoved: boolean; totalChangePct: number };
   totals: { vehMinBefore: number; vehMinAfter: number; changePct: number; demandVehH: number };
-  people: {
-    carOccupancy: number;
-    carOccupancySource: string;
-    carPersonHoursBefore: number;
-    carPersonHoursAfter: number;
-    busHoursBefore: number;
-    busHoursAfter: number;
-    busLinesCounted: number;
-  };
   carRoutes: CarRoute[];
   junctions: { nodeId: string; delayBeforeSec: number; delayAfterSec: number }[];
   trafficShifts: TrafficShift[];

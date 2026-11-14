@@ -342,10 +342,6 @@ class CorridorModel:
         removed = any(c.car_lanes_after < self.car_lanes(c.link_id)[0] for c in changes)
         change_pct = (after.total_time - before.total_time) / before.total_time * 100
         buses = self.bus_results(changes, before, after)
-        occ = LANDUSE["car_occupancy"]
-        scheduled = [b for b in buses if b["busesPerHour"]]
-        bus_h_before = sum(b["busesPerHour"] * b["minutesBefore"] for b in scheduled) / 60.0
-        bus_h_after = sum(b["busesPerHour"] * b["minutesAfter"] for b in scheduled) / 60.0
         return {
             "testData": False,
             "profile": profile,
@@ -358,17 +354,7 @@ class CorridorModel:
             # Braess's paradox: car capacity was taken away, yet total time in traffic went DOWN.
             "braess": {"detected": bool(removed and change_pct < -0.05), "carCapacityRemoved": removed,
                        "totalChangePct": round(change_pct, 2)},
-            # time spent by PEOPLE: car occupants (occupancy is the same assumption the demand uses) and
-            # STPT bus time (bus-hours from the timetable; passengers per bus are not measured, so no
-            # passenger-hours are claimed)
-            "people": {
-                "carOccupancy": occ, "carOccupancySource": "assumption (same as demand)",
-                "carPersonHoursBefore": round(before.total_time / 60 * occ, 1),
-                "carPersonHoursAfter": round(after.total_time / 60 * occ, 1),
-                "busHoursBefore": round(bus_h_before, 2), "busHoursAfter": round(bus_h_after, 2),
-                "busLinesCounted": len(scheduled),
-            },
-            "carRoutes": routes,
+                "carRoutes": routes,
             "junctions": [{"nodeId": k, "delayBeforeSec": round(jb[k], 1), "delayAfterSec": round(ja[k], 1)} for k in jb],
             "trafficShifts": shifts[:8],
             "intersections": inter[:6],

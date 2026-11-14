@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Box, ClipboardList, HelpCircle, Leaf, Loader2, Menu, Palette, RefreshCw, Search, Undo2, X } from "lucide-react";
+import { Box, HelpCircle, Leaf, Loader2, Menu, Palette, RefreshCw, Search, Undo2, X } from "lucide-react";
 import { api, signed } from "./api";
 import { I18nContext, translations, type Lang } from "./i18n/translations";
 import type {
@@ -31,7 +31,6 @@ import ResultsPanel from "./components/ResultsPanel";
 import ModelCheckCard from "./components/ModelCheckCard";
 import BraessToast from "./components/BraessToast";
 import ProfileBar from "./components/ProfileBar";
-import CountTool from "./components/CountTool";
 import CitizenBraessExplainerModal from "./components/CitizenBraessExplainerModal";
 
 function readLang(): Lang {
@@ -102,7 +101,6 @@ export default function App() {
   const [demandInput, setDemandInput] = useState(1);        // slider position (moves instantly)
   const [demandScale, setDemandScale] = useState(1);        // applied after a short pause
   const [demandVehH, setDemandVehH] = useState<number | null>(null);
-  const [countOpen, setCountOpen] = useState(false);
   const [baseline, setBaseline] = useState<BaselineLink[] | null>(null);
   const [baselineJunctions, setBaselineJunctions] = useState<{ nodeId: string; delaySec: number }[] | null>(null);
   const [scanRows, setScanRows] = useState<ScanRow[] | null>(null);
@@ -468,21 +466,6 @@ export default function App() {
                     <span className="truncate">{t.menuRecommendedPoints}</span>
                   </button>
 
-                  <button
-                    type="button"
-                    role="menuitem"
-                    onClick={() => {
-                      setCountOpen(true);
-                      setMenuOpen(false);
-                    }}
-                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
-                      isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
-                    }`}
-                  >
-                    <ClipboardList size={16} className={`shrink-0 ${isDark ? "text-[#38BDF8]" : "text-[#005BBC]"}`} strokeWidth={2.2} />
-                    <span className="truncate">{t.menuCount}</span>
-                  </button>
-
                   <div className="relative">
                     <button
                       type="button"
@@ -688,11 +671,6 @@ export default function App() {
         <BraessToast changePct={toastPct} estimated={demandSource === "estimated"} onClose={() => setToastPct(null)} />
       </div>
       <CitizenBraessExplainerModal open={explainer} onClose={() => setExplainer(false)} />
-      {data && (
-        <div className={isDark ? "theme-dark" : ""}>
-          <CountTool open={countOpen} data={data} profile={profile} baseline={baseline} onClose={() => setCountOpen(false)} />
-        </div>
-      )}
     </I18nContext.Provider>
   );
 }

@@ -82,25 +82,6 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
         </p>
       </div>
 
-      <div className="rounded-lg border border-slate-200 p-3">
-        <h3 className="text-[12.5px] font-semibold text-slate-800">{t.peopleTitle}</h3>
-        <div className="mt-1 space-y-1 text-[12px] text-slate-700">
-          <div className="flex flex-wrap items-baseline justify-between gap-x-2">
-            <span>{t.peopleInCars}</span>
-            <Delta before={r.people.carPersonHoursBefore} after={r.people.carPersonHoursAfter} unit={t.personHours} digits={1} />
-          </div>
-          {r.people.busLinesCounted > 0 && (
-            <div className="flex flex-wrap items-baseline justify-between gap-x-2">
-              <span>{t.busTime} <span className="text-slate-400">· {r.people.busLinesCounted} {t.lines}</span></span>
-              <Delta before={r.people.busHoursBefore} after={r.people.busHoursAfter} unit={t.busHours} digits={2} />
-            </div>
-          )}
-        </div>
-        <p className="mt-1 text-[10.5px] leading-snug text-slate-500">
-          {t.peopleNote.replace("{occ}", fmt(r.people.carOccupancy, 1))}
-        </p>
-      </div>
-
       <div>
         <h3 className="text-[12.5px] font-semibold text-slate-800">{t.cars}</h3>
         <ul className="mt-1 divide-y divide-slate-100">
