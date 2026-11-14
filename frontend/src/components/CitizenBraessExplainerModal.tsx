@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Car, X } from "lucide-react";
 import { useI18n } from "../i18n/translations";
+import { usePresence, useSlidingThumb, useTween } from "../motion";
 
 interface Props {
   open: boolean;
@@ -49,7 +50,8 @@ function Road({ from, to, color, cars, delay, dashed }: { from: Node; to: Node; 
   const d = pathOf(from, to);
   return (
     <g>
-      <path d={d} stroke={color} strokeWidth={dashed ? 4 : 13} strokeLinecap="round" strokeDasharray={dashed ? "7 7" : undefined} fill="none" />
+      <path d={d} stroke={color} strokeWidth={dashed ? 4 : 13} strokeLinecap="round" strokeDasharray={dashed ? "7 7" : undefined} fill="none"
+        className="transition-[stroke,stroke-width] duration-500" />
       {/* a white streak runs along the road in the driving direction and fades, only where cars drive */}
       {cars > 0 && <path d={d} pathLength={100} className="road-streak" style={{ animationDelay: `${delay}s` }} />}
     </g>
@@ -59,10 +61,11 @@ function Road({ from, to, color, cars, delay, dashed }: { from: Node; to: Node; 
 function CarsBadge({ at, cars }: { at: readonly [number, number]; cars: number }) {
   const w = 36;
   return (
-    <g transform={`translate(${at[0] - w / 2},${at[1] - 10})`}>
+    <g transform={`translate(${at[0] - w / 2},${at[1] - 10})`} className="m-fade-in">
       <rect width={w} height={20} rx={10} fill="#0F172A" stroke="#ffffff" strokeWidth={1.5} />
       <Car x={6} y={4} size={12} color="#ffffff" strokeWidth={2.4} />
-      <text x={25} y={14} textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="700" className="font-secondary">{cars}</text>
+      {/* keyed so a new count fades in (opacity only: a CSS transform would override the SVG translate) */}
+      <text key={cars} x={25} y={14} textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="700" className="m-fade-in font-secondary">{cars}</text>
     </g>
   );
 }
@@ -71,6 +74,9 @@ export default function CitizenBraessExplainerModal({ open, onClose }: Props) {
   const { t } = useI18n();
   const [shortcut, setShortcut] = useState(false);
   const closeRef = useRef<HTMLButtonElement | null>(null);
+  const presence = usePresence(open, 180);
+  const stepThumb = useSlidingThumb(String(shortcut));
+  const tripTime = useTween(equilibrium(shortcut).time, 500);
 
   useEffect(() => {
     if (!open) return;
@@ -81,7 +87,7 @@ export default function CitizenBraessExplainerModal({ open, onClose }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  if (!open) return null;
+  if (!presence.mounted) return null;
 
   const without = equilibrium(false);
   const withCut = equilibrium(true);
@@ -95,14 +101,14 @@ export default function CitizenBraessExplainerModal({ open, onClose }: Props) {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-slate-900/40 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="explainer-title" onClick={onClose}>
-      <div className="max-h-[94vh] w-full max-w-[1040px] overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl animate-slideIn" onClick={(e) => e.stopPropagation()}>
+    <div className={`fixed inset-0 z-50 grid place-items-center bg-slate-900/40 p-4 backdrop-blur-sm ${presence.closing ? "pointer-events-none m-fade-out" : "m-fade-in"}`} role="dialog" aria-modal="true" aria-labelledby="explainer-title" onClick={onClose}>
+      <div className={`max-h-[94vh] w-full max-w-[1040px] overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl ${presence.closing ? "m-dialog-out" : "m-dialog-in"}`} onClick={(e) => e.stopPropagation()}>
         <div className="flex items-start gap-3">
           <div className="flex-1">
             <h2 id="explainer-title" className="text-[18px] font-bold text-slate-900">{t.explain}</h2>
             <p className="mt-1 text-[13px] leading-relaxed text-slate-600">{t.explainerIntro}</p>
           </div>
-          <button ref={closeRef} onClick={onClose} aria-label={t.close} className="grid h-8 w-8 place-items-center rounded-lg text-slate-500 hover:bg-slate-100">
+          <button ref={closeRef} onClick={onClose} aria-label={t.close} className="grid h-8 w-8 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 active:scale-95">
             <X size={18} />
           </button>
         </div>
@@ -110,11 +116,13 @@ export default function CitizenBraessExplainerModal({ open, onClose }: Props) {
         {/* wide two-column layout so the whole explanation fits without scrolling; stacks on narrow screens */}
         <div className="mt-3 grid items-start gap-4 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <div>
-        <div className="grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1" role="radiogroup" aria-label={t.explainerShortcut}>
+        <div ref={stepThumb.ref} className="relative grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1" role="radiogroup" aria-label={t.explainerShortcut}>
+          <span aria-hidden="true" style={stepThumb.style}
+            className="absolute left-0 top-0 rounded-lg bg-white shadow-sm transition-[transform,width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]" />
           {[false, true].map((v) => (
-            <button key={String(v)} type="button" role="radio" aria-checked={shortcut === v} onClick={() => setShortcut(v)}
-              className={`rounded-lg px-3 py-1.5 text-[12.5px] font-semibold transition duration-300 ${
-                shortcut === v ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-800"
+            <button key={String(v)} type="button" role="radio" data-thumb-key={String(v)} aria-checked={shortcut === v} onClick={() => setShortcut(v)}
+              className={`relative rounded-lg px-3 py-1.5 text-[12.5px] font-semibold transition-colors duration-300 ${
+                shortcut === v ? "text-slate-900" : "text-slate-500 hover:text-slate-800"
               }`}>
               {v ? t.explainerStepWith : t.explainerStepWithout}
             </button>
@@ -137,14 +145,14 @@ export default function CitizenBraessExplainerModal({ open, onClose }: Props) {
             <text x="166" y="226" textAnchor="end" fontWeight="600">{t.explainerBusy}</text>
             <text x="166" y="242" textAnchor="end" fontStyle="italic">{t.explainerBusyRule}</text>
             <text x="304" y="146" fontWeight="600">{t.explainerShortcut}</text>
-            <text x="304" y="162" className="font-secondary">{shortcut ? `${SHORT} min` : t.explainerClosed}</text>
+            <text key={String(shortcut)} x="304" y="162" className="m-fade-in font-secondary">{shortcut ? `${SHORT} min` : t.explainerClosed}</text>
           </g>
 
           <CarsBadge at={mid("A", "C")} cars={s.up} />
           <CarsBadge at={mid("A", "B")} cars={s.down + s.cut} />
           <CarsBadge at={mid("C", "D")} cars={s.up + s.cut} />
           <CarsBadge at={mid("B", "D")} cars={s.down} />
-          {shortcut && <CarsBadge at={mid("B", "C")} cars={s.cut} />}
+          {shortcut && <CarsBadge key="cut" at={mid("B", "C")} cars={s.cut} />}
 
           {(Object.keys(N) as Node[]).map((k) => (
             <g key={k}>
@@ -163,22 +171,22 @@ export default function CitizenBraessExplainerModal({ open, onClose }: Props) {
         <div className="space-y-3">
           <div>
             <h3 className="text-[12.5px] font-semibold text-slate-900">{t.explainerWhatHappens}</h3>
-            <p className="mt-1 text-[12.5px] leading-relaxed text-slate-600">{shortcut ? t.explainerWithBody : t.explainerWithoutBody}</p>
+            <p key={String(shortcut)} className="m-fade-in mt-1 text-[12.5px] leading-relaxed text-slate-600">{shortcut ? t.explainerWithBody : t.explainerWithoutBody}</p>
           </div>
           <div className="rounded-xl bg-slate-50 p-3">
             <div className="text-[11.5px] text-slate-500">{t.explainerTripTime}</div>
             <div className="mt-0.5 flex items-baseline gap-1.5 font-secondary">
-              <span className={`text-[26px] font-bold ${shortcut ? "text-red-700" : "text-emerald-700"}`}>{s.time}</span>
+              <span className={`text-[26px] font-bold transition-colors duration-300 ${shortcut ? "text-red-700" : "text-emerald-700"}`}>{Math.round(tripTime)}</span>
               <span className="text-[12px] text-slate-500">min</span>
             </div>
-            <p className={`text-[11.5px] font-semibold ${shortcut ? "text-red-700" : "text-emerald-700"}`}>
+            <p key={String(shortcut)} className={`m-fade-in text-[11.5px] font-semibold ${shortcut ? "text-red-700" : "text-emerald-700"}`}>
               <span className="font-secondary">{diff}</span> {shortcut ? t.explainerSlower : t.explainerFaster}
             </p>
             <table className="mt-2 w-full text-left text-[11.5px]">
               <thead className="text-slate-500">
                 <tr><th className="font-medium">{t.explainerRoute}</th><th className="text-right font-medium">{t.explainerCars}</th><th className="text-right font-medium">{t.explainerTime}</th></tr>
               </thead>
-              <tbody className="text-slate-800">
+              <tbody key={String(shortcut)} className="m-fade-in text-slate-800">
                 {routes.map((r) => (
                   <tr key={r.name} className={r.open && r.cars > 0 ? "" : "text-slate-400"}>
                     <td className="py-0.5">{r.name}</td>

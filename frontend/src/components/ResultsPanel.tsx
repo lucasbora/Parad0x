@@ -3,12 +3,15 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import type { BusResult, CarRoute, Change, Highlight, Profile, SensitivityRow, SimulateResponse } from "../types/corridor";
 import { api, fmt, signed } from "../api";
 import { useI18n } from "../i18n/translations";
+import { useTween } from "../motion";
 import SourceBadge from "./SourceBadge";
+import Collapse from "./Collapse";
 
 interface Props {
   result: SimulateResponse | null;
   changes: Change[];
   profile: Profile;
+  busy: boolean;
   onHoverBus: (b: BusResult | null) => void;
   onHighlight: (h: Highlight | null) => void;
   onFocus: (h: Highlight) => void;
@@ -34,16 +37,18 @@ function Delta({ before, after, unit, digits = 1, goodWhenLower = true }: {
   );
 }
 
-export default function ResultsPanel({ result, changes, profile, onHoverBus, onHighlight, onFocus }: Props) {
+export default function ResultsPanel({ result, changes, profile, busy, onHoverBus, onHighlight, onFocus }: Props) {
   const { t } = useI18n();
   const [sens, setSens] = useState<SensitivityRow[] | null>(null);
   const [sensBusy, setSensBusy] = useState(false);
   useEffect(() => setSens(null), [result]);   // robustness table belongs to one scenario
+  // the headline number counts to its new value instead of jumping
+  const totalPct = useTween(result && result.status === "ok" ? result.totals.changePct : 0);
 
   if (!result) return null;
   if (result.status === "needs_data") {
     return (
-      <section>
+      <section className="m-rise-in">
         <h2 className="text-[14px] font-semibold text-slate-900">{t.step3}</h2>
         <p className="mt-2 rounded-lg border border-amber-300 bg-amber-50 p-3 text-[12.5px] text-amber-900">{t.needsDataResults}</p>
       </section>
@@ -62,19 +67,16 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
   const buses = r.buses.filter((b) => b.usesChangedStreet);
 
   return (
-    <section className="space-y-4">
+    <section className={`m-rise-in space-y-4 transition-opacity duration-300 ${busy ? "opacity-60" : "opacity-100"}`} aria-busy={busy}>
       <h2 className="text-[14px] font-semibold text-slate-900">{t.step3}</h2>
-      {r.demandSource === "estimated" && (
-        <p className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-1.5 text-[11.5px] font-semibold text-amber-800">{t.estimatedBanner}</p>
-      )}
 
       <div className="rounded-lg bg-slate-50 p-3">
         <p className="text-[12px] text-slate-600">{t.totalTime}</p>
-        <p className={`font-secondary text-[22px] font-semibold ${r.totals.changePct <= 0 ? "text-emerald-700" : "text-orange-700"}`}>
-          {signed(r.totals.changePct, 1)}%
+        <p className={`font-secondary text-[22px] font-semibold transition-colors duration-300 ${r.totals.changePct <= 0 ? "text-emerald-700" : "text-orange-700"}`}>
+          {signed(totalPct, 1)}%
         </p>
         <p className="font-secondary text-[11px] text-slate-500">
-          {fmt(r.totals.vehMinBefore / 60, 0)} → {fmt(r.totals.vehMinAfter / 60, 0)} veh·h · {fmt(r.totals.demandVehH, 0)} {t.vehH}
+          {fmt(r.totals.vehMinBefore / 60, 0)} → {fmt(r.totals.vehMinAfter / 60, 0)} veh/h · {fmt(r.totals.demandVehH, 0)} {t.vehH}
           {r.demandScale !== 1 && ` · ${t.demandMeter} ${Math.round(r.demandScale * 100)}%`}
         </p>
         <p className={`mt-1 text-[11.5px] ${r.braess.detected ? "font-semibold text-fuchsia-700" : "text-slate-500"}`}>
@@ -163,10 +165,11 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
 
       <div>
         <button onClick={runSens} disabled={sensBusy}
-          className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-[12px] font-medium text-slate-800 hover:bg-slate-50">
+          className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-[12px] font-medium text-slate-800 transition hover:bg-slate-50 active:scale-[0.98]">
           {sensBusy && <Loader2 size={13} className="animate-spin" />} {t.sensitivity}
         </button>
-        {sens && (
+        <Collapse open={!!sens}>
+          {sens && (
           <div className="mt-2">
             <p className="text-[11.5px] text-slate-600">{t.sensitivityTitle}</p>
             <table className="mt-1 w-full text-left font-secondary text-[11px]">
@@ -185,7 +188,8 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
               </tbody>
             </table>
           </div>
-        )}
+          )}
+        </Collapse>
       </div>
 
       {r.warnings.map((w) => <p key={w} className="rounded bg-amber-50 px-2 py-1 text-[11px] text-amber-800">{w}</p>)}

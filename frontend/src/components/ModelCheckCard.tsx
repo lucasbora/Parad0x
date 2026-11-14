@@ -1,6 +1,24 @@
+import { useState, type ReactNode } from "react";
+import { ChevronRight } from "lucide-react";
 import type { CalibrationResponse, CorridorResponse, FittedRow } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
 import { fmt } from "../api";
+import Collapse from "./Collapse";
+
+/** Expandable card (replaces <details>, which cannot animate its height). */
+function Disclosure({ title, children }: { title: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-3">
+      <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open}
+        className="flex w-full items-center gap-1.5 text-left text-[12.5px] font-semibold text-slate-800">
+        <ChevronRight size={14} className={`shrink-0 text-slate-500 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "rotate-90" : ""}`} />
+        <span className="flex-1">{title}</span>
+      </button>
+      <Collapse open={open}>{children}</Collapse>
+    </div>
+  );
+}
 
 function GehTable({ rows }: { rows: (FittedRow & { label: string; title?: string })[] }) {
   const { t } = useI18n();
@@ -31,8 +49,7 @@ export default function ModelCheckCard({ data, calibration }: { data: CorridorRe
 
   return (
     <div className="space-y-3">
-      <details className="rounded-xl border border-slate-200 bg-white p-3">
-        <summary className="cursor-pointer text-[12.5px] font-semibold text-slate-800">{t.calibrationTitle}</summary>
+      <Disclosure title={t.calibrationTitle}>
         {!cal && <p className="mt-2 text-[12px] text-slate-600">{t.calibrationMissing}</p>}
 
         {cal && fitted.length > 0 && (
@@ -68,10 +85,9 @@ export default function ModelCheckCard({ data, calibration }: { data: CorridorRe
             )}
           </div>
         )}
-      </details>
+      </Disclosure>
 
-      <details className="rounded-xl border border-slate-200 bg-white p-3">
-        <summary className="cursor-pointer text-[12.5px] font-semibold text-slate-800">{t.assumptionsTitle}</summary>
+      <Disclosure title={t.assumptionsTitle}>
         <ul className="mt-2 space-y-1.5">
           {data.assumptions.map((a) => (
             <li key={a.what} className="text-[11.5px] leading-snug">
@@ -80,7 +96,7 @@ export default function ModelCheckCard({ data, calibration }: { data: CorridorRe
             </li>
           ))}
         </ul>
-      </details>
+      </Disclosure>
 
       <div className="text-[11px] text-slate-500">
         <span className="font-semibold">{t.sources}:</span> {t.network}: {data.sources.network} ({data.sources.networkFetchedAt.slice(0, 10)}) ·{" "}

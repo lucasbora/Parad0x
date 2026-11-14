@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { BadgeCheck, CheckCircle2, ChevronDown, ChevronUp, Circle, ExternalLink, FlaskConical } from "lucide-react";
+import { BadgeCheck, CheckCircle2, ChevronDown, Circle, ExternalLink, FlaskConical } from "lucide-react";
 import type { CorridorResponse, DemandSummary, Profile } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
 import { fmt } from "../api";
+import Collapse from "./Collapse";
 
 interface Props {
   data: CorridorResponse;
@@ -41,9 +42,9 @@ export default function DataStatusCard({ data, profile, demand }: Props) {
             {ps?.gatesCounted ?? 0}/{st.gatesTotal} {t.gatesCounted}
           </span>
         </span>
-        {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        <ChevronDown size={16} className={`shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "rotate-180" : ""}`} />
       </button>
-      {open && (
+      <Collapse open={open}>
         <div className="mt-2 space-y-2.5">
           <p className="text-[12px] leading-relaxed text-slate-700">{t.dataMissingBody}</p>
 
@@ -104,9 +105,9 @@ export default function DataStatusCard({ data, profile, demand }: Props) {
             <p key={w} className="rounded-md bg-white/70 px-2 py-1 text-[11px] text-amber-800">{w}</p>
           ))}
           <button className="flex items-center gap-1 text-[12px] font-semibold text-[#005BBC]" onClick={() => setGatesOpen((o) => !o)}>
-            {t.showGates} {gatesOpen ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+            {t.showGates} <ChevronDown size={13} className={`transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${gatesOpen ? "rotate-180" : ""}`} />
           </button>
-          {gatesOpen && (
+          <Collapse open={gatesOpen}>
             <div>
               <p className="mb-1 text-[11px] text-slate-600">{t.gatesHint} {meta ? `${meta.start}–${meta.end}` : ""}.</p>
               <ul className="space-y-0.5">
@@ -130,9 +131,9 @@ export default function DataStatusCard({ data, profile, demand }: Props) {
                 })}
               </ul>
             </div>
-          )}
+          </Collapse>
         </div>
-      )}
+      </Collapse>
     </section>
   );
 }

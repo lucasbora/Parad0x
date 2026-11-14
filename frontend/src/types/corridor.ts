@@ -317,6 +317,8 @@ export type LaneKind = "car" | "bus" | "bike" | "sidewalk";
 export interface Pin {
   street: string;
   heading: string;
+  /** kept on the map even when another street is selected (the selected street always shows its pin) */
+  onMap: boolean;
 }
 
 /** One tested change from the Braess search.

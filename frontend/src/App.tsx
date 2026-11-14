@@ -20,7 +20,7 @@ import type {
   ScanRow,
   SimulateResponse,
 } from "./types/corridor";
-import CorridorMap, { type MapPinView, type MapTheme } from "./components/CorridorMap";
+import CorridorMap, { type CameraTarget, type MapPinView, type MapTheme, type ViewPadding } from "./components/CorridorMap";
 import LayersPill from "./components/LayersPill";
 import DataStatusCard from "./components/DataStatusCard";
 import StreetSearch from "./components/StreetSearch";
@@ -29,10 +29,10 @@ import PinsPanel, { type PinTime } from "./components/PinsPanel";
 import ScanCard from "./components/ScanCard";
 import ResultsPanel from "./components/ResultsPanel";
 import ModelCheckCard from "./components/ModelCheckCard";
-import BraessToast from "./components/BraessToast";
 import ProfileBar from "./components/ProfileBar";
 import CountTool from "./components/CountTool";
 import CitizenBraessExplainerModal from "./components/CitizenBraessExplainerModal";
+import { usePresence, useSlidingThumb, withViewTransition } from "./motion";
 
 function readLang(): Lang {
   try {
@@ -123,8 +123,7 @@ export default function App() {
   const [hoverBus, setHoverBus] = useState<BusResult | null>(null);
   const [hovered, setHovered] = useState<Highlight | null>(null);
   const [pinned, setPinned] = useState<Highlight | null>(null);
-  const [focusKey, setFocusKey] = useState(0);
-  const [toastPct, setToastPct] = useState<number | null>(null);
+  const [camera, setCamera] = useState<CameraTarget | null>(null);
   const [explainer, setExplainer] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [recommendedOpen, setRecommendedOpen] = useState(false);
@@ -132,6 +131,9 @@ export default function App() {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [mapTheme, setMapTheme] = useState<MapTheme>("colored");
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const menu = usePresence(menuOpen, 150);
+  const themeMenu = usePresence(themeMenuOpen, 150);
+  const langThumb = useSlidingThumb(lang);
 
   useEffect(() => {
     if (!menuOpen) {
@@ -234,7 +236,7 @@ export default function App() {
     setPinned(null);
     if (s && h) {
       setSidebarOpen(true);
-      setPins((ps) => (ps.some((p) => p.street === s && p.heading === h) ? ps : [...ps, { street: s, heading: h }]));
+      setPins((ps) => (ps.some((p) => p.street === s && p.heading === h) ? ps : [...ps, { street: s, heading: h, onMap: false }]));
     }
   }, []);
 
@@ -259,7 +261,6 @@ export default function App() {
       const coords = r.linkIds.map((id) => linkProps.get(id)?.geometry.coordinates ?? []).sort((a, b) => b.length - a.length)[0];
       if (coords && coords.length > 1) {
         setPinned({ coordinates: coords, color: "#c026d3", label: r.street, time: `${signed(r.changePct, 2)}%` });
-        setFocusKey((k) => k + 1);
       }
     }
   }, [select, street, heading, originalLanes, linkProps]);
@@ -284,6 +285,70 @@ export default function App() {
   }, [scenario, lanes, maxLanes, selectedIds, linkProps]);
   const changesKey = JSON.stringify(changes);
 
+  // ------------------------------------------------------------ camera: whatever the user acts on is brought into view
+  const coordsOf = useCallback((ids: string[]) => ids.flatMap((id) => linkProps.get(id)?.geometry.coordinates ?? []), [linkProps]);
+  const focusCamera = useCallback((coords: LngLat[], mode: CameraTarget["mode"] = "fit") => {
+    if (coords.length) setCamera((c) => ({ coords, mode, key: (c?.key ?? 0) + 1 }));
+  }, []);
+  const focusStr = focusIds.join(",");
+  const focusStreet = scenario ? scenario.street : street;
+  const lastFocus = useRef("");
+  const lastStreet = useRef<string | null>(null);
+  useEffect(() => {
+    if (!focusIds.length) {
+      lastFocus.current = "";
+      lastStreet.current = null;
+      return;
+    }
+    if (focusStr !== lastFocus.current) {
+      // another street: fly to it. Same street (other direction, other side of an intersection,
+      // a Braess-search closure being edited): only move if it is not already on screen
+      const sameStreet = focusStreet !== null && focusStreet === lastStreet.current;
+      lastFocus.current = focusStr;
+      lastStreet.current = focusStreet;
+      focusCamera(coordsOf(focusIds), sameStreet ? "ensure" : "fit");
+    } else if (changes.length) {
+      focusCamera(coordsOf(focusIds), "ensure");   // its lanes changed: move only if it is out of view
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusStr, changesKey]);
+
+  // the floating panels cover parts of the map; the camera centres things in what is left
+  const [vw, setVw] = useState(() => window.innerWidth);
+  useEffect(() => {
+    const onResize = () => setVw(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  const viewPadding: ViewPadding = useMemo(() => (vw < 768
+    ? { top: 90, right: 24, bottom: 90, left: 24 }
+    : { top: 96, right: recommendedOpen ? 408 : 60, bottom: 96, left: sidebarOpen ? 462 : 60 }), [vw, sidebarOpen, recommendedOpen]);
+
+  // ------------------------------------------------------------ responsive layout (window width, px)
+  //   < 768   phone: side panels take the full width, so the bottom controls hide while one is open
+  //   < 1180  the two side panels do not fit next to each other: opening one closes the other
+  //   < 1500  the side panels would run under the header pill, so they start below it
+  const NARROW = 768;
+  const BOTH_PANELS = 1180;
+  const BESIDE_HEADER = 1500;
+  const narrow = vw < NARROW;
+  useEffect(() => {
+    if (sidebarOpen && window.innerWidth < BOTH_PANELS) setRecommendedOpen(false);
+  }, [sidebarOpen]);
+  useEffect(() => {
+    if (recommendedOpen && window.innerWidth < BOTH_PANELS) setSidebarOpen(false);
+  }, [recommendedOpen]);
+  useEffect(() => {
+    // shrinking the window with both open: keep the street panel (the main workspace)
+    if (vw < BOTH_PANELS) setRecommendedOpen((r) => (r && sidebarOpen ? false : r));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vw]);
+  const belowHeader = vw < BESIDE_HEADER;
+  // the part of the map no side panel covers: the layers panel, the time bar and the Braess pop-up live here
+  const freeLeft = !narrow && sidebarOpen ? 434 : 12;
+  const freeRight = !narrow && recommendedOpen ? 396 : 12;
+  const panelCoversMap = narrow && (sidebarOpen || recommendedOpen);
+
   const ctrl = useRef<AbortController | null>(null);
   useEffect(() => {
     ctrl.current?.abort();
@@ -297,10 +362,7 @@ export default function App() {
     setBusy(true);
     const id = window.setTimeout(() => {
       api.simulate(changes, profile, demandScale, c.signal)
-        .then((r) => {
-          setResult(r);
-          if (r.status === "ok" && r.braess.detected) setToastPct(r.braess.totalChangePct);
-        })
+        .then((r) => setResult(r))
         .catch((e: Error) => {
           if (e.name !== "AbortError") setError(e.message);
         })
@@ -361,14 +423,20 @@ export default function App() {
     });
   }, [pins, data, baseline, ok]);
 
-  const mapPins: MapPinView[] = useMemo(() => pinTimes.map(({ pin, beforeSec, afterSec }) => {
-    const ids = data?.streets.find((s) => s.street === pin.street)?.directions.find((d) => d.heading === pin.heading)?.linkIds ?? [];
-    const longest = ids.map((id) => linkProps.get(id)).filter((f): f is NonNullable<typeof f> => !!f)
-      .sort((a, b) => b.properties.lengthM - a.properties.lengthM)[0];
-    const g = longest?.geometry.coordinates ?? [];
-    const at: LngLat = g.length ? g[Math.floor(g.length / 2)] : [0, 0];
-    return { key: pinKey(pin), label: `${pin.street} · ${t.heading[pin.heading] ?? pin.heading}`, at, beforeSec, afterSec };
-  }), [pinTimes, data, linkProps, t]);
+  // on the map: the street being edited, plus the ones pinned with the pin button in the list
+  const mapPins: MapPinView[] = useMemo(() => pinTimes
+    .filter(({ pin }) => pin.onMap || (pin.street === street && pin.heading === heading))
+    .map(({ pin, beforeSec, afterSec }) => {
+      const ids = data?.streets.find((s) => s.street === pin.street)?.directions.find((d) => d.heading === pin.heading)?.linkIds ?? [];
+      const longest = ids.map((id) => linkProps.get(id)).filter((f): f is NonNullable<typeof f> => !!f)
+        .sort((a, b) => b.properties.lengthM - a.properties.lengthM)[0];
+      const g = longest?.geometry.coordinates ?? [];
+      const at: LngLat = g.length ? g[Math.floor(g.length / 2)] : [0, 0];
+      return { key: pinKey(pin), label: `${pin.street} · ${t.heading[pin.heading] ?? pin.heading}`, at, beforeSec, afterSec };
+    }), [pinTimes, data, linkProps, t, street, heading]);
+  const togglePinOnMap = useCallback((p: Pin) => {
+    setPins((ps) => ps.map((x) => (pinKey(x) === pinKey(p) ? { ...x, onMap: !x.onMap } : x)));
+  }, []);
 
   const pickLink = useCallback((id: string) => {
     const f = linkProps.get(id);
@@ -377,26 +445,28 @@ export default function App() {
     const s = data.streets.find((x) => x.street === p.street);
     if (s && s.directions.some((d) => d.heading === p.heading)) select(p.street, p.heading);
   }, [linkProps, data, select]);
+  // clicking empty map: nothing selected any more (the search box empties with it)
+  const deselect = useCallback(() => select(null, null), [select]);
 
   const isDark = mapTheme === "dark";
 
   return (
     <I18nContext.Provider value={i18n}>
-      <div className={`relative h-screen w-screen overflow-hidden transition-colors duration-300 ${isDark ? "theme-dark bg-[#0B1120] text-slate-100" : "bg-[#F8FAFC] text-[#0F172A]"}`}>
+      <div className={`relative h-screen w-screen overflow-hidden transition-colors duration-300 ${!narrow && recommendedOpen ? "right-panel-open" : ""} ${isDark ? "theme-dark bg-[#0B1120] text-slate-100" : "bg-[#F8FAFC] text-[#0F172A]"}`}>
         {data && (
           <CorridorMap data={data} baseline={baseline} baselineJunctions={baselineJunctions} result={ok} scanRows={scanRows}
             layers={layers} mapTheme={mapTheme} showDelta={showDelta} selectedLinkIds={focusIds} pins={mapPins}
-            highlight={hovered ?? pinned} focusKey={focusKey} highlightBus={hoverBus} onPickLink={pickLink} />
+            highlight={hovered ?? pinned} camera={camera} viewPadding={viewPadding} highlightBus={hoverBus} onPickLink={pickLink} onPickNothing={deselect} />
         )}
 
         {/* top-center pill header */}
-        <header className="glass pointer-events-auto absolute left-1/2 top-3 z-20 flex w-[min(640px,calc(100vw-24px))] -translate-x-1/2 items-center justify-between gap-6 rounded-full px-6 py-3">
+        <header className="glass pointer-events-auto absolute left-1/2 top-3 z-30 flex w-[min(640px,calc(100vw-24px))] -translate-x-1/2 items-center justify-between gap-3 rounded-full px-4 py-3 sm:gap-6 sm:px-6">
           <img
             src={isDark ? "/pmt-logo-dark.png" : "/pmt-logo.png"}
             alt="Primăria Municipiului Timișoara"
-            className={`h-10 w-auto shrink-0 select-none object-contain ${isDark ? "" : "mix-blend-multiply"}`}
+            className={`h-8 w-auto shrink-0 select-none object-contain sm:h-10 ${isDark ? "" : "mix-blend-multiply"}`}
           />
-          <h1 className={`whitespace-nowrap text-[17px] font-bold leading-tight tracking-tight ${isDark ? "text-slate-100" : "text-[#0F172A]"}`}>
+          <h1 className={`min-w-0 truncate text-[15px] font-bold leading-tight tracking-tight sm:text-[17px] ${isDark ? "text-slate-100" : "text-[#0F172A]"}`}>
             {t.pillTitle}
           </h1>
           <div className="flex shrink-0 items-center gap-2">
@@ -407,21 +477,27 @@ export default function App() {
                 aria-haspopup="menu"
                 aria-expanded={menuOpen}
                 aria-label="Menu"
-                className={`grid h-9 w-9 place-items-center rounded-full shadow-sm transition duration-200 ${
+                className={`grid h-9 w-9 place-items-center rounded-full shadow-sm transition duration-200 active:scale-95 ${
                   isDark
                     ? `bg-slate-800 text-[#38BDF8] hover:bg-slate-700 ${menuOpen ? "ring-2 ring-[#38BDF8]" : "border border-slate-700"}`
                     : `bg-white text-[#005BBC] hover:bg-slate-50 ${menuOpen ? "ring-2 ring-[#005BBC]" : "border border-slate-200/80"}`
                 }`}
               >
-                <Menu size={18} strokeWidth={2.2} />
+                {/* the hamburger turns into a close icon while the menu is open */}
+                <span className="relative grid h-[18px] w-[18px] place-items-center" aria-hidden="true">
+                  <Menu size={18} strokeWidth={2.2}
+                    className={`absolute transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${menuOpen ? "rotate-90 scale-50 opacity-0" : "rotate-0 scale-100 opacity-100"}`} />
+                  <X size={18} strokeWidth={2.2}
+                    className={`absolute transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${menuOpen ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-50 opacity-0"}`} />
+                </span>
               </button>
 
-              {menuOpen && (
+              {menu.mounted && (
                 <div
                   role="menu"
-                  className={`absolute right-0 top-full z-30 mt-2 flex w-60 flex-col gap-1 rounded-xl border p-1.5 shadow-island animate-slideIn ${
-                    isDark ? "border-slate-700/90 bg-slate-900" : "border-slate-200/90 bg-white"
-                  }`}
+                  className={`absolute right-0 top-full z-30 mt-2 flex w-60 origin-top-right flex-col gap-1 rounded-xl border p-1.5 shadow-island ${
+                    menu.closing ? "pointer-events-none m-pop-out" : "m-pop-in"
+                  } ${isDark ? "border-slate-700/90 bg-slate-900" : "border-slate-200/90 bg-white"}`}
                 >
                   <button
                     type="button"
@@ -430,7 +506,7 @@ export default function App() {
                       setSidebarOpen((open) => !open);
                       setMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition active:scale-[0.98] ${
                       isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
                     } ${sidebarOpen ? (isDark ? "ring-1 ring-[#38BDF8]/45" : "ring-1 ring-[#005BBC]/35") : ""}`}
                   >
@@ -445,7 +521,7 @@ export default function App() {
                       setRecommendedOpen((open) => !open);
                       setMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition active:scale-[0.98] ${
                       isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
                     } ${recommendedOpen ? (isDark ? "ring-1 ring-[#10B981]/50" : "ring-1 ring-[#059669]/40") : ""}`}
                   >
@@ -459,7 +535,7 @@ export default function App() {
                       role="menuitem"
                       aria-expanded={themeMenuOpen}
                       onClick={() => setThemeMenuOpen((open) => !open)}
-                      className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                      className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition active:scale-[0.98] ${
                         isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
                       } ${themeMenuOpen ? (isDark ? "ring-1 ring-[#38BDF8]/45" : "ring-1 ring-[#005BBC]/35") : ""}`}
                     >
@@ -467,20 +543,20 @@ export default function App() {
                       <span className="truncate">{t.menuTheme}</span>
                     </button>
 
-                    {themeMenuOpen && (
+                    {themeMenu.mounted && (
                       // centred by a static flex wrapper: the slide-in animation sets `transform`,
                       // which used to cancel a -translate-y-1/2 and make the flyout jump when it appeared
-                      <div className="absolute inset-y-0 left-full z-40 ml-2 flex items-center">
+                      <div className={`absolute inset-y-0 left-full z-40 ml-2 flex items-center ${themeMenu.closing ? "pointer-events-none" : ""}`}>
                       <div
                         role="group"
                         aria-label={t.menuTheme}
-                        className={`flex items-center gap-1.5 rounded-xl border p-1.5 shadow-island animate-slideIn ${
+                        className={`flex items-center gap-1.5 rounded-xl border p-1.5 shadow-island ${themeMenu.closing ? "m-side-out" : "m-side-in"} ${
                           isDark ? "border-slate-700/90 bg-slate-900" : "border-slate-200/90 bg-white"
                         }`}
                       >
                         <button
                           type="button"
-                          onClick={() => setMapTheme("dark")}
+                          onClick={() => withViewTransition(() => setMapTheme("dark"))}
                           aria-label={t.themeDark}
                           title={t.themeDark}
                           aria-pressed={mapTheme === "dark"}
@@ -493,7 +569,7 @@ export default function App() {
 
                         <button
                           type="button"
-                          onClick={() => setMapTheme("colored")}
+                          onClick={() => withViewTransition(() => setMapTheme("colored"))}
                           aria-label={t.themeColored}
                           title={t.themeColored}
                           aria-pressed={mapTheme === "colored"}
@@ -510,7 +586,7 @@ export default function App() {
                           aria-label={t.theme3d}
                           title={t.theme3d}
                           aria-pressed={layers.buildings3d}
-                          className={`grid h-9 w-9 place-items-center rounded-lg transition hover:scale-105 ${
+                          className={`flex h-9 w-9 flex-col items-center justify-center gap-0.5 rounded-lg transition hover:scale-105 active:scale-95 ${
                             layers.buildings3d
                               ? isDark
                                 ? "bg-sky-950/80 text-[#38BDF8] ring-2 ring-[#38BDF8] shadow-sm"
@@ -520,7 +596,8 @@ export default function App() {
                                 : "bg-slate-50 text-slate-400 hover:text-[#005BBC]"
                           }`}
                         >
-                          <Box size={19} strokeWidth={2.2} />
+                          <Box size={15} strokeWidth={2.2} />
+                          <span className="text-[8.5px] font-bold leading-none">3D</span>
                         </button>
                       </div>
                       </div>
@@ -534,7 +611,7 @@ export default function App() {
                       setExplainer(true);
                       setMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition active:scale-[0.98] ${
                       isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
                     }`}
                   >
@@ -549,7 +626,7 @@ export default function App() {
                       setCountOpen(true);
                       setMenuOpen(false);
                     }}
-                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition ${
+                    className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[12.5px] font-semibold transition active:scale-[0.98] ${
                       isDark ? "bg-slate-900 text-slate-100 hover:bg-slate-800" : "bg-white text-[#0F172A] hover:bg-slate-50"
                     }`}
                   >
@@ -560,19 +637,22 @@ export default function App() {
               )}
             </div>
 
-            <div className={`flex rounded-full p-0.5 font-secondary text-[11px] ${isDark ? "bg-slate-800" : "bg-slate-100"}`} role="radiogroup" aria-label={t.language}>
+            <div ref={langThumb.ref} className={`relative flex rounded-full p-0.5 font-secondary text-[11px] ${isDark ? "bg-slate-800" : "bg-slate-100"}`} role="radiogroup" aria-label={t.language}>
+              <span aria-hidden="true" style={langThumb.style}
+                className={`absolute left-0 top-0 rounded-full shadow-sm transition-[transform,width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${isDark ? "bg-slate-700" : "bg-white"}`} />
               {(["ro", "en"] as const).map((l) => (
                 <button
                   key={l}
                   type="button"
                   role="radio"
+                  data-thumb-key={l}
                   aria-checked={lang === l}
-                  onClick={() => setLang(l)}
-                  className={`rounded-full px-2.5 py-1 font-semibold uppercase transition ${
+                  onClick={() => withViewTransition(() => setLang(l))}
+                  className={`relative rounded-full px-2.5 py-1 font-semibold uppercase transition-colors duration-300 ${
                     lang === l
                       ? isDark
-                        ? "bg-slate-700 text-[#38BDF8] shadow-sm"
-                        : "bg-white text-[#005BBC] shadow-sm"
+                        ? "text-[#38BDF8]"
+                        : "text-[#005BBC]"
                       : isDark
                         ? "text-slate-400 hover:text-slate-200"
                         : "text-slate-500 hover:text-slate-800"
@@ -588,7 +668,9 @@ export default function App() {
         {/* floating glass sidebar */}
         <aside
           aria-hidden={!sidebarOpen}
-          className={`glass absolute bottom-3 left-3 top-3 z-10 flex w-[410px] max-w-[calc(100vw-24px)] flex-col overflow-hidden rounded-2xl transition-[transform,opacity] duration-300 ease-out ${
+          className={`glass absolute bottom-3 left-3 z-20 flex w-[410px] max-w-[calc(100vw-24px)] flex-col overflow-hidden rounded-2xl transition-[transform,opacity,top] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            belowHeader ? "top-[88px]" : "top-3"
+          } ${
             sidebarOpen
               ? "pointer-events-auto translate-x-0 opacity-100"
               : "pointer-events-none -translate-x-[calc(100%+24px)] opacity-0"
@@ -596,7 +678,7 @@ export default function App() {
         >
           <header className="flex items-center gap-2 border-b border-slate-200/80 px-4 py-3">
             <div className="min-w-0 flex-1">
-              <h2 className="text-[15px] font-bold leading-tight tracking-tight">{t.appName}</h2>
+              <h2 className="text-[15px] font-bold leading-tight tracking-tight">{t.menuSearchPoints}</h2>
             </div>
             <button
               type="button"
@@ -611,7 +693,7 @@ export default function App() {
 
           <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
             {error && (
-              <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-[12.5px] text-red-800">
+              <div className="m-rise-in rounded-xl border border-red-200 bg-red-50 p-3 text-[12.5px] text-red-800">
                 {t.backendDown}
                 <p className="mt-1 font-secondary text-[11px]">{error}</p>
                 <button onClick={() => setReload((r) => r + 1)} className="mt-2 flex items-center gap-1 rounded bg-white px-2 py-1 text-[12px] shadow-sm">
@@ -619,14 +701,14 @@ export default function App() {
                 </button>
               </div>
             )}
-            {!data && !error && <p className="flex items-center gap-2 text-[13px] text-slate-500"><Loader2 size={15} className="animate-spin" /> {t.loading}</p>}
+            {!data && !error && <p className="m-fade-in flex items-center gap-2 text-[13px] text-slate-500"><Loader2 size={15} className="animate-spin" /> {t.loading}</p>}
             {data && (
               <>
                 <DataStatusCard data={data} profile={profile} demand={demandSummary} />
                 <StreetSearch data={data} street={street} heading={heading} onChange={select} />
                 {scenario && (
-                  <section className="rounded-xl border border-fuchsia-300 bg-fuchsia-50 p-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-fuchsia-700">{t.scenarioTitle}</p>
+                  <section key={scenario.linkIds.join(",")} className="m-rise-in rounded-xl border border-fuchsia-300 bg-fuchsia-50 p-3">
+                    <p className="text-[11.5px] font-semibold text-fuchsia-700">{t.scenarioTitle}</p>
                     <p className="mt-0.5 text-[12.5px] font-semibold text-slate-900">{t.scenarioClosed}</p>
                     <p className="text-[11.5px] text-slate-600">{scenario.street}: {scenario.fromName} → {scenario.toName}</p>
                     <button type="button" onClick={() => setScenario(null)}
@@ -636,23 +718,27 @@ export default function App() {
                   </section>
                 )}
                 {selectedIds.length > 0 && (
-                  <LaneMixer lanes={lanes} original={originalLanes} existingBusLane={existingBusLane} segments={selectedIds.length}
+                  // keyed by street so picking another street replays the lanes' entrance
+                  <LaneMixer key={`${street}|${heading}`} lanes={lanes} original={originalLanes} existingBusLane={existingBusLane} segments={selectedIds.length}
                     lanesSource={lanesSource} slowness={slowness} busy={busy}
                     onChange={(l) => { setScenario(null); setLanes(l); }} />
                 )}
-                <PinsPanel times={pinTimes} onRemove={(p) => setPins((ps) => ps.filter((x) => pinKey(x) !== pinKey(p)))} />
-                <ResultsPanel result={result} changes={changes} profile={profile} onHoverBus={setHoverBus}
-                  onHighlight={setHovered} onFocus={(h) => { setPinned(h); setFocusKey((k) => k + 1); }} />
+                <PinsPanel times={pinTimes} onTogglePin={togglePinOnMap}
+                  onRemove={(p) => setPins((ps) => ps.filter((x) => pinKey(x) !== pinKey(p)))} />
+                <ResultsPanel result={result} changes={changes} profile={profile} busy={busy} onHoverBus={setHoverBus}
+                  onHighlight={setHovered} onFocus={(h) => { setPinned(h); focusCamera([...h.coordinates, ...(h.ghost ?? [])], "fit"); }} />
                 <ModelCheckCard data={data} calibration={calibration} />
               </>
             )}
           </div>
         </aside>
 
-        {/* top-right Recommended Points floating panel (padding leaves room for the card's drop shadow inside the scroll area) */}
+        {/* right "Optimized ways" panel: the same glass panel as the street panel on the left (header + scrolling body) */}
         <aside
           aria-hidden={!recommendedOpen}
-          className={`absolute right-0 top-0 z-10 w-[384px] max-w-[100vw] max-h-[calc(100vh-36px)] overflow-y-auto p-3 pb-8 transition-[transform,opacity] duration-300 ease-out ${
+          className={`glass absolute bottom-3 right-3 z-20 flex w-[372px] max-w-[calc(100vw-24px)] flex-col overflow-hidden rounded-2xl transition-[transform,opacity,top] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            belowHeader ? "top-[88px]" : "top-3"
+          } ${
             recommendedOpen
               ? "pointer-events-auto translate-x-0 opacity-100"
               : "pointer-events-none translate-x-[calc(100%+24px)] opacity-0"
@@ -661,7 +747,6 @@ export default function App() {
           <ScanCard
             rows={scanRows}
             loading={scanLoading}
-            demandSource={demandSource}
             stats={scanStats}
             demandScale={demandScale}
             onPick={pickScan}
@@ -669,27 +754,29 @@ export default function App() {
           />
         </aside>
 
+        {/* free part of the map (between the open side panels, under the header). Its bottom row holds the layers panel and
+            the time bar: side by side when there is room, stacked (time bar at the very bottom) when there is not.
+            row-reverse + wrap-reverse makes the time bar the first item of the bottom line; mr-auto keeps the layers panel left. */}
         <div
-          className={`pointer-events-none absolute bottom-3 z-10 hidden transition-[left] duration-300 ease-out md:block ${
-            sidebarOpen ? "left-[436px]" : "left-3"
+          className={`pointer-events-none absolute bottom-3 top-[88px] z-10 flex flex-col justify-end transition-[left,right] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            panelCoversMap ? "hidden" : ""
           }`}
+          style={{ left: freeLeft, right: freeRight }}
         >
-          <LayersPill layers={layers} onChange={setLayers} showDelta={showDelta} onShowDelta={setShowDelta} hasResult={!!ok} />
-        </div>
-
-        {/* bottom bar: time of day + demand level, centred in the free space right of the layers pill */}
-        {data && data.profiles.length > 0 && (
-          <div
-            className={`pointer-events-none absolute bottom-3 right-14 z-20 flex justify-center transition-[left] duration-300 ease-out ${
-              sidebarOpen ? "left-3 md:left-[712px]" : "left-3 md:left-[288px]"
-            }`}
-          >
-            <ProfileBar profiles={data.profiles} profile={profile} demandSource={demandSource} demandScale={demandInput}
-              demandVehH={demandVehH} onChange={setProfile} onDemandScale={setDemandInput} />
+          {/* (with wrap-reverse the cross axis is flipped too, so items-start is what lines up the bottoms) */}
+          <div className="flex flex-row-reverse flex-wrap-reverse items-start gap-2">
+            {data && data.profiles.length > 0 && (
+              // leaves room on the right for the map's zoom buttons
+              <div className="flex min-w-0 flex-[1_1_380px] justify-center pr-11">
+                <ProfileBar profiles={data.profiles} profile={profile} demandSource={demandSource} demandScale={demandInput}
+                  demandVehH={demandVehH} onChange={setProfile} onDemandScale={setDemandInput} />
+              </div>
+            )}
+            <div className="mr-auto max-w-full">
+              <LayersPill layers={layers} onChange={setLayers} showDelta={showDelta} onShowDelta={setShowDelta} hasResult={!!ok} />
+            </div>
           </div>
-        )}
-
-        <BraessToast changePct={toastPct} estimated={demandSource === "estimated"} onClose={() => setToastPct(null)} />
+        </div>
       </div>
       <CitizenBraessExplainerModal open={explainer} onClose={() => setExplainer(false)} />
       {data && (

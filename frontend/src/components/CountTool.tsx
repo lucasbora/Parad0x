@@ -3,6 +3,7 @@ import { Download, Minus, Play, Plus, Square, Trash2, X } from "lucide-react";
 import type { BaselineLink, CorridorResponse, Profile } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
 import { fmt } from "../api";
+import { usePresence } from "../motion";
 
 /** Columns exactly as backend/app/corridor/inputs.py SCHEMAS expects them. */
 const SCHEMAS = {
@@ -52,6 +53,7 @@ interface Props {
 /** Field tally counter: count cars for one interval on a phone and get rows in the exact CSV format. */
 export default function CountTool({ open, data, profile, baseline, onClose }: Props) {
   const { t, lang } = useI18n();
+  const presence = usePresence(open, 180);
   const [kind, setKind] = useState<Kind>("gate");
   const [{ rows, observer }, setStore] = useState(load);
   const [gateId, setGateId] = useState("");
@@ -166,7 +168,7 @@ export default function CountTool({ open, data, profile, baseline, onClose }: Pr
     URL.revokeObjectURL(a.href);
   };
 
-  if (!open) return null;
+  if (!presence.mounted) return null;
   const label = (id: string) => {
     const p = linkFeat.get(id);
     return p ? `${p.street} ${t.heading[p.heading] ?? p.heading}` : id;
@@ -175,8 +177,8 @@ export default function CountTool({ open, data, profile, baseline, onClose }: Pr
   const files = (Object.keys(SCHEMAS) as CountFile[]).filter((f) => rows.some((r) => r.file === f));
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-slate-900/40 p-3 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="count-title" onClick={onClose}>
-      <div className="max-h-[94vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-4 shadow-2xl animate-slideIn" onClick={(e) => e.stopPropagation()}>
+    <div className={`fixed inset-0 z-50 grid place-items-center bg-slate-900/40 p-3 backdrop-blur-sm ${presence.closing ? "pointer-events-none m-fade-out" : "m-fade-in"}`} role="dialog" aria-modal="true" aria-labelledby="count-title" onClick={onClose}>
+      <div className={`max-h-[94vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-4 shadow-2xl ${presence.closing ? "m-dialog-out" : "m-dialog-in"}`} onClick={(e) => e.stopPropagation()}>
         <div className="flex items-start gap-3">
           <div className="flex-1">
             <h2 id="count-title" className="text-[17px] font-bold text-slate-900">{t.countTitle}</h2>

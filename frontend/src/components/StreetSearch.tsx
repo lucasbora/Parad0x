@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { MapPin, Search, X } from "lucide-react";
 import type { CorridorResponse } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
+import { usePresence } from "../motion";
 
 interface Props {
   data: CorridorResponse;
@@ -27,6 +28,7 @@ export default function StreetSearch({ data, street, heading, onChange }: Props)
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const box = useRef<HTMLDivElement | null>(null);
+  const list = usePresence(open, 140);
 
   useEffect(() => setQ(street ?? ""), [street]);
   useEffect(() => {
@@ -95,13 +97,15 @@ export default function StreetSearch({ data, street, heading, onChange }: Props)
               onChange(null, null);
             }}
             aria-label={t.close}
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-0.5 text-slate-400 hover:text-slate-700"
+            className="m-fade-in absolute right-2 top-1/2 -translate-y-1/2 rounded p-0.5 text-slate-400 transition-colors hover:text-slate-700"
           >
             <X size={14} />
           </button>
         )}
-        {open && (
-          <ul id="street-list" role="listbox" className="absolute z-30 mt-1 max-h-72 w-full overflow-auto rounded-lg border border-slate-200 bg-white py-1 shadow-lg">
+        {list.mounted && (
+          <ul id="street-list" role="listbox" className={`absolute z-30 mt-1 max-h-72 w-full origin-top overflow-auto rounded-lg border border-slate-200 bg-white py-1 shadow-lg ${
+            list.closing ? "pointer-events-none m-pop-out" : "m-pop-in"
+          }`}>
             {matches.length === 0 && <li className="px-3 py-2 text-[12px] text-slate-500">{t.noMatches}</li>}
             {matches.map((s, i) => (
               <li
@@ -113,7 +117,7 @@ export default function StreetSearch({ data, street, heading, onChange }: Props)
                   pick(s.street);
                 }}
                 onMouseEnter={() => setActive(i)}
-                className={`flex cursor-pointer items-center gap-2 px-3 py-1.5 text-[12.5px] ${i === active ? "bg-blue-50" : ""}`}
+                className={`flex cursor-pointer items-center gap-2 px-3 py-1.5 text-[12.5px] transition-colors duration-150 ${i === active ? "bg-blue-50" : ""}`}
               >
                 <MapPin size={13} className={data.corridor.mainStreets.includes(s.street) ? "text-[#005BBC]" : "text-slate-400"} />
                 <span className="flex-1 truncate">{s.street}</span>
@@ -126,7 +130,7 @@ export default function StreetSearch({ data, street, heading, onChange }: Props)
       <p className="mt-1 text-[11px] text-slate-500">{t.orClickMap}</p>
 
       {choice && (
-        <div className="mt-2">
+        <div key={choice.street} className="m-rise-in mt-2">
           <p className="text-[12px] font-medium text-slate-700">{t.direction}</p>
           <div className="mt-1 flex flex-wrap gap-1.5" role="radiogroup">
             {choice.directions.map((d) => (
@@ -135,7 +139,7 @@ export default function StreetSearch({ data, street, heading, onChange }: Props)
                 role="radio"
                 aria-checked={d.heading === heading}
                 onClick={() => onChange(choice.street, d.heading)}
-                className={`rounded-full border px-3 py-1 text-[12px] font-medium ${
+                className={`rounded-full border px-3 py-1 text-[12px] font-medium transition-[color,background-color,border-color,transform] duration-200 active:scale-95 ${
                   d.heading === heading ? "border-[#005BBC] bg-[#005BBC] text-white" : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
                 }`}
               >

@@ -2,6 +2,7 @@ import { BadgeCheck, Clock, FlaskConical, Gauge } from "lucide-react";
 import type { DemandSource, Profile, ProfileMeta } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
 import { fmt } from "../api";
+import { useSlidingThumb } from "../motion";
 
 interface Props {
   profiles: ProfileMeta[];
@@ -18,11 +19,15 @@ export default function ProfileBar({ profiles, profile, demandSource, demandScal
   const { t, lang } = useI18n();
   const calibrated = demandSource === "calibrated";
   const pct = Math.round(demandScale * 100);
+  const thumb = useSlidingThumb(profile);
   return (
     <div className="glass pointer-events-auto flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-3xl px-2 py-1.5">
-      <div className="flex items-center gap-1">
+      <div className="flex min-w-0 max-w-full items-center gap-1">
         <Clock size={14} className="ml-1 shrink-0 text-[#005BBC]" aria-hidden="true" />
-        <div className="flex gap-0.5" role="radiogroup" aria-label={t.profileLabel}>
+        <div ref={thumb.ref} className="relative flex flex-wrap justify-center gap-0.5" role="radiogroup" aria-label={t.profileLabel}>
+          {/* the blue pill slides to the chosen time of day */}
+          <span aria-hidden="true" style={thumb.style}
+            className="absolute left-0 top-0 rounded-full bg-[#005BBC] shadow-sm transition-[transform,width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]" />
           {profiles.map((p) => {
             const on = p.id === profile;
             return (
@@ -31,10 +36,11 @@ export default function ProfileBar({ profiles, profile, demandSource, demandScal
                 type="button"
                 role="radio"
                 aria-checked={on}
+                data-thumb-key={p.id}
                 onClick={() => onChange(p.id)}
                 title={`${lang === "ro" ? p.labelRo : p.labelEn} · ${p.start}–${p.end}`}
-                className={`whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold transition ${
-                  on ? "bg-[#005BBC] text-white shadow-sm" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                className={`relative whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold transition-[color,background-color,transform] duration-300 active:scale-95 ${
+                  on ? "text-white" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                 }`}
               >
                 {lang === "ro" ? p.labelRo : p.labelEn}
@@ -60,7 +66,7 @@ export default function ProfileBar({ profiles, profile, demandSource, demandScal
           aria-valuetext={`${pct}%`}
           className="h-1.5 w-24 cursor-pointer accent-[#005BBC]"
         />
-        <span className={`w-10 font-secondary text-[11px] font-semibold ${pct === 100 ? "text-slate-600" : pct > 100 ? "text-orange-700" : "text-emerald-700"}`}>
+        <span className={`w-10 font-secondary text-[11px] font-semibold transition-colors duration-300 ${pct === 100 ? "text-slate-600" : pct > 100 ? "text-orange-700" : "text-emerald-700"}`}>
           {pct}%
         </span>
         {demandVehH !== null && (
@@ -70,8 +76,9 @@ export default function ProfileBar({ profiles, profile, demandSource, demandScal
 
       {demandSource && (
         <span
+          key={demandSource}
           title={calibrated ? t.demandCalibratedHint : t.demandEstimatedHint}
-          className={`flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 font-secondary text-[10.5px] font-semibold ${
+          className={`m-fade-in flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 font-secondary text-[10.5px] font-semibold ${
             calibrated ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-amber-300 bg-amber-50 text-amber-800"
           }`}
         >
