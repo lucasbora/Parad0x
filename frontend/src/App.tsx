@@ -372,7 +372,7 @@ export default function App() {
         )}
 
         {/* top-center pill header */}
-        <header className="glass pointer-events-auto absolute left-1/2 top-3 z-20 flex w-[min(640px,calc(100vw-24px))] -translate-x-1/2 items-center justify-between gap-6 rounded-full px-6 py-3">
+        <header className="glass pointer-events-auto absolute left-1/2 top-[60px] z-20 flex w-[min(640px,calc(100vw-24px))] -translate-x-1/2 items-center justify-between gap-6 rounded-full px-6 py-3">
           <img
             src={isDark ? "/pmt-logo-dark.png" : "/pmt-logo.png"}
             alt="Primăria Municipiului Timișoara"
