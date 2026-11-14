@@ -4,7 +4,7 @@ import type { LaneUse } from "../types/corridor";
 export type Lang = "ro" | "en";
 
 const ro = {
-  appName: "TM-BraessGreen",
+  appName: "Timișoara Braess Paradox",
   subtitle: "Simulator pe un coridor real",
   peak: "vârf dimineață",
   explain: "Ce este paradoxul Braess?",
@@ -57,7 +57,7 @@ const ro = {
   noMatches: "Nicio stradă cu acest nume în zonă",
   lanesTitle: "Benzile pe sensul ales",
   laneN: "Banda",
-  laneKinds: { car: "🚗 Mașini", bus: "🚌 Autobuz", bike: "🚲 Bicicletă", sidewalk: "🌳 Trotuar" } as Record<string, string>,
+  laneKinds: { car: "Mașini", bus: "Autobuz", bike: "Bicicletă", sidewalk: "Trotuar" } as Record<string, string>,
   existingBus: "bandă bus existentă",
   resetLanes: "Resetează",
   recalculating: "Se recalculează…",
@@ -152,7 +152,7 @@ const ro = {
 export type Dict = typeof ro;
 
 const en: Dict = {
-  appName: "TM-BraessGreen",
+  appName: "Timișoara Braess Paradox",
   subtitle: "Simulator on a real corridor",
   peak: "morning peak",
   explain: "What is Braess's paradox?",
@@ -205,7 +205,7 @@ const en: Dict = {
   noMatches: "No street with that name in the area",
   lanesTitle: "Lanes in the chosen direction",
   laneN: "Lane",
-  laneKinds: { car: "🚗 Cars", bus: "🚌 Bus", bike: "🚲 Bike", sidewalk: "🌳 Sidewalk" },
+  laneKinds: { car: "Cars", bus: "Bus", bike: "Bike", sidewalk: "Sidewalk" },
   existingBus: "existing bus lane",
   resetLanes: "Reset",
   recalculating: "Recalculating…",

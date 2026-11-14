@@ -272,15 +272,8 @@ export default function App() {
         {/* floating glass sidebar */}
         <aside className="glass pointer-events-auto absolute bottom-3 left-3 top-3 z-10 flex w-[410px] max-w-[calc(100vw-24px)] flex-col overflow-hidden rounded-2xl animate-slideIn">
           <header className="flex items-center gap-2.5 border-b border-slate-200/80 px-4 py-3">
-            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#005BBC] text-white shadow-sm" aria-hidden>
-              <svg viewBox="0 0 32 32" className="h-6 w-6">
-                <path d="M6 24 L16 8 L26 24 Z" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinejoin="round" />
-                <path d="M11 16 L21 16" stroke="#34d399" strokeWidth="2.6" strokeLinecap="round" strokeDasharray="2 3" />
-              </svg>
-            </div>
             <div className="min-w-0 flex-1">
               <h1 className="text-[15px] font-bold leading-tight tracking-tight">{t.appName}</h1>
-              <p className="truncate text-[11.5px] text-slate-500">{data ? `${data.corridor.name} · ${t.peak} ${data.corridor.peak}` : t.subtitle}</p>
             </div>
             <button onClick={() => setExplainer(true)} className="grid h-8 w-8 place-items-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-[#005BBC]" title={t.explain} aria-label={t.explain}>
               <HelpCircle size={17} />

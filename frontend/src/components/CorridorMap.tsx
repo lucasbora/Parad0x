@@ -339,7 +339,7 @@ export default function CorridorMap(props: Props) {
         const worse = r && now > was + 3;
         // the base red-light wait (~14 s at a 90 s cycle) is normal; only queueing on top of it glows
         const state = now >= 35 ? "saturated" : now >= 20 ? "busy" : "free";
-        entry.el.className = `queue-pillar queue-${relieved ? "resolved" : state}${worse ? " queue-worse" : ""}`;
+        entry.el.className = `maplibregl-marker queue-pillar queue-${relieved ? "resolved" : state}${worse ? " queue-worse" : ""}`;
         entry.el.style.setProperty("--qsize", `${Math.min(44, 16 + now / 2)}px`);
         entry.el.title = `${p.name}\n${fmt(was, 0)} s → ${fmt(now, 0)} s`;
         entry.el.innerHTML = `<span class="queue-ring"></span><span class="queue-core">${Math.round(now)}<small>s</small></span>`;
@@ -373,7 +373,7 @@ export default function CorridorMap(props: Props) {
       el.innerHTML =
         `<div class="tmbg-pin-card ${changed ? (faster ? "tmbg-pin-faster" : "tmbg-pin-slower") : ""}">` +
         `<div class="tmbg-pin-title">${p.label}</div>` +
-        `<div class="tmbg-pin-time">⏱ ${p.beforeSec === null ? "—" : fmt(p.beforeSec / 60, 2)}` +
+        `<div class="tmbg-pin-time">${p.beforeSec === null ? "—" : fmt(p.beforeSec / 60, 2)}` +
         (changed ? ` → <b>${fmt((p.afterSec as number) / 60, 2)}</b>` : "") + ` min</div></div><div class="tmbg-pin-stem"></div>`;
       return new maplibregl.Marker({ element: el, anchor: "bottom" }).setLngLat(p.at).addTo(map);
     });
