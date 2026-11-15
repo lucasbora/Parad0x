@@ -1,5 +1,5 @@
-import { Leaf, Loader2, Sparkles, X } from "lucide-react";
-import type { DemandSource, ScanRow } from "../types/corridor";
+import { Bus, Layers3, Leaf, Loader2, Sparkles, X } from "lucide-react";
+import type { DemandSource, PackageResponse, ScanRow } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
 import { fmt, signed } from "../api";
 
@@ -11,12 +11,14 @@ interface Props {
   demandScale: number;
   onPick: (r: ScanRow) => void;
   onClose?: () => void;
+  pkg?: PackageResponse | null;
+  onPickPackage?: (r: ScanRow) => void;
 }
 
 const rowKey = (r: ScanRow) => `${r.kind}|${r.linkIds.join(",")}`;
 
 /** "Where is a green lane worth it?" — every busy segment closed (both ways) + −1 lane per street, ranked. */
-export default function ScanCard({ rows, loading, demandSource, stats, demandScale, onPick, onClose }: Props) {
+export default function ScanCard({ rows, loading, demandSource, stats, demandScale, onPick, onClose, pkg, onPickPackage }: Props) {
   const { t } = useI18n();
   const braess = (rows ?? []).filter((r) => r.braess);
   const cheap = (rows ?? []).filter((r) => r.lowRegret && !r.braess).slice(0, 6);
@@ -48,6 +50,7 @@ export default function ScanCard({ rows, loading, demandSource, stats, demandSca
       {loading && <p className="mt-2 flex items-center gap-1.5 text-[11.5px] text-slate-500"><Loader2 size={12} className="animate-spin" /> {t.scanRunning}</p>}
       {rows && !loading && (
         <div className="mt-2 space-y-2">
+          {pkg && onPickPackage && <PackageBlock pkg={pkg} onPick={onPickPackage} />}
           <div>
             <p className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-fuchsia-700"><Sparkles size={11} /> {t.scanBraess}</p>
             {braess.length === 0 ? (
@@ -97,3 +100,60 @@ function Row({ r, onPick, tone }: { r: ScanRow; onPick: (r: ScanRow) => void; to
     </button>
   );
 }
+
+function packageRow(pkg: PackageResponse, withBus: boolean): ScanRow | null {
+  const f = pkg.filters;
+  const b = pkg.withBus;
+  if (!f || (withBus && !b)) return null;
+  const streets = f.steps.map((s) => s.street).join(" + ");
+  return {
+    street: streets, heading: "", linkIds: f.linkIds, mode: "closure", kind: "package", scope: "both",
+    fromName: withBus && b ? `${b.street} (${b.heading})` : "", toName: "",
+    changePct: withBus && b ? b.changePct : f.changePct, vehMinDelta: 0, vehHSaved: withBus && b ? b.vehHSaved : f.vehHSaved,
+    braess: true, routeBraess: false, bestRouteGainPct: 0, lowRegret: false, stage: "verified", baseFlow: 0,
+    at: [0, 0], extraChanges: withBus && b ? b.laneChanges : [],
+  };
+}
+
+function PackageBlock({ pkg, onPick }: { pkg: PackageResponse; onPick: (r: ScanRow) => void }) {
+  const { t } = useI18n();
+  const f = pkg.filters;
+  const b = pkg.withBus;
+  const rowF = packageRow(pkg, false);
+  const rowB = packageRow(pkg, true);
+  return (
+    <div>
+      <p className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-[#005BBC]"><Layers3 size={11} /> {t.pkgTitle}</p>
+      {!f && <p className="text-[11.5px] text-slate-500">{t.pkgNone}</p>}
+      {f && rowF && (
+        <button onClick={() => onPick(rowF)} className="mt-1 flex w-full items-center gap-2 rounded-lg border border-fuchsia-200 bg-white/80 px-2 py-1.5 text-left transition hover:bg-white hover:shadow-sm">
+          <span className="min-w-0 flex-1">
+            <span className="block text-[10.5px] text-slate-500">{t.pkgFilters}</span>
+            <span className="block text-[12px] leading-snug text-slate-800">{rowF.street}</span>
+          </span>
+          <span className="text-right">
+            <span className="block font-mono text-[11.5px] text-fuchsia-700">{signed(f.changePct, 2)}%</span>
+            <span className="block font-mono text-[10px] text-slate-500">{fmt(f.vehHSaved, 1)} veh·h</span>
+          </span>
+          <span className="text-[10.5px] font-semibold text-[#005BBC]">{t.scanApply} →</span>
+        </button>
+      )}
+      {b && rowB && (
+        <button onClick={() => onPick(rowB)} className="mt-1 flex w-full items-center gap-2 rounded-lg border border-fuchsia-200 bg-white/80 px-2 py-1.5 text-left transition hover:bg-white hover:shadow-sm">
+          <span className="min-w-0 flex-1">
+            <span className="block text-[10.5px] text-slate-500">{t.pkgWithBus}</span>
+            <span className="flex items-start gap-1 text-[12px] leading-snug text-slate-800"><Bus size={12} className="mt-0.5 shrink-0 text-red-700" /> <span>{t.pkgLaneBus} {b.street} ({t.heading[b.heading] ?? b.heading})</span></span>
+            <span className="block truncate text-[10.5px] text-slate-500">{b.busLines.length} {t.pkgLines}: {b.busLines.join(", ")}</span>
+          </span>
+          <span className="text-right">
+            <span className="block font-mono text-[11.5px] text-fuchsia-700">{signed(b.changePct, 2)}%</span>
+            <span className="block font-mono text-[10px] text-slate-500">{fmt(b.vehHSaved, 1)} veh·h</span>
+          </span>
+          <span className="text-[10.5px] font-semibold text-[#005BBC]">{t.scanApply} →</span>
+        </button>
+      )}
+      <p className="mt-0.5 text-[10px] leading-snug text-slate-400">{t.pkgRule}</p>
+    </div>
+  );
+}
+

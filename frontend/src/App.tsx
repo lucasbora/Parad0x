@@ -2,24 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Box, HelpCircle, Leaf, Loader2, Menu, Palette, RefreshCw, Search, Undo2, X } from "lucide-react";
 import { api, signed } from "./api";
 import { I18nContext, translations, type Lang } from "./i18n/translations";
-import type {
-  BaselineLink,
-  BusResult,
-  CalibrationResponse,
-  Change,
-  CorridorResponse,
-  DemandSource,
-  DemandSummary,
-  Highlight,
-  LaneKind,
-  LaneUse,
-  LngLat,
-  MapLayers,
-  Pin,
-  Profile,
-  ScanRow,
-  SimulateResponse,
-} from "./types/corridor";
+import type { BaselineLink, BusResult, CalibrationResponse, Change, CorridorResponse, DemandSource, DemandSummary, Highlight, LaneKind, LaneUse, LngLat, MapLayers, PackageResponse, Pin, Profile, ScanRow, SimulateResponse } from "./types/corridor";
 import CorridorMap, { type MapPinView, type MapTheme } from "./components/CorridorMap";
 import LayersPill from "./components/LayersPill";
 import DataStatusCard from "./components/DataStatusCard";
@@ -108,6 +91,8 @@ export default function App() {
   const [scanStats, setScanStats] = useState<{ tested: number; seconds: number } | null>(null);
   /** A segment from the Braess search closed in BOTH directions (not expressible as lanes of one direction). */
   const [scenario, setScenario] = useState<ScanRow | null>(null);
+  const [pkg, setPkg] = useState<PackageResponse | null>(null);
+  const [evaporation, setEvaporation] = useState(0);
 
   const [street, setStreet] = useState<string | null>(null);
   const [heading, setHeading] = useState<string | null>(null);
@@ -185,10 +170,13 @@ export default function App() {
     setScanStats(null);
     setCalibration(null);
     setScanLoading(true);
+    setPkg(null);
     api.scan(profile).then((s) => {
       if (!live) return;
       setScanRows(s.status === "ok" ? s.rows : null);
       setScanStats(s.status === "ok" ? { tested: s.tested.removal + s.tested.lane, seconds: s.seconds } : null);
+      // the package reuses the cached search, so ask only after it is done
+      if (s.status === "ok") api.package(profile).then((p) => live && setPkg(p)).catch(() => undefined);
     }).catch(() => undefined)
       .finally(() => live && setScanLoading(false));
     api.calibration(profile).then((c) => live && setCalibration(c)).catch(() => undefined);
@@ -262,11 +250,22 @@ export default function App() {
     }
   }, [select, street, heading, originalLanes, linkProps]);
 
-  const focusIds = scenario ? scenario.linkIds : selectedIds;
+  // a package closes several segments (and may take a lane for buses); no single street is selected
+  const pickPackage = useCallback((r: ScanRow) => {
+    setScenario(r);
+    setSidebarOpen(true);
+    const coords = r.linkIds.map((id) => linkProps.get(id)?.geometry.coordinates ?? []).sort((a, b) => b.length - a.length)[0];
+    if (coords && coords.length > 1) {
+      setPinned({ coordinates: coords, color: "#c026d3", label: r.street, time: `${signed(r.changePct, 2)}%` });
+      setFocusKey((k) => k + 1);
+    }
+  }, [linkProps]);
+
+  const focusIds = scenario ? [...scenario.linkIds, ...(scenario.extraChanges ?? []).map((c) => c.linkId)] : selectedIds;
 
   // ------------------------------------------------------------ lanes → changes → live simulation
   const changes: Change[] = useMemo(() => {
-    if (scenario) return scenario.linkIds.map((id) => ({ linkId: id, carLanesAfter: 0, use: "closed" as LaneUse }));
+    if (scenario) return [...scenario.linkIds.map((id) => ({ linkId: id, carLanesAfter: 0, use: "closed" as LaneUse })), ...(scenario.extraChanges ?? [])];
     const carAfter = lanes.filter((l) => l === "car").length;
     const removed = maxLanes - carAfter;
     if (removed <= 0) return [];
@@ -294,7 +293,7 @@ export default function App() {
     ctrl.current = c;
     setBusy(true);
     const id = window.setTimeout(() => {
-      api.simulate(changes, profile, demandScale, c.signal)
+      api.simulate(changes, profile, demandScale, c.signal, evaporation)
         .then((r) => {
           setResult(r);
           if (r.status === "ok" && r.braess.detected) setToastPct(r.braess.totalChangePct);
@@ -311,7 +310,7 @@ export default function App() {
       c.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changesKey, profile, demandScale]);
+  }, [changesKey, profile, demandScale, evaporation]);
 
   const ok = result && result.status === "ok" ? result : null;
   useEffect(() => {
@@ -606,8 +605,12 @@ export default function App() {
                 {scenario && (
                   <section className="rounded-xl border border-fuchsia-300 bg-fuchsia-50 p-3">
                     <p className="text-[11px] font-semibold uppercase tracking-wide text-fuchsia-700">{t.scenarioTitle}</p>
-                    <p className="mt-0.5 text-[12.5px] font-semibold text-slate-900">{t.scenarioClosed}</p>
-                    <p className="text-[11.5px] text-slate-600">{scenario.street}: {scenario.fromName} → {scenario.toName}</p>
+                    <p className="mt-0.5 text-[12.5px] font-semibold text-slate-900">{scenario.kind === "package" ? t.scenarioPackage : t.scenarioClosed}</p>
+                    {scenario.kind === "package" ? (
+                      <p className="text-[11.5px] text-slate-600">{scenario.street}{scenario.fromName && <> + {t.pkgLaneBus} {scenario.fromName}</>}</p>
+                    ) : (
+                      <p className="text-[11.5px] text-slate-600">{scenario.street}: {scenario.fromName} → {scenario.toName}</p>
+                    )}
                     <button type="button" onClick={() => setScenario(null)}
                       className="mt-1.5 flex items-center gap-1 rounded-md bg-white px-2 py-1 text-[11.5px] font-semibold text-[#005BBC] shadow-sm hover:bg-slate-50">
                       <Undo2 size={12} /> {t.scenarioUndo}
@@ -620,7 +623,7 @@ export default function App() {
                     onChange={(l) => { setScenario(null); setLanes(l); }} />
                 )}
                 <PinsPanel times={pinTimes} onRemove={(p) => setPins((ps) => ps.filter((x) => pinKey(x) !== pinKey(p)))} />
-                <ResultsPanel result={result} changes={changes} profile={profile} onHoverBus={setHoverBus}
+                <ResultsPanel result={result} changes={changes} profile={profile} tripCosts={data?.tripCosts} profiles={data.profiles} evaporation={evaporation} onEvaporation={setEvaporation} evapOptions={data.evaporation} onHoverBus={setHoverBus}
                   onHighlight={setHovered} onFocus={(h) => { setPinned(h); setFocusKey((k) => k + 1); }} />
                 <ModelCheckCard data={data} calibration={calibration} />
               </>
@@ -645,6 +648,8 @@ export default function App() {
             demandScale={demandScale}
             onPick={pickScan}
             onClose={() => setRecommendedOpen(false)}
+            pkg={pkg}
+            onPickPackage={pickPackage}
           />
         </aside>
 

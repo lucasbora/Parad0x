@@ -6,6 +6,7 @@ them (calibration). Change a number here and the whole model follows.
 """
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -123,6 +124,32 @@ LANDUSE = {
     "zone_cell_m": 150.0,
     "max_zones": 32,
 }
+
+# Citizen survey (backend/data/survey/*.csv): replaces car share and people per car once it has
+# enough answers (survey.MIN_RESPONSES). Written into LANDUSE so cached Braess scans, whose
+# signature hashes LANDUSE, are invalidated automatically when the survey changes.
+from app.corridor import survey as _survey  # noqa: E402
+
+SURVEY = _survey.load()
+LANDUSE["car_share_default"] = LANDUSE["car_share"]
+LANDUSE["car_occupancy_default"] = LANDUSE["car_occupancy"]
+LANDUSE["car_share_source"] = "PMUD Timișoara (unverified)"
+LANDUSE["car_occupancy_source"] = "assumption"
+# Rule: the survey REPLACES the PMUD figures only when it is large enough to be trusted. The current
+# export (31 answers, convenience sample) is reported but not used: its 95 % range for car share
+# (26–59 %) contains the PMUD 44 %, so it does not contradict it. TMBG_SURVEY_DEMAND=1 forces it in.
+SURVEY_REPLACES_DEFAULTS = os.getenv("TMBG_SURVEY_DEMAND", "0") == "1" or bool(
+    SURVEY and SURVEY["responses"] >= 100)
+if SURVEY_REPLACES_DEFAULTS:
+    for _k, _v in _survey.overrides(SURVEY).items():
+        LANDUSE[_k] = _v
+        LANDUSE[f"{_k}_source"] = f"citizen survey (n={SURVEY['responses']})"
+
+# Traffic evaporation (what-if, off by default): when road capacity is taken away, part of the traffic
+# that used it does not reappear elsewhere (people change mode, time or destination).
+# Cairns, Atkins & Goodwin (2002) "Disappearing traffic? The story so far", ~70 case studies: median ≈ 11 %.
+EVAPORATION = {"literature_median": 0.11, "cautious": 0.05, "max": 0.30,
+               "source": "Cairns, Atkins & Goodwin (2002), Disappearing traffic? — median of ~70 cases"}
 
 # Destination weights per OSM feature, grouped into activity categories (inspired by L. Zhao's
 # land-use demand; our own values). Building weights are per 100 m² of floor area.

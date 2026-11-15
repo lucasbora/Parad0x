@@ -130,6 +130,20 @@ export interface LandUseSummary {
   activityByCategory: Record<string, number>;
   carShare: number;
   carShareVerified: boolean;
+  carShareSource?: string;
+  carOccupancy?: number;
+  carOccupancySource?: string;
+}
+
+export interface TripCosts {
+  ticket?: { lei: number; minutes: number; dayPassLei?: number | null; source: string; fetchedAt?: number | null };
+  parking?: {
+    streetSegmentsByTariff: Record<string, number>;
+    eurPerHour: Record<string, number>;
+    schedule?: { weekdays?: number[] } | null;
+    source: string;
+    fetchedAt?: number | null;
+  };
 }
 
 export interface CorridorResponse {
@@ -138,6 +152,8 @@ export interface CorridorResponse {
   defaultProfile: Profile;
   zones: FC<{ type: "Point"; coordinates: LngLat }, ZoneProps>;
   landUse: LandUseSummary;
+  tripCosts?: TripCosts;
+  evaporation?: { literature_median: number; cautious: number; max: number; source: string };
   links: FC<{ type: "LineString"; coordinates: LngLat[] }, LinkProps>;
   gates: FC<{ type: "Point"; coordinates: LngLat }, GateProps>;
   junctions: FC<{ type: "Point"; coordinates: LngLat }, JunctionProps>;
@@ -237,12 +253,57 @@ export interface SimulateOk {
   links: LinkResult[];
   solver: { gapBefore: number; gapAfter: number; iterationsAfter: number; msAfter: number };
   demandScale: number;
+  /** Stated preference from the citizen survey; never changes the traffic result. */
+  local?: LocalEffects;
+  /** traffic evaporation what-if: share of the changed street's drivers who leave the car */
+  evaporation?: {
+    share: number; carsLeftVehH: number; stayingDriversChangePct: number | null;
+    stayingDriversVehHSaved: number; source: string;
+  } | null;
+  modeShift?: {
+    minutesFaster: number; option?: number; k: number; n: number; share: number | null;
+    ci95?: number[] | null; belowSmallestOption?: number; basis: string; source: string;
+  } | null;
   warnings: string[];
 }
 
 export interface NeedsData {
   status: "needs_data";
   dataStatus: DataStatus;
+}
+
+export interface TripChange {
+  from: string; to: string; vehH: number; minutesBefore: number; minutesAfter: number; changePct: number;
+}
+export interface SideStreetChange {
+  street: string; heading: string; linkId: string; flowBefore: number; flowAfter: number; deltaFlow: number;
+}
+export interface LocalEffects {
+  bestTrip: TripChange | null;
+  worstTrip: TripChange | null;
+  sideStreetRelieved: SideStreetChange | null;
+  sideStreetLoaded: SideStreetChange | null;
+  vehHSavedPerHour: number;
+}
+export interface BreakEvenOk {
+  status: "ok"; costPct: number; streetUsersVehH: number; totalVehH: number; profile: Profile; basis: string;
+  free: boolean; switchVehH: number | null; switchShare: number | null; above?: number;
+}
+
+export type AllDay = Record<Profile, { changePct: number; vehHSaved: number } | null>;
+export interface PackageResponse {
+  status: "ok";
+  profile: Profile;
+  rule: string;
+  filters: {
+    linkIds: string[];
+    steps: { street: string; fromName: string; toName: string; linkIds: string[]; cumulativeChangePct: number }[];
+    changePct: number; vehHSaved: number; allDay: AllDay;
+  } | null;
+  withBus: {
+    street: string; heading: string; laneChanges: Change[]; changePct: number; vehHSaved: number;
+    busLines: string[]; busMinutesSaved: number; allDay: AllDay;
+  } | null;
 }
 
 export type SimulateResponse = SimulateOk | NeedsData;
@@ -318,7 +379,7 @@ export interface ScanRow {
   heading: string;
   linkIds: string[];
   mode: "minus_one_lane" | "closure";
-  kind: "removal" | "lane";
+  kind: "removal" | "lane" | "package";
   scope: "both" | "one";
   fromName: string;
   toName: string;
@@ -332,6 +393,8 @@ export interface ScanRow {
   stage: "quick" | "verified";
   baseFlow: number;
   at: LngLat;
+  /** package only: lane changes applied together with the closures */
+  extraChanges?: Change[];
 }
 
 export type ScanResponse =

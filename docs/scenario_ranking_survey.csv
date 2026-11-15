@@ -1,0 +1,1309 @@
+﻿profile,kind,street,heading,from,to,carLanesBefore,links,changePct,vehHSaved,bestTripGainPct,busLines,busMinSaved,gap
+morning,close direction,Piața Tineretului,NW,,,1,1,-0.25,1.18,5.32,,0,9.80753818842777e-06
+morning,close segment (both ways),Piața Tineretului,SE,Piața Tineretului / Strada Craiova,Piața Tineretului / Strada Surorile Martir Caceu,,2,-0.25,1.18,5.32,,0,9.80753818842777e-06
+morning,close segment (both ways),Strada Craiova,SW,Piața Tineretului / Strada Craiova,Strada Craiova / Strada Memorandului,,1,-0.228,1.07,5.57,,0,1.2926175568072389e-16
+morning,close direction,Strada Craiova,SW,,,1,3,-0.218,1.02,5.56,,0,5.493313892782011e-08
+morning,close direction,Strada Cozia,SW,,,1,3,-0.194,0.91,9.02,,0,0.0
+morning,close segment (both ways),Strada Cozia,SW,Strada Severin / Strada Cozia,Strada Cosminului / Strada Cozia,,1,-0.194,0.91,9.02,,0,0.0
+morning,close segment (both ways),Strada Cozia,SW,Strada Cozia / Strada Arieș,Strada Severin / Strada Cozia,,1,-0.194,0.91,9.02,,0,0.0
+evening,close segment (both ways),Strada Putna,N,Strada Mitropolit Varlaam / Strada Putna,Strada Putna / Bulevardul Doctor Victor Babeș,,1,-0.192,0.96,4.56,,0,7.216461476200433e-06
+evening,close segment (both ways),Strada Mitropolit Varlaam,W,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,Strada Mitropolit Varlaam / Strada Argeș,,2,-0.186,0.93,4.84,,0,8.901614736344292e-06
+evening,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Argeș,Strada Mitropolit Varlaam / Strada Putna,,1,-0.145,0.73,4.56,,0,7.607403507659372e-06
+morning,close direction,Piața Bisericii,SW,,,1,3,-0.107,0.5,5.09,,0,8.466351066577274e-06
+evening,close direction,Strada Mitropolit Varlaam,W,,,1,5,-0.105,0.53,4.55,,0,7.599882069525605e-06
+evening,close direction,Piața Tineretului,NW,,,1,1,-0.092,0.46,4.18,,0,4.916222346364863e-06
+evening,close segment (both ways),Piața Tineretului,SE,Piața Tineretului / Strada Craiova,Piața Tineretului / Strada Surorile Martir Caceu,,2,-0.092,0.46,4.18,,0,4.916222346364863e-06
+morning,close segment (both ways),Strada Protopop George Dragomir,W,Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,,1,-0.091,0.43,4.94,,0,4.506001139896618e-06
+evening,close segment (both ways),Strada Craiova,SW,Piața Tineretului / Strada Craiova,Strada Craiova / Strada Memorandului,,1,-0.091,0.46,4.46,,0,5.045717230907873e-06
+evening,close direction,Strada Craiova,SW,,,1,3,-0.086,0.43,4.46,,0,4.2722934873102245e-06
+morning,close segment (both ways),Strada Putna,N,Strada Mitropolit Varlaam / Strada Putna,Strada Putna / Bulevardul Doctor Victor Babeș,,1,-0.084,0.4,2.5,,0,1.9885014585654746e-06
+evening,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,,1,-0.084,0.42,2.09,,0,2.9124887401468237e-06
+evening,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,Strada Traian Lalescu / Strada Doctor Aurel Cândea,,1,-0.084,0.42,2.09,,0,2.9124887401468237e-06
+morning,close segment (both ways),Strada Mitropolit Varlaam,W,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,Strada Mitropolit Varlaam / Strada Argeș,,2,-0.075,0.35,2.75,,0,2.5236574402608386e-06
+evening,close direction,Strada Cozia,SW,,,1,3,-0.07,0.35,7.76,,0,5.528041239641785e-06
+evening,close segment (both ways),Strada Cozia,SW,Strada Severin / Strada Cozia,Strada Cosminului / Strada Cozia,,1,-0.07,0.35,7.76,,0,5.528041239641785e-06
+evening,close segment (both ways),Strada Cozia,SW,Strada Cozia / Strada Arieș,Strada Severin / Strada Cozia,,1,-0.07,0.35,7.76,,0,5.528041239641785e-06
+morning,close segment (both ways),Strada Protopop George Dragomir,E,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,Piața Bisericii / Strada Protopop George Dragomir,,2,-0.064,0.3,5.1,,0,9.417219971910908e-06
+morning,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,,1,-0.044,0.21,3.05,,0,1.8712390023376402e-06
+morning,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,Strada Traian Lalescu / Strada Doctor Aurel Cândea,,1,-0.044,0.21,3.05,,0,1.8712390023376402e-06
+morning,close segment (both ways),Strada Protopop George Dragomir,W,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,,1,-0.018,0.09,1.27,,0,1.4139357044682358e-06
+morning,close segment (both ways),Strada Protopop George Dragomir,E,Strada Protopop George Dragomir,Strada Sorin Titel / Strada Protopop George Dragomir,,2,-0.015,0.07,4.89,,0,2.369715644909981e-06
+evening,close direction,Strada Sorin Titel,N,,,1,1,-0.014,0.07,1.65,,0,1.2526041156399718e-06
+evening,close segment (both ways),Strada Sorin Titel,N,Strada Sorin Titel / Strada Protopop George Dragomir,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,,1,-0.014,0.07,1.65,,0,1.2526041156399718e-06
+morning,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Argeș,Strada Mitropolit Varlaam / Strada Putna,,1,-0.01,0.05,2.49,,0,2.932962120214512e-06
+evening,close segment (both ways),Strada Protopop George Dragomir,E,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,Piața Bisericii / Strada Protopop George Dragomir,,2,-0.008,0.04,4.1,,0,1.8465043419834379e-06
+morning,close direction,Strada Mitropolit Varlaam,W,,,1,5,-0.003,0.02,2.49,,0,2.9340883686725236e-06
+morning,-1 lane → bus,Strada Protopop George Dragomir,W,,,2,1,-0.003,0.01,0.18,,0,1.1875542066107704e-06
+morning,close segment (both ways),Strada Craiova,NE,Strada Craiova / Strada Anghel Saligny,Strada Retezat / Strada Craiova,,2,-0.002,0.01,0.22,,0,1.2896886311403433e-16
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Feldioara / Strada 1 Decembrie 1918,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,,1,-0.001,0.01,0.97,,0,4.297300399234522e-07
+evening,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Putna,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,,1,-0.001,0.0,0.15,,0,1.306331467529245e-06
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Independenței / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918,,1,-0.001,0.01,0.05,,0,1.2902405709292995e-06
+evening,close segment (both ways),Strada Protopop George Dragomir,W,Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,,1,0.0,-0.0,3.23,,0,5.133443572171153e-08
+morning,close direction,Strada Arhitect László Székely,S,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,-1 lane → bus,Strada Independenței,N,,,2,2,0.0,-0.0,0.0,,0,1.9634787466675874e-06
+morning,-1 lane → bus,Strada Ciprian Porumbescu,SW,,,2,2,0.0,-0.0,0.0,,0,1.9634757796639716e-06
+morning,-1 lane → bus,Bulevardul Eroilor de la Tisa,SW,,,2,2,0.0,-0.0,0.0,,0,1.963471462981519e-06
+morning,close direction,Strada Traian Lalescu,S,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Virgil Madgearu,E,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Virgil Madgearu,W,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Piața Karlsruhe,W,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Piața Karlsruhe,E,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Bucegi,S,,,1,2,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Bucegi,N,,,1,2,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Socrate,SW,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Alexandru Vaida Voievod,NE,,,1,3,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Doctor Ioan Mureșan,S,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Doctor Ioan Mureșan,N,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Severin,NW,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Feldioara,SE,,,1,3,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Grigore Constantin Moisil,S,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Memorandului,W,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Wilhelm Mühle,E,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Wilhelm Mühle,W,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,-1 lane → bus,Bulevardul Corneliu Coposu,NE,,,2,1,0.0,-0.0,0.0,,0,1.9634794673961743e-06
+morning,-1 lane → bus,Strada Michelangelo,S,,,4,1,0.0,-0.0,0.0,15 E2 M24 M3,0.0,1.963476534137157e-06
+morning,close direction,Strada Caraș,NW,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Daliei,SE,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Piața Tineretului,SE,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,-1 lane → bus,Strada Sfânta Rosalia,W,,,2,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Sfânta Rosalia,W,,,2,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,-1 lane → bus,Strada Filaret Barbu,S,,,2,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Filaret Barbu,S,,,2,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Gheorghe Doja,NW,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Gheorghe Doja,SE,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Protopop George Popovici,E,,,1,2,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Piața Axente Sever,SW,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Aron Pumnul,NW,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Aron Pumnul,SE,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,-1 lane → bus,Strada Ștefan Covaci,SW,,,3,1,0.0,-0.0,0.0,,0,1.963479668473344e-06
+morning,-2 lane → bus,Strada Ștefan Covaci,SW,,,3,1,0.0,-0.0,0.0,,0,1.9634786039048645e-06
+morning,close direction,Strada Ștefan Covaci,N,,,1,2,0.0,0.0,0.0,,0,1.9634797254255997e-06
+morning,close direction,Strada Virgil Onițiu,SW,,,1,1,0.0,0.0,0.0,,0,1.9634797254255997e-06
+day,close direction,Strada Arhitect László Székely,S,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,-1 lane → bus,Strada Independenței,N,,,2,2,0.0,-0.0,0.0,,0,4.804918798441558e-06
+day,-1 lane → bus,Strada Ciprian Porumbescu,SW,,,2,2,0.0,-0.0,0.0,,0,4.804915699915249e-06
+day,-1 lane → bus,Bulevardul Eroilor de la Tisa,SW,,,2,2,0.0,-0.0,0.0,,0,4.8053467034805956e-06
+day,close direction,Strada Traian Lalescu,S,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Virgil Madgearu,E,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Virgil Madgearu,W,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,-1 lane → bus,Piața Nicolae Bălcescu,SW,,,2,3,0.0,-0.0,0.0,,0,4.804905717471003e-06
+day,-1 lane → bus,Strada Profesor Doctor Aurel Păunescu Podeanu,NE,,,2,1,0.0,-0.0,0.0,,0,4.804898735337642e-06
+day,-1 lane → bus,Strada Profesor Doctor Aurel Păunescu Podeanu,W,,,2,1,0.0,-0.0,0.0,,0,4.804899640337201e-06
+day,close direction,Piața Karlsruhe,W,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Piața Karlsruhe,E,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Bucegi,S,,,1,2,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Bucegi,N,,,1,2,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Socrate,SW,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Alexandru Vaida Voievod,NE,,,1,3,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Doctor Ioan Mureșan,S,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Doctor Ioan Mureșan,N,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Severin,NW,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,-1 lane → bus,Splaiul Tudor Vladimirescu,E,,,3,1,0.0,-0.0,0.0,,0,4.804910745184897e-06
+day,close direction,Strada Feldioara,SE,,,1,3,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Grigore Constantin Moisil,S,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Memorandului,W,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Wilhelm Mühle,E,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Wilhelm Mühle,W,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,-1 lane → bus,Bulevardul Corneliu Coposu,NE,,,2,1,0.0,-0.0,0.0,,0,4.80491914035109e-06
+day,-1 lane → bus,Strada Michelangelo,S,,,4,1,0.0,-0.0,0.0,15 E2 M24 M3,0.0,4.804916695202445e-06
+day,-2 lane → bus,Strada Michelangelo,S,,,4,1,0.0,-0.0,0.0,15 E2 M24 M3,0.0,4.804900601296879e-06
+day,close direction,Strada Caraș,NW,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Daliei,SE,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,-1 lane → bus,Strada Drubeta,NE,,,2,1,0.0,-0.0,0.0,,0,4.804900299100111e-06
+day,close direction,Piața Tineretului,SE,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,-1 lane → bus,Strada Sfânta Rosalia,W,,,2,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Sfânta Rosalia,W,,,2,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,-1 lane → bus,Strada Filaret Barbu,S,,,2,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Filaret Barbu,S,,,2,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Gheorghe Doja,NW,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Gheorghe Doja,SE,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Protopop George Popovici,E,,,1,2,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Piața Axente Sever,SW,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Aron Pumnul,NW,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Aron Pumnul,SE,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,-1 lane → bus,Strada Ștefan Covaci,SW,,,3,1,0.0,-0.0,0.0,,0,4.8049193499253404e-06
+day,-2 lane → bus,Strada Ștefan Covaci,SW,,,3,1,0.0,-0.0,0.0,,0,4.804918351644905e-06
+day,close direction,Strada Ștefan Covaci,N,,,1,2,0.0,0.0,0.0,,0,4.804919403322152e-06
+day,close direction,Strada Virgil Onițiu,SW,,,1,1,0.0,0.0,0.0,,0,4.804919403322152e-06
+evening,close direction,Strada Arhitect László Székely,S,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,-1 lane → bus,Strada Independenței,N,,,2,2,0.0,-0.0,0.0,,0,5.0844689127884895e-06
+evening,-1 lane → bus,Strada Ciprian Porumbescu,SW,,,2,2,0.0,-0.0,0.0,,0,5.084455420020115e-06
+evening,-1 lane → bus,Bulevardul Eroilor de la Tisa,SW,,,2,2,0.0,-0.0,0.0,,0,5.084457204298153e-06
+evening,close direction,Strada Traian Lalescu,S,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Virgil Madgearu,E,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Virgil Madgearu,W,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Piața Karlsruhe,W,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Piața Karlsruhe,E,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Bucegi,S,,,1,2,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Bucegi,N,,,1,2,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Socrate,SW,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Alexandru Vaida Voievod,NE,,,1,3,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Doctor Ioan Mureșan,S,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Doctor Ioan Mureșan,N,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Severin,NW,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Feldioara,SE,,,1,3,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Grigore Constantin Moisil,S,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Memorandului,W,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Wilhelm Mühle,E,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Wilhelm Mühle,W,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,-1 lane → bus,Bulevardul Corneliu Coposu,NE,,,2,1,0.0,-0.0,0.0,,0,5.080336500648103e-06
+evening,-1 lane → bus,Strada Michelangelo,S,,,4,1,0.0,-0.0,0.0,15 E2 M24 M3,0.0,5.084460421415379e-06
+evening,close direction,Strada Caraș,NW,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Daliei,SE,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Piața Tineretului,SE,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,-1 lane → bus,Strada Sfânta Rosalia,W,,,2,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Sfânta Rosalia,W,,,2,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,-1 lane → bus,Strada Filaret Barbu,S,,,2,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Filaret Barbu,S,,,2,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Gheorghe Doja,NW,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Gheorghe Doja,SE,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Protopop George Popovici,E,,,1,2,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Piața Axente Sever,SW,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Aron Pumnul,NW,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Aron Pumnul,SE,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,-1 lane → bus,Strada Ștefan Covaci,SW,,,3,1,0.0,-0.0,0.0,,0,5.084470518455248e-06
+evening,-2 lane → bus,Strada Ștefan Covaci,SW,,,3,1,0.0,-0.0,0.0,,0,5.084466543279055e-06
+evening,close direction,Strada Ștefan Covaci,N,,,1,2,0.0,0.0,0.0,,0,5.08447073111917e-06
+evening,close direction,Strada Virgil Onițiu,SW,,,1,1,0.0,0.0,0.0,,0,5.08447073111917e-06
+sunday,close direction,Strada Arhitect László Székely,S,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,-1 lane → bus,Strada Independenței,N,,,2,2,0.0,-0.0,0.0,,0,1.2987871513053012e-06
+sunday,-1 lane → bus,Strada Ciprian Porumbescu,SW,,,2,2,0.0,-0.0,0.0,,0,1.2987866469053753e-06
+sunday,-1 lane → bus,Bulevardul Eroilor de la Tisa,SW,,,2,2,0.0,-0.0,0.0,,0,1.298786473631858e-06
+sunday,close direction,Strada Traian Lalescu,S,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,-1 lane → bus,Piața Leonardo da Vinci,NE,,,3,5,0.0,-0.0,0.0,,0,1.298783287446361e-06
+sunday,close direction,Strada Virgil Madgearu,E,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Virgil Madgearu,W,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,-1 lane → bus,Piața Nicolae Bălcescu,SW,,,2,3,0.0,-0.0,0.0,,0,1.2987848055647997e-06
+sunday,-1 lane → bus,Strada Profesor Doctor Aurel Păunescu Podeanu,NE,,,2,1,0.0,-0.0,0.0,,0,1.2987840930197242e-06
+sunday,-1 lane → bus,Strada Profesor Doctor Aurel Păunescu Podeanu,W,,,2,1,0.0,-0.0,0.0,,0,1.298784230279607e-06
+sunday,-1 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.0,-0.0,0.0,15 E2,0.0,1.2987819979531945e-06
+sunday,close direction,Piața Karlsruhe,W,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Piața Karlsruhe,E,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Bucegi,S,,,1,2,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Bucegi,N,,,1,2,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Socrate,SW,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Alexandru Vaida Voievod,NE,,,1,3,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Doctor Ioan Mureșan,S,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Doctor Ioan Mureșan,N,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Severin,NW,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,-1 lane → bus,Splaiul Tudor Vladimirescu,E,,,3,1,0.0,-0.0,0.0,,0,1.2987859145329615e-06
+sunday,close direction,Strada Feldioara,SE,,,1,3,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Grigore Constantin Moisil,S,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Memorandului,W,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Wilhelm Mühle,E,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Wilhelm Mühle,W,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,-1 lane → bus,Bulevardul Corneliu Coposu,NE,,,2,1,0.0,-0.0,0.0,,0,1.2987871963865684e-06
+sunday,-1 lane → bus,Strada Michelangelo,S,,,4,1,0.0,-0.0,0.0,15 E2 M24 M3,0.0,1.298786816762865e-06
+sunday,-2 lane → bus,Strada Michelangelo,S,,,4,1,0.0,-0.0,0.0,15 E2 M24 M3,0.0,1.2987843758291637e-06
+sunday,close direction,Strada Caraș,NW,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Daliei,SE,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,-1 lane → bus,Strada Drubeta,NE,,,2,1,0.0,-0.0,0.0,,0,1.2987843299954443e-06
+sunday,close direction,Piața Tineretului,SE,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,-1 lane → bus,Strada Sfânta Rosalia,W,,,2,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Sfânta Rosalia,W,,,2,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,-1 lane → bus,Strada Filaret Barbu,S,,,2,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Filaret Barbu,S,,,2,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Gheorghe Doja,NW,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Gheorghe Doja,SE,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Protopop George Popovici,E,,,1,2,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Piața Axente Sever,SW,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Aron Pumnul,NW,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Aron Pumnul,SE,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,-1 lane → bus,Strada Ștefan Covaci,SW,,,3,1,0.0,-0.0,0.0,,0,1.2987872178346704e-06
+sunday,-2 lane → bus,Strada Ștefan Covaci,SW,,,3,1,0.0,-0.0,0.0,,0,1.2987870372084468e-06
+sunday,close direction,Strada Ștefan Covaci,N,,,1,2,0.0,0.0,0.0,,0,1.298787227497803e-06
+sunday,close direction,Strada Virgil Onițiu,SW,,,1,1,0.0,0.0,0.0,,0,1.298787227497803e-06
+morning,-1 lane → bus,Piața Nicolae Bălcescu,SW,,,2,3,0.001,-0.0,0.0,,0,1.9634691864994773e-06
+morning,-1 lane → bus,Strada Profesor Doctor Aurel Păunescu Podeanu,NE,,,2,1,0.001,-0.01,0.0,,0,1.9634553701377144e-06
+morning,-1 lane → bus,Strada Profesor Doctor Aurel Păunescu Podeanu,W,,,2,1,0.001,-0.01,0.0,,0,1.9634564365869357e-06
+morning,-1 lane → bus,Splaiul Tudor Vladimirescu,E,,,3,1,0.001,-0.0,0.0,,0,1.9634695225720396e-06
+morning,-2 lane → bus,Strada Michelangelo,S,,,4,1,0.001,-0.01,0.0,15 E2 M24 M3,0.0,1.963457569108816e-06
+morning,-1 lane → bus,Strada Drubeta,NE,,,2,1,0.001,-0.01,0.0,,0,1.963457212871816e-06
+day,-1 lane → bus,Strada Ciprian Porumbescu,E,,,2,2,0.001,-0.0,0.0,,0,4.8048585187669e-06
+day,-1 lane → bus,Piața Leonardo da Vinci,NE,,,3,5,0.001,-0.0,0.0,,0,4.804885178141e-06
+day,-1 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.001,-0.0,0.0,15 E2,0.02,4.804885471095429e-06
+day,-1 lane → bus,Splaiul Tudor Vladimirescu,W,,,2,1,0.001,-0.0,0.0,E3,0.0,4.804866167965305e-06
+evening,-1 lane → bus,Strada Profesor Doctor Aurel Păunescu Podeanu,W,,,2,1,0.001,-0.01,0.0,,0,5.084395494034273e-06
+evening,-1 lane → bus,Splaiul Tudor Vladimirescu,E,,,3,1,0.001,-0.0,0.0,,0,5.084437769655489e-06
+evening,-2 lane → bus,Strada Michelangelo,S,,,4,1,0.001,-0.01,0.0,15 E2 M24 M3,0.0,5.0843991523417256e-06
+evening,-1 lane → bus,Strada Drubeta,NE,,,2,1,0.001,-0.01,0.0,,0,5.084398002020032e-06
+sunday,-1 lane → bus,Strada Ciprian Porumbescu,E,,,2,2,0.001,-0.0,0.0,,0,1.2987777555321769e-06
+sunday,-2 lane → bus,Piața Leonardo da Vinci,NE,,,3,5,0.001,-0.0,0.0,,0,1.298777219625436e-06
+sunday,-1 lane → bus,Piața Nicolae Bălcescu,N,,,3,7,0.001,-0.0,0.0,,0,1.2987737273590054e-06
+sunday,-2 lane → bus,Piața Nicolae Bălcescu,N,,,3,7,0.001,-0.0,0.0,,0,1.2987720876409543e-06
+sunday,-1 lane → bus,Splaiul Tudor Vladimirescu,W,,,2,1,0.001,-0.0,0.0,E3,0.0,1.2987791533635836e-06
+sunday,-1 lane → bus,Strada Michelangelo,NW,,,2,1,0.001,-0.0,0.0,15 E2 M3,0.0,1.2987729157678426e-06
+morning,-1 lane → bus,Piața Leonardo da Vinci,NE,,,3,5,0.002,-0.01,0.0,,0,1.9634470590312117e-06
+morning,-1 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.002,-0.01,0.0,15 E2,0.0,1.9634418316701944e-06
+day,-2 lane → bus,Piața Leonardo da Vinci,NE,,,3,5,0.002,-0.01,0.0,,0,4.80483442112396e-06
+day,-1 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.002,-0.01,0.0,15 16 E2 E3 M24 M3,0.0,4.929848860446912e-06
+day,-1 lane → bus,Piața Nicolae Bălcescu,N,,,3,7,0.002,-0.01,0.0,,0,4.804832273621966e-06
+day,-2 lane → bus,Piața Nicolae Bălcescu,N,,,3,7,0.002,-0.01,0.0,,0,4.804819836278843e-06
+day,-1 lane → bus,Strada Michelangelo,NW,,,2,1,0.002,-0.01,0.0,15 E2 M3,0.02,4.8048250416792194e-06
+evening,-1 lane → bus,Piața Nicolae Bălcescu,SW,,,2,3,0.002,-0.01,0.0,,0,5.084383753781399e-06
+evening,-1 lane → bus,Strada Profesor Doctor Aurel Păunescu Podeanu,NE,,,2,1,0.002,-0.01,0.0,,0,5.084392048767235e-06
+sunday,-1 lane → bus,Calea Martirilor 1989,N,,,3,7,0.002,-0.01,0.0,15 16 E2 E3 M3,0.0,1.2987551416858387e-06
+sunday,-1 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.002,-0.0,0.0,15 16 E2 E3 M24 M3,0.0,1.2987671424902358e-06
+sunday,-1 lane → bus,Podul Mihai Viteazul,S,,,2,1,0.002,-0.01,0.0,16 E3,0.0,1.2987652544239308e-06
+sunday,-2 lane → bus,Splaiul Tudor Vladimirescu,E,,,3,1,0.002,-0.01,0.0,,0,1.2987613687853677e-06
+evening,close segment (both ways),Strada Craiova,NE,Strada Craiova / Strada Anghel Saligny,Strada Retezat / Strada Craiova,,2,0.003,-0.02,0.11,,0,1.316956831363142e-06
+evening,close segment (both ways),Strada Petre Râmneanțu,S,Strada Petre Râmneanțu / Strada Protopop George Popovici,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,,1,0.003,-0.01,0.05,,0,1.1824343582053972e-06
+evening,close segment (both ways),Strada Petre Râmneanțu,S,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Petre Râmneanțu / Strada Protopop George Popovici,,1,0.003,-0.01,0.05,,0,1.1824343582053972e-06
+morning,-1 lane → bus,Splaiul Tudor Vladimirescu,W,,,2,1,0.003,-0.02,0.0,E3,0.0,1.9634169933344766e-06
+day,-1 lane → bus,Podul Mihai Viteazul,S,,,2,1,0.003,-0.01,0.0,16 E3,0.0,4.804774120714877e-06
+evening,-1 lane → bus,Piața Leonardo da Vinci,NE,,,3,5,0.003,-0.01,0.0,,0,4.804790143176287e-06
+evening,-1 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.003,-0.01,0.0,15 E2,0.02,5.08433481294038e-06
+sunday,-2 lane → bus,Calea Martirilor 1989,N,,,3,7,0.003,-0.01,0.0,15 16 E2 E3 M3,0.0,1.2987504372048764e-06
+sunday,-1 lane → bus,Bulevardul Liviu Rebreanu,E,,,3,6,0.003,-0.01,0.0,16 E2 M24,0.0,1.298748860805572e-06
+sunday,-1 lane → bus,Podul Mihai Viteazul,N,,,2,1,0.003,-0.01,0.0,16,0.0,1.2987503109725545e-06
+sunday,-1 lane → bus,Bulevardul Regele Ferdinand I,SE,,,3,2,0.003,-0.01,0.0,16 E3,0.0,1.298747360781506e-06
+sunday,-1 lane → bus,Bulevardul Regele Ferdinand I,N,,,3,2,0.003,-0.01,0.0,16,0.0,1.2987500395259627e-06
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Constanța,,1,0.004,-0.02,0.06,,0,1.337195422998495e-06
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Cluj / Strada Arieș,Strada 1 Decembrie 1918,,1,0.004,-0.02,0.06,,0,1.337195422998495e-06
+morning,-1 lane → bus,Strada Ciprian Porumbescu,E,,,2,2,0.004,-0.02,0.0,,0,1.9634053527816548e-06
+morning,-2 lane → bus,Piața Leonardo da Vinci,NE,,,3,5,0.004,-0.02,0.0,,0,1.963397204371063e-06
+day,-1 lane → bus,Calea Martirilor 1989,N,,,3,7,0.004,-0.01,0.0,15 16 E2 E3 M3,0.0,4.804722811185408e-06
+day,-2 lane → bus,Splaiul Tudor Vladimirescu,E,,,3,1,0.004,-0.01,0.0,,0,4.804748910361884e-06
+evening,-1 lane → bus,Strada Ciprian Porumbescu,E,,,2,2,0.004,-0.02,0.0,,0,5.084243545148075e-06
+evening,-1 lane → bus,Splaiul Tudor Vladimirescu,W,,,2,1,0.004,-0.02,0.0,E3,0.0,5.084268069396978e-06
+sunday,-1 lane → bus,Strada 20 Decembrie 1989,NE,,,2,1,0.004,-0.01,0.0,16,0.0,1.2987293041630462e-06
+sunday,-3 lane → bus,Strada Michelangelo,S,,,4,1,0.004,-0.01,0.0,15 E2 M24 M3,0.0,1.2987387508339299e-06
+morning,close segment (both ways),Strada Vâlcea,SW,Strada Vâlcea,Strada Constanța / Strada Vâlcea,,2,0.005,-0.02,0.09,,0,1.2896049860496086e-16
+evening,close direction,Strada Feleacul,SW,,,1,1,0.005,-0.02,0.04,,0,6.493354898449454e-07
+day,-2 lane → bus,Calea Martirilor 1989,N,,,3,7,0.005,-0.02,0.0,15 16 E2 E3 M3,0.0,4.804691861738009e-06
+day,-1 lane → bus,Bulevardul Liviu Rebreanu,E,,,3,6,0.005,-0.02,0.0,16 E2 M24,0.0,4.804668797171029e-06
+day,-1 lane → bus,Podul Mihai Viteazul,N,,,2,1,0.005,-0.02,0.0,16,0.0,4.804675386789475e-06
+day,-1 lane → bus,Bulevardul Regele Ferdinand I,SE,,,3,2,0.005,-0.02,0.0,16 E3,0.0,4.804655813543865e-06
+day,-1 lane → bus,Bulevardul Regele Ferdinand I,N,,,3,2,0.005,-0.02,0.0,16,0.0,4.7826294859459815e-06
+sunday,-1 lane → bus,Bulevardul Mihai Viteazu,S,,,2,6,0.005,-0.02,0.0,16 E3,0.0,1.29872273114276e-06
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Constanța,,1,0.006,-0.03,0.08,,0,0.0
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Cluj / Strada Arieș,Strada 1 Decembrie 1918,,1,0.006,-0.03,0.08,,0,0.0
+morning,-1 lane → bus,Piața Nicolae Bălcescu,N,,,3,7,0.006,-0.03,0.0,,0,1.9633636967666573e-06
+morning,-1 lane → bus,Strada Michelangelo,NW,,,2,1,0.006,-0.03,0.0,15 E2 M3,0.0,1.9633685324635035e-06
+sunday,-2 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.006,-0.02,0.0,15 E2,0.0,1.2987070954469187e-06
+sunday,-3 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.006,-0.02,0.0,15 E2,0.0,1.2987031632864732e-06
+sunday,-2 lane → bus,Bulevardul Regele Ferdinand I,N,,,3,2,0.006,-0.02,0.0,16,0.0,1.2987119263253913e-06
+evening,-1 lane → bus,Strada Protopop George Dragomir,W,,,2,1,0.007,-0.04,0.2,,0,2.8492846419051437e-06
+evening,close segment (both ways),(fără nume),E,Calea Martirilor 1989,Strada Arieș,,1,0.007,-0.04,0.05,,0,1.293949703108625e-06
+morning,-2 lane → bus,Piața Nicolae Bălcescu,N,,,3,7,0.007,-0.03,0.0,,0,1.963340697519352e-06
+day,-3 lane → bus,Strada Michelangelo,S,,,4,1,0.007,-0.02,0.0,15 E2 M24 M3,0.0,4.804599788903331e-06
+evening,-2 lane → bus,Piața Leonardo da Vinci,NE,,,3,5,0.007,-0.03,0.0,,0,4.823231195374748e-06
+evening,-1 lane → bus,Piața Nicolae Bălcescu,N,,,3,7,0.007,-0.03,0.0,,0,3.2267331262504533e-06
+evening,-1 lane → bus,Strada Michelangelo,NW,,,2,1,0.007,-0.04,0.0,15 E2 M3,0.02,5.084111514343549e-06
+sunday,-1 lane → bus,Strada Arieș,SE,,,4,13,0.007,-0.02,0.0,15 16 E2 E3 M24 M3,0.0,1.346702814947824e-06
+sunday,close segment (both ways),Strada Petre Râmneanțu,S,Strada Petre Râmneanțu / Strada Protopop George Popovici,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,,1,0.007,-0.02,0.0,,0,1.5208860933906602e-06
+sunday,close segment (both ways),Strada Petre Râmneanțu,S,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Petre Râmneanțu / Strada Protopop George Popovici,,1,0.007,-0.02,0.0,,0,1.5208860933906602e-06
+evening,close direction,Strada Mitropolit Varlaam,SE,,,1,1,0.008,-0.04,0.65,,0,4.596847138596435e-06
+evening,close segment (both ways),Strada Béla Bartók,S,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,Strada Argeș / Strada Béla Bartók,,1,0.008,-0.04,0.65,,0,4.596847138596435e-06
+morning,close segment (both ways),Strada Petre Râmneanțu,S,Strada Petre Râmneanțu / Strada Protopop George Popovici,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,,1,0.008,-0.04,0.02,,0,0.0
+morning,close segment (both ways),Strada Petre Râmneanțu,S,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Petre Râmneanțu / Strada Protopop George Popovici,,1,0.008,-0.04,0.02,,0,0.0
+day,-1 lane → bus,Strada 20 Decembrie 1989,NE,,,2,1,0.008,-0.03,0.0,16,0.0,4.804536537617312e-06
+evening,-2 lane → bus,Piața Nicolae Bălcescu,N,,,3,7,0.008,-0.04,0.0,,0,1.5531516346131522e-06
+sunday,-1 lane → bus,Strada Protopop George Dragomir,W,,,2,1,0.008,-0.02,0.0,,0,1.2986832811044402e-06
+morning,-1 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.009,-0.04,0.0,15 16 E2 E3 M24 M3,0.01,1.9633037741237073e-06
+morning,-1 lane → bus,Podul Mihai Viteazul,S,,,2,1,0.009,-0.04,0.0,16 E3,0.0,1.963308356053197e-06
+day,-1 lane → bus,Bulevardul Mihai Viteazu,S,,,2,6,0.009,-0.03,0.0,16 E3,0.0,4.804491951762932e-06
+evening,-1 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.009,-0.04,0.0,15 16 E2 E3 M24 M3,0.02,5.076275393858661e-06
+sunday,-1 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,0.009,-0.03,0.0,15 16 E2 E3 M3,0.0,1.4287296117434117e-06
+morning,-2 lane → bus,Splaiul Tudor Vladimirescu,E,,,3,1,0.01,-0.05,0.0,,0,1.963278827207406e-06
+day,-2 lane → bus,Bulevardul Regele Ferdinand I,N,,,3,2,0.01,-0.04,0.0,16,0.0,4.370344063815589e-06
+sunday,close direction,Strada Retezat,NW,,,1,2,0.01,-0.03,0.0,,0,1.520846537672788e-06
+evening,close direction,Strada Craiova,NE,,,1,2,0.011,-0.05,0.09,,0,1.3171569898964376e-06
+day,-2 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.011,-0.04,0.0,15 E2,0.02,4.804391736944667e-06
+day,-3 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.011,-0.04,0.0,15 E2,0.02,4.8043676681207565e-06
+evening,-1 lane → bus,Podul Mihai Viteazul,S,,,2,1,0.011,-0.05,0.0,16 E3,0.0,5.083917911317703e-06
+sunday,-2 lane → bus,Bulevardul Regele Ferdinand I,SE,,,3,2,0.011,-0.03,0.0,16 E3,0.0,1.2986473744788144e-06
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Severin / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918,,1,0.012,-0.06,0.08,,0,0.0
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Strada Cluj / Strada Arieș,,1,0.012,-0.06,0.08,,0,0.0
+evening,close direction,Strada Putna,S,,,1,1,0.012,-0.06,0.05,,0,1.3846467738159741e-06
+day,-1 lane → bus,Strada Arieș,SE,,,4,13,0.012,-0.04,0.0,15 16 E2 E3 M24 M3,0.0,4.555619858568879e-06
+day,-1 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,0.012,-0.04,0.0,15 16 E2 E3 M3,0.02,5.214254135561263e-06
+sunday,close segment (both ways),Strada Craiova,NE,Strada Craiova / Strada Anghel Saligny,Strada Retezat / Strada Craiova,,2,0.013,-0.04,0.05,,0,1.5207988012565772e-06
+morning,close direction,Strada Craiova,NE,,,1,2,0.013,-0.06,0.02,,0,0.0
+morning,close segment (both ways),(fără nume),E,Calea Martirilor 1989,Strada Arieș,,1,0.013,-0.06,0.0,,0,1.2895056002364724e-16
+evening,-2 lane → bus,Splaiul Tudor Vladimirescu,E,,,3,1,0.013,-0.06,0.0,,0,5.083821722479917e-06
+morning,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Putna,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,,1,0.014,-0.07,0.12,,0,0.0
+sunday,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Putna,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,,1,0.014,-0.04,0.06,,0,1.6956736298264984e-06
+morning,-1 lane → bus,Calea Martirilor 1989,N,,,3,7,0.014,-0.06,0.0,15 16 E2 E3 M3,0.01,1.963212439036783e-06
+day,-1 lane → bus,Strada Protopop George Dragomir,W,,,2,1,0.014,-0.05,0.0,,0,3.1790964707157842e-06
+evening,-1 lane → bus,Calea Martirilor 1989,N,,,3,7,0.014,-0.07,0.0,15 16 E2 E3 M3,0.0,5.083771986063598e-06
+evening,close segment (both ways),Strada Vâlcea,SW,Strada Vâlcea,Strada Constanța / Strada Vâlcea,,2,0.015,-0.07,0.13,,0,4.709054624646631e-06
+morning,-2 lane → bus,Calea Martirilor 1989,N,,,3,7,0.015,-0.07,0.0,15 16 E2 E3 M3,0.01,1.9631759856381166e-06
+morning,-1 lane → bus,Bulevardul Liviu Rebreanu,E,,,3,6,0.015,-0.07,0.0,16 E2 M24,0.0,1.963181035133911e-06
+morning,-1 lane → bus,Podul Mihai Viteazul,N,,,2,1,0.015,-0.07,0.0,16,0.0,1.9631919338357657e-06
+morning,-1 lane → bus,Bulevardul Regele Ferdinand I,N,,,3,2,0.015,-0.07,0.0,16,0.0,1.9631922335052435e-06
+morning,close direction,Strada Feleacul,NE,,,1,1,0.015,-0.07,0.0,,0,1.2894761793715505e-16
+day,close segment (both ways),Strada Vâlcea,SW,Strada Vâlcea,Strada Constanța / Strada Vâlcea,,2,0.015,-0.05,0.0,,0,0.0
+sunday,close direction,Strada Feleacul,NE,,,1,1,0.015,-0.05,0.0,,0,1.5647585043850363e-06
+evening,close direction,Strada Protopop George Dragomir,W,,,2,6,0.016,-0.08,4.18,,0,1.6564368174348442e-06
+evening,close segment (both ways),Strada Protopop George Dragomir,W,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,Strada Sorin Titel / Strada Protopop George Dragomir,,2,0.016,-0.08,4.18,,0,1.6564368174348442e-06
+morning,-1 lane → bus,Bulevardul Regele Ferdinand I,SE,,,3,2,0.016,-0.07,0.0,16 E3,0.0,1.9631688202352453e-06
+evening,-2 lane → bus,Calea Martirilor 1989,N,,,3,7,0.016,-0.08,0.0,15 16 E2 E3 M3,0.0,5.083653925353819e-06
+sunday,-1 lane → bus,Strada Cluj,S,,,4,6,0.016,-0.05,0.0,15 16 E2 E3 M24 M3,0.0,1.2998667950874477e-06
+sunday,close direction,Strada Feleacul,SW,,,1,1,0.016,-0.05,0.0,,0,1.520753562525733e-06
+sunday,close segment (both ways),Strada Retezat,NW,Strada Feleacul / Strada Retezat,Strada Retezat / Strada Craiova,,2,0.016,-0.05,0.0,,0,9.578653805376107e-07
+morning,close direction,Strada Mitropolit Varlaam,SE,,,1,1,0.017,-0.08,0.26,,0,0.0
+morning,close segment (both ways),Strada Béla Bartók,S,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,Strada Argeș / Strada Béla Bartók,,1,0.017,-0.08,0.26,,0,0.0
+morning,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,Piața Bisericii / Strada Mitropolit Varlaam,,1,0.017,-0.08,0.12,,0,0.0
+morning,close segment (both ways),Piața Bisericii,SW,Piața Bisericii / Strada Mitropolit Varlaam,Strada Evliya Celebi / Piața Bisericii,,1,0.017,-0.08,0.12,,0,0.0
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Severin / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918,,1,0.017,-0.09,0.06,,0,1.4425984213569222e-06
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Strada Cluj / Strada Arieș,,1,0.017,-0.09,0.06,,0,1.4425984213569222e-06
+evening,close direction,Strada Feleacul,NE,,,1,1,0.017,-0.08,0.05,,0,1.2924202691909566e-06
+sunday,-1 lane → bus,Strada Surorile Martir Caceu,NE,,,3,4,0.017,-0.05,0.0,15 16 E2 E3 M3,0.0,1.362034105061399e-06
+evening,-1 lane → bus,Podul Mihai Viteazul,N,,,2,1,0.018,-0.09,0.0,16,0.0,5.083542227051376e-06
+evening,-1 lane → bus,Bulevardul Regele Ferdinand I,N,,,3,2,0.018,-0.09,0.0,16,0.0,5.084586062006546e-06
+sunday,-1 lane → bus,Bulevardul Vasile Pârvan,W,,,3,5,0.018,-0.06,0.0,16 E3,0.0,1.2985474029985425e-06
+evening,close segment (both ways),Strada Craiova,NE,Piața Tineretului / Strada Craiova,Strada Craiova / Strada Anghel Saligny,,2,0.019,-0.09,0.11,,0,1.4719982685672676e-06
+sunday,close direction,Strada Mitropolit Varlaam,SE,,,1,1,0.019,-0.06,0.03,,0,1.5207155646362651e-06
+sunday,close segment (both ways),Strada Béla Bartók,S,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,Strada Argeș / Strada Béla Bartók,,1,0.019,-0.06,0.03,,0,1.5207155646362651e-06
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Constanța,,1,0.019,-0.06,0.01,,0,1.1297322094838811e-06
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Cluj / Strada Arieș,Strada 1 Decembrie 1918,,1,0.019,-0.06,0.01,,0,1.1297322094838811e-06
+morning,-3 lane → bus,Strada Michelangelo,S,,,4,1,0.019,-0.09,0.0,15 E2 M24 M3,0.0,1.9631031338408756e-06
+day,-2 lane → bus,Bulevardul Regele Ferdinand I,SE,,,3,2,0.019,-0.07,0.0,16 E3,0.0,4.80399478259161e-06
+evening,-1 lane → bus,Bulevardul Liviu Rebreanu,E,,,3,6,0.019,-0.09,0.0,16 E2 M24,0.0,5.08352574461394e-06
+morning,close direction,Strada Evliya Celebi,S,,,1,2,0.02,-0.1,0.6,,0,0.0
+morning,close segment (both ways),Strada Evliya Celebi,S,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,Strada Evliya Celebi / Strada Protopop George Popovici,,1,0.02,-0.1,0.6,,0,0.0
+morning,close segment (both ways),Strada Evliya Celebi,S,Strada Evliya Celebi / Strada Protopop George Popovici,Strada Evliya Celebi / Piața Bisericii,,1,0.02,-0.09,0.6,,0,0.0
+evening,-1 lane → bus,Bulevardul Regele Ferdinand I,SE,,,3,2,0.02,-0.1,0.0,16 E3,0.0,5.083467800555309e-06
+sunday,-2 lane → bus,Bulevardul Liviu Rebreanu,E,,,3,6,0.02,-0.06,0.0,16 E2 M24,0.0,1.2985225864952338e-06
+sunday,close direction,Strada Retezat,SE,,,1,2,0.02,-0.06,0.0,,0,6.79657150411317e-07
+morning,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,,1,0.021,-0.1,0.12,,0,0.0
+morning,close segment (both ways),Strada Retezat,NW,Strada Feleacul / Strada Retezat,Strada Retezat / Strada Craiova,,2,0.021,-0.1,0.0,,0,0.0
+sunday,close direction,Strada Craiova,NE,,,1,2,0.021,-0.07,0.0,,0,1.5205983228373672e-06
+sunday,close segment (both ways),Strada Petre Râmneanțu,N,Strada Ioan Curea / Strada Petre Râmneanțu,Strada Petre Râmneanțu / Strada Ion Vidu,,2,0.022,-0.07,0.0,,0,1.5206684794035496e-06
+morning,close direction,Strada Feleacul,SW,,,1,1,0.023,-0.11,0.06,,0,1.2893661017111963e-16
+evening,close direction,Strada Retezat,NW,,,1,2,0.023,-0.12,0.05,,0,1.2910189771864651e-06
+morning,-1 lane → bus,Strada 20 Decembrie 1989,NE,,,2,1,0.023,-0.11,0.0,16,0.0,1.963028200592064e-06
+morning,-1 lane → bus,Bulevardul Mihai Viteazu,S,,,2,6,0.023,-0.11,0.0,16 E3,0.0,1.9630214988479456e-06
+evening,close segment (both ways),Strada Feleacul,NE,Strada Feleacul / Strada Anghel Saligny,Strada Feleacul / Strada Retezat,,2,0.024,-0.12,0.04,,0,6.492118812366859e-07
+evening,-3 lane → bus,Strada Michelangelo,S,,,4,1,0.024,-0.12,0.0,15 E2 M24 M3,0.0,5.0832541659299445e-06
+day,close segment (both ways),Strada Petre Râmneanțu,S,Strada Petre Râmneanțu / Strada Protopop George Popovici,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,,1,0.025,-0.09,0.01,,0,3.666589413832432e-08
+day,close segment (both ways),Strada Petre Râmneanțu,S,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Petre Râmneanțu / Strada Protopop George Popovici,,1,0.025,-0.09,0.01,,0,3.666589413832432e-08
+day,-1 lane → bus,Strada Cluj,S,,,4,6,0.025,-0.09,0.0,15 16 E2 E3 M24 M3,0.0,4.803736124451102e-06
+sunday,close segment (both ways),Strada Retezat,SE,Strada 1 Decembrie 1918 / Strada Retezat,Strada Retezat / Strada Craiova,,2,0.025,-0.08,0.0,,0,6.796197697373217e-07
+day,close segment (both ways),Strada Craiova,NE,Strada Craiova / Strada Anghel Saligny,Strada Retezat / Strada Craiova,,2,0.026,-0.09,0.0,,0,0.0
+morning,-2 lane → bus,Bulevardul Regele Ferdinand I,N,,,3,2,0.027,-0.13,0.0,16,0.0,1.9629403236012326e-06
+day,-1 lane → bus,Strada Surorile Martir Caceu,NE,,,3,4,0.027,-0.1,0.0,15 16 E2 E3 M3,0.02,4.803617304267575e-06
+day,close segment (both ways),(fără nume),E,Calea Martirilor 1989,Strada Arieș,,1,0.027,-0.1,0.0,,0,3.5959811995486074e-08
+sunday,close direction,Strada Putna,S,,,1,1,0.027,-0.08,0.0,,0,1.520594498308656e-06
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,,1,0.028,-0.14,4.97,,0,5.091819939052094e-07
+sunday,close segment (both ways),Strada Feleacul,NE,Strada Feleacul / Strada Anghel Saligny,Strada Feleacul / Strada Retezat,,2,0.028,-0.08,0.0,,0,1.5645658430252878e-06
+sunday,close segment (both ways),Strada Protopop George Dragomir,E,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,Strada Protopop George Dragomir,,1,0.028,-0.09,0.0,,0,1.5205700414885571e-06
+evening,close direction,Strada Putna,N,,,1,2,0.029,-0.15,4.56,,0,6.307078675464222e-06
+sunday,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,Piața Bisericii / Strada Mitropolit Varlaam,,1,0.029,-0.09,0.06,,0,1.695427196554862e-06
+sunday,close segment (both ways),Piața Bisericii,SW,Piața Bisericii / Strada Mitropolit Varlaam,Strada Evliya Celebi / Piața Bisericii,,1,0.029,-0.09,0.06,,0,1.695427196554862e-06
+day,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Putna,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,,1,0.029,-0.1,0.03,,0,6.465331941005626e-08
+morning,close direction,Strada Retezat,SE,,,1,2,0.029,-0.14,0.0,,0,0.0
+day,close direction,Strada Retezat,NW,,,1,2,0.029,-0.1,0.0,,0,0.0
+evening,-1 lane → bus,Strada 20 Decembrie 1989,NE,,,2,1,0.029,-0.14,0.0,16,0.0,5.083014003121936e-06
+sunday,close segment (both ways),Strada Petre Râmneanțu,S,Strada Ioan Curea / Strada Petre Râmneanțu,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,,1,0.029,-0.09,0.0,,0,1.520564324185508e-06
+morning,close segment (both ways),Strada Craiova,NE,Piața Tineretului / Strada Craiova,Strada Craiova / Strada Anghel Saligny,,2,0.03,-0.14,0.09,,0,0.0
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Severin / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918,,1,0.03,-0.09,0.07,,0,1.1429459019031638e-06
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Strada Cluj / Strada Arieș,,1,0.03,-0.09,0.07,,0,1.1429459019031638e-06
+morning,-1 lane → bus,Strada Arieș,SE,,,4,13,0.03,-0.14,0.0,15 16 E2 E3 M24 M3,0.0,1.962892544212052e-06
+sunday,-2 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.03,-0.09,0.0,15 16 E2 E3 M24 M3,0.0,1.298393079068229e-06
+morning,close segment (both ways),Strada Feleacul,NE,Strada Feleacul / Strada Anghel Saligny,Strada Feleacul / Strada Retezat,,2,0.031,-0.15,0.06,,0,0.0
+sunday,close segment (both ways),Strada Vâlcea,SW,Strada Vâlcea,Strada Constanța / Strada Vâlcea,,2,0.031,-0.1,0.02,,0,0.0
+sunday,-3 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.031,-0.1,0.0,15 16 E2 E3 M24 M3,0.0,1.2983821232646855e-06
+sunday,close direction,Strada Petre Râmneanțu,S,,,1,5,0.031,-0.1,0.0,,0,1.5205222219838988e-06
+evening,close segment (both ways),Strada Protopop George Dragomir,E,Strada Protopop George Dragomir,Strada Sorin Titel / Strada Protopop George Dragomir,,2,0.032,-0.16,3.16,,0,9.63528128554264e-08
+sunday,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,,1,0.032,-0.1,0.06,,0,1.6953753764258853e-06
+morning,-2 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.032,-0.15,0.0,15 E2,0.0,1.9628604243010057e-06
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Constanța,,1,0.032,-0.11,0.0,,0,3.5958293670743164e-08
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Cluj / Strada Arieș,Strada 1 Decembrie 1918,,1,0.032,-0.11,0.0,,0,3.5958293670743164e-08
+morning,close direction,Strada Protopop George Dragomir,W,,,2,6,0.033,-0.15,5.1,,0,1.2851113768291417e-06
+morning,close segment (both ways),Strada Protopop George Dragomir,W,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,Strada Sorin Titel / Strada Protopop George Dragomir,,2,0.033,-0.15,5.1,,0,1.2851113768291417e-06
+evening,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,Piața Bisericii / Strada Mitropolit Varlaam,,1,0.033,-0.17,0.15,,0,7.43939705654381e-07
+evening,close segment (both ways),Piața Bisericii,SW,Piața Bisericii / Strada Mitropolit Varlaam,Strada Evliya Celebi / Piața Bisericii,,1,0.033,-0.17,0.15,,0,7.43939705654381e-07
+morning,-3 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.033,-0.15,0.0,15 E2,0.0,1.9628374948161767e-06
+day,close direction,Strada Craiova,NE,,,1,2,0.033,-0.12,0.0,,0,4.869536330846544e-08
+day,close direction,Strada Feleacul,NE,,,1,1,0.033,-0.12,0.0,,0,3.59577030611069e-08
+morning,close direction,Strada Retezat,NW,,,1,2,0.034,-0.16,0.0,,0,1.3021511526550742e-06
+evening,-2 lane → bus,Bulevardul Regele Ferdinand I,N,,,3,2,0.034,-0.17,0.0,16,0.0,5.103263819269519e-06
+evening,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,,1,0.035,-0.18,0.15,,0,7.412127412830298e-07
+day,close direction,Strada Feleacul,SW,,,1,1,0.035,-0.12,0.0,,0,1.456459421095874e-07
+evening,-1 lane → bus,Bulevardul Mihai Viteazu,S,,,2,6,0.035,-0.17,0.0,16 E3,0.0,5.082705252177892e-06
+morning,close direction,Strada Putna,S,,,1,1,0.036,-0.17,0.0,,0,0.0
+day,-1 lane → bus,Bulevardul Vasile Pârvan,W,,,3,5,0.036,-0.13,0.0,16 E3,0.0,7.893314653449243e-06
+day,-2 lane → bus,Bulevardul Liviu Rebreanu,E,,,3,6,0.036,-0.13,0.0,16 E2 M24,0.0,4.803179903986569e-06
+evening,close segment (both ways),Strada Petre Râmneanțu,N,Strada Ioan Curea / Strada Petre Râmneanțu,Strada Petre Râmneanțu / Strada Ion Vidu,,2,0.037,-0.18,0.09,,0,9.777465217225418e-07
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Severin / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918,,1,0.037,-0.13,0.01,,0,1.671899840163049e-08
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Strada Cluj / Strada Arieș,,1,0.037,-0.13,0.01,,0,1.671899840163049e-08
+day,close segment (both ways),Strada Retezat,NW,Strada Feleacul / Strada Retezat,Strada Retezat / Strada Craiova,,2,0.038,-0.13,0.0,,0,7.502194383626406e-08
+morning,close segment (both ways),Strada Ion Vidu,W,Strada Béla Bartók / Strada Ion Vidu,Strada Ion Vidu / Strada Putna,,1,0.04,-0.19,0.3,,0,0.0
+evening,close segment (both ways),Strada Retezat,NW,Strada Feleacul / Strada Retezat,Strada Retezat / Strada Craiova,,2,0.04,-0.2,0.05,,0,1.4520307734804387e-06
+day,-2 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.04,-0.14,0.0,15 16 E2 E3 M24 M3,0.0,7.264140921448274e-06
+evening,-2 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.04,-0.2,0.0,15 E2,0.02,5.082454790089837e-06
+evening,close segment (both ways),Strada Argeș,SW,Strada Cluj / Strada Argeș,Strada Argeș / Strada Béla Bartók,,1,0.041,-0.2,0.08,,0,6.510353762789243e-07
+day,-3 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.041,-0.15,0.0,15 16 E2 E3 M24 M3,0.0,7.264060960182393e-06
+sunday,-1 lane → bus,Strada Arieș,NW,,,2,6,0.041,-0.12,0.0,15 E2,0.0,1.2982613331660203e-06
+sunday,-2 lane → bus,Bulevardul Vasile Pârvan,W,,,3,5,0.041,-0.13,0.0,16 E3,0.0,1.2982512712109248e-06
+evening,close direction,Strada Constanța,NW,,,1,2,0.042,-0.21,0.05,,0,1.2791723335099563e-06
+day,close direction,Strada Putna,S,,,1,1,0.042,-0.15,0.0,,0,3.595443027152777e-08
+evening,-3 lane → bus,Bulevardul Liviu Rebreanu,W,,,4,6,0.042,-0.21,0.0,15 E2,0.02,5.082345506304733e-06
+evening,-1 lane → bus,Strada Arieș,SE,,,4,13,0.043,-0.22,0.0,15 16 E2 E3 M24 M3,0.0,5.08533042930735e-06
+morning,close segment (both ways),Strada Petre Râmneanțu,S,Strada Ioan Curea / Strada Petre Râmneanțu,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,,1,0.044,-0.21,0.27,,0,0.0
+day,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,Piața Bisericii / Strada Mitropolit Varlaam,,1,0.044,-0.16,0.03,,0,6.337807538652695e-08
+day,close segment (both ways),Piața Bisericii,SW,Piața Bisericii / Strada Mitropolit Varlaam,Strada Evliya Celebi / Piața Bisericii,,1,0.044,-0.16,0.03,,0,6.337807538652695e-08
+morning,close direction,Strada Petre Râmneanțu,S,,,1,5,0.045,-0.21,0.27,,0,0.0
+day,close direction,Strada Mitropolit Varlaam,SE,,,1,1,0.045,-0.16,0.14,,0,5.8054918344144755e-08
+day,close segment (both ways),Strada Béla Bartók,S,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,Strada Argeș / Strada Béla Bartók,,1,0.045,-0.16,0.14,,0,5.8054918344144755e-08
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Constanța / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Vâlcea,,1,0.045,-0.23,0.05,,0,1.1670178708245377e-06
+sunday,close segment (both ways),Strada Béla Bartók,S,Strada Béla Bartók / Strada Ion Vidu,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,,1,0.045,-0.14,0.0,,0,1.520313527308243e-06
+morning,close segment (both ways),Piața Bisericii,SW,Strada Evliya Celebi / Piața Bisericii,Piața Bisericii / Strada Protopop George Dragomir,,1,0.046,-0.22,0.57,,0,0.0
+day,close segment (both ways),Strada Petre Râmneanțu,N,Strada Ioan Curea / Strada Petre Râmneanțu,Strada Petre Râmneanțu / Strada Ion Vidu,,2,0.046,-0.16,0.03,,0,6.844453494197076e-08
+day,close direction,Strada Retezat,SE,,,1,2,0.046,-0.16,0.0,,0,1.315115671546906e-07
+day,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Petre Râmneanțu,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,,1,0.047,-0.17,0.03,,0,6.458738522550246e-08
+morning,close segment (both ways),Strada Béla Bartók,S,Strada Béla Bartók / Strada Ion Vidu,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,,1,0.047,-0.22,0.0,,0,0.0
+day,close segment (both ways),Strada Feleacul,NE,Strada Feleacul / Strada Anghel Saligny,Strada Feleacul / Strada Retezat,,2,0.047,-0.17,0.0,,0,1.4562870710972815e-07
+sunday,-1 lane → bus,Calea Martirilor 1989,S,,,3,6,0.047,-0.15,0.0,15 E3 M3,0.0,1.2981711576896464e-06
+sunday,close direction,Strada Evliya Celebi,S,,,1,2,0.048,-0.15,0.1,,0,1.8383747261121006e-06
+sunday,close segment (both ways),Strada Evliya Celebi,S,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,Strada Evliya Celebi / Strada Protopop George Popovici,,1,0.048,-0.15,0.1,,0,1.8383747261121006e-06
+sunday,close segment (both ways),Strada Evliya Celebi,S,Strada Evliya Celebi / Strada Protopop George Popovici,Strada Evliya Celebi / Piața Bisericii,,1,0.048,-0.15,0.1,,0,1.838384723288141e-06
+sunday,close segment (both ways),Strada Craiova,NE,Piața Tineretului / Strada Craiova,Strada Craiova / Strada Anghel Saligny,,2,0.048,-0.15,0.03,,0,1.5202016740707541e-06
+sunday,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,,1,0.048,-0.15,0.0,,0,1.5202680216383035e-06
+morning,close segment (both ways),Strada Martir Sorinel Leia,SE,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,Strada Martir Sorinel Leia / Strada Memorandului,,1,0.049,-0.23,0.04,,0,3.034691414049934e-07
+morning,close direction,Strada Constanța,NW,,,1,2,0.049,-0.23,0.01,,0,0.0
+evening,close segment (both ways),Strada Ion Vidu,W,Strada Béla Bartók / Strada Ion Vidu,Strada Ion Vidu / Strada Putna,,1,0.05,-0.25,0.08,,0,1.0081169521617695e-06
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Constanța / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Vâlcea,,1,0.05,-0.23,0.01,,0,0.0
+morning,-1 lane → bus,Strada Cluj,S,,,4,6,0.05,-0.23,0.0,15 16 E2 E3 M24 M3,0.01,1.962501254466288e-06
+evening,close direction,Strada Argeș,SW,,,1,2,0.051,-0.26,0.64,,0,3.841903555904505e-06
+evening,close segment (both ways),Strada Argeș,SW,Strada Argeș / Strada Béla Bartók,Strada Mitropolit Varlaam / Strada Argeș,,1,0.051,-0.26,0.64,,0,3.841903555904505e-06
+morning,close segment (both ways),Strada Petre Râmneanțu,N,Strada Ioan Curea / Strada Petre Râmneanțu,Strada Petre Râmneanțu / Strada Ion Vidu,,2,0.051,-0.24,0.27,,0,0.0
+evening,-1 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,0.051,-0.26,0.0,15 16 E2 E3 M3,0.02,5.9336132122069576e-06
+day,close segment (both ways),Strada Retezat,SE,Strada 1 Decembrie 1918 / Strada Retezat,Strada Retezat / Strada Craiova,,2,0.052,-0.18,0.0,,0,9.555304812412837e-08
+morning,close segment (both ways),Strada Retezat,SE,Strada 1 Decembrie 1918 / Strada Retezat,Strada Retezat / Strada Craiova,,2,0.053,-0.25,0.0,,0,1.301893692905923e-06
+sunday,close direction,Strada Ioan Curea,E,,,1,1,0.053,-0.16,0.0,,0,1.5201948327525428e-06
+sunday,close segment (both ways),Strada Ioan Curea,E,Strada Traian Lalescu / Strada Ioan Curea,Strada Ioan Curea / Strada Petre Râmneanțu,,1,0.053,-0.16,0.0,,0,1.5201948327525428e-06
+evening,close segment (both ways),Strada Evliya Celebi,S,Strada Evliya Celebi / Strada Protopop George Popovici,Strada Evliya Celebi / Piața Bisericii,,1,0.054,-0.27,0.72,,0,3.7915622427553064e-07
+evening,close direction,Strada Evliya Celebi,S,,,1,2,0.055,-0.28,0.72,,0,3.791516984156467e-07
+evening,close segment (both ways),Strada Evliya Celebi,S,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,Strada Evliya Celebi / Strada Protopop George Popovici,,1,0.055,-0.28,0.72,,0,3.791516984156467e-07
+evening,close segment (both ways),Strada Protopop George Dragomir,E,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,Strada Protopop George Dragomir,,1,0.055,-0.27,0.12,,0,2.802875804921853e-07
+day,close segment (both ways),Strada Craiova,NE,Piața Tineretului / Strada Craiova,Strada Craiova / Strada Anghel Saligny,,2,0.055,-0.19,0.0,,0,1.6686782210620925e-07
+morning,-1 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,0.056,-0.26,0.0,15 16 E2 E3 M3,0.01,1.962375813336705e-06
+morning,-2 lane → bus,Bulevardul Regele Ferdinand I,SE,,,3,2,0.056,-0.26,0.0,16 E3,0.0,1.962389414576413e-06
+sunday,close direction,Strada Sorin Titel,N,,,1,1,0.058,-0.18,0.38,,0,1.5201105965077803e-06
+sunday,close segment (both ways),Strada Sorin Titel,N,Strada Sorin Titel / Strada Protopop George Dragomir,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,,1,0.058,-0.18,0.38,,0,1.5201105965077803e-06
+evening,close segment (both ways),Strada Anghel Saligny,E,Strada Anghel Saligny / Strada Arieș,Strada Constanța / Strada Anghel Saligny,,2,0.058,-0.29,0.11,,0,4.268297405112139e-06
+morning,close segment (both ways),Strada Vâlcea,SW,Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Vâlcea,,2,0.058,-0.27,0.01,,0,0.0
+day,close segment (both ways),Strada Anghel Saligny,E,Strada Anghel Saligny / Strada Arieș,Strada Constanța / Strada Anghel Saligny,,2,0.059,-0.21,0.0,,0,1.0143729745345445e-07
+sunday,-2 lane → bus,Calea Martirilor 1989,S,,,3,6,0.061,-0.19,0.0,15 E3 M3,0.0,1.2979931652262438e-06
+sunday,close segment (both ways),Strada Anghel Saligny,E,Strada Anghel Saligny / Strada Arieș,Strada Constanța / Strada Anghel Saligny,,2,0.061,-0.19,0.0,,0,1.537042256322744e-06
+day,close segment (both ways),Strada Protopop George Dragomir,E,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,Strada Protopop George Dragomir,,1,0.062,-0.22,0.0,,0,9.024261977169815e-08
+sunday,-2 lane → bus,Strada Arieș,SE,,,4,13,0.062,-0.19,0.0,15 16 E2 E3 M24 M3,0.0,1.6310740466998699e-06
+sunday,close segment (both ways),Strada Ion Vidu,W,Strada Béla Bartók / Strada Ion Vidu,Strada Ion Vidu / Strada Putna,,1,0.063,-0.19,0.03,,0,1.5200466680614981e-06
+evening,close segment (both ways),Strada Protopop George Dragomir,W,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,,1,0.064,-0.32,1.07,,0,3.55223278760141e-06
+sunday,close segment (both ways),Strada Argeș,SW,Strada Cluj / Strada Argeș,Strada Argeș / Strada Béla Bartók,,1,0.064,-0.2,0.03,,0,2.0354021597666473e-06
+morning,close direction,Strada Sorin Titel,N,,,1,1,0.068,-0.32,1.14,,0,1.9237475000857927e-07
+morning,close segment (both ways),Strada Sorin Titel,N,Strada Sorin Titel / Strada Protopop George Dragomir,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,,1,0.068,-0.32,1.14,,0,1.9237475000857927e-07
+day,close segment (both ways),Strada Evliya Celebi,S,Strada Evliya Celebi / Strada Protopop George Popovici,Strada Evliya Celebi / Piața Bisericii,,1,0.068,-0.24,0.21,,0,0.0
+evening,close direction,Strada Retezat,SE,,,1,2,0.068,-0.34,0.07,,0,5.899336914835704e-07
+day,close direction,Strada Sorin Titel,N,,,1,1,0.069,-0.24,0.46,,0,9.297302094485138e-08
+day,close segment (both ways),Strada Sorin Titel,N,Strada Sorin Titel / Strada Protopop George Dragomir,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,,1,0.069,-0.24,0.46,,0,9.297302094485138e-08
+day,close direction,Strada Evliya Celebi,S,,,1,2,0.069,-0.24,0.21,,0,0.0
+day,close segment (both ways),Strada Evliya Celebi,S,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,Strada Evliya Celebi / Strada Protopop George Popovici,,1,0.069,-0.24,0.21,,0,0.0
+evening,-2 lane → bus,Bulevardul Regele Ferdinand I,SE,,,3,2,0.069,-0.35,0.0,16 E3,0.0,5.08095390528617e-06
+sunday,-2 lane → bus,Strada Surorile Martir Caceu,NE,,,3,4,0.069,-0.21,0.0,15 16 E2 E3 M3,0.0,2.5470826015834075e-06
+morning,close segment (both ways),(fără nume),W,Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,,1,0.071,-0.34,0.02,,0,0.0
+day,-1 lane → bus,Strada Arieș,NW,,,2,6,0.071,-0.25,0.0,15 E2,0.02,4.801500239830589e-06
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Feldioara / Strada 1 Decembrie 1918,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,,1,0.073,-0.34,0.0,,0,0.0
+sunday,-1 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.073,-0.22,0.0,,0,1.2978430391217214e-06
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Retezat,,1,0.074,-0.35,0.01,,0,6.917280262534338e-07
+sunday,-2 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.074,-0.23,0.0,,0,1.297822132363156e-06
+morning,-1 lane → bus,Strada Surorile Martir Caceu,NE,,,3,4,0.075,-0.35,0.0,15 16 E2 E3 M3,0.01,1.9620083468081232e-06
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Retezat,Strada 1 Decembrie 1918,,1,0.075,-0.35,0.0,,0,1.6394297909206348e-06
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,,1,0.075,-0.35,0.0,,0,1.6394297909206348e-06
+day,close segment (both ways),Strada Argeș,SW,Strada Cluj / Strada Argeș,Strada Argeș / Strada Béla Bartók,,1,0.076,-0.27,0.02,,0,1.4352779805590586e-07
+sunday,close direction,Strada Argeș,SW,,,1,2,0.078,-0.24,0.03,,0,2.035100840746226e-06
+sunday,close segment (both ways),Strada Argeș,SW,Strada Argeș / Strada Béla Bartók,Strada Mitropolit Varlaam / Strada Argeș,,1,0.078,-0.24,0.03,,0,2.035100840746226e-06
+morning,close segment (both ways),Piața Nicolae Bălcescu,SW,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,,1,0.078,-0.37,0.0,,0,2.57731835403783e-15
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Retezat,Strada 1 Decembrie 1918,,1,0.078,-0.24,0.0,,0,1.257227879526626e-06
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,,1,0.078,-0.24,0.0,,0,1.257227879526626e-06
+evening,close segment (both ways),Strada Béla Bartók,S,Strada Béla Bartók / Strada Ion Vidu,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,,1,0.079,-0.4,0.05,,0,1.3476834715488052e-06
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Feldioara / Strada 1 Decembrie 1918,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,,1,0.079,-0.24,0.0,,0,1.5198034529307548e-06
+morning,close segment (both ways),Strada Anghel Saligny,E,Strada Anghel Saligny / Strada Arieș,Strada Constanța / Strada Anghel Saligny,,2,0.081,-0.38,0.21,,0,8.76077197924883e-06
+day,close segment (both ways),Strada Ion Vidu,W,Strada Béla Bartók / Strada Ion Vidu,Strada Ion Vidu / Strada Putna,,1,0.083,-0.29,0.1,,0,3.3908998000543916e-08
+day,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,,1,0.083,-0.29,0.0,,0,3.5939871195876255e-08
+evening,close direction,Piața Bisericii,SW,,,1,3,0.084,-0.42,3.86,,0,6.76518541203105e-07
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,,1,0.084,-0.39,0.96,,0,2.7588251046627658e-06
+morning,close segment (both ways),Strada Argeș,SW,Strada Cluj / Strada Argeș,Strada Argeș / Strada Béla Bartók,,1,0.085,-0.4,0.12,,0,0.0
+day,close direction,Strada Constanța,NW,,,1,2,0.085,-0.3,0.0,,0,4.0732829325960354e-08
+sunday,close segment (both ways),Strada Martir Sorinel Leia,SE,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,Strada Martir Sorinel Leia / Strada Memorandului,,1,0.085,-0.26,0.0,,0,1.6944703391067242e-06
+evening,close segment (both ways),Strada Retezat,SE,Strada 1 Decembrie 1918 / Strada Retezat,Strada Retezat / Strada Craiova,,2,0.086,-0.43,0.07,,0,5.899280306949563e-07
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Retezat,Strada 1 Decembrie 1918,,1,0.087,-0.31,0.0,,0,2.350618868574321e-08
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,,1,0.087,-0.31,0.0,,0,2.350618868574321e-08
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Constanța / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Vâlcea,,1,0.087,-0.31,0.0,,0,3.908648065498956e-08
+morning,close segment (both ways),Piața Bisericii,SW,Piața Bisericii / Strada Protopop George Dragomir,Piața Bisericii / Strada Protopop George Dragomir,,2,0.088,-0.41,1.73,,0,9.683015872552968e-07
+day,-1 lane → bus,Calea Martirilor 1989,S,,,3,6,0.088,-0.31,0.0,15 E3 M3,0.01,4.800672268923767e-06
+day,close segment (both ways),Strada Béla Bartók,S,Strada Béla Bartók / Strada Ion Vidu,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,,1,0.088,-0.31,0.0,,0,3.593789092134666e-08
+morning,close segment (both ways),Strada Protopop George Dragomir,E,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,Strada Protopop George Dragomir,,1,0.089,-0.42,0.05,,0,0.0
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Retezat,,1,0.089,-0.27,0.0,,0,1.2663901526170894e-07
+evening,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,,1,0.09,-0.45,1.52,,0,4.45945237200411e-06
+sunday,close segment (both ways),Piața Bisericii,SW,Strada Evliya Celebi / Piața Bisericii,Piața Bisericii / Strada Protopop George Dragomir,,1,0.09,-0.28,0.09,,0,2.0196039849482912e-06
+evening,close segment (both ways),Strada Vâlcea,SW,Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Vâlcea,,2,0.091,-0.45,0.11,,0,3.147543595442488e-06
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Feldioara / Strada 1 Decembrie 1918,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,,1,0.093,-0.33,0.0,,0,3.593613546662379e-08
+day,close segment (both ways),Strada Vâlcea,SW,Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Vâlcea,,2,0.093,-0.33,0.0,,0,6.738632682223689e-08
+morning,close direction,Strada Argeș,SW,,,1,2,0.095,-0.45,0.26,,0,0.0
+morning,close segment (both ways),Strada Argeș,SW,Strada Argeș / Strada Béla Bartók,Strada Mitropolit Varlaam / Strada Argeș,,1,0.095,-0.45,0.26,,0,0.0
+morning,close segment (both ways),Strada Protopop George Dragomir,E,Piața Bisericii / Strada Protopop George Dragomir,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,,2,0.098,-0.46,1.83,,0,2.268618440597304e-06
+day,-2 lane → bus,Bulevardul Vasile Pârvan,W,,,3,5,0.098,-0.35,0.0,16 E3,0.0,3.5934600932033566e-08
+sunday,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Putna / Bulevardul Doctor Victor Babeș,,2,0.099,-0.3,0.01,,0,1.4915773555844582e-06
+day,close direction,Strada Argeș,SW,,,1,2,0.1,-0.35,0.13,,0,1.7251975491768451e-07
+day,close segment (both ways),Strada Argeș,SW,Strada Argeș / Strada Béla Bartók,Strada Mitropolit Varlaam / Strada Argeș,,1,0.1,-0.35,0.13,,0,1.7251975491768451e-07
+evening,close segment (both ways),(fără nume),W,Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,,1,0.1,-0.5,0.08,,0,1.281230819272419e-06
+morning,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,,1,0.103,-0.49,0.37,,0,9.689504785639456e-06
+sunday,close segment (both ways),(fără nume),W,Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,,1,0.103,-0.31,0.0,,0,1.5194399957403732e-06
+morning,-2 lane → bus,Bulevardul Liviu Rebreanu,E,,,3,6,0.105,-0.49,0.0,16 E2 M24,0.0,1.961424734287221e-06
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Retezat,,1,0.105,-0.37,0.0,,0,2.666369092712578e-07
+evening,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,,1,0.106,-0.53,0.04,,0,1.4381186472653996e-06
+day,-2 lane → bus,Strada Surorile Martir Caceu,NE,,,3,4,0.107,-0.38,0.0,15 16 E2 E3 M3,0.02,4.805484949081824e-06
+sunday,close segment (both ways),Bulevardul Mihai Viteazu,S,Strada Virgil Onițiu / Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu / Piața Nicolae Bălcescu,,1,0.107,-0.33,0.0,,0,1.5193778253992273e-06
+sunday,close segment (both ways),Piața Nicolae Bălcescu,SW,Bulevardul Mihai Viteazu / Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,0.107,-0.33,0.0,,0,1.5193778253992273e-06
+morning,close direction,Piața Vasile Adamachi,N,,,1,1,0.108,-0.51,6.17,,0,0.0
+morning,close segment (both ways),Piața Vasile Adamachi,N,Strada Cosminului / Strada Cozia,Strada Memorandului / Piața Vasile Adamachi,,1,0.108,-0.51,6.17,,0,0.0
+day,close segment (both ways),Strada Petre Râmneanțu,S,Strada Ioan Curea / Strada Petre Râmneanțu,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,,1,0.108,-0.38,0.02,,0,3.5930806268802224e-08
+sunday,-3 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.108,-0.33,0.02,,0,8.815959985892943e-07
+evening,-1 lane → bus,Strada Surorile Martir Caceu,NE,,,3,4,0.109,-0.55,0.0,15 16 E2 E3 M3,0.02,5.078921994274174e-06
+day,close direction,Strada Petre Râmneanțu,S,,,1,5,0.111,-0.39,0.02,,0,3.6667360932686615e-08
+day,-2 lane → bus,Strada Arieș,SE,,,4,13,0.111,-0.39,0.0,15 16 E2 E3 M24 M3,0.0,3.1195403579004465e-06
+evening,close segment (both ways),Strada Petre Râmneanțu,S,Strada Ioan Curea / Strada Petre Râmneanțu,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,,1,0.112,-0.56,0.05,,0,1.0087387774802377e-06
+evening,-1 lane → bus,Strada Cluj,S,,,4,6,0.112,-0.56,0.0,15 16 E2 E3 M24 M3,0.0,5.065749200794646e-06
+day,-2 lane → bus,Calea Martirilor 1989,S,,,3,6,0.113,-0.4,0.0,15 E3 M3,0.01,4.799481756492366e-06
+sunday,close segment (both ways),Piața Nicolae Bălcescu,SW,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,,1,0.113,-0.35,0.0,,0,1.5192763298154719e-06
+morning,close segment (both ways),Bulevardul Mihai Viteazu,S,Strada Virgil Onițiu / Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu / Piața Nicolae Bălcescu,,1,0.115,-0.54,0.0,,0,0.0
+morning,close segment (both ways),Piața Nicolae Bălcescu,SW,Bulevardul Mihai Viteazu / Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,0.115,-0.54,0.0,,0,0.0
+day,close segment (both ways),(fără nume),W,Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,,1,0.115,-0.41,0.0,,0,3.5887023653817254e-08
+evening,close direction,Strada Petre Râmneanțu,S,,,1,5,0.116,-0.58,0.05,,0,1.0055183184396295e-06
+morning,close direction,Piața Bisericii,NE,,,1,2,0.117,-0.55,0.97,,0,9.020692251551704e-07
+morning,close segment (both ways),Strada Martir Sorinel Leia,SE,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,,1,0.117,-0.55,0.97,,0,9.020692251551704e-07
+day,close segment (both ways),Strada Martir Sorinel Leia,SE,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,Strada Martir Sorinel Leia / Strada Memorandului,,1,0.118,-0.42,0.01,,0,1.728064417280058e-07
+day,close segment (both ways),Piața Bisericii,SW,Strada Evliya Celebi / Piața Bisericii,Piața Bisericii / Strada Protopop George Dragomir,,1,0.119,-0.42,0.18,,0,5.907232316604279e-08
+day,close segment (both ways),Piața Nicolae Bălcescu,SW,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,,1,0.12,-0.42,0.0,,0,3.592672975595375e-08
+morning,close direction,Strada Martir Sorinel Leia,SE,,,1,2,0.122,-0.57,1.04,,0,9.283814468319619e-07
+evening,close segment (both ways),(fără nume),NW,Bulevardul Eroilor de la Tisa,Aleea F.C. Ripensia,,1,0.124,-0.62,0.05,,0,1.2991250530761312e-06
+evening,-1 lane → bus,Bulevardul Vasile Pârvan,W,,,3,5,0.125,-0.63,0.0,16 E3,0.0,7.004536454243128e-06
+day,close segment (both ways),Bulevardul Mihai Viteazu,S,Strada Virgil Onițiu / Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu / Piața Nicolae Bălcescu,,1,0.126,-0.45,0.0,,0,3.5924341663584025e-08
+day,close segment (both ways),Piața Nicolae Bălcescu,SW,Bulevardul Mihai Viteazu / Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,0.126,-0.45,0.0,,0,3.5924341663584025e-08
+evening,-2 lane → bus,Bulevardul Liviu Rebreanu,E,,,3,6,0.13,-0.65,0.0,16 E2 M24,0.0,5.07786878977942e-06
+morning,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Putna / Bulevardul Doctor Victor Babeș,,2,0.131,-0.62,0.1,,0,0.0
+evening,close segment (both ways),Strada Anghel Saligny,E,Strada Craiova / Strada Anghel Saligny,Strada Feleacul / Strada Anghel Saligny,,2,0.133,-0.67,0.83,,0,7.41060329178103e-06
+morning,close direction,Strada Anghel Saligny,W,,,1,4,0.134,-0.63,0.28,,0,1.471036605112462e-06
+sunday,close segment (both ways),Strada Ion Vidu,W,Strada Ion Vidu / Strada Putna,Strada Petre Râmneanțu / Strada Ion Vidu,,1,0.136,-0.42,0.1,,0,1.5445785334408378e-06
+day,close direction,Strada Anghel Saligny,W,,,1,4,0.138,-0.49,0.12,,0,2.9273563663427946e-08
+evening,close segment (both ways),Piața Nicolae Bălcescu,SW,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,Piața Nicolae Bălcescu / Strada Ciprian Porumbescu,,1,0.139,-0.7,0.04,,0,1.2922478001749151e-06
+morning,-1 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.142,-0.67,1.4,,0,9.738420169361567e-06
+evening,close segment (both ways),Strada Ion Vidu,W,Strada Ion Vidu / Strada Putna,Strada Petre Râmneanțu / Strada Ion Vidu,,1,0.143,-0.72,0.11,,0,1.013998795456277e-06
+morning,-2 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.144,-0.68,1.4,,0,8.881200598325279e-06
+morning,close direction,Strada Severin,SE,,,1,2,0.144,-0.68,0.67,,0,5.5178298257171015e-06
+morning,close segment (both ways),Strada Severin,SE,Strada Severin / Strada 1 Decembrie 1918,Strada Severin / Strada Memorandului,,1,0.144,-0.68,0.67,,0,5.5178298257171015e-06
+evening,close direction,Strada Anghel Saligny,W,,,1,4,0.144,-0.72,0.14,,0,2.978694253337044e-06
+day,-1 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.145,-0.52,0.0,,0,3.7685448325210917e-06
+day,-2 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.149,-0.53,0.0,,0,3.906595900645046e-06
+sunday,close segment (both ways),(fără nume),NW,Bulevardul Eroilor de la Tisa,Aleea F.C. Ripensia,,1,0.15,-0.46,0.0,,0,1.5187193304413694e-06
+day,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Putna / Bulevardul Doctor Victor Babeș,,2,0.153,-0.54,0.02,,0,5.279838289823552e-08
+sunday,close segment (both ways),Strada Putna,N,Strada Putna / Bulevardul Doctor Victor Babeș,Strada Ion Vidu / Strada Putna,,2,0.155,-0.48,0.16,,0,1.5539933060929237e-06
+sunday,close segment (both ways),Aleea F.C. Ripensia,NW,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,Aleea F.C. Ripensia,,1,0.155,-0.48,0.0,,0,1.51864046895215e-06
+morning,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,,1,0.156,-0.73,1.32,,0,3.2187447898061754e-06
+morning,close direction,Strada Ioan Curea,E,,,1,1,0.156,-0.73,0.11,,0,0.0
+morning,close segment (both ways),Strada Ioan Curea,E,Strada Traian Lalescu / Strada Ioan Curea,Strada Ioan Curea / Strada Petre Râmneanțu,,1,0.156,-0.73,0.11,,0,0.0
+morning,close segment (both ways),Strada Anghel Saligny,E,Strada Craiova / Strada Anghel Saligny,Strada Feleacul / Strada Anghel Saligny,,2,0.159,-0.75,0.35,,0,6.137073982245364e-06
+morning,close segment (both ways),(fără nume),NW,Bulevardul Eroilor de la Tisa,Aleea F.C. Ripensia,,1,0.159,-0.75,0.0,,0,0.0
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Constanța / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Vâlcea,,1,0.16,-0.49,0.01,,0,0.0
+day,close segment (both ways),Aleea F.C. Ripensia,NW,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,Aleea F.C. Ripensia,,1,0.161,-0.57,0.0,,0,3.591201387208376e-08
+day,close segment (both ways),(fără nume),NW,Bulevardul Eroilor de la Tisa,Aleea F.C. Ripensia,,1,0.161,-0.57,0.0,,0,3.5911730866515245e-08
+sunday,close direction,Strada Constanța,NW,,,1,2,0.162,-0.5,0.0,,0,1.4108370716169115e-06
+evening,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Putna / Bulevardul Doctor Victor Babeș,,2,0.164,-0.82,0.16,,0,8.629799762562252e-08
+sunday,-2 lane → bus,Strada Cluj,S,,,4,6,0.165,-0.51,0.0,15 16 E2 E3 M24 M3,0.0,1.3055402023902882e-06
+morning,-3 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.168,-0.79,1.62,,0,3.6859210061926834e-06
+evening,close direction,Strada Severin,SE,,,1,2,0.171,-0.86,1.48,,0,1.1792386811078371e-06
+evening,close segment (both ways),Strada Severin,SE,Strada Severin / Strada 1 Decembrie 1918,Strada Severin / Strada Memorandului,,1,0.171,-0.86,1.48,,0,1.1792386811078371e-06
+sunday,-2 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,0.171,-0.52,0.0,15 16 E2 E3 M3,0.0,3.7610378646615173e-06
+sunday,close segment (both ways),Strada Vâlcea,SW,Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Vâlcea,,2,0.173,-0.53,0.0,,0,0.0
+sunday,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,,1,0.174,-0.53,0.14,,0,1.6767823097930628e-06
+sunday,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu / Strada Arieș,Strada Surorile Martir Caceu,,1,0.174,-0.53,0.03,,0,3.13468133055804e-06
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,,1,0.174,-0.53,0.0,,0,1.5800261547884286e-06
+sunday,close direction,Piața Bisericii,NE,,,1,2,0.175,-0.54,0.23,,0,2.2749336178577567e-06
+sunday,close segment (both ways),Strada Martir Sorinel Leia,SE,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,,1,0.175,-0.54,0.23,,0,2.2749336178577567e-06
+evening,-2 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.175,-0.88,0.0,15 16 E2 E3 M24 M3,0.02,6.807273874672471e-06
+morning,-2 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.176,-0.83,0.0,15 16 E2 E3 M24 M3,0.01,5.659810000937453e-06
+morning,-3 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.179,-0.84,0.0,15 16 E2 E3 M24 M3,0.01,5.659655660555337e-06
+evening,-3 lane → bus,Piața Leonardo da Vinci,SW,,,4,5,0.18,-0.9,0.0,15 16 E2 E3 M24 M3,0.02,6.806943878844754e-06
+sunday,close direction,Strada Severin,SE,,,1,2,0.181,-0.56,0.19,,0,1.0096592985159062e-07
+sunday,close segment (both ways),Strada Severin,SE,Strada Severin / Strada 1 Decembrie 1918,Strada Severin / Strada Memorandului,,1,0.181,-0.56,0.19,,0,1.0096592985159062e-07
+evening,close segment (both ways),Bulevardul Mihai Viteazu,S,Strada Virgil Onițiu / Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu / Piața Nicolae Bălcescu,,1,0.182,-0.91,0.05,,0,1.291692538435191e-06
+evening,close segment (both ways),Piața Nicolae Bălcescu,SW,Bulevardul Mihai Viteazu / Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,0.182,-0.91,0.05,,0,1.291692538435191e-06
+morning,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,0.183,-0.86,0.0,,0,0.0
+evening,close segment (both ways),Piața Bisericii,SW,Strada Evliya Celebi / Piața Bisericii,Piața Bisericii / Strada Protopop George Dragomir,,1,0.184,-0.92,0.56,,0,3.8952374268909776e-07
+evening,close segment (both ways),Strada Ion Vidu,W,Strada Cluj / Strada Ion Vidu,Strada Béla Bartók / Strada Ion Vidu,,1,0.184,-0.92,0.24,,0,1.006832952095781e-06
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Grigore Constantin Moisil / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,,1,0.185,-0.66,0.19,,0,9.604193700134444e-06
+morning,close direction,Strada Protopop George Dragomir,E,,,1,5,0.186,-0.88,0.69,,0,1.639245111168759e-06
+day,close segment (both ways),Strada Putna,N,Strada Mitropolit Varlaam / Strada Putna,Strada Putna / Bulevardul Doctor Victor Babeș,,1,0.187,-0.66,0.85,,0,1.210892739515303e-06
+day,-3 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.187,-0.66,0.08,,0,5.1292591259157926e-06
+evening,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,0.189,-0.95,0.03,,0,1.3043256015985122e-06
+sunday,close direction,Strada Martir Sorinel Leia,SE,,,1,2,0.19,-0.58,0.3,,0,2.2745858389551506e-06
+day,close segment (both ways),Strada Ion Vidu,W,Strada Ion Vidu / Strada Putna,Strada Petre Râmneanțu / Strada Ion Vidu,,1,0.19,-0.67,0.18,,0,7.459796085964165e-08
+sunday,close segment (both ways),Strada Ion Vidu,W,Strada Cluj / Strada Ion Vidu,Strada Béla Bartók / Strada Ion Vidu,,1,0.192,-0.59,0.02,,0,1.518088078647966e-06
+sunday,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,0.195,-0.6,0.0,,0,1.5180442192566778e-06
+day,close direction,Strada Severin,SE,,,1,2,0.196,-0.7,0.17,,0,5.784612794543298e-06
+day,close segment (both ways),Strada Severin,SE,Strada Severin / Strada 1 Decembrie 1918,Strada Severin / Strada Memorandului,,1,0.196,-0.7,0.17,,0,5.784612794543298e-06
+evening,close segment (both ways),Strada Martir Sorinel Leia,SE,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,Strada Martir Sorinel Leia / Strada Memorandului,,1,0.196,-0.98,0.04,,0,6.956487946821673e-07
+evening,-2 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.197,-0.99,0.31,,0,1.7662283821009851e-06
+sunday,close direction,Strada Protopop George Dragomir,E,,,1,5,0.199,-0.61,0.14,,0,2.2743907321329084e-06
+day,close direction,Piața Bisericii,NE,,,1,2,0.201,-0.71,0.32,,0,6.90943948563133e-10
+day,close segment (both ways),Strada Martir Sorinel Leia,SE,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,,1,0.201,-0.71,0.32,,0,6.90943948563133e-10
+evening,-1 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.201,-1.01,0.27,,0,9.305914833639188e-06
+day,close segment (both ways),Strada Putna,N,Strada Putna / Bulevardul Doctor Victor Babeș,Strada Ion Vidu / Strada Putna,,2,0.202,-0.71,0.26,,0,1.0425855013646617e-07
+morning,close segment (both ways),Aleea F.C. Ripensia,NW,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,Aleea F.C. Ripensia,,1,0.202,-0.95,0.01,,0,0.0
+evening,close direction,Strada Minerva,SE,,,1,1,0.206,-1.03,1.55,,0,4.769978556440152e-06
+evening,close segment (both ways),Strada Minerva,SE,Strada Minerva / Bulevardul Eroilor de la Tisa,Strada Diana / Strada Minerva,,1,0.206,-1.03,1.55,,0,4.769978556440152e-06
+sunday,close segment (both ways),Strada Diana,SW,Strada Diana / Strada Constanța,Strada Diana / Strada Cluj,,2,0.207,-0.64,0.03,,0,2.1698333480172462e-06
+morning,-1 lane → bus,Bulevardul Vasile Pârvan,W,,,3,5,0.207,-0.97,0.0,16 E3,0.01,9.482523636276412e-06
+morning,-1 lane → bus,Strada Arieș,NW,,,2,6,0.208,-0.98,0.0,15 E2,0.0,1.9594028466077108e-06
+sunday,close segment (both ways),Strada Anghel Saligny,E,Strada Craiova / Strada Anghel Saligny,Strada Feleacul / Strada Anghel Saligny,,2,0.209,-0.64,0.09,,0,1.7480428442798343e-06
+evening,close segment (both ways),Aleea F.C. Ripensia,NW,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,Aleea F.C. Ripensia,,1,0.209,-1.05,0.05,,0,1.0062772548852694e-06
+day,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,0.209,-0.74,0.0,,0,3.589464765593532e-08
+day,close segment (both ways),Strada Mitropolit Varlaam,W,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,Strada Mitropolit Varlaam / Strada Argeș,,2,0.211,-0.75,1.01,,0,1.3289388928826515e-06
+day,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,,1,0.211,-0.75,0.15,,0,3.4650663397763083e-07
+day,close segment (both ways),Strada Protopop George Dragomir,W,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,,1,0.212,-0.75,0.28,,0,0.0
+sunday,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,,1,0.212,-0.65,0.13,,0,1.6761594723262293e-06
+sunday,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,Strada Traian Lalescu / Strada Doctor Aurel Cândea,,1,0.212,-0.65,0.13,,0,1.6761594723262293e-06
+evening,-3 lane → bus,Bulevardul Mihai Viteazu,N,,,4,4,0.215,-1.08,0.46,,0,9.082152658103613e-06
+day,close segment (both ways),Strada Anghel Saligny,E,Strada Craiova / Strada Anghel Saligny,Strada Feleacul / Strada Anghel Saligny,,2,0.216,-0.76,0.02,,0,1.0349956924336422e-08
+day,close direction,Strada Martir Sorinel Leia,SE,,,1,2,0.217,-0.77,0.4,,0,1.4749928953388052e-08
+morning,close segment (both ways),Strada Anghel Saligny,E,Strada Constanța / Strada Anghel Saligny,Strada Craiova / Strada Anghel Saligny,,2,0.218,-1.03,0.72,,0,4.839612937543516e-06
+sunday,-3 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,0.219,-0.67,0.0,15 16 E2 E3 M3,0.0,3.8100230896422222e-06
+evening,close direction,Piața Vasile Adamachi,N,,,1,1,0.221,-1.11,5.04,,0,6.492479477419895e-06
+evening,close segment (both ways),Piața Vasile Adamachi,N,Strada Cosminului / Strada Cozia,Strada Memorandului / Piața Vasile Adamachi,,1,0.221,-1.11,5.04,,0,6.492479477419895e-06
+day,close segment (both ways),Strada Diana,SW,Strada Diana / Strada Constanța,Strada Diana / Strada Cluj,,2,0.225,-0.8,0.02,,0,1.8480775665274438e-07
+sunday,close segment (both ways),Strada Putna,N,Strada Mitropolit Varlaam / Strada Putna,Strada Putna / Bulevardul Doctor Victor Babeș,,1,0.23,-0.7,0.77,,0,3.652851997817143e-06
+evening,close direction,Piața Bisericii,NE,,,1,2,0.233,-1.17,0.66,,0,4.1534292246504954e-07
+evening,close segment (both ways),Strada Martir Sorinel Leia,SE,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,,1,0.233,-1.17,0.66,,0,4.1534292246504954e-07
+evening,close segment (both ways),Strada Putna,N,Strada Putna / Bulevardul Doctor Victor Babeș,Strada Ion Vidu / Strada Putna,,2,0.233,-1.17,0.27,,0,5.2643289543262605e-06
+evening,close segment (both ways),Strada Anghel Saligny,E,Strada Constanța / Strada Anghel Saligny,Strada Craiova / Strada Anghel Saligny,,2,0.234,-1.18,1.38,,0,8.470192539747374e-06
+sunday,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Traian Lalescu / Strada Doctor Aurel Cândea,,2,0.234,-0.72,0.01,,0,1.489572093996933e-06
+evening,close direction,Strada Martir Sorinel Leia,SE,,,1,2,0.235,-1.18,1.09,,0,4.153362420821527e-07
+day,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Argeș,Strada Mitropolit Varlaam / Strada Putna,,1,0.235,-0.83,0.86,,0,1.285064190366159e-06
+day,close direction,Strada Protopop George Dragomir,E,,,1,5,0.24,-0.85,0.17,,0,7.463245574005157e-07
+day,close segment (both ways),Strada Ion Vidu,W,Strada Cluj / Strada Ion Vidu,Strada Béla Bartók / Strada Ion Vidu,,1,0.241,-0.86,0.1,,0,3.5542748721016436e-08
+day,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu / Strada Arieș,Strada Surorile Martir Caceu,,1,0.241,-0.85,0.05,,0,3.751876564055792e-06
+sunday,close segment (both ways),Strada Mitropolit Varlaam,W,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,Strada Mitropolit Varlaam / Strada Argeș,,2,0.242,-0.74,0.82,,0,3.6679936644234442e-06
+morning,close segment (both ways),Strada Diana,SW,Strada Diana / Strada Constanța,Strada Diana / Strada Cluj,,2,0.244,-1.15,0.12,,0,1.619188476902278e-06
+sunday,close segment (both ways),Strada Protopop George Dragomir,W,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,,1,0.244,-0.75,0.07,,0,1.0631190589214496e-06
+day,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Mitropolit Varlaam,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,,1,0.246,-0.87,0.18,,0,1.102377287110364e-06
+day,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Protopop George Popovici,Strada Traian Lalescu / Strada Doctor Aurel Cândea,,1,0.246,-0.87,0.18,,0,1.102377287110364e-06
+morning,close segment (both ways),Strada Ion Vidu,W,Strada Cluj / Strada Ion Vidu,Strada Béla Bartók / Strada Ion Vidu,,1,0.247,-1.16,0.33,,0,0.0
+sunday,close direction,Strada Anghel Saligny,W,,,1,4,0.247,-0.76,0.07,,0,1.555043323388846e-06
+evening,close segment (both ways),Piața Bisericii,SW,Piața Bisericii / Strada Protopop George Dragomir,Piața Bisericii / Strada Protopop George Dragomir,,2,0.248,-1.25,1.17,,0,3.9526702218605505e-06
+evening,close segment (both ways),Strada Protopop George Dragomir,E,Piața Bisericii / Strada Protopop George Dragomir,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,,2,0.25,-1.26,1.33,,0,5.129510969480101e-07
+day,-2 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,0.251,-0.89,0.0,15 16 E2 E3 M3,0.02,3.9252950343958615e-07
+day,close direction,Strada Mitropolit Varlaam,W,,,1,5,0.252,-0.89,0.86,,0,1.2845958412230996e-06
+morning,-1 lane → bus,Calea Martirilor 1989,S,,,3,6,0.252,-1.18,0.0,15 E3 M3,0.01,1.958548310749684e-06
+evening,-1 lane → bus,Strada Arieș,NW,,,2,6,0.253,-1.27,0.0,15 E2,0.02,5.071622723302947e-06
+sunday,close segment (both ways),Strada Anghel Saligny,W,Strada Surorile Martir Caceu / Strada Anghel Saligny,Strada Feleacul / Strada Anghel Saligny,,2,0.257,-0.79,0.01,,0,1.910493509054696e-06
+day,-2 lane → bus,Strada Cluj,S,,,4,6,0.262,-0.93,0.0,15 16 E2 E3 M24 M3,0.0,4.794548130651011e-06
+morning,close segment (both ways),Strada Anghel Saligny,W,Strada Surorile Martir Caceu / Strada Anghel Saligny,Strada Feleacul / Strada Anghel Saligny,,2,0.265,-1.25,0.03,,0,1.7259646017750522e-06
+morning,close segment (both ways),Strada Putna,N,Strada Putna / Bulevardul Doctor Victor Babeș,Strada Ion Vidu / Strada Putna,,2,0.267,-1.25,0.66,,0,5.868119846935887e-06
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Retezat,Strada 1 Decembrie 1918,,1,0.269,-1.35,0.08,,0,5.399225707600008e-07
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,,1,0.269,-1.35,0.08,,0,5.399225707600008e-07
+morning,close segment (both ways),Strada Constanța,SE,Strada Constanța / Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Constanța,,2,0.27,-1.27,0.06,,0,4.8288030593456195e-06
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Constanța,Strada Constanța / Strada 1 Decembrie 1918,,1,0.272,-1.28,0.06,,0,4.828700699824376e-06
+day,close direction,Strada Ioan Curea,E,,,1,1,0.272,-0.96,0.04,,0,6.829044719517485e-08
+day,close segment (both ways),Strada Ioan Curea,E,Strada Traian Lalescu / Strada Ioan Curea,Strada Ioan Curea / Strada Petre Râmneanțu,,1,0.272,-0.96,0.04,,0,6.829044719517485e-08
+day,close segment (both ways),Strada Anghel Saligny,W,Strada Surorile Martir Caceu / Strada Anghel Saligny,Strada Feleacul / Strada Anghel Saligny,,2,0.272,-0.96,0.01,,0,7.556824700479524e-07
+evening,close segment (both ways),Strada Constanța,SE,Strada Constanța / Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Constanța,,2,0.277,-1.39,0.08,,0,1.1637836729832723e-06
+morning,-2 lane → bus,Strada Arieș,SE,,,4,13,0.277,-1.3,0.0,15 16 E2 E3 M24 M3,0.0,1.9580516473981046e-06
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Constanța,Strada Constanța / Strada 1 Decembrie 1918,,1,0.281,-1.41,0.07,,0,3.028577490256388e-06
+evening,close direction,Strada Protopop George Dragomir,E,,,1,5,0.282,-1.41,0.59,,0,1.2018572089479981e-07
+sunday,close segment (both ways),Strada Mitropolit Varlaam,W,Strada Mitropolit Varlaam / Strada Argeș,Strada Mitropolit Varlaam / Strada Putna,,1,0.287,-0.88,0.77,,0,4.307470020172388e-06
+morning,close direction,Strada Putna,N,,,1,2,0.291,-1.37,2.51,,0,3.3906402316439506e-06
+evening,close segment (both ways),Strada Constanța,SE,Strada Constanța / Strada 1 Decembrie 1918,Strada Constanța / Strada Anghel Saligny,,2,0.292,-1.46,0.2,,0,1.8162556920114907e-06
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,Strada Severin / Strada 1 Decembrie 1918,,1,0.294,-0.9,0.55,,0,1.3985659704015652e-06
+evening,close segment (both ways),Strada Anghel Saligny,W,Strada Surorile Martir Caceu / Strada Anghel Saligny,Strada Feleacul / Strada Anghel Saligny,,2,0.294,-1.47,0.2,,0,8.042717216182048e-07
+day,close segment (both ways),Strada Anghel Saligny,E,Strada Constanța / Strada Anghel Saligny,Strada Craiova / Strada Anghel Saligny,,2,0.296,-1.05,0.15,,0,6.075189471748228e-06
+morning,close direction,Strada Minerva,SE,,,1,1,0.298,-1.4,0.93,,0,4.768876970321846e-06
+morning,close segment (both ways),Strada Minerva,SE,Strada Minerva / Bulevardul Eroilor de la Tisa,Strada Diana / Strada Minerva,,1,0.298,-1.4,0.93,,0,4.768876970321846e-06
+sunday,close direction,Strada Mitropolit Varlaam,W,,,1,5,0.304,-0.93,0.77,,0,4.3066723245981134e-06
+sunday,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Strada Traian Lalescu / Strada Doctor Aurel Cândea,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,,2,0.304,-0.93,0.03,,0,1.488528844356397e-06
+morning,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Traian Lalescu / Strada Doctor Aurel Cândea,,2,0.305,-1.43,0.39,,0,2.780285226753746e-06
+sunday,close direction,Strada Ion Vidu,W,,,1,3,0.307,-0.94,0.1,,0,1.5419399285260574e-06
+morning,close segment (both ways),Strada Constanța,SE,Strada Constanța / Strada 1 Decembrie 1918,Strada Constanța / Strada Anghel Saligny,,2,0.308,-1.45,0.07,,0,3.988194141108265e-06
+morning,close segment (both ways),Piața Nicolae Bălcescu,SW,Piața Nicolae Bălcescu,Strada Gheorghe Doja / Piața Nicolae Bălcescu,,1,0.308,-1.45,0.0,,0,0.0
+sunday,close segment (both ways),Piața Nicolae Bălcescu,SW,Piața Nicolae Bălcescu,Strada Gheorghe Doja / Piața Nicolae Bălcescu,,1,0.308,-0.94,0.0,,0,1.5163351256592316e-06
+evening,-2 lane → bus,Bulevardul Vasile Pârvan,W,,,3,5,0.309,-1.55,0.13,16 E3,0.0,9.549547705864392e-06
+day,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Traian Lalescu / Strada Doctor Aurel Cândea,,2,0.312,-1.11,0.01,,0,5.271480668407678e-08
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,,1,0.313,-1.47,2.09,,0,0.0
+day,-3 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,0.313,-1.11,0.0,15 16 E2 E3 M3,0.02,0.0
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,Strada Severin / Strada 1 Decembrie 1918,,1,0.317,-1.49,2.27,,0,1.740810706989957e-06
+day,close direction,Strada Minerva,SE,,,1,1,0.317,-1.12,0.31,,0,2.451368814502727e-06
+day,close segment (both ways),Strada Minerva,SE,Strada Minerva / Bulevardul Eroilor de la Tisa,Strada Diana / Strada Minerva,,1,0.317,-1.12,0.31,,0,2.451368814502727e-06
+morning,close segment (both ways),Strada Ion Vidu,W,Strada Ion Vidu / Strada Putna,Strada Petre Râmneanțu / Strada Ion Vidu,,1,0.318,-1.49,0.57,,0,4.538392843537718e-06
+evening,close segment (both ways),Strada Diana,SW,Strada Diana / Strada Constanța,Strada Diana / Strada Cluj,,2,0.321,-1.61,0.09,,0,9.132778355492087e-08
+morning,-2 lane → bus,Calea Martirilor 1989,S,,,3,6,0.321,-1.51,0.0,15 E3 M3,0.01,1.9571877721376325e-06
+day,close segment (both ways),Strada Constanța,SE,Strada Constanța / Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Constanța,,2,0.321,-1.14,0.0,,0,3.881288099295634e-09
+evening,close direction,Strada Ion Vidu,W,,,1,3,0.322,-1.61,0.2,,0,1.019893433157947e-06
+morning,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu / Strada Arieș,Strada Surorile Martir Caceu,,1,0.322,-1.51,0.14,,0,4.174683837620405e-06
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Constanța,Strada Constanța / Strada 1 Decembrie 1918,,1,0.324,-1.15,0.0,,0,3.881153769383875e-09
+day,close segment (both ways),Piața Nicolae Bălcescu,SW,Piața Nicolae Bălcescu,Strada Gheorghe Doja / Piața Nicolae Bălcescu,,1,0.326,-1.15,0.0,,0,3.5852911667509964e-08
+evening,-1 lane → bus,Calea Martirilor 1989,S,,,3,6,0.326,-1.64,0.0,15 E3 M3,0.01,5.067940731928206e-06
+evening,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș / Strada Petre Râmneanțu,Strada Traian Lalescu / Strada Doctor Aurel Cândea,,2,0.331,-1.66,0.22,,0,1.037515605148308e-06
+day,close segment (both ways),Calea Martirilor 1989,N,Calea Martirilor 1989,Strada Arieș / Calea Martirilor 1989,,1,0.331,-1.17,0.0,,0,4.600192981002143e-08
+day,close segment (both ways),Calea Martirilor 1989,N,Strada Arieș / Calea Martirilor 1989,Strada Surorile Martir Caceu / Calea Martirilor 1989,,1,0.331,-1.17,0.0,,0,4.600192981002143e-08
+sunday,close segment (both ways),Calea Martirilor 1989,N,Calea Martirilor 1989,Strada Arieș / Calea Martirilor 1989,,1,0.332,-1.02,0.0,,0,1.515970362818638e-06
+sunday,close segment (both ways),Calea Martirilor 1989,N,Strada Arieș / Calea Martirilor 1989,Strada Surorile Martir Caceu / Calea Martirilor 1989,,1,0.332,-1.02,0.0,,0,1.515970362818638e-06
+morning,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,,1,0.333,-1.57,2.33,,0,8.527850240858042e-06
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,,1,0.333,-1.02,0.45,,0,1.781903728060351e-06
+morning,-2 lane → bus,Strada Surorile Martir Caceu,NE,,,3,4,0.334,-1.57,0.01,15 16 E2 E3 M3,0.01,0.0
+morning,-2 lane → bus,Bulevardul Vasile Pârvan,W,,,3,5,0.336,-1.58,0.0,16 E3,0.01,0.0
+sunday,close direction,Strada Minerva,SE,,,1,1,0.342,-1.05,0.22,,0,4.867371876579999e-08
+sunday,close segment (both ways),Strada Minerva,SE,Strada Minerva / Bulevardul Eroilor de la Tisa,Strada Diana / Strada Minerva,,1,0.342,-1.05,0.22,,0,4.867371876579999e-08
+morning,close segment (both ways),Calea Martirilor 1989,N,Calea Martirilor 1989,Strada Arieș / Calea Martirilor 1989,,1,0.342,-1.61,0.04,,0,0.0
+morning,close segment (both ways),Calea Martirilor 1989,N,Strada Arieș / Calea Martirilor 1989,Strada Surorile Martir Caceu / Calea Martirilor 1989,,1,0.342,-1.61,0.04,,0,0.0
+sunday,close segment (both ways),Strada Constanța,SE,Strada Constanța / Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Constanța,,2,0.344,-1.05,0.13,,0,0.0
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Constanța,Strada Constanța / Strada 1 Decembrie 1918,,1,0.344,-1.06,0.12,,0,0.0
+day,close direction,Strada Putna,N,,,1,2,0.348,-1.24,0.9,,0,1.3668786361199318e-06
+sunday,close direction,Strada Putna,N,,,1,2,0.348,-1.07,0.77,,0,3.6914856381270104e-06
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Vâlcea,Strada 1 Decembrie 1918 / Strada Retezat,,1,0.35,-1.75,0.09,,0,2.725179257527977e-06
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,Strada Severin / Strada 1 Decembrie 1918,,1,0.357,-1.26,0.8,,0,3.4878137944595604e-06
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,,1,0.358,-1.8,3.22,,0,4.785098363529371e-07
+evening,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu / Strada Arieș,Strada Surorile Martir Caceu,,1,0.373,-1.87,0.92,,0,1.054201625244474e-06
+sunday,close segment (both ways),Strada Anghel Saligny,E,Strada Constanța / Strada Anghel Saligny,Strada Craiova / Strada Anghel Saligny,,2,0.374,-1.15,0.16,,0,6.652523053854038e-08
+evening,close direction,Strada Anghel Saligny,E,,,1,4,0.376,-1.88,1.5,,0,1.059917486068775e-06
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,,1,0.376,-1.33,0.54,,0,7.778612169648532e-06
+day,close direction,Piața Tineretului,NW,,,1,1,0.378,-1.34,0.38,,0,2.9254111524875888e-06
+day,close segment (both ways),Piața Tineretului,SE,Piața Tineretului / Strada Craiova,Piața Tineretului / Strada Surorile Martir Caceu,,2,0.378,-1.34,0.38,,0,2.9254111524875888e-06
+day,close segment (both ways),Strada Constanța,SE,Strada Constanța / Strada 1 Decembrie 1918,Strada Constanța / Strada Anghel Saligny,,2,0.379,-1.34,0.0,,0,5.388811360191155e-06
+day,close segment (both ways),Piața Bisericii,SW,Piața Bisericii / Strada Protopop George Dragomir,Piața Bisericii / Strada Protopop George Dragomir,,2,0.381,-1.35,0.36,,0,3.648819865462178e-07
+day,close segment (both ways),Strada Protopop George Dragomir,E,Piața Bisericii / Strada Protopop George Dragomir,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,,2,0.381,-1.35,0.36,,0,3.648819865462178e-07
+evening,close direction,Strada Ioan Curea,E,,,1,1,0.39,-1.95,0.25,,0,9.216562529758404e-07
+evening,close segment (both ways),Strada Ioan Curea,E,Strada Traian Lalescu / Strada Ioan Curea,Strada Ioan Curea / Strada Petre Râmneanțu,,1,0.39,-1.95,0.25,,0,9.216562529758404e-07
+sunday,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,Aleea F.C. Ripensia,,1,0.391,-1.2,0.0,,0,1.5150728271296504e-06
+morning,close direction,Strada Anghel Saligny,E,,,1,4,0.394,-1.85,1.08,,0,5.47901766669644e-06
+evening,close segment (both ways),Calea Martirilor 1989,N,Calea Martirilor 1989,Strada Arieș / Calea Martirilor 1989,,1,0.398,-2.0,0.07,,0,1.2997864728577514e-06
+evening,close segment (both ways),Calea Martirilor 1989,N,Strada Arieș / Calea Martirilor 1989,Strada Surorile Martir Caceu / Calea Martirilor 1989,,1,0.398,-2.0,0.07,,0,1.2997864728577514e-06
+day,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,Aleea F.C. Ripensia,,1,0.399,-1.41,0.0,,0,2.043473022353461e-07
+day,close direction,Strada Ion Vidu,W,,,1,3,0.406,-1.44,0.18,,0,7.44711879196039e-08
+day,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Strada Traian Lalescu / Strada Doctor Aurel Cândea,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,,2,0.406,-1.44,0.07,,0,0.0
+evening,-2 lane → bus,Strada Arieș,SE,,,4,13,0.407,-2.04,0.0,15 16 E2 E3 M24 M3,0.0,5.085042014835786e-06
+sunday,close segment (both ways),Piața Bisericii,SW,Piața Bisericii / Strada Protopop George Dragomir,Piața Bisericii / Strada Protopop George Dragomir,,2,0.409,-1.26,0.23,,0,1.7682694123411492e-06
+sunday,close segment (both ways),Strada Protopop George Dragomir,E,Piața Bisericii / Strada Protopop George Dragomir,Strada Protopop George Dragomir / Strada Martir Sorinel Leia,,2,0.409,-1.26,0.23,,0,1.7682694123411492e-06
+day,close direction,Strada Craiova,SW,,,1,3,0.411,-1.46,0.49,,0,3.6740202221381303e-07
+evening,close segment (both ways),Piața Nicolae Bălcescu,SW,Piața Nicolae Bălcescu,Strada Gheorghe Doja / Piața Nicolae Bălcescu,,1,0.412,-2.06,0.03,,0,1.301440520683308e-06
+day,close segment (both ways),Strada Craiova,SW,Piața Tineretului / Strada Craiova,Strada Craiova / Strada Memorandului,,1,0.413,-1.46,0.4,,0,2.987363713292277e-07
+evening,-2 lane → bus,Calea Martirilor 1989,S,,,3,6,0.418,-2.1,0.0,15 E3 M3,0.01,5.063315397856264e-06
+sunday,close direction,Piața Tineretului,NW,,,1,1,0.424,-1.3,0.16,,0,3.2518309148815335e-06
+sunday,close segment (both ways),Piața Tineretului,SE,Piața Tineretului / Strada Craiova,Piața Tineretului / Strada Surorile Martir Caceu,,2,0.424,-1.3,0.16,,0,3.2518309148815335e-06
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Martir Sorinel Leia,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,,1,0.425,-2.13,3.19,,0,4.4802366841941e-06
+evening,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,Strada Putna / Bulevardul Doctor Victor Babeș,,2,0.433,-2.17,2.84,,0,0.0
+day,close segment (both ways),Strada Protopop George Dragomir,W,Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,,1,0.433,-1.53,0.53,,0,4.8396148138711624e-08
+morning,close segment (both ways),Strada Arieș,SE,Strada Arieș,Bulevardul Liviu Rebreanu / Strada Arieș,,1,0.433,-2.04,0.24,,0,3.652066915184398e-06
+evening,close segment (both ways),Strada Constanța,SE,Strada Diana / Strada Constanța,Strada Constanța / Strada Vâlcea,,1,0.437,-2.19,2.99,,0,2.0825451380212017e-06
+sunday,close segment (both ways),Strada Protopop George Dragomir,W,Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,,1,0.441,-1.35,0.26,,0,1.5514045369292282e-06
+sunday,close direction,Strada Anghel Saligny,E,,,1,4,0.441,-1.35,0.17,,0,1.0723833108953114e-07
+morning,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Strada Traian Lalescu / Strada Doctor Aurel Cândea,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,,2,0.442,-2.08,1.25,,0,1.8308037497470605e-06
+morning,-2 lane → bus,Strada Cluj,S,,,4,6,0.448,-2.11,0.24,15 16 E2 E3 M24 M3,0.03,3.486746850722494e-08
+sunday,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,,2,0.45,-1.38,0.02,,0,1.5015974463862028e-06
+sunday,close segment (both ways),Strada Craiova,SW,Piața Tineretului / Strada Craiova,Strada Craiova / Strada Memorandului,,1,0.451,-1.38,0.14,,0,1.5141660897483205e-06
+day,close direction,Strada Anghel Saligny,E,,,1,4,0.453,-1.6,0.22,,0,2.129898905989857e-07
+day,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,,1,0.455,-1.61,0.67,,0,0.0
+sunday,close direction,Strada Craiova,SW,,,1,3,0.455,-1.39,0.19,,0,1.514113035763162e-06
+evening,close direction,Strada Constanța,SE,,,1,3,0.455,-2.28,0.09,,0,4.754525688000033e-07
+morning,close direction,Strada Constanța,SE,,,1,3,0.456,-2.14,0.09,,0,4.524442071245756e-07
+day,close segment (both ways),Strada Protopop George Dragomir,E,Strada Protopop George Dragomir,Strada Sorin Titel / Strada Protopop George Dragomir,,2,0.459,-1.63,0.52,,0,3.31212650084391e-06
+sunday,close segment (both ways),Strada Protopop George Dragomir,E,Strada Protopop George Dragomir,Strada Sorin Titel / Strada Protopop George Dragomir,,2,0.46,-1.41,0.26,,0,4.1039848605613e-06
+evening,-2 lane → bus,Strada Surorile Martir Caceu,NE,,,3,4,0.461,-2.31,0.15,15 16 E2 E3 M3,0.02,1.025517458956351e-06
+day,close direction,Strada Cozia,SW,,,1,3,0.462,-1.64,3.4,,0,6.5986651813848975e-06
+day,close segment (both ways),Strada Cozia,SW,Strada Severin / Strada Cozia,Strada Cosminului / Strada Cozia,,1,0.462,-1.64,3.4,,0,6.5986651813848975e-06
+day,close segment (both ways),Strada Cozia,SW,Strada Cozia / Strada Arieș,Strada Severin / Strada Cozia,,1,0.462,-1.64,3.4,,0,6.5986651813848975e-06
+morning,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,Strada Putna / Bulevardul Doctor Victor Babeș,,2,0.462,-2.17,2.26,,0,6.950482884202221e-07
+morning,close segment (both ways),Strada Constanța,SE,Strada Diana / Strada Constanța,Strada Constanța / Strada Vâlcea,,1,0.464,-2.18,0.04,,0,4.523760322363511e-07
+morning,close direction,Strada Cosminului,N,,,1,2,0.467,-2.2,4.5,,0,2.3369452371606217e-06
+morning,close direction,Strada Diaconul Coresi,SW,,,1,2,0.467,-2.2,4.5,,0,2.3369452371606217e-06
+morning,close segment (both ways),Strada Diaconul Coresi,SW,Strada Diaconul Coresi / Calea Martirilor 1989,Strada Diaconul Coresi / Strada Cosminului,,1,0.467,-2.2,4.5,,0,2.3369452371606217e-06
+morning,close segment (both ways),Strada Cosminului,N,Strada Diaconul Coresi / Strada Cosminului,Strada Cosminului / Strada Cozia,,1,0.467,-2.2,4.5,,0,2.3369452371606217e-06
+day,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,Strada Putna / Bulevardul Doctor Victor Babeș,,2,0.489,-1.73,0.58,,0,8.681480207182237e-07
+sunday,-1 lane → bus,Strada Memorandului,NE,,,2,7,0.495,-1.52,0.16,,0,1.0604614340656666e-06
+sunday,close segment (both ways),Strada Arieș,SE,Strada Arieș,Bulevardul Liviu Rebreanu / Strada Arieș,,1,0.495,-1.52,0.0,,0,1.5135098843246928e-06
+sunday,close segment (both ways),Strada Constanța,SE,Strada Constanța / Strada 1 Decembrie 1918,Strada Constanța / Strada Anghel Saligny,,2,0.496,-1.52,0.15,,0,1.673968863002315e-08
+evening,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Strada Traian Lalescu / Strada Doctor Aurel Cândea,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,,2,0.498,-2.5,0.41,,0,1.1986894614255399e-06
+day,close segment (both ways),Strada Arieș,SE,Strada Arieș,Bulevardul Liviu Rebreanu / Strada Arieș,,1,0.503,-1.78,0.0,,0,1.3503786411967274e-07
+evening,close segment (both ways),Strada 1 Decembrie 1918,E,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,Strada Severin / Strada 1 Decembrie 1918,,1,0.511,-2.56,2.48,,0,3.608573561537671e-16
+sunday,close segment (both ways),Strada 1 Decembrie 1918,E,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,Strada 1 Decembrie 1918 / Strada Mitropolit Varlaam,,1,0.517,-1.58,0.52,,0,1.3954610301932414e-06
+sunday,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,Strada Putna / Bulevardul Doctor Victor Babeș,,2,0.521,-1.6,0.27,,0,5.089539137070673e-06
+sunday,close segment (both ways),Strada Independenței,N,Strada Independenței / Strada 1 Decembrie 1918,Piața Nicolae Bălcescu / Strada Independenței,,1,0.528,-1.62,0.07,,0,2.5075949360991543e-06
+day,close direction,Strada Constanța,SE,,,1,3,0.538,-1.91,0.0,,0,7.411370690096497e-07
+morning,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Strada Cluj / Bulevardul Eroilor de la Tisa,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,,2,0.546,-2.57,2.37,,0,9.481603148444261e-07
+day,close segment (both ways),Strada Constanța,SE,Strada Diana / Strada Constanța,Strada Constanța / Strada Vâlcea,,1,0.55,-1.95,0.0,,0,7.835010762717697e-07
+evening,close segment (both ways),Bulevardul Regele Ferdinand I,SE,Bulevardul Regele Ferdinand I,Bulevardul Regele Ferdinand I / Strada 20 Decembrie 1989,,1,0.557,-2.79,0.05,,0,1.2868720974363516e-06
+morning,-1 lane → bus,Strada Memorandului,NE,,,2,7,0.56,-2.63,5.31,,0,1.524124702817639e-06
+morning,close segment (both ways),Bulevardul Regele Ferdinand I,SE,Bulevardul Regele Ferdinand I,Bulevardul Regele Ferdinand I / Strada 20 Decembrie 1989,,1,0.568,-2.67,0.0,,0,0.0
+sunday,close segment (both ways),Bulevardul Regele Ferdinand I,SE,Bulevardul Regele Ferdinand I,Bulevardul Regele Ferdinand I / Strada 20 Decembrie 1989,,1,0.571,-1.75,0.0,,0,1.5123632283244491e-06
+evening,close segment (both ways),Strada Arieș,SE,Strada Arieș,Bulevardul Liviu Rebreanu / Strada Arieș,,1,0.572,-2.87,0.11,,0,5.490482629953996e-07
+sunday,close segment (both ways),Strada Constanța,SE,Strada Diana / Strada Constanța,Strada Constanța / Strada Vâlcea,,1,0.581,-1.78,0.24,,0,0.0
+evening,close direction,Strada Cosminului,N,,,1,2,0.582,-2.92,3.73,,0,3.498534316859402e-06
+evening,close direction,Strada Diaconul Coresi,SW,,,1,2,0.582,-2.92,3.73,,0,3.498534316859402e-06
+evening,close segment (both ways),Strada Diaconul Coresi,SW,Strada Diaconul Coresi / Calea Martirilor 1989,Strada Diaconul Coresi / Strada Cosminului,,1,0.582,-2.92,3.73,,0,3.498534316859402e-06
+evening,close segment (both ways),Strada Cosminului,N,Strada Diaconul Coresi / Strada Cosminului,Strada Cosminului / Strada Cozia,,1,0.582,-2.92,3.73,,0,3.498534316859402e-06
+evening,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,Aleea F.C. Ripensia,,1,0.583,-2.93,0.4,,0,1.3181473625990136e-06
+day,close segment (both ways),Bulevardul Regele Ferdinand I,SE,Bulevardul Regele Ferdinand I,Bulevardul Regele Ferdinand I / Strada 20 Decembrie 1989,,1,0.587,-2.08,0.0,,0,3.575978399108473e-08
+morning,close direction,Strada Ion Vidu,W,,,1,3,0.589,-2.77,0.53,,0,3.801697126831486e-06
+sunday,close direction,Strada Constanța,SE,,,1,3,0.598,-1.83,0.0,,0,0.0
+evening,close segment (both ways),Strada Independenței,N,Strada Independenței / Strada 1 Decembrie 1918,Piața Nicolae Bălcescu / Strada Independenței,,1,0.603,-3.02,0.58,,0,4.266676208203744e-06
+day,close segment (both ways),Strada Independenței,N,Strada Independenței / Strada 1 Decembrie 1918,Piața Nicolae Bălcescu / Strada Independenței,,1,0.603,-2.14,0.17,,0,6.236994488035324e-06
+sunday,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,0.603,-1.85,0.0,,0,1.5118787107413115e-06
+morning,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,0.609,-2.86,0.0,,0,0.0
+evening,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,0.622,-3.12,0.05,,0,1.0023530966371702e-06
+day,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,0.623,-2.21,0.0,,0,3.5747056514371e-08
+sunday,close direction,Strada Cosminului,N,,,1,2,0.628,-1.93,0.0,,0,4.1104415798015666e-06
+sunday,close direction,Strada Diaconul Coresi,SW,,,1,2,0.628,-1.93,0.0,,0,4.1104415798015666e-06
+sunday,close segment (both ways),Strada Diaconul Coresi,SW,Strada Diaconul Coresi / Calea Martirilor 1989,Strada Diaconul Coresi / Strada Cosminului,,1,0.628,-1.93,0.0,,0,4.1104415798015666e-06
+sunday,close segment (both ways),Strada Cosminului,N,Strada Diaconul Coresi / Strada Cosminului,Strada Cosminului / Strada Cozia,,1,0.628,-1.93,0.0,,0,4.1104415798015666e-06
+day,close segment (both ways),Strada Protopop George Dragomir,E,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,Piața Bisericii / Strada Protopop George Dragomir,,2,0.629,-2.23,0.53,,0,1.7278298301669392e-07
+day,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Strada Cluj / Bulevardul Eroilor de la Tisa,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,,2,0.642,-2.28,0.38,,0,8.656529523619708e-07
+morning,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,Aleea F.C. Ripensia,,1,0.642,-3.02,0.02,,0,8.906233572091256e-07
+sunday,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Strada Cluj / Bulevardul Eroilor de la Tisa,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,,2,0.645,-1.98,0.06,,0,5.982072673319098e-06
+sunday,close direction,Strada Cozia,SW,,,1,3,0.648,-1.99,2.01,,0,1.1083478260535288e-06
+sunday,close segment (both ways),Strada Cozia,SW,Strada Severin / Strada Cozia,Strada Cosminului / Strada Cozia,,1,0.648,-1.99,2.01,,0,1.1083478260535288e-06
+sunday,close segment (both ways),Strada Cozia,SW,Strada Cozia / Strada Arieș,Strada Severin / Strada Cozia,,1,0.648,-1.99,2.01,,0,1.1083478260535288e-06
+sunday,close segment (both ways),Strada Protopop George Dragomir,E,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,Piața Bisericii / Strada Protopop George Dragomir,,2,0.653,-2.0,0.24,,0,1.0748726183392198e-06
+sunday,close segment (both ways),Strada Traian Lalescu,N,Strada Traian Lalescu / Strada Ioan Curea,Strada Traian Lalescu,,1,0.664,-2.04,0.02,,0,1.510971413013408e-06
+sunday,close segment (both ways),Strada Traian Lalescu,N,Strada Traian Lalescu,Strada Traian Lalescu / Bulevardul Vasile Pârvan,,2,0.664,-2.04,0.02,,0,1.510971413013408e-06
+day,close direction,Piața Bisericii,SW,,,1,3,0.665,-2.36,0.42,,0,4.116889769251386e-07
+evening,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,,1,0.667,-3.35,5.13,,0,8.788486664300992e-06
+evening,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,,1,0.667,-3.35,5.13,,0,8.788486664300992e-06
+sunday,close direction,Piața Bisericii,SW,,,1,3,0.67,-2.05,0.26,,0,1.5259211061928412e-06
+sunday,-3 lane → bus,Strada Arieș,SE,,,4,13,0.675,-2.07,0.0,15 16 E2 E3 M24 M3,0.0,8.507224916869712e-06
+morning,close segment (both ways),Strada Independenței,N,Strada Independenței / Strada 1 Decembrie 1918,Piața Nicolae Bălcescu / Strada Independenței,,1,0.677,-3.18,0.39,,0,4.125944039996337e-06
+day,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,,2,0.677,-2.4,0.05,,0,0.0
+evening,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Strada Cluj / Bulevardul Eroilor de la Tisa,Bulevardul Doctor Victor Babeș / Strada Béla Bartók,,2,0.692,-3.47,1.75,,0,0.0
+day,close direction,Strada Protopop George Dragomir,W,,,2,6,0.696,-2.47,0.53,,0,0.0
+day,close segment (both ways),Strada Protopop George Dragomir,W,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,Strada Sorin Titel / Strada Protopop George Dragomir,,2,0.696,-2.47,0.53,,0,0.0
+day,close direction,Piața Vasile Adamachi,N,,,1,1,0.701,-2.49,0.89,,0,5.750125959673391e-07
+day,close segment (both ways),Piața Vasile Adamachi,N,Strada Cosminului / Strada Cozia,Strada Memorandului / Piața Vasile Adamachi,,1,0.701,-2.49,0.89,,0,5.750125959673391e-07
+sunday,close direction,Strada Protopop George Dragomir,W,,,2,6,0.705,-2.16,0.14,,0,1.0582463638593598e-06
+sunday,close segment (both ways),Strada Protopop George Dragomir,W,Strada Protopop George Dragomir / Strada Grigore Constantin Moisil,Strada Sorin Titel / Strada Protopop George Dragomir,,2,0.705,-2.16,0.14,,0,1.0582463638593598e-06
+sunday,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,2,0.705,-2.16,0.02,,0,1.501922682813823e-06
+evening,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,2,0.71,-3.56,0.39,,0,1.969746374105345e-06
+day,close direction,Strada Cosminului,N,,,1,2,0.711,-2.52,0.66,,0,8.889459862718677e-06
+day,close direction,Strada Diaconul Coresi,SW,,,1,2,0.711,-2.52,0.66,,0,8.889459862718677e-06
+day,close segment (both ways),Strada Diaconul Coresi,SW,Strada Diaconul Coresi / Calea Martirilor 1989,Strada Diaconul Coresi / Strada Cosminului,,1,0.711,-2.52,0.66,,0,8.889459862718677e-06
+day,close segment (both ways),Strada Cosminului,N,Strada Diaconul Coresi / Strada Cosminului,Strada Cosminului / Strada Cozia,,1,0.711,-2.52,0.66,,0,8.889459862718677e-06
+evening,close direction,Strada Doctor Aurel Cândea,NW,,,1,5,0.721,-3.62,5.12,,0,3.126964847917853e-07
+morning,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Strada Drubeta,Strada Feldioara / Strada Memorandului,,1,0.725,-3.41,2.25,,0,6.567252578350886e-06
+morning,close segment (both ways),Strada Memorandului,NE,Strada Feldioara / Strada Memorandului,Strada Memorandului / Strada Aron Pumnul,,1,0.725,-3.41,2.25,,0,6.567252578350886e-06
+morning,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Strada Aron Pumnul,Strada Memorandului / Piața Vasile Adamachi,,1,0.725,-3.41,2.25,,0,6.567252578350886e-06
+day,close segment (both ways),Strada Traian Lalescu,N,Strada Traian Lalescu / Strada Ioan Curea,Strada Traian Lalescu,,1,0.727,-2.58,0.07,,0,7.316609286470983e-06
+day,close segment (both ways),Strada Traian Lalescu,N,Strada Traian Lalescu,Strada Traian Lalescu / Bulevardul Vasile Pârvan,,2,0.727,-2.58,0.07,,0,7.316609286470983e-06
+morning,close segment (both ways),Strada Traian Lalescu,N,Strada Traian Lalescu / Strada Ioan Curea,Strada Traian Lalescu,,1,0.728,-3.42,0.53,,0,6.1077452058645195e-06
+morning,close segment (both ways),Strada Traian Lalescu,N,Strada Traian Lalescu,Strada Traian Lalescu / Bulevardul Vasile Pârvan,,2,0.728,-3.42,0.53,,0,6.1077452058645195e-06
+sunday,close direction,Piața Vasile Adamachi,N,,,1,1,0.729,-2.23,0.48,,0,1.057999789052693e-06
+sunday,close segment (both ways),Piața Vasile Adamachi,N,Strada Cosminului / Strada Cozia,Strada Memorandului / Piața Vasile Adamachi,,1,0.729,-2.23,0.48,,0,1.057999789052693e-06
+sunday,close segment (both ways),Strada Memorandului,NE,Strada Sava Petrovici / Strada Memorandului,Strada Severin / Strada Memorandului,,1,0.732,-2.25,0.0,,0,7.110661993757598e-06
+sunday,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,,2,0.738,-2.26,0.02,,0,1.614834926851062e-06
+sunday,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,2,0.738,-2.26,0.02,,0,1.614834926851062e-06
+evening,close segment (both ways),Strada Traian Lalescu,N,Strada Traian Lalescu / Strada Ioan Curea,Strada Traian Lalescu,,1,0.743,-3.72,0.12,,0,4.9014184991637345e-06
+evening,close segment (both ways),Strada Traian Lalescu,N,Strada Traian Lalescu,Strada Traian Lalescu / Bulevardul Vasile Pârvan,,2,0.743,-3.72,0.12,,0,4.9014184991637345e-06
+morning,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,,2,0.745,-3.5,1.03,,0,1.3711274268574828e-06
+day,-1 lane → bus,Strada Memorandului,NE,,,2,7,0.762,-2.7,0.62,,0,6.714733992635445e-06
+sunday,close direction,Bulevardul Doctor Victor Babeș,W,,,1,9,0.765,-2.35,0.01,,0,2.7974300547164256e-06
+evening,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Strada Drubeta,Strada Feldioara / Strada Memorandului,,1,0.78,-3.91,1.81,,0,7.430458438302644e-06
+evening,close segment (both ways),Strada Memorandului,NE,Strada Feldioara / Strada Memorandului,Strada Memorandului / Strada Aron Pumnul,,1,0.78,-3.91,1.81,,0,7.430458438302644e-06
+evening,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Strada Aron Pumnul,Strada Memorandului / Piața Vasile Adamachi,,1,0.78,-3.91,1.81,,0,7.430458438302644e-06
+evening,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,1,0.782,-3.92,4.45,,0,5.210400878906449e-06
+day,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,2,0.783,-2.78,0.05,,0,5.924847274313036e-06
+morning,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,2,0.805,-3.78,0.31,,0,9.528088144603332e-06
+sunday,-1 lane → bus,Bulevardul Vasile Pârvan,E,,,3,5,0.809,-2.48,0.01,16 E3,0.04,6.29343909980686e-06
+morning,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,,1,0.813,-3.82,1.29,,0,6.485932344177165e-06
+morning,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,,1,0.813,-3.82,1.29,,0,6.485932344177165e-06
+sunday,-2 lane → bus,Bulevardul Vasile Pârvan,E,,,3,5,0.817,-2.51,0.01,16 E3,0.04,6.658111974180131e-06
+morning,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,1,0.847,-3.98,5.34,,0,7.733456472279162e-06
+morning,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,,2,0.849,-3.99,1.53,,0,2.346135473419959e-06
+morning,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,2,0.849,-3.99,1.53,,0,2.346135473419959e-06
+day,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,,2,0.851,-3.02,0.23,,0,9.449499146247827e-06
+day,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,2,0.851,-3.02,0.23,,0,9.449499146247827e-06
+day,close direction,Bulevardul Doctor Victor Babeș,W,,,1,9,0.855,-3.03,0.25,,0,4.498682230619309e-06
+evening,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,Bulevardul Doctor Victor Babeș / Strada Evliya Celebi,,2,0.856,-4.29,0.39,,0,5.9560439866158475e-06
+sunday,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,0.857,-2.63,0.08,,0,2.665340277724397e-06
+sunday,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,,1,0.857,-2.63,0.08,,0,2.665340277724397e-06
+morning,close direction,Strada Doctor Aurel Cândea,NW,,,1,5,0.882,-4.15,1.24,,0,2.2769775041038823e-07
+evening,-1 lane → bus,Strada Memorandului,NE,,,2,7,0.887,-4.45,5.45,,0,9.441761458987001e-06
+evening,-2 lane → bus,Strada Cluj,S,,,4,6,0.892,-4.47,1.14,15 16 E2 E3 M24 M3,0.02,4.487196059442339e-07
+morning,close direction,Bulevardul Doctor Victor Babeș,W,,,1,9,0.894,-4.2,1.73,,0,1.2782463135338437e-16
+sunday,close direction,Bulevardul Doctor Victor Babeș,E,,,1,9,0.904,-2.77,0.05,,0,5.843552456278055e-06
+day,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Strada Drubeta,Strada Feldioara / Strada Memorandului,,1,0.912,-3.23,0.6,,0,9.559431092823712e-07
+day,close segment (both ways),Strada Memorandului,NE,Strada Feldioara / Strada Memorandului,Strada Memorandului / Strada Aron Pumnul,,1,0.912,-3.23,0.6,,0,9.559431092823712e-07
+day,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Strada Aron Pumnul,Strada Memorandului / Piața Vasile Adamachi,,1,0.912,-3.23,0.6,,0,9.559431092823712e-07
+evening,close segment (both ways),Bulevardul Doctor Victor Babeș,E,Bulevardul Doctor Victor Babeș,Bulevardul Doctor Victor Babeș / Strada Sorin Titel,,2,0.915,-4.59,1.1,,0,6.265459322992477e-07
+evening,close segment (both ways),Bulevardul Doctor Victor Babeș,W,Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,2,0.915,-4.59,1.1,,0,6.265459322992477e-07
+morning,close segment (both ways),Calea Martirilor 1989,N,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,0.935,-4.4,3.63,,0,4.997231874041193e-06
+day,close segment (both ways),Strada Memorandului,NE,Strada Sava Petrovici / Strada Memorandului,Strada Severin / Strada Memorandului,,1,0.937,-3.32,0.34,,0,1.69432691211708e-16
+evening,close direction,Bulevardul Doctor Victor Babeș,W,,,1,9,0.946,-4.75,1.1,,0,3.2272590749013455e-06
+sunday,-3 lane → bus,Strada Cluj,S,,,4,6,0.949,-2.91,0.16,15 16 E2 E3 M24 M3,0.02,2.763858222072953e-06
+sunday,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Strada Drubeta,Strada Feldioara / Strada Memorandului,,1,0.95,-2.91,0.47,,0,2.5581577427925888e-06
+sunday,close segment (both ways),Strada Memorandului,NE,Strada Feldioara / Strada Memorandului,Strada Memorandului / Strada Aron Pumnul,,1,0.95,-2.91,0.47,,0,2.5581577427925888e-06
+sunday,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Strada Aron Pumnul,Strada Memorandului / Piața Vasile Adamachi,,1,0.95,-2.91,0.47,,0,2.5581577427925888e-06
+evening,-2 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,0.969,-4.86,0.32,15 16 E2 E3 M3,0.02,6.321472872246551e-07
+morning,close direction,Bulevardul Doctor Victor Babeș,E,,,1,9,0.984,-4.63,2.63,,0,6.411364746940255e-06
+sunday,close segment (both ways),Calea Martirilor 1989,N,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,0.991,-3.04,0.0,,0,3.281997420258699e-06
+day,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,1.013,-3.59,0.19,,0,0.0
+day,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,,1,1.013,-3.59,0.19,,0,0.0
+sunday,close segment (both ways),Strada Memorandului,NE,Strada Severin / Strada Memorandului,Strada Craiova / Strada Memorandului,,1,1.018,-3.12,0.0,,0,7.356891194636022e-08
+day,-3 lane → bus,Strada Arieș,SE,,,4,13,1.026,-3.64,0.34,15 16 E2 E3 M24 M3,0.0,0.0
+morning,close segment (both ways),Calea Martirilor 1989,N,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,Calea Martirilor 1989,,1,1.059,-4.98,4.21,,0,6.418115433398364e-06
+sunday,close segment (both ways),Calea Martirilor 1989,N,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,Calea Martirilor 1989,,1,1.066,-3.27,0.0,,0,3.73670026498633e-06
+morning,-2 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,1.07,-5.03,0.13,15 16 E2 E3 M3,0.01,7.441817383193741e-06
+day,close direction,Bulevardul Doctor Victor Babeș,E,,,1,9,1.075,-3.81,0.19,,0,8.600956926673195e-07
+evening,close segment (both ways),Calea Martirilor 1989,N,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,Calea Martirilor 1989,,1,1.08,-5.42,3.32,,0,2.06277706623749e-07
+day,close segment (both ways),Calea Martirilor 1989,N,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,1.085,-3.85,0.58,,0,0.0
+evening,close segment (both ways),Calea Martirilor 1989,N,Bulevardul Liviu Rebreanu / Calea Martirilor 1989,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,1.092,-5.47,2.98,,0,2.1206398670431262e-07
+sunday,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu / Strada 1 Decembrie 1918,Piața Nicolae Bălcescu,,1,1.097,-3.37,0.08,,0,2.658990549460297e-06
+sunday,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,1.097,-3.37,0.08,,0,2.658990549460297e-06
+sunday,close segment (both ways),Bulevardul Liviu Rebreanu,W,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.107,-3.39,0.0,,0,1.504352602011224e-06
+sunday,close segment (both ways),Bulevardul Liviu Rebreanu,W,Strada Arieș / Bulevardul Liviu Rebreanu,Bulevardul Liviu Rebreanu / Strada Arieș,,1,1.107,-3.39,0.0,,0,1.504352602011224e-06
+morning,close segment (both ways),Bulevardul Liviu Rebreanu,W,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.121,-5.27,0.36,,0,9.997712726645322e-06
+morning,close segment (both ways),Bulevardul Liviu Rebreanu,W,Strada Arieș / Bulevardul Liviu Rebreanu,Bulevardul Liviu Rebreanu / Strada Arieș,,1,1.121,-5.27,0.36,,0,9.997712726645322e-06
+evening,close direction,Bulevardul Doctor Victor Babeș,E,,,1,9,1.122,-5.63,1.41,,0,6.486146235025713e-06
+day,close segment (both ways),Calea Martirilor 1989,N,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,Calea Martirilor 1989,,1,1.137,-4.03,0.59,,0,0.0
+day,close segment (both ways),Bulevardul Liviu Rebreanu,W,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.152,-4.08,0.0,,0,1.8342659814945562e-07
+day,close segment (both ways),Bulevardul Liviu Rebreanu,W,Strada Arieș / Bulevardul Liviu Rebreanu,Bulevardul Liviu Rebreanu / Strada Arieș,,1,1.152,-4.08,0.0,,0,1.8342659814945562e-07
+day,close segment (both ways),Strada Memorandului,NE,Strada Severin / Strada Memorandului,Strada Craiova / Strada Memorandului,,1,1.216,-4.31,0.34,,0,0.0
+morning,close segment (both ways),Strada Memorandului,NE,Strada Sava Petrovici / Strada Memorandului,Strada Severin / Strada Memorandului,,1,1.224,-5.76,0.68,,0,7.983673676173382e-06
+evening,-3 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,1.225,-6.14,0.32,15 16 E2 E3 M3,0.02,9.006975772946027e-06
+evening,close segment (both ways),Strada Memorandului,NE,Strada Sava Petrovici / Strada Memorandului,Strada Severin / Strada Memorandului,,1,1.226,-6.15,3.66,,0,2.790957718734349e-06
+sunday,close direction,Strada Independenței,N,,,2,3,1.233,-3.78,0.07,,0,6.720688629862533e-07
+sunday,close segment (both ways),Strada Independenței,N,Strada Memorandului / Strada Drubeta,Strada Independenței,,1,1.233,-3.78,0.07,,0,6.720688629862533e-07
+sunday,close segment (both ways),Strada Independenței,N,Strada Independenței,Strada Independenței / Strada 1 Decembrie 1918,,1,1.233,-3.78,0.07,,0,6.720688629862533e-07
+sunday,close segment (both ways),Strada Cluj,S,Strada Cluj / Strada Argeș,Strada Cluj / Strada Arieș,,1,1.248,-3.83,0.22,,0,6.060612322483023e-06
+sunday,close segment (both ways),Strada Arieș,SE,Strada Cluj / Strada Arieș,Strada Anghel Saligny / Strada Arieș,,1,1.252,-3.84,0.22,,0,6.31188712321501e-06
+sunday,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,,1,1.253,-3.84,0.0,,0,1.5021811202229538e-06
+sunday,close segment (both ways),Strada Surorile Martir Caceu,NE,Piața Tineretului / Strada Surorile Martir Caceu,Strada Surorile Martir Caceu / Strada Anghel Saligny,,1,1.26,-3.87,0.02,,0,3.7913402127051043e-06
+evening,close segment (both ways),Bulevardul Liviu Rebreanu,W,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.262,-6.33,0.05,,0,1.277921444599401e-06
+evening,close segment (both ways),Bulevardul Liviu Rebreanu,W,Strada Arieș / Bulevardul Liviu Rebreanu,Bulevardul Liviu Rebreanu / Strada Arieș,,1,1.262,-6.33,0.05,,0,1.277921444599401e-06
+day,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu / Strada 1 Decembrie 1918,Piața Nicolae Bălcescu,,1,1.271,-4.51,0.19,,0,0.0
+day,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,1.271,-4.51,0.19,,0,0.0
+day,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,,1,1.28,-4.54,2.34,,0,1.874513892913569e-08
+day,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,,1,1.28,-4.54,2.34,,0,1.874513892913569e-08
+day,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,,1,1.29,-4.57,0.0,,0,3.551158752784313e-08
+evening,close direction,Strada Sava Petrovici,NW,,,1,1,1.298,-6.51,6.51,,0,5.970022920526192e-06
+evening,close segment (both ways),Strada Sava Petrovici,NW,Strada Sava Petrovici / Strada Memorandului,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,,1,1.298,-6.51,6.51,,0,5.970022920526192e-06
+morning,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,,1,1.299,-6.11,0.0,,0,0.0
+morning,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Strada Cluj / Bulevardul Eroilor de la Tisa,Strada Minerva / Bulevardul Eroilor de la Tisa,,2,1.307,-6.14,2.27,,0,6.666950698549934e-07
+sunday,close segment (both ways),Strada Arieș,SE,Strada Arieș / Calea Martirilor 1989,Strada Arieș / Calea Martirilor 1989,,1,1.316,-4.04,0.0,,0,0.0
+sunday,close segment (both ways),Strada Arieș,SE,Strada Arieș / Calea Martirilor 1989,Strada Arieș,,1,1.316,-4.04,0.0,,0,0.0
+day,-1 lane → bus,Bulevardul Vasile Pârvan,E,,,3,5,1.318,-4.67,0.02,16 E3,0.08,6.111477092773736e-06
+sunday,close segment (both ways),Strada Cluj,S,Strada Diana / Strada Cluj,Strada Cluj / Strada Argeș,,1,1.32,-4.05,0.22,,0,7.1386023856602895e-06
+sunday,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,1,1.327,-4.07,0.08,,0,4.7772168312366444e-06
+day,-3 lane → bus,Strada Cluj,S,,,4,6,1.331,-4.72,0.53,15 16 E2 E3 M24 M3,0.04,6.110581397724574e-06
+day,-2 lane → bus,Bulevardul Vasile Pârvan,E,,,3,5,1.331,-4.72,0.02,16 E3,0.08,6.222451101670942e-06
+day,close direction,Strada Doctor Aurel Cândea,NW,,,1,5,1.337,-4.74,2.36,,0,2.2448842441298255e-06
+evening,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Bulevardul Regele Ferdinand I,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,,1,1.337,-6.7,0.05,,0,1.235046037133795e-06
+sunday,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,1.366,-4.19,0.14,,0,3.4531365109634793e-06
+sunday,close direction,Bulevardul Corneliu Coposu,NE,,,2,1,1.373,-4.21,0.0,,0,1.5003996694615557e-06
+sunday,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,,1,1.373,-4.21,0.0,,0,1.5003996694615557e-06
+sunday,close segment (both ways),Bulevardul Corneliu Coposu,NE,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,Bulevardul Corneliu Coposu,,1,1.373,-4.21,0.0,,0,1.5003996694615557e-06
+evening,close direction,Strada Independenței,N,,,2,3,1.394,-6.99,2.37,,0,3.985820929203677e-06
+evening,close segment (both ways),Strada Independenței,N,Strada Memorandului / Strada Drubeta,Strada Independenței,,1,1.394,-6.99,2.37,,0,3.985820929203677e-06
+evening,close segment (both ways),Strada Independenței,N,Strada Independenței,Strada Independenței / Strada 1 Decembrie 1918,,1,1.394,-6.99,2.37,,0,3.985820929203677e-06
+day,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu / Strada Protopop George Dragomir,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,,1,1.4,-4.96,0.39,,0,6.570564454619273e-06
+morning,close direction,Bulevardul Corneliu Coposu,NE,,,2,1,1.406,-6.61,0.03,,0,0.0
+morning,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,,1,1.406,-6.61,0.03,,0,0.0
+morning,close segment (both ways),Bulevardul Corneliu Coposu,NE,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,Bulevardul Corneliu Coposu,,1,1.406,-6.61,0.03,,0,0.0
+morning,-3 lane → bus,Aleea F.C. Ripensia,NW,,,4,11,1.407,-6.61,0.13,15 16 E2 E3 M3,0.01,0.0
+morning,close direction,Calea Martirilor 1989,N,,,3,7,1.41,-6.63,4.13,,0,3.291439218190276e-06
+sunday,close direction,Calea Martirilor 1989,N,,,3,7,1.417,-4.35,0.0,,0,4.007508347663822e-06
+sunday,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,Strada Doctor Aurel Cândea / Strada Protopop George Dragomir,,1,1.429,-4.38,0.26,,0,5.721455038517258e-07
+sunday,close segment (both ways),Strada Doctor Aurel Cândea,NW,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,Strada Doctor Aurel Cândea / Strada Petre Râmneanțu,,1,1.429,-4.38,0.26,,0,5.721455038517258e-07
+morning,close segment (both ways),Strada Memorandului,NE,Strada Severin / Strada Memorandului,Strada Craiova / Strada Memorandului,,1,1.438,-6.76,0.68,,0,7.984218064679258e-06
+day,close direction,Bulevardul Corneliu Coposu,NE,,,2,1,1.444,-5.12,0.02,,0,3.545780712647379e-08
+day,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,,1,1.444,-5.12,0.02,,0,3.545780712647379e-08
+day,close segment (both ways),Bulevardul Corneliu Coposu,NE,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,Bulevardul Corneliu Coposu,,1,1.444,-5.12,0.02,,0,3.545780712647379e-08
+morning,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,1.455,-6.84,0.85,,0,5.9794861480892165e-06
+sunday,close segment (both ways),(fără nume),SW,Aleea F.C. Ripensia,Aleea F.C. Ripensia,,1,1.457,-4.47,0.02,,0,0.0
+sunday,close direction,Strada Doctor Aurel Cândea,NW,,,1,5,1.479,-4.54,0.25,,0,5.718635830970355e-07
+day,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,Piața Leonardo da Vinci / Strada Michelangelo,,1,1.481,-5.25,0.0,,0,5.995574240256967e-08
+day,close segment (both ways),Strada Surorile Martir Caceu,NE,Piața Tineretului / Strada Surorile Martir Caceu,Strada Surorile Martir Caceu / Strada Anghel Saligny,,1,1.485,-5.27,0.05,,0,4.806379850292662e-06
+evening,close segment (both ways),Strada Memorandului,NE,Strada Severin / Strada Memorandului,Strada Craiova / Strada Memorandului,,1,1.487,-7.46,3.67,,0,9.565663073212665e-06
+morning,close segment (both ways),Strada Arieș,SE,Strada Arieș / Calea Martirilor 1989,Strada Arieș / Calea Martirilor 1989,,1,1.496,-7.04,0.03,,0,2.975811884972289e-07
+morning,close segment (both ways),Strada Arieș,SE,Strada Arieș / Calea Martirilor 1989,Strada Arieș,,1,1.496,-7.04,0.03,,0,2.975811884972289e-07
+day,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,1.5,-5.32,0.37,,0,2.212881484827731e-06
+day,close direction,Calea Martirilor 1989,N,,,3,7,1.501,-5.32,0.5,,0,3.3525051807992504e-06
+evening,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,1.506,-7.55,1.25,,0,3.652659762793636e-06
+morning,close direction,Strada Independenței,N,,,2,3,1.506,-7.08,0.39,,0,2.248858943370004e-06
+morning,close segment (both ways),Strada Independenței,N,Strada Memorandului / Strada Drubeta,Strada Independenței,,1,1.506,-7.08,0.39,,0,2.248858943370004e-06
+morning,close segment (both ways),Strada Independenței,N,Strada Independenței,Strada Independenței / Strada 1 Decembrie 1918,,1,1.506,-7.08,0.39,,0,2.248858943370004e-06
+day,close segment (both ways),Strada Arieș,SE,Strada Arieș / Calea Martirilor 1989,Strada Arieș / Calea Martirilor 1989,,1,1.506,-5.34,0.01,,0,1.9159371115514098e-06
+day,close segment (both ways),Strada Arieș,SE,Strada Arieș / Calea Martirilor 1989,Strada Arieș,,1,1.506,-5.34,0.01,,0,1.9159371115514098e-06
+day,close direction,Strada Independenței,N,,,2,3,1.507,-5.34,0.17,,0,5.979755133837149e-06
+day,close segment (both ways),Strada Independenței,N,Strada Memorandului / Strada Drubeta,Strada Independenței,,1,1.507,-5.34,0.17,,0,5.979755133837149e-06
+day,close segment (both ways),Strada Independenței,N,Strada Independenței,Strada Independenței / Strada 1 Decembrie 1918,,1,1.507,-5.34,0.17,,0,5.979755133837149e-06
+evening,close direction,Calea Martirilor 1989,N,,,3,7,1.51,-7.57,3.23,,0,9.189317834473026e-06
+evening,close direction,Bulevardul Corneliu Coposu,NE,,,2,1,1.515,-7.6,0.05,,0,9.908470273113468e-07
+evening,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,,1,1.515,-7.6,0.05,,0,9.908470273113468e-07
+evening,close segment (both ways),Bulevardul Corneliu Coposu,NE,Bulevardul Corneliu Coposu / Piața Leonardo da Vinci,Bulevardul Corneliu Coposu,,1,1.515,-7.6,0.05,,0,9.908470273113468e-07
+day,close segment (both ways),(fără nume),SW,Aleea F.C. Ripensia,Aleea F.C. Ripensia,,1,1.515,-5.37,0.0,,0,3.5400071375544097e-06
+sunday,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.517,-4.65,0.01,,0,1.4982737859643695e-06
+sunday,close segment (both ways),Strada Arieș,SE,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.517,-4.65,0.01,,0,1.4982737859643695e-06
+sunday,close direction,Strada Ștefan Covaci,SW,,,3,4,1.53,-4.69,0.02,,0,0.0
+sunday,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Ștefan Covaci,,1,1.53,-4.69,0.02,,0,0.0
+sunday,close segment (both ways),Strada Ștefan Covaci,N,Strada Ștefan Covaci,Strada Ștefan Covaci,,2,1.53,-4.69,0.02,,0,0.0
+sunday,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Ștefan Covaci,,1,1.53,-4.69,0.02,,0,0.0
+sunday,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Arieș / Strada Ștefan Covaci,,1,1.53,-4.69,0.02,,0,0.0
+sunday,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,Piața Leonardo da Vinci / Strada Michelangelo,,1,1.538,-4.72,0.0,,0,1.5093141455782476e-06
+morning,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,1.544,-7.26,0.67,,0,7.723018587681074e-06
+morning,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,,1,1.544,-7.26,0.67,,0,7.723018587681074e-06
+sunday,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,,1,1.554,-4.77,0.0,,0,1.4977180018085203e-06
+sunday,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,,1,1.554,-4.77,0.0,,0,1.4977180018085203e-06
+morning,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,Bulevardul Eroilor de la Tisa,,2,1.562,-7.34,2.29,,0,1.4614966156137046e-06
+sunday,close segment (both ways),Strada Arieș,SE,Strada Anghel Saligny / Strada Arieș,Strada Craiova / Strada Memorandului,,1,1.565,-4.8,0.23,,0,2.5169281552792736e-07
+day,close direction,Strada Ștefan Covaci,SW,,,3,4,1.573,-5.58,0.01,,0,3.892825328395681e-06
+day,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Ștefan Covaci,,1,1.573,-5.58,0.01,,0,3.892825328395681e-06
+day,close segment (both ways),Strada Ștefan Covaci,N,Strada Ștefan Covaci,Strada Ștefan Covaci,,2,1.573,-5.58,0.01,,0,3.892825328395681e-06
+day,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Ștefan Covaci,,1,1.573,-5.58,0.01,,0,3.892825328395681e-06
+day,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Arieș / Strada Ștefan Covaci,,1,1.573,-5.58,0.01,,0,3.892825328395681e-06
+day,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.575,-5.59,0.01,,0,4.112221006833642e-08
+day,close segment (both ways),Strada Arieș,SE,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.575,-5.59,0.01,,0,4.112221006833642e-08
+day,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Strada Cluj / Bulevardul Eroilor de la Tisa,Strada Minerva / Bulevardul Eroilor de la Tisa,,2,1.58,-5.6,0.49,,0,4.8085005999795995e-06
+evening,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,1.585,-7.95,0.84,,0,6.740566622863971e-06
+evening,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu / Strada Protopop George Dragomir,,1,1.585,-7.95,0.84,,0,6.740566622863971e-06
+evening,close segment (both ways),Strada Arieș,SE,Strada Arieș / Calea Martirilor 1989,Strada Arieș / Calea Martirilor 1989,,1,1.624,-8.15,0.09,,0,7.727238600559337e-07
+evening,close segment (both ways),Strada Arieș,SE,Strada Arieș / Calea Martirilor 1989,Strada Arieș,,1,1.624,-8.15,0.09,,0,7.727238600559337e-07
+morning,close segment (both ways),(fără nume),SW,Aleea F.C. Ripensia,Aleea F.C. Ripensia,,1,1.65,-7.76,0.13,,0,2.737064363003038e-06
+sunday,close segment (both ways),Strada Cluj,S,Strada Cluj / Bulevardul Eroilor de la Tisa,Strada Diana / Strada Cluj,,1,1.683,-5.16,0.23,,0,1.8007055817159904e-06
+day,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,,1,1.691,-6.0,0.0,,0,3.5371386616007176e-08
+day,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,,1,1.691,-6.0,0.0,,0,3.5371386616007176e-08
+morning,-3 lane → bus,Strada Arieș,SE,,,4,13,1.702,-8.0,2.62,15 16 E2 E3 M24 M3,0.0,5.982274055731044e-07
+day,close segment (both ways),Strada Arieș,SE,Strada Cluj / Strada Arieș,Strada Anghel Saligny / Strada Arieș,,1,1.702,-6.03,0.56,,0,9.873714097075781e-06
+day,close segment (both ways),Strada Cluj,S,Strada Cluj / Strada Argeș,Strada Cluj / Strada Arieș,,1,1.705,-6.05,0.55,,0,1.7923943161664971e-06
+morning,-3 lane → bus,Strada Cluj,S,,,4,6,1.721,-8.09,1.72,15 16 E2 E3 M24 M3,0.1,7.273066213290311e-06
+morning,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.721,-8.09,0.06,,0,0.0
+morning,close segment (both ways),Strada Arieș,SE,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.721,-8.09,0.06,,0,0.0
+sunday,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Strada Cluj / Bulevardul Eroilor de la Tisa,Strada Minerva / Bulevardul Eroilor de la Tisa,,2,1.729,-5.3,0.13,,0,0.0
+morning,-1 lane → bus,Bulevardul Vasile Pârvan,E,,,3,5,1.736,-8.16,0.24,16 E3,0.14,8.850845565224427e-06
+morning,-2 lane → bus,Bulevardul Vasile Pârvan,E,,,3,5,1.747,-8.21,0.24,16 E3,0.14,9.255154108255522e-06
+morning,close direction,Strada Ștefan Covaci,SW,,,3,4,1.753,-8.24,0.08,,0,3.0853293535384567e-06
+morning,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Ștefan Covaci,,1,1.753,-8.24,0.08,,0,3.0853293535384567e-06
+morning,close segment (both ways),Strada Ștefan Covaci,N,Strada Ștefan Covaci,Strada Ștefan Covaci,,2,1.753,-8.24,0.08,,0,3.0853293535384567e-06
+morning,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Ștefan Covaci,,1,1.753,-8.24,0.08,,0,3.0853293535384567e-06
+morning,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Arieș / Strada Ștefan Covaci,,1,1.753,-8.24,0.08,,0,3.0853293535384567e-06
+morning,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,,1,1.756,-8.26,0.13,,0,9.125939730875125e-06
+morning,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,,1,1.756,-8.26,0.13,,0,9.125939730875125e-06
+morning,close direction,Strada Sava Petrovici,NW,,,1,1,1.758,-8.27,2.0,,0,0.0
+morning,close segment (both ways),Strada Sava Petrovici,NW,Strada Sava Petrovici / Strada Memorandului,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,,1,1.758,-8.27,2.0,,0,0.0
+evening,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,Piața Leonardo da Vinci / Strada Michelangelo,,1,1.76,-8.83,0.08,,0,2.8750334295516917e-06
+day,close segment (both ways),Strada Cluj,S,Strada Diana / Strada Cluj,Strada Cluj / Strada Argeș,,1,1.761,-6.24,0.57,,0,7.444551448715821e-06
+evening,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.771,-8.88,0.05,,0,1.2715279836748498e-06
+evening,close segment (both ways),Strada Arieș,SE,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș / Bulevardul Liviu Rebreanu,,1,1.771,-8.88,0.05,,0,1.2715279836748498e-06
+day,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,Bulevardul Eroilor de la Tisa,,2,1.801,-6.38,0.49,,0,4.836837156252174e-06
+day,close segment (both ways),Strada Arieș,SE,Strada Anghel Saligny / Strada Arieș,Strada Craiova / Strada Memorandului,,1,1.821,-6.46,0.75,,0,7.544143812883985e-06
+evening,close segment (both ways),(fără nume),SW,Aleea F.C. Ripensia,Aleea F.C. Ripensia,,1,1.824,-9.15,0.25,,0,4.205164132586764e-06
+morning,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu / Strada 1 Decembrie 1918,Piața Nicolae Bălcescu,,1,1.83,-8.61,0.69,,0,1.2667086500933304e-06
+morning,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,1.83,-8.61,0.69,,0,1.2667086500933304e-06
+sunday,close segment (both ways),Bulevardul Liviu Rebreanu,W,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,1.849,-5.67,0.0,,0,1.4933859692232014e-06
+evening,close direction,Strada Ștefan Covaci,SW,,,3,4,1.868,-9.37,0.22,,0,5.0243949830869266e-06
+evening,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Ștefan Covaci,,1,1.868,-9.37,0.22,,0,5.0243949830869266e-06
+evening,close segment (both ways),Strada Ștefan Covaci,N,Strada Ștefan Covaci,Strada Ștefan Covaci,,2,1.868,-9.37,0.22,,0,5.0243949830869266e-06
+evening,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Ștefan Covaci,,1,1.868,-9.37,0.22,,0,5.0243949830869266e-06
+evening,close segment (both ways),Strada Ștefan Covaci,SW,Strada Ștefan Covaci,Strada Arieș / Strada Ștefan Covaci,,1,1.868,-9.37,0.22,,0,5.0243949830869266e-06
+morning,close segment (both ways),Bulevardul Liviu Rebreanu,W,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,1.896,-8.91,1.8,,0,1.1088102098794613e-06
+day,close segment (both ways),Strada Cluj,S,Strada Cluj / Bulevardul Eroilor de la Tisa,Strada Diana / Strada Cluj,,1,1.9,-6.74,0.74,,0,8.56024920222579e-06
+evening,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu / Strada 1 Decembrie 1918,Piața Nicolae Bălcescu,,1,1.919,-9.63,0.82,,0,3.0941894959259195e-07
+evening,close segment (both ways),Piața Nicolae Bălcescu,N,Piața Nicolae Bălcescu,Piața Nicolae Bălcescu,,1,1.919,-9.63,0.82,,0,3.0941894959259195e-07
+day,close segment (both ways),Bulevardul Liviu Rebreanu,W,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,1.932,-6.85,0.0,,0,9.988085290522361e-06
+evening,close segment (both ways),Bulevardul Liviu Rebreanu,W,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,1.951,-9.78,1.39,,0,2.2690040234781464e-06
+sunday,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,Bulevardul Eroilor de la Tisa,,2,1.978,-6.07,0.13,,0,0.0
+evening,close segment (both ways),(fără nume),N,Aleea F.C. Ripensia,Bulevardul Corneliu Coposu,,1,1.983,-9.94,2.54,,0,7.87447669531334e-08
+morning,close segment (both ways),(fără nume),N,Aleea F.C. Ripensia,Bulevardul Corneliu Coposu,,1,1.988,-9.35,2.52,,0,1.2368467282966816e-06
+day,close segment (both ways),(fără nume),N,Aleea F.C. Ripensia,Bulevardul Corneliu Coposu,,1,1.995,-7.07,0.68,,0,1.3917538141381787e-06
+sunday,close segment (both ways),(fără nume),N,Aleea F.C. Ripensia,Bulevardul Corneliu Coposu,,1,2.05,-6.29,0.59,,0,4.715394409031243e-06
+morning,close segment (both ways),Strada Cluj,S,Strada Cluj / Strada Argeș,Strada Cluj / Strada Arieș,,1,2.053,-9.65,1.67,,0,3.3526957702077067e-06
+day,close direction,Strada Sava Petrovici,NW,,,1,1,2.074,-7.35,2.65,,0,1.3818414322971853e-06
+day,close segment (both ways),Strada Sava Petrovici,NW,Strada Sava Petrovici / Strada Memorandului,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,,1,2.074,-7.35,2.65,,0,1.3818414322971853e-06
+morning,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci / Bulevardul Corneliu Coposu,Piața Leonardo da Vinci / Strada Michelangelo,,1,2.107,-9.91,0.1,,0,9.393142780405996e-06
+evening,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,Bulevardul Mihai Viteazu / Strada Sfânta Rosalia,,1,2.117,-10.62,0.12,,0,9.103159841698179e-06
+evening,close segment (both ways),Bulevardul Mihai Viteazu,S,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,Bulevardul Mihai Viteazu / Strada Virgil Madgearu,,1,2.117,-10.62,0.12,,0,9.103159841698179e-06
+morning,close segment (both ways),Strada Cluj,S,Strada Diana / Strada Cluj,Strada Cluj / Strada Argeș,,1,2.137,-10.05,1.68,,0,8.687570609899388e-06
+morning,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Piața Vasile Adamachi,Strada Martir Sorinel Leia / Strada Memorandului,,1,2.151,-10.11,11.22,,0,9.792262615611104e-06
+sunday,close segment (both ways),Piața Leonardo da Vinci,NE,Strada Cluj / Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,2.156,-6.61,0.11,,0,3.426153779368305e-06
+morning,close segment (both ways),Strada Arieș,SE,Strada Cluj / Strada Arieș,Strada Anghel Saligny / Strada Arieș,,1,2.161,-10.16,1.69,,0,9.475300274643078e-06
+evening,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Strada Cluj / Bulevardul Eroilor de la Tisa,Strada Minerva / Bulevardul Eroilor de la Tisa,,2,2.195,-11.01,2.0,,0,0.0
+morning,close segment (both ways),Strada Arieș,SE,Strada Anghel Saligny / Strada Arieș,Strada Craiova / Strada Memorandului,,1,2.244,-10.55,2.55,,0,8.56701515957886e-06
+evening,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Piața Vasile Adamachi,Strada Martir Sorinel Leia / Strada Memorandului,,1,2.291,-11.49,9.22,,0,9.380269358638492e-06
+sunday,close direction,Strada Sava Petrovici,NW,,,1,1,2.298,-7.05,0.28,,0,1.0148345465342232e-06
+sunday,close segment (both ways),Strada Sava Petrovici,NW,Strada Sava Petrovici / Strada Memorandului,Strada Doctor Aurel Cândea / Strada 1 Decembrie 1918,,1,2.298,-7.05,0.28,,0,1.0148345465342232e-06
+morning,close segment (both ways),Piața Leonardo da Vinci,NE,Strada Cluj / Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,2.322,-10.92,0.67,,0,3.680497548253064e-06
+day,close segment (both ways),Piața Leonardo da Vinci,NE,Strada Cluj / Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,2.356,-8.35,0.24,,0,2.071835938454149e-06
+evening,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,Bulevardul Eroilor de la Tisa,,2,2.388,-11.98,1.99,,0,2.2529810907308566e-07
+sunday,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,Aleea F.C. Ripensia,,1,2.399,-7.36,0.02,,0,5.985303296575109e-07
+sunday,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,,1,2.399,-7.36,0.02,,0,5.985303296575109e-07
+sunday,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș,,1,2.414,-7.4,0.0,,0,1.4851417283873367e-06
+evening,close segment (both ways),Strada Arieș,SE,Strada Cluj / Strada Arieș,Strada Anghel Saligny / Strada Arieș,,1,2.445,-12.26,2.69,,0,8.681975520983206e-06
+morning,close segment (both ways),Strada Cluj,S,Strada Cluj / Bulevardul Eroilor de la Tisa,Strada Diana / Strada Cluj,,1,2.452,-11.53,1.88,,0,6.6449185683856195e-06
+sunday,close segment (both ways),Strada Arieș,NW,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș,,1,2.483,-7.61,0.25,,0,1.4925577339894056e-06
+evening,-1 lane → bus,Bulevardul Vasile Pârvan,E,,,3,5,2.492,-12.5,3.19,16 E3,0.24,9.926217547448561e-06
+day,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș,,1,2.496,-8.85,0.0,,0,4.168561128866832e-07
+evening,-3 lane → bus,Strada Arieș,SE,,,4,13,2.524,-12.66,2.61,15 16 E2 E3 M24 M3,-0.01,3.254127816868818e-06
+evening,-2 lane → bus,Bulevardul Vasile Pârvan,E,,,3,5,2.531,-12.69,3.19,16 E3,0.24,3.0338001593573313e-06
+sunday,close segment (both ways),Strada Arieș,NW,Strada Arieș,Strada Surorile Martir Caceu / Calea Martirilor 1989,,1,2.531,-7.76,0.26,,0,2.0241476876978405e-06
+evening,close segment (both ways),Piața Leonardo da Vinci,NE,Strada Cluj / Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,2.548,-12.78,0.92,,0,3.5776022166582063e-06
+morning,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,Aleea F.C. Ripensia,,1,2.572,-12.09,0.38,,0,7.663201225770866e-06
+morning,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,,1,2.572,-12.09,0.38,,0,7.663201225770866e-06
+evening,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,Aleea F.C. Ripensia,,1,2.607,-13.07,0.25,,0,7.66657327408144e-06
+evening,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,,1,2.607,-13.07,0.25,,0,7.66657327408144e-06
+morning,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș,,1,2.626,-12.35,0.75,,0,2.16526632452194e-06
+day,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,Aleea F.C. Ripensia,,1,2.706,-9.59,0.11,,0,3.3748557268333726e-08
+day,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia,Aleea F.C. Ripensia / Strada Surorile Martir Caceu,,1,2.706,-9.59,0.11,,0,3.3748557268333726e-08
+evening,close segment (both ways),Strada Cluj,S,Strada Cluj / Strada Argeș,Strada Cluj / Strada Arieș,,1,2.731,-13.69,2.92,,0,5.448425288729402e-06
+day,close segment (both ways),Strada Arieș,NW,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș,,1,2.734,-9.69,1.05,,0,0.0
+evening,close segment (both ways),Strada Arieș,SE,Strada Anghel Saligny / Strada Arieș,Strada Craiova / Strada Memorandului,,1,2.742,-13.75,3.11,,0,6.343125072074667e-06
+day,close segment (both ways),Strada Arieș,NW,Strada Arieș,Strada Surorile Martir Caceu / Calea Martirilor 1989,,1,2.775,-9.84,0.02,,0,8.97828899124443e-09
+day,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Piața Vasile Adamachi,Strada Martir Sorinel Leia / Strada Memorandului,,1,2.778,-9.85,4.06,,0,2.417422907193153e-06
+sunday,close direction,Piața Leonardo da Vinci,NE,,,3,7,2.787,-8.55,0.1,,0,3.4051189779707027e-06
+sunday,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,2.787,-8.55,0.1,,0,3.4051189779707027e-06
+sunday,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,2.787,-8.55,0.1,,0,3.4051189779707027e-06
+evening,close segment (both ways),Strada Cluj,S,Strada Diana / Strada Cluj,Strada Cluj / Strada Argeș,,1,2.789,-13.99,2.92,,0,9.046119219977186e-06
+morning,close segment (both ways),Strada Surorile Martir Caceu,NE,Piața Tineretului / Strada Surorile Martir Caceu,Strada Surorile Martir Caceu / Strada Anghel Saligny,,1,2.799,-13.16,0.12,,0,1.7420814399715348e-07
+sunday,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,2.82,-8.65,0.0,,0,1.479281385812256e-06
+morning,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,2.844,-13.37,0.14,,0,0.0
+day,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,2.862,-10.15,0.0,,0,2.7584131166308063e-08
+evening,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Calea Martirilor 1989 / Bulevardul Liviu Rebreanu,,1,2.897,-14.53,0.21,,0,1.2576116439950632e-06
+evening,-3 lane → bus,Strada Cluj,S,,,4,6,2.935,-14.72,3.47,15 16 E2 E3 M24 M3,0.17,7.812283853669123e-06
+sunday,close segment (both ways),Strada Memorandului,NE,Strada Memorandului / Piața Vasile Adamachi,Strada Martir Sorinel Leia / Strada Memorandului,,1,2.936,-9.0,2.38,,0,1.5683017485678853e-06
+sunday,close segment (both ways),Calea Martirilor 1989,S,Strada Arieș / Calea Martirilor 1989,Calea Martirilor 1989,,1,2.938,-9.01,0.0,,0,1.4775871049006193e-06
+day,close direction,Piața Leonardo da Vinci,NE,,,3,7,3.009,-10.67,0.24,,0,1.9666873863340155e-06
+day,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,3.009,-10.67,0.24,,0,1.9666873863340155e-06
+day,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,3.009,-10.67,0.24,,0,1.9666873863340155e-06
+day,close segment (both ways),Calea Martirilor 1989,S,Strada Arieș / Calea Martirilor 1989,Calea Martirilor 1989,,1,3.026,-10.73,0.0,,0,2.72135754054235e-08
+morning,close segment (both ways),Calea Martirilor 1989,S,Strada Arieș / Calea Martirilor 1989,Calea Martirilor 1989,,1,3.029,-14.24,0.16,,0,1.251749501028636e-16
+morning,close direction,Piața Leonardo da Vinci,NE,,,3,7,3.032,-14.26,0.65,,0,2.2197615679302645e-06
+morning,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,3.032,-14.26,0.65,,0,2.2197615679302645e-06
+morning,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,3.032,-14.26,0.65,,0,2.2197615679302645e-06
+evening,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș,,1,3.047,-15.28,0.37,,0,6.174550318943305e-06
+evening,close segment (both ways),Calea Martirilor 1989,S,Strada Arieș / Calea Martirilor 1989,Calea Martirilor 1989,,1,3.076,-15.43,0.21,,0,1.2554262796571616e-06
+evening,close segment (both ways),Strada Arieș,NW,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș,,1,3.095,-15.52,2.62,,0,9.788865076976912e-06
+sunday,close segment (both ways),Strada Cluj,S,Strada Cluj / Strada Ion Vidu,Strada Cluj / Bulevardul Eroilor de la Tisa,,1,3.097,-9.5,0.41,,0,2.735729683941591e-06
+morning,close segment (both ways),Strada Arieș,NW,Strada Arieș / Bulevardul Liviu Rebreanu,Strada Arieș,,1,3.112,-14.63,1.15,,0,6.561720738025102e-06
+morning,close segment (both ways),Strada Arieș,NW,Strada Arieș,Strada Surorile Martir Caceu / Calea Martirilor 1989,,1,3.134,-14.74,1.14,,0,9.473265037020099e-07
+evening,close segment (both ways),Strada Arieș,NW,Strada Arieș,Strada Surorile Martir Caceu / Calea Martirilor 1989,,1,3.166,-15.88,0.57,,0,8.381132895980797e-06
+sunday,close segment (both ways),Bulevardul Vasile Pârvan,W,Bulevardul Vasile Pârvan,Bulevardul Vasile Pârvan / Pasajul Michelangelo,,1,3.264,-10.01,0.02,,0,1.4840881472238939e-06
+sunday,close segment (both ways),Bulevardul Vasile Pârvan,W,Piața Leonardo da Vinci / Strada Michelangelo,Bulevardul Vasile Pârvan,,1,3.264,-10.01,0.02,,0,1.4840881472238939e-06
+sunday,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Calea Martirilor 1989,,2,3.266,-10.02,0.0,,0,1.4728892209668337e-06
+sunday,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Strada Diaconul Coresi / Calea Martirilor 1989,,2,3.288,-10.08,0.0,,0,1.4849797211919734e-06
+day,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Calea Martirilor 1989,,2,3.337,-11.83,0.0,,0,3.69875535080147e-08
+morning,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Calea Martirilor 1989,,2,3.367,-15.83,0.16,,0,0.0
+evening,close direction,Piața Leonardo da Vinci,NE,,,3,7,3.372,-16.91,0.89,,0,3.475263848916949e-06
+evening,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,3.372,-16.91,0.89,,0,3.475263848916949e-06
+evening,close segment (both ways),Piața Leonardo da Vinci,NE,Piața Leonardo da Vinci,Piața Leonardo da Vinci,,1,3.372,-16.91,0.89,,0,3.475263848916949e-06
+day,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Strada Diaconul Coresi / Calea Martirilor 1989,,2,3.373,-11.96,0.0,,0,2.8445011255646827e-07
+morning,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Strada Diaconul Coresi / Calea Martirilor 1989,,2,3.38,-15.89,0.16,,0,0.0
+morning,close segment (both ways),Bulevardul Eroilor de la Tisa,SW,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,Bulevardul Eroilor de la Tisa,,2,3.4,-15.98,1.68,,0,4.8313971513085164e-08
+morning,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Bulevardul Eroilor de la Tisa,Bulevardul Eroilor de la Tisa,,2,3.4,-15.98,1.68,,0,4.8313971513085164e-08
+day,close segment (both ways),Strada Cluj,S,Strada Cluj / Strada Ion Vidu,Strada Cluj / Bulevardul Eroilor de la Tisa,,1,3.407,-12.08,1.11,,0,9.860356942972811e-06
+evening,close segment (both ways),Strada Cluj,S,Strada Cluj / Bulevardul Eroilor de la Tisa,Strada Diana / Strada Cluj,,1,3.425,-17.18,3.2,,0,9.964435405336754e-06
+evening,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Calea Martirilor 1989,,2,3.481,-17.46,0.21,,0,1.2610550102076257e-06
+day,close segment (both ways),Bulevardul Vasile Pârvan,W,Bulevardul Vasile Pârvan,Bulevardul Vasile Pârvan / Pasajul Michelangelo,,1,3.488,-12.37,0.04,,0,1.4982495252848784e-06
+day,close segment (both ways),Bulevardul Vasile Pârvan,W,Piața Leonardo da Vinci / Strada Michelangelo,Bulevardul Vasile Pârvan,,1,3.488,-12.37,0.04,,0,1.4982495252848784e-06
+evening,close segment (both ways),Strada Surorile Martir Caceu,NE,Piața Tineretului / Strada Surorile Martir Caceu,Strada Surorile Martir Caceu / Strada Anghel Saligny,,1,3.495,-17.53,1.24,,0,5.442265639208541e-06
+evening,close segment (both ways),Calea Martirilor 1989,S,Calea Martirilor 1989,Strada Diaconul Coresi / Calea Martirilor 1989,,2,3.501,-17.56,0.21,,0,1.2608133619621305e-06
+day,close segment (both ways),Bulevardul Eroilor de la Tisa,SW,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,Bulevardul Eroilor de la Tisa,,2,3.517,-12.47,0.6,,0,3.747438764641306e-09
+day,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Bulevardul Eroilor de la Tisa,Bulevardul Eroilor de la Tisa,,2,3.517,-12.47,0.6,,0,3.747438764641306e-09
+morning,close segment (both ways),Strada Cluj,S,Strada Cluj / Strada Ion Vidu,Strada Cluj / Bulevardul Eroilor de la Tisa,,1,3.723,-17.51,2.6,,0,7.707203607825298e-06
+evening,close segment (both ways),Bulevardul Vasile Pârvan,W,Bulevardul Vasile Pârvan,Bulevardul Vasile Pârvan / Pasajul Michelangelo,,1,3.743,-18.77,0.2,,0,9.378859978364432e-06
+evening,close segment (both ways),Bulevardul Vasile Pârvan,W,Piața Leonardo da Vinci / Strada Michelangelo,Bulevardul Vasile Pârvan,,1,3.743,-18.77,0.2,,0,9.378859978364432e-06
+sunday,close segment (both ways),Bulevardul Eroilor de la Tisa,SW,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,Bulevardul Eroilor de la Tisa,,2,3.752,-11.51,0.32,,0,5.090143896029513e-06
+sunday,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Bulevardul Eroilor de la Tisa,Bulevardul Eroilor de la Tisa,,2,3.752,-11.51,0.32,,0,5.090143896029513e-06
+day,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Strada Minerva / Bulevardul Eroilor de la Tisa,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,,2,3.81,-13.51,0.63,,0,7.543133352508102e-06
+evening,close segment (both ways),Bulevardul Eroilor de la Tisa,SW,Bulevardul Eroilor de la Tisa / Aleea F.C. Ripensia,Bulevardul Eroilor de la Tisa,,2,3.836,-19.24,1.97,,0,9.498450155622277e-06
+evening,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Bulevardul Eroilor de la Tisa,Bulevardul Eroilor de la Tisa,,2,3.836,-19.24,1.97,,0,9.498450155622277e-06
+morning,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Strada Minerva / Bulevardul Eroilor de la Tisa,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,,2,3.836,-18.03,1.72,,0,6.740612706227826e-07
+sunday,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș / Strada Ștefan Covaci,,2,3.846,-11.79,0.0,,0,0.0
+sunday,close segment (both ways),Calea Martirilor 1989,S,Strada Diaconul Coresi / Calea Martirilor 1989,Calea Martirilor 1989,,2,3.879,-11.9,0.0,,0,3.5734012145485046e-06
+morning,close segment (both ways),Calea Martirilor 1989,S,Strada Diaconul Coresi / Calea Martirilor 1989,Calea Martirilor 1989,,2,3.893,-18.3,4.16,,0,5.9145793818641385e-06
+sunday,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,,1,3.951,-12.11,0.03,,0,2.9782956174845694e-06
+day,close segment (both ways),Calea Martirilor 1989,S,Strada Diaconul Coresi / Calea Martirilor 1989,Calea Martirilor 1989,,2,3.954,-14.02,0.64,,0,8.211969014358264e-06
+evening,close segment (both ways),Calea Martirilor 1989,S,Strada Diaconul Coresi / Calea Martirilor 1989,Calea Martirilor 1989,,2,3.975,-19.94,3.29,,0,2.0121375344284716e-07
+evening,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Strada Minerva / Bulevardul Eroilor de la Tisa,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,,2,4.108,-20.6,2.1,,0,2.6245436851626545e-06
+sunday,close segment (both ways),Bulevardul Eroilor de la Tisa,NE,Strada Minerva / Bulevardul Eroilor de la Tisa,Bulevardul Eroilor de la Tisa / Strada Mihail Jora,,2,4.138,-12.69,0.3,,0,5.9392016526074364e-06
+day,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș / Strada Ștefan Covaci,,2,4.273,-15.15,0.0,,0,7.3307173819206446e-06
+morning,close segment (both ways),Bulevardul Regele Ferdinand I,N,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,,1,4.296,-20.2,9.84,,0,6.599501991917636e-06
+sunday,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu,,1,4.357,-13.36,1.53,,0,5.942131786388638e-07
+sunday,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,,1,4.357,-13.36,1.53,,0,5.942131786388638e-07
+evening,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu,,1,4.485,-22.49,6.08,,0,3.273587267809324e-06
+evening,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,,1,4.485,-22.49,6.08,,0,3.273587267809324e-06
+sunday,close direction,Bulevardul Mihai Viteazu,N,,,4,4,4.533,-13.9,1.54,,0,4.669758602236914e-07
+sunday,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu,,1,4.533,-13.9,1.54,,0,4.669758602236914e-07
+evening,close segment (both ways),Bulevardul Regele Ferdinand I,N,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,,1,4.557,-22.85,7.15,,0,8.137155540639859e-06
+day,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu,,1,4.563,-16.18,2.68,,0,1.205528257488861e-06
+day,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,,1,4.563,-16.18,2.68,,0,1.205528257488861e-06
+sunday,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,,1,4.62,-14.17,0.27,,0,1.0366394892426252e-07
+day,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,,1,4.633,-16.42,0.04,,0,9.639228918510841e-06
+morning,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș / Strada Ștefan Covaci,,2,4.637,-21.8,1.14,,0,7.491239761211332e-06
+day,close segment (both ways),Bulevardul Regele Ferdinand I,N,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,,1,4.664,-16.54,3.32,,0,0.0
+day,close direction,Bulevardul Mihai Viteazu,N,,,4,4,4.714,-16.71,2.69,,0,9.160126570717562e-06
+day,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu,,1,4.714,-16.71,2.69,,0,9.160126570717562e-06
+evening,close direction,Bulevardul Mihai Viteazu,N,,,4,4,4.733,-23.74,6.11,,0,9.207219806135104e-06
+evening,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu,,1,4.733,-23.74,6.11,,0,9.207219806135104e-06
+sunday,close segment (both ways),Bulevardul Regele Ferdinand I,N,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,Bulevardul Regele Ferdinand I / Bulevardul Vasile Pârvan,,1,4.774,-14.64,1.76,,0,6.327846002220838e-07
+evening,close segment (both ways),Strada Arieș,SE,Strada Arieș,Strada Arieș / Strada Ștefan Covaci,,2,4.799,-24.07,0.36,,0,4.743936708294563e-06
+sunday,close segment (both ways),Strada Arieș,NW,Strada Arieș,Strada Arieș / Strada Ștefan Covaci,,2,4.854,-14.89,0.25,,0,1.457626290673421e-06
+sunday,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Vasile Pârvan / Pasajul Michelangelo,Strada Cluj / Piața Leonardo da Vinci,,1,4.872,-14.94,0.31,,0,1.184699377993945e-07
+day,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,,1,4.882,-17.31,1.22,,0,0.0
+morning,close segment (both ways),Bulevardul Vasile Pârvan,W,Bulevardul Vasile Pârvan,Bulevardul Vasile Pârvan / Pasajul Michelangelo,,1,4.935,-23.2,0.29,,0,6.909196638559601e-06
+morning,close segment (both ways),Bulevardul Vasile Pârvan,W,Piața Leonardo da Vinci / Strada Michelangelo,Bulevardul Vasile Pârvan,,1,4.935,-23.2,0.29,,0,6.909196638559601e-06
+sunday,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,Bulevardul Vasile Pârvan,,1,5.075,-15.56,0.05,,0,7.911350260170591e-06
+day,close segment (both ways),Strada Arieș,NW,Strada Arieș,Strada Arieș / Strada Ștefan Covaci,,2,5.134,-18.2,1.03,,0,0.0
+morning,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu,Bulevardul Mihai Viteazu,,1,5.3,-24.92,8.44,,0,9.674447040069837e-06
+morning,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,,1,5.3,-24.92,8.44,,0,9.674447040069837e-06
+morning,close direction,Bulevardul Mihai Viteazu,N,,,4,4,5.443,-25.59,8.48,,0,8.87653257044549e-06
+morning,close segment (both ways),Bulevardul Mihai Viteazu,N,Bulevardul Mihai Viteazu / Bulevardul Doctor Victor Babeș,Bulevardul Mihai Viteazu,,1,5.443,-25.59,8.48,,0,8.87653257044549e-06
+evening,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,,1,5.538,-27.77,4.7,,0,8.865555273739248e-06
+morning,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Mihai Viteazu / Bulevardul Vasile Pârvan,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,,1,5.551,-26.1,2.69,,0,9.157801688000038e-06
+evening,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,,1,5.675,-28.46,0.12,,0,8.26538711138137e-06
+morning,close segment (both ways),Strada Arieș,NW,Strada Arieș,Strada Arieș / Strada Ștefan Covaci,,2,5.687,-26.74,1.19,,0,7.559336292299297e-06
+evening,close segment (both ways),Strada Cluj,S,Strada Cluj / Strada Ion Vidu,Strada Cluj / Bulevardul Eroilor de la Tisa,,1,5.691,-28.54,4.61,,0,6.021910476405075e-06
+morning,close segment (both ways),Aleea F.C. Ripensia,NW,Aleea F.C. Ripensia,Aleea F.C. Ripensia / Strada 1 Decembrie 1918,,1,5.75,-27.03,0.16,,0,7.664623773635356e-06
+day,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Vasile Pârvan / Pasajul Michelangelo,Strada Cluj / Piața Leonardo da Vinci,,1,5.964,-21.15,0.89,,0,2.3836807233912706e-06
+day,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,Bulevardul Vasile Pârvan,,1,5.986,-21.22,1.24,,0,9.059748953300556e-06
+evening,close segment (both ways),Strada Arieș,NW,Strada Arieș,Strada Arieș / Strada Ștefan Covaci,,2,6.012,-30.15,2.55,,0,8.76939655465706e-06
+morning,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Vasile Pârvan / Pasajul Michelangelo,Strada Cluj / Piața Leonardo da Vinci,,1,6.482,-30.47,1.5,,0,9.93299526192346e-06
+evening,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,Bulevardul Vasile Pârvan,,1,7.811,-39.17,4.81,,0,5.342256746346733e-06
+day,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci,Strada Cluj / Piața Leonardo da Vinci,,1,8.812,-31.24,0.09,,0,9.008175873903599e-07
+evening,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Vasile Pârvan / Pasajul Michelangelo,Strada Cluj / Piața Leonardo da Vinci,,1,9.022,-45.25,3.45,,0,8.173041463927474e-06
+sunday,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci,Strada Cluj / Piața Leonardo da Vinci,,1,9.066,-27.8,0.01,,0,6.172960704807176e-07
+morning,close segment (both ways),Bulevardul Vasile Pârvan,E,Bulevardul Vasile Pârvan / Bulevardul Regele Ferdinand I,Bulevardul Vasile Pârvan,,1,9.09,-42.74,2.74,,0,6.06455526534271e-06
+morning,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci,Strada Cluj / Piața Leonardo da Vinci,,1,9.426,-44.32,0.32,,0,4.725691542631979e-06
+day,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci / Strada Michelangelo,Piața Leonardo da Vinci,,1,10.272,-36.42,0.09,,0,0.0
+sunday,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci / Strada Michelangelo,Piața Leonardo da Vinci,,1,10.426,-31.97,0.01,,0,6.096943498915009e-07
+evening,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci,Strada Cluj / Piața Leonardo da Vinci,,1,11.003,-55.18,3.13,,0,1.4908211382771238e-06
+morning,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci / Strada Michelangelo,Piața Leonardo da Vinci,,1,11.125,-52.3,0.32,,0,1.198839515434195e-06
+evening,close segment (both ways),Piața Leonardo da Vinci,SW,Piața Leonardo da Vinci / Strada Michelangelo,Piața Leonardo da Vinci,,1,12.78,-64.09,3.19,,0,2.976058489516927e-07
+sunday,close segment (both ways),Strada Cluj,S,Strada Cluj / Piața Leonardo da Vinci,Strada Cluj / Strada Ion Vidu,,1,13.077,-40.1,0.48,,0,2.8990481692052647e-06
+sunday,close segment (both ways),Strada Cluj,S,Strada Cluj / Piața Leonardo da Vinci,Strada Cluj / Piața Leonardo da Vinci,,1,13.077,-40.1,0.48,,0,2.8990481692052647e-06
+sunday,close direction,Strada Cluj,S,,,4,6,13.284,-40.74,0.48,,0,1.9950825436878374e-06
+day,close segment (both ways),Strada Cluj,S,Strada Cluj / Piața Leonardo da Vinci,Strada Cluj / Strada Ion Vidu,,1,13.482,-47.8,1.23,,0,7.077279741950495e-06
+day,close segment (both ways),Strada Cluj,S,Strada Cluj / Piața Leonardo da Vinci,Strada Cluj / Piața Leonardo da Vinci,,1,13.482,-47.8,1.23,,0,7.077279741950495e-06
+day,close direction,Strada Cluj,S,,,4,6,13.739,-48.71,1.23,,0,9.722267052900607e-06
+morning,close segment (both ways),Strada Cluj,S,Strada Cluj / Piața Leonardo da Vinci,Strada Cluj / Strada Ion Vidu,,1,14.583,-68.56,2.67,,0,9.820609882784262e-06
+morning,close segment (both ways),Strada Cluj,S,Strada Cluj / Piața Leonardo da Vinci,Strada Cluj / Piața Leonardo da Vinci,,1,14.583,-68.56,2.67,,0,9.820609882784262e-06
+morning,close direction,Strada Cluj,S,,,4,6,15.12,-71.09,2.67,,0,6.545682564847239e-06
+sunday,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu / Calea Martirilor 1989,Strada Surorile Martir Caceu,,1,17.707,-54.3,0.06,,0,6.7953805413383564e-06
+evening,close segment (both ways),Strada Cluj,S,Strada Cluj / Piața Leonardo da Vinci,Strada Cluj / Strada Ion Vidu,,1,18.875,-94.66,4.67,,0,8.72188201229717e-06
+evening,close segment (both ways),Strada Cluj,S,Strada Cluj / Piața Leonardo da Vinci,Strada Cluj / Piața Leonardo da Vinci,,1,18.875,-94.66,4.67,,0,8.72188201229717e-06
+sunday,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu,Piața Tineretului / Strada Surorile Martir Caceu,,1,19.139,-58.69,0.05,,0,8.513426927842845e-06
+evening,close direction,Strada Cluj,S,,,4,6,19.559,-98.09,4.7,,0,9.810136301453691e-06
+sunday,close segment (both ways),Strada Arieș,SE,Strada Surorile Martir Caceu / Strada Arieș,Strada Arieș / Calea Martirilor 1989,,1,24.083,-73.85,0.03,,0,7.522328137017671e-06
+day,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu / Calea Martirilor 1989,Strada Surorile Martir Caceu,,1,24.276,-86.07,0.05,,0,4.9054233890806686e-06
+day,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu,Piața Tineretului / Strada Surorile Martir Caceu,,1,25.807,-91.5,0.06,,0,5.066620925954907e-07
+sunday,close segment (both ways),Strada Arieș,SE,Strada Cozia / Strada Arieș,Strada Surorile Martir Caceu / Strada Arieș,,1,27.113,-83.15,0.01,,0,7.075977280595632e-06
+sunday,close segment (both ways),Strada Arieș,SE,Strada Craiova / Strada Memorandului,Strada Cozia / Strada Arieș,,1,27.544,-84.47,1.37,,0,9.27095904936761e-06
+day,close segment (both ways),Strada Arieș,SE,Strada Surorile Martir Caceu / Strada Arieș,Strada Arieș / Calea Martirilor 1989,,1,38.402,-136.15,0.06,,0,8.662391062903727e-07
+day,close segment (both ways),Strada Arieș,SE,Strada Cozia / Strada Arieș,Strada Surorile Martir Caceu / Strada Arieș,,1,42.274,-149.88,0.17,,0,8.026110070401189e-06
+day,close segment (both ways),Strada Arieș,SE,Strada Craiova / Strada Memorandului,Strada Cozia / Strada Arieș,,1,42.444,-150.48,2.35,,0,5.288004800812966e-06
+morning,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu / Calea Martirilor 1989,Strada Surorile Martir Caceu,,1,54.377,-255.65,0.44,,0,7.1381906123647535e-06
+morning,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu,Piața Tineretului / Strada Surorile Martir Caceu,,1,61.324,-288.31,0.47,,0,8.478962216659236e-06
+evening,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu / Calea Martirilor 1989,Strada Surorile Martir Caceu,,1,63.575,-318.83,2.43,,0,4.335003617783656e-06
+evening,close segment (both ways),Strada Surorile Martir Caceu,NE,Strada Surorile Martir Caceu,Piața Tineretului / Strada Surorile Martir Caceu,,1,70.821,-355.18,1.71,,0,9.680507858338048e-06
+morning,close segment (both ways),Strada Arieș,SE,Strada Surorile Martir Caceu / Strada Arieș,Strada Arieș / Calea Martirilor 1989,,1,93.468,-439.43,0.16,,0,4.655204571985295e-06
+morning,close segment (both ways),Strada Arieș,SE,Strada Craiova / Strada Memorandului,Strada Cozia / Strada Arieș,,1,99.752,-468.98,4.85,,0,8.71257540075633e-06
+morning,close segment (both ways),Strada Arieș,SE,Strada Cozia / Strada Arieș,Strada Surorile Martir Caceu / Strada Arieș,,1,99.933,-469.83,0.56,,0,6.656609569323792e-06
+evening,close segment (both ways),Strada Arieș,SE,Strada Surorile Martir Caceu / Strada Arieș,Strada Arieș / Calea Martirilor 1989,,1,127.475,-639.3,0.36,,0,5.925202840059776e-06
+evening,close segment (both ways),Strada Arieș,SE,Strada Craiova / Strada Memorandului,Strada Cozia / Strada Arieș,,1,136.691,-685.52,5.11,,0,9.33708281922306e-06
+evening,close segment (both ways),Strada Arieș,SE,Strada Cozia / Strada Arieș,Strada Surorile Martir Caceu / Strada Arieș,,1,136.897,-686.56,3.47,,0,6.1317796412927e-06

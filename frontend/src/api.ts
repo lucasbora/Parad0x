@@ -1,5 +1,8 @@
 import type {
   BaselineResponse,
+  AllDay,
+  BreakEvenOk,
+  PackageResponse,
   CalibrationResponse,
   Change,
   CorridorResponse,
@@ -33,10 +36,10 @@ export const api = {
   corridor: () => request<CorridorResponse>("/api/corridor"),
   baseline: (profile: Profile, demandScale = 1) =>
     request<BaselineResponse>(`/api/corridor/baseline?profile=${profile}&demandScale=${demandScale}`),
-  simulate: (changes: Change[], profile: Profile, demandScale = 1, signal?: AbortSignal) =>
+  simulate: (changes: Change[], profile: Profile, demandScale = 1, signal?: AbortSignal, evaporation = 0) =>
     request<SimulateResponse>("/api/corridor/simulate", {
       method: "POST",
-      body: JSON.stringify({ changes, demandScale, profile }),
+      body: JSON.stringify({ changes, demandScale, profile, evaporation }),
       signal,
     }),
   sensitivity: (changes: Change[], profile: Profile) =>
@@ -44,7 +47,20 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ changes, profile }),
     }),
+  breakeven: (changes: Change[], profile: Profile, demandScale = 1, signal?: AbortSignal) =>
+    request<BreakEvenOk>("/api/corridor/breakeven", {
+      method: "POST",
+      body: JSON.stringify({ changes, demandScale, profile }),
+      signal,
+    }),
   calibration: (profile: Profile) => request<CalibrationResponse>(`/api/corridor/calibration?profile=${profile}`),
+  package: (profile: Profile) => request<PackageResponse>(`/api/corridor/package?profile=${profile}`),
+  allday: (changes: Change[], profile: Profile, signal?: AbortSignal, evaporation = 0) =>
+    request<{ status: "ok"; profiles: AllDay }>("/api/corridor/allday", {
+      method: "POST",
+      body: JSON.stringify({ changes, profile, evaporation }),
+      signal,
+    }),
   scan: (profile: Profile) => request<ScanResponse>(`/api/corridor/scan?profile=${profile}`),
 };
 

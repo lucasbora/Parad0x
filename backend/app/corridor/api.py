@@ -12,7 +12,9 @@ from typing import Any, Literal
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
-from app.corridor import calibration, config
+import difflib
+
+from app.corridor import calibration, config, survey
 from app.corridor.config import DEFAULT_PROFILE, LANDUSE, PROFILES
 from app.corridor.model import LaneChange, NeedsData, get_model
 from app.corridor.osm_network import compass, street_directions
@@ -33,6 +35,7 @@ class SimulateBody(BaseModel):
     demandScale: float = Field(1.0, ge=0.5, le=1.5)
     profile: ProfileQ = DEFAULT_PROFILE
     testData: bool = False     # deprecated: estimated land-use demand replaces test mode
+    evaporation: float = Field(0.0, ge=0.0, le=0.3)   # share of the changed street's drivers who leave the car
 
 
 def _changes(body_changes: list[Change]) -> list[LaneChange]:
@@ -114,7 +117,11 @@ def corridor() -> dict[str, Any]:
         "zones": {"type": "FeatureCollection", "features": zones},
         "streets": [{"street": s, "directions": [{"heading": h, "linkIds": ids} for h, ids in sorted(streets[s].items())]}
                     for s in main_first],
-        "landUse": {**m.landuse.summary, "carShare": LANDUSE["car_share"], "carShareVerified": LANDUSE["car_share_verified"]},
+        "landUse": {**m.landuse.summary, "carShare": LANDUSE["car_share"], "carShareVerified": LANDUSE["car_share_verified"],
+                    "carShareSource": LANDUSE["car_share_source"], "carOccupancy": LANDUSE["car_occupancy"],
+                    "carOccupancySource": LANDUSE["car_occupancy_source"]},
+        "tripCosts": _trip_costs(),
+        "evaporation": config.EVAPORATION,
         "dataStatus": m.status,
         "assumptions": m.assumptions_in_use(),
         "sources": {"network": net.source["osm"], "networkFetchedAt": net.source["fetchedAt"],
@@ -143,8 +150,34 @@ def demand(profile: ProfileQ = Query(DEFAULT_PROFILE)) -> dict[str, Any]:
 def simulate(body: SimulateBody) -> dict[str, Any]:
     changes = _changes(body.changes)
     m = get_model()
-    result = m.compare(changes, round(body.demandScale, 2), profile=body.profile)
+    result = m.compare(changes, round(body.demandScale, 2), profile=body.profile, evaporation=body.evaporation)
     return {"status": "ok", **result, "warnings": m.status["warnings"]}
+
+
+@router.post("/breakeven")
+def breakeven(body: SimulateBody) -> dict[str, Any]:
+    """Drivers who must switch mode for a lane removal to cost cars nothing (several solves)."""
+    changes = _changes(body.changes)
+    if not changes:
+        raise HTTPException(400, "no changes")
+    try:
+        return {"status": "ok", **get_model().break_even(changes, profile=body.profile, scale=round(body.demandScale, 2))}
+    except ValueError as e:
+        raise HTTPException(400, str(e)) from e
+
+
+@router.get("/package")
+def package_endpoint(profile: ProfileQ = Query(DEFAULT_PROFILE)) -> dict[str, Any]:
+    """Greedy filter package from the Braess search, plus a bus lane on top if the total stays lower."""
+    from app.corridor import package
+    return {"status": "ok", **package.best_package(get_model(), profile)}
+
+
+@router.post("/allday")
+def allday_endpoint(body: SimulateBody) -> dict[str, Any]:
+    """The same changes in every time window (total time change per profile)."""
+    from app.corridor import package
+    return {"status": "ok", "profiles": package.all_day(get_model(), _changes(body.changes), body.evaporation)}
 
 
 @router.post("/sensitivity")
@@ -185,3 +218,73 @@ def calibration_endpoint(profile: ProfileQ = Query(DEFAULT_PROFILE)) -> dict[str
         return {"status": "ok", **calibration.calibration_report(m, profile=profile)}
     except NeedsData as nd:
         return {"status": "needs_data", "dataStatus": nd.status}
+
+
+def _match_street(answer: str, names: list[str]) -> str | None:
+    """Network street for a free-text answer: exact, substring (≥ 5 chars), else close spelling."""
+    def key(x: str) -> str:
+        k = survey.norm(x)
+        return k[len("strada "):] if k.startswith("strada ") else k
+    a = key(answer)
+    if not a:
+        return None
+    keyed = {key(n): n for n in names}
+    if a in keyed:
+        return keyed[a]
+    if len(a) >= 5:
+        for k, n in keyed.items():
+            if a in k or (len(k) >= 5 and k in a):
+                return n
+    best = max(keyed, key=lambda k: difflib.SequenceMatcher(None, a, k).ratio(), default=None)
+    if best and difflib.SequenceMatcher(None, a, best).ratio() >= 0.88:
+        return keyed[best]
+    return None
+
+
+def _trip_costs() -> dict[str, Any]:
+    """Bus ticket (SMTT wallet API) vs paid street parking in the zone (Timpark API). Live data only:
+    if either API is down and only the seed fallback exists, that part is left out."""
+    from collections import Counter
+
+    from app.services import pmt_client
+
+    out: dict[str, Any] = {}
+    try:
+        types, prov = pmt_client.get_wallet_types()
+        if prov.source != "seed":
+            by_id = {t.get("id"): t for t in types if isinstance(t, dict)}
+            single, day = by_id.get("transit-single"), by_id.get("transit-day")
+            if single:
+                out["ticket"] = {"lei": single.get("priceLei"), "minutes": 60, "dayPassLei": (day or {}).get("priceLei"),
+                                 "source": "SMTT wallet API (cont.primariatm.ro)", "fetchedAt": prov.fetched_at}
+        park, prov = pmt_client.get_parking()
+        if prov.source != "seed" and park.get("features"):
+            la0, lo0, la1, lo1 = config.CORRIDOR.bbox
+            zones = Counter(f.get("tariff") for f in park["features"] if f.get("kind") == "street" and any(
+                lo0 <= c[0] <= lo1 and la0 <= c[1] <= la1 for c in f.get("coordinates") or []))
+            hourly = (park.get("tariffs") or {}).get("hourly") or {}
+            out["parking"] = {"streetSegmentsByTariff": dict(zones.most_common()),
+                              "eurPerHour": {k: v.get("eur") for k, v in hourly.items() if isinstance(v, dict)},
+                              "schedule": (park.get("tariffs") or {}).get("schedule"),
+                              "source": "Timpark API (cont.primariatm.ro)", "fetchedAt": prov.fetched_at}
+    except Exception:  # noqa: BLE001 — context only, never break /api/corridor
+        pass
+    return out
+
+
+@router.get("/survey")
+def survey_endpoint() -> dict[str, Any]:
+    """Citizen survey summary (anonymous) and which answers feed the model."""
+    s = config.SURVEY
+    if not s:
+        return {"status": "no_data"}
+    names = sorted({l.street for l in get_model().net.links})
+    mentioned = s["routeChoice"]["avoidStreetsMentioned"]
+    return {
+        "status": "ok", **s,
+        "avoidStreetsInModel": [{**x, "streetInModel": _match_street(x["answer"], names)} for x in mentioned],
+        "usedInModel": {k: {"value": LANDUSE[k], "default": LANDUSE[f"{k}_default"], "source": LANDUSE[f"{k}_source"]}
+                        for k in ("car_share", "car_occupancy")},
+        "surveyEnabled": survey.enabled(),
+        "minResponses": survey.MIN_RESPONSES,
+    }

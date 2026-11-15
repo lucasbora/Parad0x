@@ -16,7 +16,7 @@ import numpy as np
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import dijkstra
 
-from app.corridor import config, inputs
+from app.corridor import config, inputs, survey
 from app.corridor.assignment import AssignmentResult, LinkCosts, Network, assign
 from app.corridor.config import ASSUMPTIONS, DEFAULT_PROFILE, LANDUSE, PROFILES, SIDE_STREET_CLASSES
 from app.corridor.demand import ODTable, landuse_od
@@ -289,8 +289,45 @@ class CorridorModel:
                        "freeTimeSec": round(float(free[i]) * 60, 1)} for i, l in enumerate(self.net.links)],
         }
 
+    def street_users(self, changes: list[LaneChange], scale: float = 1.0,
+                     profile: str = DEFAULT_PROFILE) -> set[tuple[int, int]]:
+        """Origin–destination pairs whose route (today's equilibrium costs) uses a link that loses capacity."""
+        changed = {self.net.link_index[c.link_id] for c in changes
+                   if c.car_lanes_after < self.car_lanes(c.link_id)[0]}
+        if not changed:
+            return set()
+        base = self.solve([], scale, profile=profile)
+        ods = self.ods(scale, profile)
+        _, usable0 = self.costs([])
+        origins = sorted({o for o, _, _ in ods})
+        _, pred = self.solver_net.shortest_paths(base.cost, origins, usable0)
+        row = {o: i for i, o in enumerate(origins)}
+        return {(o, d) for o, d, _ in ods if changed & set(self.solver_net.path_links(pred[row[o]], d))}
+
+    def solve_evaporated(self, changes: list[LaneChange], scale: float, profile: str,
+                         share: float) -> tuple[AssignmentResult, list[tuple[int, int, float]]]:
+        """Equilibrium after the change when ``share`` of the drivers whose route used the changed street
+        leave the car (traffic evaporation). Returns the result and the demand actually assigned."""
+        ods = self.ods(scale, profile)
+        if share <= 0 or not changes:
+            return self.solve(changes, scale, profile=profile), ods
+        users = self.street_users(changes, scale, profile)
+        od2 = [(o, d, q * (1 - share) if (o, d) in users else q) for o, d, q in ods]
+        key = ("evap", tuple((c.link_id, c.car_lanes_after) for c in sorted(changes, key=lambda c: c.link_id)),
+               round(scale, 4), profile, round(share, 4))
+        with self._lock:
+            if key in self._cache:
+                return self._cache[key], od2
+        costs, usable = self.costs(changes)
+        plain = self.solve(changes, scale, profile=profile)
+        res = assign(self.solver_net, costs, od2, usable=usable, rel_gap=BASE_GAP, max_iter=BASE_MAX_ITER,
+                     x0=(plain.flow, plain.movement_flow))
+        with self._lock:
+            self._cache[key] = res
+        return res, od2
+
     def compare(self, changes: list[LaneChange], scale: float = 1.0, test: bool = False,
-                profile: str = DEFAULT_PROFILE) -> dict[str, Any]:
+                profile: str = DEFAULT_PROFILE, evaporation: float = 0.0) -> dict[str, Any]:
         profile = check_profile(profile)
         for c in changes:
             if c.link_id not in self.net.link_index:
@@ -298,7 +335,8 @@ class CorridorModel:
             if c.use not in USES:
                 raise ValueError(f"use must be one of {USES}")
         before = self.solve([], scale, profile=profile)
-        after = self.solve(changes, scale, profile=profile)
+        evaporation = max(0.0, min(float(evaporation), config.EVAPORATION["max"]))
+        after, ods_after = self.solve_evaporated(changes, scale, profile, evaporation)
         free = self.costs([])[0].fixed
         net = self.net
         links = []
@@ -341,7 +379,14 @@ class CorridorModel:
                            "pathAfter": self.path_coords(after.cost, usable_after, *key)})
         removed = any(c.car_lanes_after < self.car_lanes(c.link_id)[0] for c in changes)
         change_pct = (after.total_time - before.total_time) / before.total_time * 100
+        local = self._local_effects(od, before, after, scale)
         buses = self.bus_results(changes, before, after)
+        # Stated-preference indicator only: the model has fixed demand and no mode choice, so this
+        # never changes the traffic result. Basis = the best bus-minute gain on the changed street.
+        gain = max((b["minutesBefore"] - b["minutesAfter"] for b in buses if b["usesChangedStreet"]), default=0.0)
+        shift = survey.share_switching(config.SURVEY, max(gain, 0.0))
+        mode_shift = ({**shift, "basis": "best bus-minute gain on the changed street",
+                       "source": f"citizen survey (n={config.SURVEY['responses']})"} if shift else None)
         return {
             "testData": False,
             "profile": profile,
@@ -352,7 +397,9 @@ class CorridorModel:
                 "demandVehH": round(sum(q for _, _, q in self.ods(scale, profile)), 0),
             },
             # Braess's paradox: car capacity was taken away, yet total time in traffic went DOWN.
-            "braess": {"detected": bool(removed and change_pct < -0.05), "carCapacityRemoved": removed,
+            # with evaporation some trips leave the car, so a lower total is no longer a "paradox"
+            "braess": {"detected": bool(removed and change_pct < -0.05 and evaporation == 0),
+                       "carCapacityRemoved": removed,
                        "totalChangePct": round(change_pct, 2)},
                 "carRoutes": routes,
             "junctions": [{"nodeId": k, "delayBeforeSec": round(jb[k], 1), "delayAfterSec": round(ja[k], 1)} for k in jb],
@@ -363,7 +410,92 @@ class CorridorModel:
             "solver": {"gapBefore": before.rel_gap, "gapAfter": after.rel_gap, "iterationsAfter": after.iterations,
                        "msAfter": round(after.elapsed_ms, 1)},
             "demandScale": scale,
+            "modeShift": mode_shift,
+            "evaporation": self._evaporation_block(evaporation, before, after, ods_after, scale, profile),
+            # where the effect actually lands (the zone total dilutes it over every trip)
+            "local": {**local, "vehHSavedPerHour": round((before.total_time - after.total_time) / 60, 2)},
         }
+
+    def _evaporation_block(self, share: float, before: AssignmentResult, after: AssignmentResult,
+                           ods_after: list[tuple[int, int, float]], scale: float, profile: str) -> dict[str, Any] | None:
+        """What evaporation did: cars that left, and the time change for the drivers who STAYED in their car
+        (same trips before and after, so fewer cars on the road cannot inflate it)."""
+        if share <= 0:
+            return None
+        ods_before = {(o, d): q for o, d, q in self.ods(scale, profile)}
+        removed = sum(ods_before.values()) - sum(q for _, _, q in ods_after)
+        tb = sum(q * before.od_time[(o, d)] for o, d, q in ods_after if (o, d) in before.od_time and (o, d) in after.od_time)
+        ta = sum(q * after.od_time[(o, d)] for o, d, q in ods_after if (o, d) in before.od_time and (o, d) in after.od_time)
+        return {"share": share, "carsLeftVehH": round(removed, 1),
+                "stayingDriversChangePct": round((ta - tb) / tb * 100, 3) if tb > 0 else None,
+                "stayingDriversVehHSaved": round((tb - ta) / 60, 2),
+                "source": config.EVAPORATION["source"]}
+
+    def _local_effects(self, od: ODTable, before: AssignmentResult, after: AssignmentResult,
+                       scale: float) -> dict[str, Any]:
+        """Biggest trip gain / loss (pairs with ≥ 5 veh/h) and the most relieved / loaded side street."""
+        trips = []
+        for i, r in enumerate(od.rows):
+            for j, c in enumerate(od.cols):
+                q = float(od.trips[i, j]) * scale
+                key = (r.node, c.node)
+                if q < 5 or r.node == c.node or key not in before.od_time or key not in after.od_time:
+                    continue
+                tb, ta = before.od_time[key], after.od_time[key]
+                if tb > 0 and np.isfinite(ta):
+                    trips.append({"from": r.label, "to": c.label, "vehH": round(q, 0), "minutesBefore": round(tb, 2),
+                                  "minutesAfter": round(ta, 2), "changePct": round((ta - tb) / tb * 100, 2)})
+        best = min(trips, key=lambda t: t["changePct"], default=None)
+        worst = max(trips, key=lambda t: t["changePct"], default=None)
+        side = []
+        for i, l in enumerate(self.net.links):
+            if l.highway in SIDE_STREET_CLASSES:
+                side.append({"street": l.street, "heading": compass(l.bearing), "linkId": l.id,
+                             "flowBefore": round(float(before.flow[i]), 0), "flowAfter": round(float(after.flow[i]), 0),
+                             "deltaFlow": round(float(after.flow[i] - before.flow[i]), 0)})
+        relieved = min(side, key=lambda x: x["deltaFlow"], default=None)
+        loaded = max(side, key=lambda x: x["deltaFlow"], default=None)
+        return {"bestTrip": best if best and best["changePct"] < 0 else None,
+                "worstTrip": worst if worst and worst["changePct"] > 0 else None,
+                "sideStreetRelieved": relieved if relieved and relieved["deltaFlow"] <= -20 else None,
+                "sideStreetLoaded": loaded if loaded and loaded["deltaFlow"] >= 20 else None}
+
+    def break_even(self, changes: list[LaneChange], scale: float = 1.0, profile: str = DEFAULT_PROFILE) -> dict[str, Any]:
+        """How many drivers whose route uses the changed street must leave the car (bus, bike, walk)
+        for total car time to be back to today's? Bisection on the share of those drivers removed."""
+        profile = check_profile(profile)
+        base = self.solve([], scale, profile=profile)
+        after = self.solve(changes, scale, profile=profile)
+        cost_pct = (after.total_time - base.total_time) / base.total_time * 100
+        ods = self.ods(scale, profile)
+        total = sum(q for _, _, q in ods)
+        changed = {self.net.link_index[c.link_id] for c in changes}
+        _, usable0 = self.costs([])
+        origins = sorted({o for o, _, _ in ods})
+        _, pred = self.solver_net.shortest_paths(base.cost, origins, usable0)
+        row = {o: i for i, o in enumerate(origins)}
+        users = {(o, d) for o, d, _ in ods if changed & set(self.solver_net.path_links(pred[row[o]], d))}
+        users_veh = sum(q for o, d, q in ods if (o, d) in users)
+        out = {"costPct": round(cost_pct, 3), "streetUsersVehH": round(users_veh, 0), "totalVehH": round(total, 0),
+               "profile": profile, "basis": "drivers whose route used the changed street before the change"}
+        if cost_pct <= 0.005:
+            return {**out, "free": True, "switchVehH": 0, "switchShare": 0.0}
+        costs, usable = self.costs(changes)
+        x0 = (after.flow, after.movement_flow)
+
+        def excess(sh: float) -> float:
+            od2 = [(o, d, q * (1 - sh) if (o, d) in users else q) for o, d, q in ods]
+            return assign(self.solver_net, costs, od2, usable=usable, rel_gap=BASE_GAP, max_iter=BASE_MAX_ITER,
+                          x0=x0).total_time - base.total_time
+        lo, hi = 0.0, 0.05
+        while excess(hi) > 0:
+            lo, hi = hi, hi * 2
+            if hi > 0.8:
+                return {**out, "free": False, "switchVehH": None, "switchShare": None, "above": 0.8}
+        for _ in range(10):
+            mid = (lo + hi) / 2
+            lo, hi = (mid, hi) if excess(mid) > 0 else (lo, mid)
+        return {**out, "free": False, "switchShare": round(hi, 4), "switchVehH": round(hi * users_veh, 1)}
 
     def bus_results(self, changes: list[LaneChange], before: AssignmentResult, after: AssignmentResult) -> list[dict]:
         from app.corridor import transit
@@ -407,7 +539,9 @@ class CorridorModel:
         lanes_assumed = sum(1 for l in self.net.links if l.lanes_source == "assumed" and l.id not in self.fd.lanes)
         speed_assumed = sum(1 for l in self.net.links if l.speed_source.startswith("assumed"))
         lu = self.landuse.summary
-        car_share = f"{LANDUSE['car_share']:.0%}" + ("" if LANDUSE["car_share_verified"] else " (PMUD, unverified)")
+        car_share = f"{LANDUSE['car_share']:.0%} ({LANDUSE['car_share_source']})"
+        occupancy = f"{LANDUSE['car_occupancy']:.2f} people/car ({LANDUSE['car_occupancy_source']})"
+        from_survey = any(w in LANDUSE[k] for w in ("survey", "scenario") for k in ("car_share_source", "car_occupancy_source"))
         return [
             {"what": "Demand (where trips start and end)", "value": "OSM buildings + POIs → gravity model",
              "appliesTo": "all profiles without counts", "replaceWith": "gate_counts.csv / link_counts.csv"},
@@ -416,8 +550,9 @@ class CorridorModel:
              "appliesTo": f"{lu.get('residentialBuildings', 0)} buildings ({lu.get('levelsFromOsm', 0)} with floors in OSM)",
              "replaceWith": "INS census / link_counts.csv"},
             {"what": "Car trips per resident", "value": f"{LANDUSE['trips_per_resident_day']} trips/day × car share "
-                     f"{car_share} ÷ {LANDUSE['car_occupancy']} people/car",
-             "appliesTo": "local demand", "replaceWith": "PMUD Timișoara / link_counts.csv"},
+                     f"{car_share} ÷ {occupancy}",
+             "appliesTo": "local demand",
+             "replaceWith": "larger survey / PMUD Timișoara / link_counts.csv" if from_survey else "PMUD Timișoara / link_counts.csv"},
             {"what": "Through traffic at gateways",
              "value": f"{LANDUSE['through_share_of_capacity']:.0%} of the road's capacity at "
                       f"{PROFILES[LANDUSE['through_reference_profile']].label_en.lower()} peak; other profiles × "

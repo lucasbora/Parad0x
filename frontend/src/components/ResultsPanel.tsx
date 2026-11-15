@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
-import type { BusResult, CarRoute, Change, Highlight, Profile, SensitivityRow, SimulateResponse } from "../types/corridor";
+import type { BreakEvenOk, BusResult, CarRoute, Change, Highlight, Profile, SensitivityRow, SimulateResponse, TripChange, TripCosts, AllDay, ProfileMeta } from "../types/corridor";
 import { api, fmt, signed } from "../api";
 import { useI18n } from "../i18n/translations";
 import SourceBadge from "./SourceBadge";
@@ -12,6 +12,11 @@ interface Props {
   onHoverBus: (b: BusResult | null) => void;
   onHighlight: (h: Highlight | null) => void;
   onFocus: (h: Highlight) => void;
+  tripCosts?: TripCosts;
+  profiles?: ProfileMeta[];
+  evaporation?: number;
+  onEvaporation?: (v: number) => void;
+  evapOptions?: { literature_median: number; cautious: number; source: string };
 }
 
 function routeHighlight(c: CarRoute, minLabel: string): Highlight {
@@ -34,11 +39,36 @@ function Delta({ before, after, unit, digits = 1, goodWhenLower = true }: {
   );
 }
 
-export default function ResultsPanel({ result, changes, profile, onHoverBus, onHighlight, onFocus }: Props) {
-  const { t } = useI18n();
+export default function ResultsPanel({ result, changes, profile, onHoverBus, onHighlight, onFocus, tripCosts, profiles, evaporation = 0, onEvaporation, evapOptions }: Props) {
+  const { t, lang } = useI18n();
   const [sens, setSens] = useState<SensitivityRow[] | null>(null);
   const [sensBusy, setSensBusy] = useState(false);
   useEffect(() => setSens(null), [result]);   // robustness table belongs to one scenario
+  const [allDay, setAllDay] = useState<AllDay | null>(null);
+  useEffect(() => {
+    setAllDay(null);
+    if (!result || result.status !== "ok") return;
+    const ctl = new AbortController();
+    api.allday(changes, profile, ctl.signal, evaporation).then((a) => setAllDay(a.profiles)).catch(() => undefined);
+    return () => ctl.abort();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result]);
+  const [be, setBe] = useState<BreakEvenOk | null>(null);
+  const [beBusy, setBeBusy] = useState(false);
+  // break-even only for lanes given to bus / bike / sidewalk (not for full closures)
+  const laneTaken = changes.some((c) => c.use !== "closed" && c.carLanesAfter > 0);
+  useEffect(() => {
+    setBe(null);
+    if (!result || result.status !== "ok" || !laneTaken) return;
+    const ctl = new AbortController();
+    setBeBusy(true);
+    api.breakeven(changes, profile, result.demandScale, ctl.signal)
+      .then((b) => setBe(b))
+      .catch(() => undefined)
+      .finally(() => setBeBusy(false));
+    return () => ctl.abort();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result]);
 
   if (!result) return null;
   if (result.status === "needs_data") {
@@ -68,19 +98,100 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
         <p className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-1.5 text-[11.5px] font-semibold text-amber-800">{t.estimatedBanner}</p>
       )}
 
+      {r.braess.carCapacityRemoved && onEvaporation && evapOptions && (
+        <div className="rounded-lg border border-slate-200 p-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-[12.5px] font-semibold text-slate-800">{t.evapTitle}</h3>
+            <div className="flex gap-0.5 rounded-lg bg-slate-100 p-0.5" role="radiogroup" aria-label={t.evapTitle}>
+              {[0, evapOptions.cautious, evapOptions.literature_median].map((v) => (
+                <button key={v} role="radio" aria-checked={evaporation === v} onClick={() => onEvaporation(v)}
+                  className={`rounded-md px-2 py-0.5 font-mono text-[11.5px] font-semibold transition ${evaporation === v ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}
+                  title={v === evapOptions.cautious ? t.evapCautious : v === evapOptions.literature_median ? t.evapLiterature : ""}>
+                  {Math.round(v * 100)}%
+                </button>
+              ))}
+            </div>
+          </div>
+          <p className="mt-1 text-[10.5px] leading-snug text-slate-500">{t.evapHint}</p>
+          {r.evaporation && (
+            <div className="mt-1.5 space-y-0.5 text-[12px] text-slate-700">
+              <p><b className="font-mono">{fmt(r.evaporation.carsLeftVehH, 0)}</b> {t.evapLeft}</p>
+              {r.evaporation.stayingDriversChangePct !== null && (
+                <p>
+                  {t.evapStaying}:{" "}
+                  <b className={`font-mono ${r.evaporation.stayingDriversChangePct <= 0 ? "text-emerald-700" : "text-orange-700"}`}>
+                    {signed(r.evaporation.stayingDriversChangePct, 2)}%
+                  </b>{" "}
+                  <span className="text-slate-500">{r.evaporation.stayingDriversChangePct <= 0 ? t.evapStayFaster : t.evapStaySlower}</span>
+                </p>
+              )}
+              <p className="font-mono text-[10px] text-slate-400">{r.evaporation.source}</p>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="rounded-lg bg-slate-50 p-3">
-        <p className="text-[12px] text-slate-600">{t.totalTime}</p>
+        <p className="text-[12px] text-slate-600">{r.evaporation ? `${t.evapTotalLabel} ${Math.round(r.evaporation.share * 100)}%)` : t.totalTime}</p>
         <p className={`font-mono text-[22px] font-semibold ${r.totals.changePct <= 0 ? "text-emerald-700" : "text-orange-700"}`}>
-          {signed(r.totals.changePct, 1)}%
+          {signed(r.totals.changePct, 2)}%
         </p>
         <p className="font-mono text-[11px] text-slate-500">
           {fmt(r.totals.vehMinBefore / 60, 0)} → {fmt(r.totals.vehMinAfter / 60, 0)} veh·h · {fmt(r.totals.demandVehH, 0)} {t.vehH}
           {r.demandScale !== 1 && ` · ${t.demandMeter} ${Math.round(r.demandScale * 100)}%`}
         </p>
-        <p className={`mt-1 text-[11.5px] ${r.braess.detected ? "font-semibold text-fuchsia-700" : "text-slate-500"}`}>
-          {r.braess.detected ? `${t.braessTitle} ${t.braessBody} ${fmt(Math.abs(r.braess.totalChangePct), 2)}%.` : t.noBraess}
+        <p className={`mt-1 text-[11.5px] ${r.braess.detected ? "font-semibold text-fuchsia-700" : r.evaporation && r.totals.changePct < 0 ? "font-semibold text-emerald-700" : "text-slate-500"}`}>
+          {r.braess.detected ? `${t.braessTitle} ${t.braessBody} ${fmt(Math.abs(r.braess.totalChangePct), 2)}%.` : r.evaporation ? (r.totals.changePct < 0 ? t.evapImproves : t.evapWorse) : t.noBraess}
         </p>
       </div>
+
+      {allDay && profiles && (
+        <div>
+          <h3 className="text-[12.5px] font-semibold text-slate-800">{t.allDayTitle}</h3>
+          <div className="mt-1 grid grid-cols-4 gap-1">
+            {profiles.map((p) => {
+              const v = allDay[p.id];
+              const tone = !v ? "border-slate-200 text-slate-400" : v.changePct < -0.005 ? "border-emerald-200 bg-emerald-50 text-emerald-800" : v.changePct > 0.005 ? "border-orange-200 bg-orange-50 text-orange-800" : "border-slate-200 text-slate-600";
+              return (
+                <div key={p.id} className={`rounded-lg border px-1.5 py-1 text-center ${tone} ${p.id === profile ? "ring-1 ring-[#005BBC]" : ""}`}>
+                  <div className="truncate text-[10.5px] font-medium">{lang === "ro" ? p.labelRo : p.labelEn}</div>
+                  <div className="font-mono text-[11.5px] font-semibold">{v ? `${signed(v.changePct, 2)}%` : "—"}</div>
+                </div>
+              );
+            })}
+          </div>
+          {Object.values(allDay).some((v) => v && v.changePct > 0.005) && Object.values(allDay).some((v) => v && v.changePct < -0.005) && (
+            <p className="mt-1 text-[10.5px] text-slate-500">{t.allDayHint}</p>
+          )}
+        </div>
+      )}
+
+      {r.local && <LocalBlock local={r.local} />}
+
+      {laneTaken && (
+        <div className="rounded-lg border border-slate-200 p-3">
+          <h3 className="text-[12.5px] font-semibold text-slate-800">{t.breakEvenTitle}</h3>
+          {beBusy && !be && <p className="mt-1 flex items-center gap-1.5 text-[11.5px] text-slate-500"><Loader2 size={12} className="animate-spin" /> {t.breakEvenBusy}</p>}
+          {be && be.free && <p className="mt-1 text-[12px] font-medium text-emerald-700">{t.breakEvenFree}</p>}
+          {be && !be.free && be.switchVehH !== null && (
+            <p className="mt-1 text-[12px] leading-snug text-slate-700">
+              {t.breakEvenIf} <b className="font-mono">{fmt(be.switchVehH, 1)}</b> {t.breakEvenOf}{" "}
+              <span className="font-mono">{fmt(be.streetUsersVehH, 0)}</span> {t.breakEvenUsers}
+              {be.switchVehH > 0 && <span className="font-mono text-slate-500"> ({t.breakEvenOneIn} {fmt(Math.max(1, be.streetUsersVehH / be.switchVehH), 0)})</span>}.
+            </p>
+          )}
+          {be && !be.free && be.switchVehH === null && <p className="mt-1 text-[12px] text-orange-700">{t.breakEvenAbove}</p>}
+          {r.modeShift && buses.length > 0 && (
+            <p className="mt-1.5 text-[11px] leading-snug text-slate-500">
+              <span className="font-semibold">{t.surveyLabel}:</span>{" "}
+              {r.modeShift.belowSmallestOption
+                ? <>{fmt(r.modeShift.minutesFaster, 2)} {t.surveyBelow} ({r.modeShift.belowSmallestOption} min).</>
+                : <><span className="font-mono">{Math.round((r.modeShift.share ?? 0) * 100)}%</span> {t.surveyShare} {r.modeShift.option} min.</>}{" "}
+              <span className="font-mono">{r.modeShift.source}</span> · {t.statedPref}
+            </p>
+          )}
+        </div>
+      )}
 
       <div>
         <h3 className="text-[12.5px] font-semibold text-slate-800">{t.cars}</h3>
@@ -116,6 +227,8 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
           ))}
         </ul>
       </div>
+
+      {tripCosts && (tripCosts.ticket || tripCosts.parking) && <CostsLine c={tripCosts} />}
 
       <div>
         <h3 className="text-[12.5px] font-semibold text-slate-800">{t.shifts}</h3>
@@ -174,5 +287,90 @@ export default function ResultsPanel({ result, changes, profile, onHoverBus, onH
         Wardrop UE · CFW gap {r.solver.gapAfter.toExponential(0)} · {r.solver.iterationsAfter} it · {fmt(r.solver.msAfter, 0)} ms
       </p>
     </section>
+  );
+}
+
+function TripLine({ label, trip, good }: { label: string; trip: TripChange; good: boolean }) {
+  const { t } = useI18n();
+  return (
+    <li className="py-1">
+      <div className="text-[11px] text-slate-500">{label}</div>
+      <div className="truncate text-[12px] text-slate-700" title={`${trip.from} → ${trip.to}`}>
+        {trip.from} → {trip.to} <span className="text-slate-400">· {fmt(trip.vehH, 0)} {t.vehH}</span>
+      </div>
+      <span className="font-mono text-[12px]">
+        <span className="text-slate-500">{fmt(trip.minutesBefore, 2)}</span>
+        <ArrowRight size={11} className="mx-1 inline text-slate-400" />
+        <b className="text-slate-900">{fmt(trip.minutesAfter, 2)}</b> {t.min}{" "}
+        <span className={good ? "text-emerald-700" : "text-orange-700"}>({signed(trip.changePct, 1)}%)</span>
+      </span>
+    </li>
+  );
+}
+
+function LocalBlock({ local }: { local: NonNullable<Extract<SimulateResponse, { status: "ok" }>["local"]> }) {
+  const { t } = useI18n();
+  const saved = local.vehHSavedPerHour;
+  const relieved = local.sideStreetRelieved;
+  const loaded = local.sideStreetLoaded;
+  return (
+    <div>
+      <h3 className="text-[12.5px] font-semibold text-slate-800">{t.whereFelt}</h3>
+      {Math.abs(saved) >= 0.05 && (
+        <p className="mt-0.5 text-[12px] text-slate-700">
+          <b className={`font-mono ${saved > 0 ? "text-emerald-700" : "text-orange-700"}`}>{fmt(Math.abs(saved), 1)}</b>{" "}
+          {saved > 0 ? t.savedPerPeak : t.costPerPeak}
+          <span className="block font-mono text-[11px] text-slate-500">≈ {fmt(Math.abs(saved) * 250, 0)} veh·h {t.perYear}</span>
+        </p>
+      )}
+      <ul className="mt-1 divide-y divide-slate-100">
+        {local.bestTrip && <TripLine label={t.bestTrip} trip={local.bestTrip} good />}
+        {local.worstTrip && <TripLine label={t.worstTrip} trip={local.worstTrip} good={false} />}
+        {relieved && (
+          <li className="flex items-center justify-between gap-2 py-1 text-[12px]">
+            <span className="min-w-0"><span className="block text-[11px] text-slate-500">{t.sideRelieved}</span>
+              <span className="block truncate text-slate-700">{relieved.street} <span className="text-slate-400">· {t.heading[relieved.heading] ?? relieved.heading}</span></span></span>
+            <span className="whitespace-nowrap font-mono text-blue-700">{signed(relieved.deltaFlow, 0)} {t.vehH}</span>
+          </li>
+        )}
+        {loaded && (
+          <li className="flex items-center justify-between gap-2 py-1 text-[12px]">
+            <span className="min-w-0"><span className="block text-[11px] text-slate-500">{t.sideLoaded}</span>
+              <span className="block truncate text-slate-700">{loaded.street} <span className="text-slate-400">· {t.heading[loaded.heading] ?? loaded.heading}</span></span></span>
+            <span className="whitespace-nowrap font-mono text-orange-700">{signed(loaded.deltaFlow, 0)} {t.vehH}</span>
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}
+
+function CostsLine({ c }: { c: TripCosts }) {
+  const { t } = useI18n();
+  const seg = c.parking ? Object.entries(c.parking.streetSegmentsByTariff) : [];
+  const total = seg.reduce((a, [, n]) => a + n, 0);
+  const [top, topN] = seg[0] ?? [null, 0];
+  const hours = c.parking?.schedule?.weekdays;
+  return (
+    <div className="rounded-lg bg-slate-50 p-2.5 text-[11.5px] leading-snug text-slate-700">
+      <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">{t.costsTitle}</p>
+      {c.ticket && (
+        <p className="mt-0.5">
+          {t.ticketLabel}: <b className="font-mono">{c.ticket.lei} lei</b> / {c.ticket.minutes} min
+          {c.ticket.dayPassLei ? <> · {t.dayPass} <span className="font-mono">{c.ticket.dayPassLei} lei</span></> : null}
+        </p>
+      )}
+      {c.parking && top && (
+        <p className="mt-0.5">
+          {t.parkingLabel}: {t.parkingMostly} {t.tariffNames[top] ?? top}{" "}
+          <b className="font-mono">€{fmt(c.parking.eurPerHour[top], 2)}/h</b>{" "}
+          <span className="text-slate-500">({topN} {t.segmentsOf} {total}{hours ? `, ${t.weekdays} ${hours[0]}–${hours[1]}` : ""})</span>
+        </p>
+      )}
+      <p className="mt-1 flex flex-wrap gap-1">
+        {c.ticket && <SourceBadge label={c.ticket.source} tone="live" />}
+        {c.parking && <SourceBadge label={c.parking.source} tone="live" />}
+      </p>
+    </div>
   );
 }
