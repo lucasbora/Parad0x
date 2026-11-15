@@ -3,12 +3,10 @@ import type {
   AllDay,
   BreakEvenOk,
   PackageResponse,
-  CalibrationResponse,
   Change,
   CorridorResponse,
   Profile,
   ScanResponse,
-  SensitivityResponse,
   SimulateResponse,
 } from "./types/corridor";
 
@@ -42,18 +40,12 @@ export const api = {
       body: JSON.stringify({ changes, demandScale, profile, evaporation }),
       signal,
     }),
-  sensitivity: (changes: Change[], profile: Profile) =>
-    request<SensitivityResponse>("/api/corridor/sensitivity", {
-      method: "POST",
-      body: JSON.stringify({ changes, profile }),
-    }),
   breakeven: (changes: Change[], profile: Profile, demandScale = 1, signal?: AbortSignal) =>
     request<BreakEvenOk>("/api/corridor/breakeven", {
       method: "POST",
       body: JSON.stringify({ changes, demandScale, profile }),
       signal,
     }),
-  calibration: (profile: Profile) => request<CalibrationResponse>(`/api/corridor/calibration?profile=${profile}`),
   package: (profile: Profile) => request<PackageResponse>(`/api/corridor/package?profile=${profile}`),
   allday: (changes: Change[], profile: Profile, signal?: AbortSignal, evaporation = 0) =>
     request<{ status: "ok"; profiles: AllDay }>("/api/corridor/allday", {

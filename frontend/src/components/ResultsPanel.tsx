@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
-import type { AllDay, BreakEvenOk, BusResult, CarRoute, Change, Highlight, Profile, ProfileMeta, SensitivityRow, SimulateResponse,
+import type { AllDay, BreakEvenOk, BusResult, CarRoute, Change, Highlight, Profile, ProfileMeta, SimulateResponse,
   TripChange, TripCosts } from "../types/corridor";
 import { api, fmt, signed } from "../api";
 import { useI18n } from "../i18n/translations";
@@ -46,9 +46,6 @@ function Delta({ before, after, unit, digits = 1, goodWhenLower = true }: {
 export default function ResultsPanel({ result, changes, profile, busy, onHoverBus, onHighlight, onFocus, tripCosts, profiles,
   evaporation = 0, onEvaporation, evapOptions }: Props) {
   const { t, lang } = useI18n();
-  const [sens, setSens] = useState<SensitivityRow[] | null>(null);
-  const [sensBusy, setSensBusy] = useState(false);
-  useEffect(() => setSens(null), [result]);   // robustness table belongs to one scenario
   // the headline number counts to its new value instead of jumping
   const totalPct = useTween(result && result.status === "ok" ? result.totals.changePct : 0);
   const evapThumb = useSlidingThumb(String(evaporation));
@@ -86,15 +83,6 @@ export default function ResultsPanel({ result, changes, profile, busy, onHoverBu
     );
   }
   const r = result;
-  const runSens = async () => {
-    setSensBusy(true);
-    try {
-      const s = await api.sensitivity(changes, profile);
-      if (s.status === "ok") setSens(s.rows);
-    } finally {
-      setSensBusy(false);
-    }
-  };
   const buses = r.buses.filter((b) => b.usesChangedStreet);
 
   return (
@@ -265,39 +253,7 @@ export default function ResultsPanel({ result, changes, profile, busy, onHoverBu
         </ul>
       </div>
 
-      <div>
-        <button onClick={runSens} disabled={sensBusy}
-          className="flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-[12px] font-medium text-slate-800 transition hover:bg-slate-50 active:scale-[0.98]">
-          {sensBusy && <Loader2 size={13} className="animate-spin" />} {t.sensitivity}
-        </button>
-        <Collapse open={!!sens}>
-          {sens && (
-          <div className="mt-2">
-            <p className="text-[11.5px] text-slate-600">{t.sensitivityTitle}</p>
-            <table className="mt-1 w-full text-left font-secondary text-[11px]">
-              <thead className="text-slate-500">
-                <tr><th className="font-normal">{t.demand}</th><th className="font-normal">{t.total}</th><th className="font-normal">{t.mainRoute}</th><th className="font-normal">{t.bus}</th></tr>
-              </thead>
-              <tbody>
-                {sens.map((row) => (
-                  <tr key={row.demandScale} className="border-t border-slate-100">
-                    <td>{Math.round(row.demandScale * 100)}%</td>
-                    <td className={row.braess ? "font-semibold text-fuchsia-700" : ""}>{signed(row.totalChangePct, 2)}%</td>
-                    <td>{row.mainRoute ? `${signed(row.mainRoute.minutesAfter - row.mainRoute.minutesBefore, 2)} ${t.min}` : "—"}</td>
-                    <td>{row.bus ? `${row.bus.shortName}: ${signed(row.bus.minutesAfter - row.bus.minutesBefore, 2)}` : "—"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          )}
-        </Collapse>
-      </div>
-
       {r.warnings.map((w) => <p key={w} className="rounded bg-amber-50 px-2 py-1 text-[11px] text-amber-800">{w}</p>)}
-      <p className="font-secondary text-[10.5px] text-slate-400">
-        Wardrop UE · CFW gap {r.solver.gapAfter.toExponential(0)} · {r.solver.iterationsAfter} it · {fmt(r.solver.msAfter, 0)} ms
-      </p>
     </section>
   );
 }

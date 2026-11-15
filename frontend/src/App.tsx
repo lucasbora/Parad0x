@@ -5,10 +5,8 @@ import { I18nContext, translations, type Lang } from "./i18n/translations";
 import type {
   BaselineLink,
   BusResult,
-  CalibrationResponse,
   Change,
   CorridorResponse,
-  DemandSummary,
   Highlight,
   LaneKind,
   LaneUse,
@@ -23,13 +21,12 @@ import type {
 } from "./types/corridor";
 import CorridorMap, { type CameraTarget, type MapPinView, type MapTheme, type ViewPadding } from "./components/CorridorMap";
 import LayersPill from "./components/LayersPill";
-import DataStatusCard from "./components/DataStatusCard";
 import StreetSearch from "./components/StreetSearch";
 import LaneMixer from "./components/LaneMixer";
 import PinsPanel, { type PinTime } from "./components/PinsPanel";
 import ScanCard from "./components/ScanCard";
 import ResultsPanel from "./components/ResultsPanel";
-import ModelCheckCard from "./components/ModelCheckCard";
+import SourcesNote from "./components/SourcesNote";
 import ProfileBar from "./components/ProfileBar";
 import CitizenBraessExplainerModal from "./components/CitizenBraessExplainerModal";
 import { usePresence, useSlidingThumb, withViewTransition } from "./motion";
@@ -95,9 +92,7 @@ export default function App() {
   const [data, setData] = useState<CorridorResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [reload, setReload] = useState(0);
-  const [calibration, setCalibration] = useState<CalibrationResponse | null>(null);
   const [profile, setProfile] = useState<Profile>("morning");
-  const [demandSummary, setDemandSummary] = useState<DemandSummary | null>(null);
   const [demandInput, setDemandInput] = useState(1);        // slider position (moves instantly)
   const [demandScale, setDemandScale] = useState(1);        // applied after a short pause
   const [demandVehH, setDemandVehH] = useState<number | null>(null);
@@ -194,7 +189,6 @@ export default function App() {
     let live = true;
     setScanRows(null);
     setScanStats(null);
-    setCalibration(null);
     setScanLoading(true);
     setPkg(null);
     api.scan(profile).then((s) => {
@@ -205,7 +199,6 @@ export default function App() {
       if (s.status === "ok") api.package(profile).then((p) => live && setPkg(p)).catch(() => undefined);
     }).catch(() => undefined)
       .finally(() => live && setScanLoading(false));
-    api.calibration(profile).then((c) => live && setCalibration(c)).catch(() => undefined);
     return () => {
       live = false;
     };
@@ -219,7 +212,6 @@ export default function App() {
       if (!live || b.status !== "ok") return;
       setBaseline(b.links);
       setBaselineJunctions(b.junctions);
-      setDemandSummary(b.demandSummary);
       setDemandVehH(b.demandVehH);
     }).catch((e: Error) => live && setError(e.message));
     return () => {
@@ -531,7 +523,7 @@ export default function App() {
 
   return (
     <I18nContext.Provider value={i18n}>
-      <div className={`relative h-screen w-screen overflow-hidden transition-colors duration-300 ${!narrow && recommendedOpen ? "right-panel-open" : ""} ${isDark ? "theme-dark bg-[#0B1120] text-slate-100" : "bg-[#F8FAFC] text-[#0F172A]"}`}>
+      <div className={`relative h-screen w-screen overflow-clip transition-colors duration-300 ${!narrow && recommendedOpen ? "right-panel-open" : ""} ${isDark ? "theme-dark bg-[#0B1120] text-slate-100" : "bg-[#F8FAFC] text-[#0F172A]"}`}>
         {data && (
           <CorridorMap data={data} baseline={baseline} baselineJunctions={baselineJunctions} result={ok} scanRows={scanRows}
             layers={layers} mapTheme={mapTheme} showDelta={showDelta} selectedLinkIds={focusIds} pins={mapPins}
@@ -768,7 +760,6 @@ export default function App() {
             {!data && !error && <p className="m-fade-in flex items-center gap-2 text-[13px] text-slate-500"><Loader2 size={15} className="animate-spin" /> {t.loading}</p>}
             {data && (
               <>
-                <DataStatusCard data={data} profile={profile} demand={demandSummary} />
                 <StreetSearch data={data} street={street} heading={heading} onChange={select} />
                 {scenario && (
                   <section key={scenario.linkIds.join(",")} className="m-rise-in rounded-xl border border-fuchsia-300 bg-fuchsia-50 p-3">
@@ -796,7 +787,7 @@ export default function App() {
                 <ResultsPanel result={result} changes={changes} profile={profile} busy={busy} tripCosts={data.tripCosts} profiles={data.profiles}
                   evaporation={evaporation} onEvaporation={setEvaporation} evapOptions={data.evaporation} onHoverBus={setHoverBus}
                   onHighlight={setHovered} onFocus={(h) => { setPinned(h); focusCamera([...h.coordinates, ...(h.ghost ?? [])], "fit"); }} />
-                <ModelCheckCard data={data} calibration={calibration} />
+                <SourcesNote data={data} />
               </>
             )}
           </div>
