@@ -1,7 +1,7 @@
 import { ArrowRight, MapPin, Pin as PinIcon, X } from "lucide-react";
 import type { Pin } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
-import { fmt, signed } from "../api";
+import { fmtDuration, signed } from "../api";
 
 export interface PinTime {
   pin: Pin;
@@ -43,14 +43,13 @@ export default function PinsPanel({ times, onTogglePin, onRemove, onOpen, change
               </button>
               {/* keyed by the times: a new value fades in */}
               <span key={`${beforeSec}|${afterSec}`} className="m-fade-in whitespace-nowrap font-secondary text-[12px]">
-                {beforeSec === null ? "—" : `${fmt(beforeSec / 60, 2)}`}
+                {fmtDuration(beforeSec)}
                 {changed && (
                   <>
                     <ArrowRight size={11} className="mx-0.5 inline text-slate-400" />
-                    <b>{fmt((afterSec as number) / 60, 2)}</b>
+                    <b>{fmtDuration(afterSec)}</b>
                   </>
-                )}{" "}
-                {t.min}
+                )}
                 {changed && <span className={`ml-1 ${d < 0 ? "text-emerald-700" : "text-orange-700"}`}>({signed(d, 0)} {t.s})</span>}
               </span>
               <button

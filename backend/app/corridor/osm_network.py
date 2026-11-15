@@ -128,7 +128,12 @@ def _lanes(tags: dict[str, str], oneway: int) -> tuple[int, int, str]:
     default = CLASS_DEFAULTS.get(tags.get("highway", ""), (50, 1))[1]
     if oneway != 0:
         n = total if total else default
-        return (n, 0, "osm" if total else "assumed") if oneway == 1 else (0, n, "osm" if total else "assumed")
+        src = "osm" if total else "assumed"
+        # OSM counts bus lanes in lanes=*; lanes:psv / lanes:bus (or busway=lane) say how many are reserved
+        reserved = num("lanes:psv") or num("lanes:bus") or (1 if tags.get("busway") == "lane" else 0)
+        if total and reserved:
+            n, src = max(1, total - reserved), "osm (bus lane excluded)"
+        return (n, 0, src) if oneway == 1 else (0, n, src)
     if fwd and bwd:
         return fwd, bwd, "osm"
     if total:

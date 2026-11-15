@@ -380,7 +380,7 @@ class CorridorModel:
         removed = any(c.car_lanes_after < self.car_lanes(c.link_id)[0] for c in changes)
         change_pct = (after.total_time - before.total_time) / before.total_time * 100
         local = self._local_effects(od, before, after, scale)
-        buses = self.bus_results(changes, before, after)
+        buses = self.bus_results(changes, before, after, profile)
         # Stated-preference indicator only: the model has fixed demand and no mode choice, so this
         # never changes the traffic result. Basis = the best bus-minute gain on the changed street.
         gain = max((b["minutesBefore"] - b["minutesAfter"] for b in buses if b["usesChangedStreet"]), default=0.0)
@@ -497,7 +497,8 @@ class CorridorModel:
             lo, hi = (mid, hi) if excess(mid) > 0 else (lo, mid)
         return {**out, "free": False, "switchShare": round(hi, 4), "switchVehH": round(hi * users_veh, 1)}
 
-    def bus_results(self, changes: list[LaneChange], before: AssignmentResult, after: AssignmentResult) -> list[dict]:
+    def bus_results(self, changes: list[LaneChange], before: AssignmentResult, after: AssignmentResult,
+                    profile: str = DEFAULT_PROFILE) -> list[dict]:
         from app.corridor import transit
 
         if "lines" not in self._cache:
@@ -523,7 +524,8 @@ class CorridorModel:
 
             before_min, after_min = t(before, False), t(after, True)
             geom = [p for i in idx for p in self.net.links[i].geometry]
-            per_hour, src = transit.buses_per_hour(line["routeId"], line["stops"], geom)
+            win = PROFILES[profile]
+            per_hour, src = transit.buses_per_hour(line["routeId"], line["stops"], geom, win.start, win.end)
             out.append({"shortName": line["shortName"], "routeId": line["routeId"], "type": int(line["type"]),
                         "color": line["color"], "longName": line["longName"], "direction": line["direction"],
                         "minutesBefore": round(before_min, 2), "minutesAfter": round(after_min, 2),

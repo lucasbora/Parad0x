@@ -106,7 +106,7 @@ def best_package(m: CorridorModel, profile: str) -> dict[str, Any]:
             pct = (res.total_time - base) / base * 100
             if pct >= 0:
                 continue        # the whole package must still beat today
-            buses = [b for b in m.bus_results(ch, base_res, res) if b["usesChangedStreet"]]
+            buses = [b for b in m.bus_results(ch, base_res, res, profile) if b["usesChangedStreet"]]
             if not buses:
                 continue
             bus_min = max(b["minutesBefore"] - b["minutesAfter"] for b in buses)

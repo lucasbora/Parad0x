@@ -53,7 +53,7 @@ def evaluate(m, base, ods, changes, profile):
         tb, ta = base.od_time.get((o, d)), res.od_time.get((o, d))
         if q >= ROUTE_MIN_DEMAND and tb and ta is not None and np.isfinite(ta) and tb > 0:
             best = max(best, (tb - ta) / tb)
-    buses = [b for b in m.bus_results(changes, base, res) if b["usesChangedStreet"]]
+    buses = [b for b in m.bus_results(changes, base, res, profile) if b["usesChangedStreet"]]
     return {
         "changePct": round(pct, 3),
         "vehHSaved": round((base.total_time - res.total_time) / 60, 2),

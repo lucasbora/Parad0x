@@ -75,8 +75,9 @@ def corridor_lines(net: CorridorNetwork) -> list[dict[str, Any]]:
     return lines
 
 
-def buses_per_hour(route_id: str, stops: list[dict], links_geom: list[list[float]]) -> tuple[int | None, str]:
-    """Departures in the peak hour at the line's stop nearest the matched corridor section."""
+def buses_per_hour(route_id: str, stops: list[dict], links_geom: list[list[float]],
+                   start: str | None = None, end: str | None = None) -> tuple[int | None, str]:
+    """Departures in the simulated hour [start, end) at the line's stop nearest the matched corridor section."""
     from app.services import live_data, pmt_client
 
     if not stops or not links_geom:
@@ -89,5 +90,6 @@ def buses_per_hour(route_id: str, stops: list[dict], links_geom: list[list[float
     if prov.source == "seed":
         return None, "no live timetable"
     times = [t for line in tt.get("lines", []) if line.get("routeId") == route_id for t in line.get("times", [])]
-    n = sum(1 for t in times if config.CORRIDOR.peak_start <= t < config.CORRIDOR.peak_end)
+    start, end = start or config.CORRIDOR.peak_start, end or config.CORRIDOR.peak_end
+    n = sum(1 for t in times if start <= t < end)
     return n, f"SMTT timetable · {stop.get('name', stop['id'])} · {tt.get('date')}"

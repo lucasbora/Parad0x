@@ -61,6 +61,14 @@ export function fmt(n: number | null | undefined, digits = 1): string {
   return n.toLocaleString("ro-RO", { minimumFractionDigits: digits, maximumFractionDigits: digits });
 }
 
+/** Travel time of a street: "45 s" or "1 min 08 s" (a change of a few seconds stays visible). */
+export function fmtDuration(sec: number | null | undefined): string {
+  if (sec === null || sec === undefined || Number.isNaN(sec)) return "—";
+  const s = Math.round(sec);
+  if (s < 60) return `${s} s`;
+  return `${Math.floor(s / 60)} min ${String(s % 60).padStart(2, "0")} s`;
+}
+
 export function signed(n: number, digits = 1): string {
   if (Math.abs(n) < 0.5 * 10 ** -digits) return fmt(0, digits);
   return `${n > 0 ? "+" : "−"}${fmt(Math.abs(n), digits)}`;

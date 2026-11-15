@@ -3,7 +3,7 @@ import maplibregl from "maplibre-gl";
 import type { GeoJSONSource, Map as MLMap, MapLayerMouseEvent, StyleSpecification } from "maplibre-gl";
 import type { BaselineLink, BusResult, CorridorResponse, Highlight, LngLat, MapLayers, ScanRow, SimulateOk } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
-import { fmt, signed } from "../api";
+import { fmt, fmtDuration, signed } from "../api";
 import { animateEl } from "../motion";
 import { TIMISOARA_BORDER_GEOJSON, TIMISOARA_MASK_GEOJSON } from "../data/timisoaraBoundary";
 
@@ -675,8 +675,7 @@ export default function CorridorMap(props: Props) {
       seen.add(p.key);
       const changed = p.beforeSec !== null && p.afterSec !== null && Math.abs(p.afterSec - p.beforeSec) >= 0.5;
       const faster = changed && (p.afterSec as number) < (p.beforeSec as number);
-      const timeHtml = `${p.beforeSec === null ? "—" : fmt(p.beforeSec / 60, 2)}` +
-        (changed ? ` → <b>${fmt((p.afterSec as number) / 60, 2)}</b>` : "") + ` min`;
+      const timeHtml = fmtDuration(p.beforeSec) + (changed ? ` → <b>${fmtDuration(p.afterSec)}</b>` : "");
       let entry = store.get(p.key);
       if (!entry) {
         const el = document.createElement("div");

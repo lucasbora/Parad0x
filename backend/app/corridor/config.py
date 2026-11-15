@@ -103,7 +103,7 @@ TURNS = {
 }
 
 # bump when the model changes in a way that invalidates cached Braess searches
-MODEL_VERSION = "v3-turns"
+MODEL_VERSION = "v4-bus-lanes-excluded"   # lanes=* no longer counts the reserved bus lane
 
 # Land use → trips. Sources: typical European urban values; replace when PMT data is found.
 LANDUSE = {
