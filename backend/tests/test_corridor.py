@@ -141,7 +141,7 @@ def test_profiles_produce_balanced_demand(estimated):
         assert od.trips.sum() > 100, p
         assert od.summary["imbalancePct"] == pytest.approx(0, abs=1e-6)
         assert m.demand_source(p) == "estimated"
-    assert tables["sunday"].summary["localTripsVehH"] < tables["morning"].summary["localTripsVehH"]
+    assert tables["day"].summary["localTripsVehH"] < tables["morning"].summary["localTripsVehH"]
     nz = len(m.landuse.zones)
     o_morning = tables["morning"].trips[:nz].sum(axis=1)
     d_evening = tables["evening"].trips[:, :nz].sum(axis=0)
@@ -170,7 +170,7 @@ def test_solve_is_fast_and_conserves_flow(estimated):
 def test_through_traffic_follows_time_of_day(estimated):
     m = estimated
     t = {p: m.od_table(p).summary["throughVehH"] for p in config.PROFILES}
-    assert t["sunday"] < t["day"] < t["morning"] < t["evening"]
+    assert t["day"] < t["morning"] < t["evening"]
     ref = config.LANDUSE["through_reference_profile"]
     assert m.od_table(ref).summary["throughScale"] == pytest.approx(1.0)
 
@@ -240,7 +240,7 @@ def counted(tmp_path):
 
 def test_gate_counts_calibrate_only_their_profile(counted):
     m = CorridorModel(input_dir=counted)
-    assert m.demand_source("morning") == "calibrated" and m.demand_source("sunday") == "estimated"
+    assert m.demand_source("morning") == "calibrated" and m.demand_source("day") == "estimated"
     od = m.od_table("morning")
     gate_rows = [i for i, r in enumerate(od.rows) if r.kind == "gate"]
     assert od.trips[gate_rows].sum(axis=1) == pytest.approx([300.0] * len(gate_rows), rel=1e-4)
@@ -285,12 +285,12 @@ def test_api_end_to_end(tmp_path, monkeypatch):
     monkeypatch.setattr(model_mod, "_MODEL", None)
     with TestClient(app) as c:
         net = c.get("/api/corridor").json()
-        assert {p["id"] for p in net["profiles"]} == {"morning", "day", "evening", "sunday"}
+        assert {p["id"] for p in net["profiles"]} == {"morning", "day", "evening"}
         assert net["landUse"]["residents"] > 0 and net["zones"]["features"]
         lid = next(s for s in net["streets"] if s["street"] == "Strada Cluj")["directions"][0]["linkIds"][0]
-        body = {"changes": [{"linkId": lid, "carLanesAfter": 1, "use": "bus"}], "profile": "sunday"}
+        body = {"changes": [{"linkId": lid, "carLanesAfter": 1, "use": "bus"}], "profile": "day"}
         r = c.post("/api/corridor/simulate", json=body).json()
-        assert r["status"] == "ok" and r["demandSource"] == "estimated" and r["profile"] == "sunday"
+        assert r["status"] == "ok" and r["demandSource"] == "estimated" and r["profile"] == "day"
         assert c.get("/api/corridor/baseline", params={"profile": "evening"}).json()["profile"] == "evening"
         assert c.get("/api/corridor/demand", params={"profile": "day"}).json()["topPairs"]
         s = c.post("/api/corridor/sensitivity", json=body).json()

@@ -54,9 +54,9 @@ def _warm_corridor() -> None:
         from app.corridor.model import get_model
 
         m = get_model()
-        for profile in ("morning", "day", "evening", "sunday"):
+        for profile in ("morning", "day", "evening"):
             m.baseline(profile=profile)
-        for profile in ("morning", "evening", "day", "sunday"):   # busiest first
+        for profile in ("morning", "evening", "day"):   # busiest first
             m.scan(profile=profile)
         log.info("corridor warm-up complete in %.1fs", time.perf_counter() - t)
     except Exception:  # never take the API down because of warm-up

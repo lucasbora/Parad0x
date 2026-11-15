@@ -2,7 +2,7 @@
 
 export type LngLat = [number, number];
 export type LaneUse = "bus" | "bike" | "sidewalk" | "closed";
-export type Profile = "morning" | "day" | "evening" | "sunday";
+export type Profile = "morning" | "day" | "evening";
 /** "estimated" = demand from OSM land use only; "calibrated" = field counts loaded for that profile. */
 export type DemandSource = "estimated" | "calibrated";
 
@@ -369,6 +369,8 @@ export type LaneKind = "car" | "bus" | "bike" | "sidewalk";
 export interface PinSnapshot {
   beforeSec: number | null;
   afterSec: number | null;
+  /** the lanes in the mixer when the time was taken: clicking the pin puts them back */
+  lanes?: LaneKind[];
 }
 
 export interface Pin {

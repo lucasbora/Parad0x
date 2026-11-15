@@ -13,10 +13,12 @@ interface Props {
   times: PinTime[];
   onTogglePin: (p: Pin) => void;
   onRemove: (p: Pin) => void;
+  onOpen: (p: Pin) => void;
+  changeLabel: (p: Pin) => string | null;
 }
 
 /** Streets picked so far with their travel time; the pin button keeps a street's time on the map. */
-export default function PinsPanel({ times, onTogglePin, onRemove }: Props) {
+export default function PinsPanel({ times, onTogglePin, onRemove, onOpen, changeLabel }: Props) {
   const { t } = useI18n();
   return (
     <section>
@@ -31,10 +33,14 @@ export default function PinsPanel({ times, onTogglePin, onRemove }: Props) {
           const pinLabel = pin.onMap ? t.unpinThis : t.pinThis;
           return (
             <li key={`${pin.street}|${pin.heading}`} className="m-rise-in flex items-center gap-2 py-1.5">
-              <span className="min-w-0 flex-1">
+              <button type="button" onClick={() => onOpen(pin)} title={t.pinOpen}
+                className="-mx-1 min-w-0 flex-1 rounded-md px-1 py-0.5 text-left transition hover:bg-slate-100 active:scale-[0.99]">
                 <span className="block truncate text-[12px] text-slate-800">{pin.street}</span>
-                <span className="block text-[10.5px] text-slate-500">{t.heading[pin.heading] ?? pin.heading}</span>
-              </span>
+                <span className="block truncate text-[10.5px] text-slate-500">
+                  {t.heading[pin.heading] ?? pin.heading}
+                  {changeLabel(pin) && <span className="text-[#005BBC]"> · {changeLabel(pin)}</span>}
+                </span>
+              </button>
               {/* keyed by the times: a new value fades in */}
               <span key={`${beforeSec}|${afterSec}`} className="m-fade-in whitespace-nowrap font-secondary text-[12px]">
                 {beforeSec === null ? "—" : `${fmt(beforeSec / 60, 2)}`}

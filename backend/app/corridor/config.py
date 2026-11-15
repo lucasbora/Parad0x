@@ -71,8 +71,6 @@ PROFILES: dict[str, Profile] = {
                    {"office": 0.6, "school": 0.6, "retail": 1.0, "leisure": 0.8, "health": 1.0}),
     "evening": Profile("evening", "Seară", "End of day", "17:00", "18:00", "weekday", 0.090, 1.0, -0.7, 0.10,
                        {"office": 0.8, "school": 0.3, "retail": 1.0, "leisure": 0.8, "health": 0.6}),
-    "sunday": Profile("sunday", "Duminică", "Sunday", "11:00", "12:00", "sunday", 0.075, 0.75, 0.2, 0.12,
-                      {"office": 0.1, "school": 0.05, "retail": 1.2, "leisure": 1.5, "health": 0.4}),
 }
 DEFAULT_PROFILE = "morning"
 

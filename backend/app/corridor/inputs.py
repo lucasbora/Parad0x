@@ -3,7 +3,7 @@
 Nothing in here invents a number. Demand is ESTIMATED from OpenStreetMap land use; counts are
 optional and CALIBRATE it (gate + link counts) or CHECK it (turn counts + travel times, never
 used for fitting). Every count row belongs to a time-of-day profile (morning / day / evening /
-sunday, see config.PROFILES); a missing ``profile`` column means ``morning``.
+see config.PROFILES); a missing ``profile`` column means ``morning``.
 
 Files (UTF-8 CSV, header row required):
   gate_counts.csv     gate_id,direction,profile,start,end,vehicles,source,notes        calibration

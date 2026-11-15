@@ -115,6 +115,7 @@ export default function App() {
   const [heading, setHeading] = useState<string | null>(null);
   const [lanes, setLanes] = useState<LaneKind[]>([]);
   const pendingScan = useRef<ScanRow | null>(null);
+  const pendingLanes = useRef<{ street: string; heading: string; lanes: LaneKind[] } | null>(null);
   const [result, setResult] = useState<SimulateResponse | null>(null);
   const [busy, setBusy] = useState(false);
   const [pins, setPins] = useState<Pin[]>([]);
@@ -254,6 +255,14 @@ export default function App() {
       pendingScan.current = null;
       setLanes(scanLanes(p, originalLanes));
       return;
+    }
+    const pl = pendingLanes.current;
+    if (pl && pl.street === street && pl.heading === heading) {
+      pendingLanes.current = null;
+      if (pl.lanes.length === originalLanes.length) {
+        setLanes(pl.lanes);
+        return;
+      }
     }
     setLanes(originalLanes);
   }, [originalLanes, street, heading]);
@@ -448,6 +457,17 @@ export default function App() {
   // a street pinned while its lanes were changed shows the before → after of that change, not the live time
   const pinTimes: PinTime[] = useMemo(() => pins.map((pin) => ({ pin, ...(pin.snapshot ?? liveTimes(pin)) })), [pins, liveTimes]);
 
+  // "−1 car lane → Bus" for a remembered change (null when nothing was changed)
+  const changeLabel = useCallback((pin: Pin): string | null => {
+    const l = pin.snapshot?.lanes;
+    if (!l || !l.length) return null;
+    const taken = l.filter((k) => k !== "car");
+    if (!taken.length) return null;
+    if (taken.length === l.length) return t.pinClosed;
+    const kinds = [...new Set(taken)].map((k) => t.laneKinds[k]).join(", ");
+    return t.pinLaneChange.replace("{n}", String(taken.length)).replace("{kinds}", kinds);
+  }, [t]);
+
   // pinned + being edited: keep its remembered change up to date with the latest result
   const isEditing = useCallback((p: Pin) => p.street === street && p.heading === heading, [street, heading]);
   useEffect(() => {
@@ -456,8 +476,9 @@ export default function App() {
       let touched = false;
       const next = ps.map((p) => {
         if (!p.onMap || !isEditing(p)) return p;
-        const live = liveTimes(p);
-        if (p.snapshot && p.snapshot.beforeSec === live.beforeSec && p.snapshot.afterSec === live.afterSec) return p;
+        const live = { ...liveTimes(p), lanes };
+        if (p.snapshot && p.snapshot.beforeSec === live.beforeSec && p.snapshot.afterSec === live.afterSec
+          && p.snapshot.lanes?.join() === lanes.join()) return p;
         touched = true;
         return { ...p, snapshot: live };
       });
@@ -475,13 +496,26 @@ export default function App() {
         .sort((a, b) => b.properties.lengthM - a.properties.lengthM)[0];
       const g = longest?.geometry.coordinates ?? [];
       const at: LngLat = g.length ? g[Math.floor(g.length / 2)] : [0, 0];
-      return { key: pinKey(pin), label: `${pin.street} · ${t.heading[pin.heading] ?? pin.heading}`, at, beforeSec, afterSec };
-    }), [pinTimes, data, linkProps, t, street, heading]);
+      const change = changeLabel(pin);
+      return { key: pinKey(pin), label: `${pin.street} · ${t.heading[pin.heading] ?? pin.heading}${change ? ` · ${change}` : ""}`, at, beforeSec, afterSec };
+    }), [pinTimes, data, linkProps, t, street, heading, changeLabel]);
   const togglePinOnMap = useCallback((p: Pin) => {
     // pinning the street whose lanes are being changed captures that change (shown until the row is removed)
-    const capture = !p.onMap && isEditing(p) && !!ok && changes.length > 0 ? liveTimes(p) : null;
+    const capture = !p.onMap && isEditing(p) && !!ok && changes.length > 0 ? { ...liveTimes(p), lanes } : null;
     setPins((ps) => ps.map((x) => (pinKey(x) === pinKey(p) ? { ...x, onMap: !x.onMap, snapshot: capture ?? x.snapshot } : x)));
-  }, [isEditing, ok, changes.length, liveTimes]);
+  }, [isEditing, ok, changes.length, liveTimes, lanes]);
+
+  // clicking a pin shows that street again, with the lanes it was pinned with
+  const openPin = useCallback((p: Pin) => {
+    const l = p.snapshot?.lanes;
+    if (p.street === street && p.heading === heading) {
+      setScenario(null);
+      if (l && l.length === originalLanes.length) setLanes(l);
+      return;
+    }
+    pendingLanes.current = l ? { street: p.street, heading: p.heading, lanes: l } : null;
+    select(p.street, p.heading);
+  }, [street, heading, originalLanes, select]);
 
   const pickLink = useCallback((id: string) => {
     const f = linkProps.get(id);
@@ -757,7 +791,7 @@ export default function App() {
                     lanesSource={lanesSource} slowness={slowness} busy={busy}
                     onChange={(l) => { setScenario(null); setLanes(l); }} />
                 )}
-                <PinsPanel times={pinTimes} onTogglePin={togglePinOnMap}
+                <PinsPanel times={pinTimes} onTogglePin={togglePinOnMap} onOpen={openPin} changeLabel={changeLabel}
                   onRemove={(p) => setPins((ps) => ps.filter((x) => pinKey(x) !== pinKey(p)))} />
                 <ResultsPanel result={result} changes={changes} profile={profile} busy={busy} tripCosts={data.tripCosts} profiles={data.profiles}
                   evaporation={evaporation} onEvaporation={setEvaporation} evapOptions={data.evaporation} onHoverBus={setHoverBus}

@@ -148,7 +148,6 @@ function PackageSection({ pkg, onPick }: { pkg: PackageResponse; onPick: (r: Sca
           </span>
         </button>
       ))}
-      <p className="mt-1 text-[10.5px] leading-snug text-slate-400">{t.pkgRule}</p>
     </section>
   );
 }

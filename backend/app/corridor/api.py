@@ -1,6 +1,6 @@
 """/api/corridor — the single-corridor, data-backed simulator.
 
-Every endpoint takes ``profile`` (morning | day | evening | sunday; default morning).
+Every endpoint takes ``profile`` (morning | day | evening; default morning).
 Demand is estimated from OpenStreetMap land use and calibrated by field counts when present,
 so results are always available; ``demandSource`` says which one you are looking at.
 ``testData`` is still accepted for older clients and ignored.
@@ -21,7 +21,7 @@ from app.corridor.osm_network import compass, street_directions
 
 router = APIRouter(prefix="/api/corridor", tags=["corridor"])
 
-ProfileQ = Literal["morning", "day", "evening", "sunday"]
+ProfileQ = Literal["morning", "day", "evening"]
 
 
 class Change(BaseModel):
