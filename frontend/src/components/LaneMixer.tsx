@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { Bike, Bus, Car, Loader2, RotateCcw, TreeDeciduous } from "lucide-react";
 import type { LaneKind } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
-import { usePresence } from "../motion";
+import { animateEl, usePresence } from "../motion";
 
 interface Props {
   lanes: LaneKind[];
@@ -38,6 +38,7 @@ function LaneStrip({
   mergeLeft,
   mergeRight,
   onClick,
+  onKeyDown,
 }: {
   kind: LaneKind | "busExisting";
   typeName: string;
@@ -46,6 +47,7 @@ function LaneStrip({
   mergeLeft?: boolean;
   mergeRight?: boolean;
   onClick?: () => void;
+  onKeyDown?: (e: ReactKeyboardEvent<HTMLButtonElement>) => void;
 }) {
   const k: LaneKind = kind === "busExisting" ? "bus" : kind;
   const Icon = ICON[k];
@@ -121,6 +123,7 @@ function LaneStrip({
     <button
       type="button"
       onClick={onClick}
+      onKeyDown={onKeyDown}
       aria-haspopup="menu"
       aria-expanded={open}
       className={`relative flex h-36 w-full flex-1 items-center justify-center overflow-hidden transition-[background-color,box-shadow,transform,filter] duration-500 active:scale-[0.97] active:duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005BBC] ${radiusClass} ${
@@ -174,6 +177,90 @@ export default function LaneMixer({
   const firstIsSidewalk = lanes.length > 0 && lanes[0] === "sidewalk";
   const lastIsSidewalk = !existingBusLane && lanes.length > 0 && lanes[lanes.length - 1] === "sidewalk";
 
+  // ---------------------------------------------------------------- drag & drop to swap two lanes
+  // Each lane keeps a stable id, so a swap moves the two DOM nodes (nothing re-animates or recolours);
+  // a FLIP animation then glides them from where they were dropped into their new places.
+  const ids = useRef<number[]>([]);
+  if (ids.current.length !== lanes.length) ids.current = lanes.map((_, i) => i);
+  const slotEls = useRef(new Map<number, HTMLDivElement>());
+  const [drag, setDrag] = useState<{ from: number; over: number | null; dx: number; centers: number[] } | null>(null);
+  const gesture = useRef<{ id: number; from: number; x0: number; centers: number[]; started: boolean } | null>(null);
+  const justDragged = useRef(false);
+  const flipFrom = useRef<Map<number, number> | null>(null);
+  // for the one render after a swap: no CSS transitions, so layout is final when the FLIP measures it
+  const [settling, setSettling] = useState(false);
+
+  const swap = (a: number, b: number) => {
+    // remember where every lane is on screen right now (including any drag offset), for the FLIP below
+    flipFrom.current = new Map([...slotEls.current].map(([id, el]) => [id, el.getBoundingClientRect().left]));
+    const nextIds = [...ids.current];
+    [nextIds[a], nextIds[b]] = [nextIds[b], nextIds[a]];
+    ids.current = nextIds;
+    const next = [...lanes];
+    [next[a], next[b]] = [next[b], next[a]];
+    setMenuFor(null);
+    setSettling(true);
+    onChange(next);
+  };
+
+  useLayoutEffect(() => {
+    const from = flipFrom.current;
+    if (!from) return;
+    flipFrom.current = null;
+    slotEls.current.forEach((el, id) => {
+      const was = from.get(id);
+      if (was === undefined) return;
+      const d = was - el.getBoundingClientRect().left;
+      if (Math.abs(d) > 0.5) {
+        animateEl(el, [{ transform: `translateX(${d}px)` }, { transform: "translateX(0)" }], { duration: 240, easing: "cubic-bezier(0.22, 1, 0.36, 1)" });
+      }
+    });
+    requestAnimationFrame(() => setSettling(false));
+  }, [lanes]);
+
+  const overAt = (g: { from: number; centers: number[] }, dx: number) => {
+    const x = g.centers[g.from] + dx;
+    let best = g.from;
+    g.centers.forEach((c, k) => {
+      if (Math.abs(c - x) < Math.abs(g.centers[best] - x)) best = k;
+    });
+    return best === g.from ? null : best;
+  };
+
+  const onPointerDown = (i: number) => (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0 || (e.target as HTMLElement).closest('[role="menu"]')) return;
+    justDragged.current = false;
+    const centers = lanes.map((_, k) => {
+      const r = slotEls.current.get(ids.current[k])?.getBoundingClientRect();
+      return r ? r.left + r.width / 2 : 0;
+    });
+    gesture.current = { id: e.pointerId, from: i, x0: e.clientX, centers, started: false };
+  };
+
+  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const g = gesture.current;
+    if (!g || e.pointerId !== g.id) return;
+    const dx = e.clientX - g.x0;
+    if (!g.started) {
+      if (Math.abs(dx) < 6) return;   // a small wobble is still a click (opens the lane menu)
+      g.started = true;
+      e.currentTarget.setPointerCapture(e.pointerId);
+      setMenuFor(null);
+    }
+    setDrag({ from: g.from, over: overAt(g, dx), dx, centers: g.centers });
+  };
+
+  const endDrag = (commit: boolean) => (e: ReactPointerEvent<HTMLDivElement>) => {
+    const g = gesture.current;
+    if (!g || e.pointerId !== g.id) return;
+    gesture.current = null;
+    if (!g.started) return;
+    justDragged.current = true;      // swallow the click that follows the drop
+    const over = overAt(g, e.clientX - g.x0);
+    if (commit && over !== null) swap(g.from, over);
+    setDrag(null);
+  };
+
   return (
     <section className="m-rise-in">
       <div className="flex items-baseline justify-between">
@@ -185,7 +272,7 @@ export default function LaneMixer({
         )}
       </div>
       <p className="mt-0.5 text-[11px] text-slate-500">
-        {segments} {t.segments} · {lanesSource === "field check" ? t.fieldCheck : t.fromOsm} · {t.liveHint}
+        {segments} {t.segments} · {lanesSource === "field check" ? t.fieldCheck : t.fromOsm} · {t.liveHint} {lanes.length > 1 ? t.laneDragHint : ""}
       </p>
 
       <div ref={containerRef} className="mt-2 rounded-xl bg-slate-100 p-2">
@@ -206,12 +293,30 @@ export default function LaneMixer({
               i === lanes.length - 1 ? !existingBusLane : lanes[i + 1] === "sidewalk";
             const mergeLeft = l === "sidewalk" && prevIsSidewalk;
             const mergeRight = l === "sidewalk" && nextIsSidewalk;
+            const dragged = drag?.from === i;
+            const target = drag?.over === i;
+            // while dragging, the dragged lane follows the pointer and the lane under it slides into the dragged lane's place
+            const shift = !drag ? 0 : dragged ? drag.dx : target ? drag.centers[drag.from] - drag.centers[i] : 0;
 
             return (
               <div
-                key={i}
-                className={`m-rise-in relative flex flex-1 ${mergeLeft ? "ml-0" : "ml-1"}`}
-                style={{ animationDelay: `${120 + i * 50}ms` }}
+                key={ids.current[i]}
+                ref={(el) => {
+                  if (el) slotEls.current.set(ids.current[i], el);
+                  else slotEls.current.delete(ids.current[i]);
+                }}
+                onPointerDown={onPointerDown(i)}
+                onPointerMove={onPointerMove}
+                onPointerUp={endDrag(true)}
+                onPointerCancel={endDrag(false)}
+                className={`m-rise-in relative flex flex-1 touch-pan-y select-none ${mergeLeft ? "ml-0" : "ml-1"} ${
+                  dragged ? "z-20 cursor-grabbing drop-shadow-xl" : "cursor-grab"
+                }`}
+                style={{
+                  animationDelay: `${120 + i * 50}ms`,
+                  transform: shift || dragged ? `translateX(${shift}px)${dragged ? " scale(1.04)" : ""}` : undefined,
+                  transition: dragged || settling ? "none" : "transform 200ms cubic-bezier(0.22, 1, 0.36, 1)",
+                }}
               >
                 <LaneStrip
                   kind={l}
@@ -219,7 +324,20 @@ export default function LaneMixer({
                   open={menuFor === i}
                   mergeLeft={mergeLeft}
                   mergeRight={mergeRight}
-                  onClick={() => setMenuFor(menuFor === i ? null : i)}
+                  onClick={() => {
+                    if (justDragged.current) {
+                      justDragged.current = false;
+                      return;
+                    }
+                    setMenuFor(menuFor === i ? null : i);
+                  }}
+                  onKeyDown={(e) => {
+                    // keyboard alternative to dragging: Alt + ← / → swaps with the neighbour
+                    if (!e.altKey || (e.key !== "ArrowLeft" && e.key !== "ArrowRight")) return;
+                    e.preventDefault();
+                    const to = e.key === "ArrowLeft" ? i - 1 : i + 1;
+                    if (to >= 0 && to < lanes.length) swap(i, to);
+                  }}
                 />
                 {menu.mounted && menuShownFor === i && (
                   <div

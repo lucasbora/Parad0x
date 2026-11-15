@@ -80,7 +80,7 @@ export default function ResultsPanel({ result, changes, profile, busy, onHoverBu
           {r.demandScale !== 1 && ` · ${t.demandMeter} ${Math.round(r.demandScale * 100)}%`}
         </p>
         <p className={`mt-1 text-[11.5px] ${r.braess.detected ? "font-semibold text-fuchsia-700" : "text-slate-500"}`}>
-          {r.braess.detected ? `${t.braessTitle} ${t.braessBody} ${fmt(Math.abs(r.braess.totalChangePct), 2)}%.` : t.noBraess}
+          {r.braess.detected ? `${t.braessBody} ${fmt(Math.abs(r.braess.totalChangePct), 2)}%.` : t.noBraess}
         </p>
       </div>
 

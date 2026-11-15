@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { ChevronUp, Layers } from "lucide-react";
 import type { MapLayers } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
@@ -11,6 +11,8 @@ interface Props {
   showDelta: boolean;
   onShowDelta: (v: boolean) => void;
   hasResult: boolean;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 const ABSOLUTE = "linear-gradient(90deg,#10b981,#eab308,#ef4444,#7f1d1d)";
@@ -27,17 +29,15 @@ function Check({ on, set, label, children, className = "" }: { on: boolean; set:
 }
 
 /** Floating layer & legend pill (bottom-left of the map). */
-export default function LayersPill({ layers, onChange, showDelta, onShowDelta, hasResult }: Props) {
+export default function LayersPill({ layers, onChange, showDelta, onShowDelta, hasResult, open, onOpenChange }: Props) {
   const { t } = useI18n();
-  // starts open only where there is room for it (tall enough, not a phone)
-  const [open, setOpen] = useState(window.innerHeight > 760 && window.innerWidth >= 768);
   const set = (k: keyof MapLayers) => (v: boolean) => onChange({ ...layers, [k]: v });
   const delta = showDelta && hasResult;
   const thumb = useSlidingThumb(String(showDelta));
 
   return (
     <section className="glass pointer-events-auto w-[268px] rounded-2xl p-3" aria-label={t.layers}>
-      <button className="flex w-full items-center gap-2 text-left text-[13px] font-semibold text-slate-900" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
+      <button className="flex w-full items-center gap-2 text-left text-[13px] font-semibold text-slate-900" onClick={() => onOpenChange(!open)} aria-expanded={open}>
         <Layers size={15} className="text-[#005BBC]" />
         <span className="flex-1">{t.layers}</span>
         <ChevronUp size={15} className={`transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "rotate-180" : ""}`} />
@@ -79,8 +79,8 @@ export default function LayersPill({ layers, onChange, showDelta, onShowDelta, h
           {/* map markers: white ring + slight shadow, as drawn on the map */}
           <Check on={layers.intersections} set={set("intersections")} label={t.layerIntersections}>
             <span className="flex gap-0.5" aria-hidden="true">
-              <span className="h-3 w-3 rounded-full border-2 border-white bg-[#059669] shadow-[0_1px_2px_rgba(15,23,42,0.35)]" />
-              <span className="h-3 w-3 rounded-full border-2 border-white bg-[#dc2626] shadow-[0_1px_2px_rgba(15,23,42,0.35)]" />
+              <span className="h-3 w-3 rounded-full border-2 border-white bg-[#10b981] shadow-[0_1px_2px_rgba(15,23,42,0.35)]" />
+              <span className="h-3 w-3 rounded-full border-2 border-white bg-[#ef4444] shadow-[0_1px_2px_rgba(15,23,42,0.35)]" />
             </span>
           </Check>
           <Check on={layers.gates} set={set("gates")} label={t.layerGates}>

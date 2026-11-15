@@ -117,12 +117,13 @@ body,
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.35);
   transition: background-color 0.6s ease;
 }
-.queue-pillar .queue-core small { font-size: 7px; margin-left: 1px; opacity: 0.85; }
-.queue-saturated .queue-core { background: #dc2626; }
-.queue-busy .queue-core { background: #d97706; }
-.queue-free .queue-core { background: #059669; font-size: 0; }
+/* same colours as the street lines: green good, yellow medium, red bad, very dark red very bad */
+.queue-jammed .queue-core { background: #7f1d1d; }
+.queue-saturated .queue-core { background: #ef4444; }
+.queue-busy .queue-core { background: #eab308; }
+.queue-free .queue-core { background: #10b981; }
 .queue-free { opacity: 0.85; }
-.queue-resolved .queue-core { background: #059669; }
+.queue-resolved .queue-core { background: #10b981; }
 .queue-worse .queue-core { box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.55), 0 2px 6px rgba(15, 23, 42, 0.35); }
 
 /* highlighted route pins & callout */
@@ -138,7 +139,7 @@ body,
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.35);
 }
 .route-pin-start { background: #0f172a; }
-.route-pin-end { background: #005bbc; }
+.route-pin-end { background: #0f172a; }
 .route-callout {
   display: flex;
   align-items: center;
@@ -152,7 +153,6 @@ body,
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
   margin-bottom: 8px;
 }
-.route-callout span { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
 .route-callout b { font-family: Sunflower, "Noto Sans Inscriptional Pahlavi", ui-sans-serif, system-ui, sans-serif; }
 
 /* travel-time pins on the map */
