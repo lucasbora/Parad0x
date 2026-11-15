@@ -122,3 +122,16 @@ def test_more_evaporation_never_raises_total_time(m):
     ch, _ = _minus_one(m, "Strada Cluj", "S")
     totals = [m.compare(ch, profile="morning", evaporation=e)["totals"]["vehMinAfter"] for e in (0.0, 0.05, 0.11)]
     assert totals[0] >= totals[1] >= totals[2]
+
+
+def test_route_list_shows_the_routes_a_change_affects(m):
+    ids = [l.id for l in m.net.links if l.street == "Piața Tineretului"]
+    c = m.compare([LaneChange(i, 0, "closed") for i in ids], profile="morning")
+    routes = c["carRoutes"]
+    assert routes and routes[0]["secondsChange"] < -5          # the cut-through's users gain seconds
+    impact = [r["vehH"] * abs(r["secondsChange"]) for r in routes]
+    assert impact == sorted(impact, reverse=True)
+    assert all(abs(r["secondsChange"]) >= 0.6 for r in routes)
+    # an empty 25 m stub changes nothing, so nothing is listed
+    stub, _ = _minus_one(m, "Bulevardul Corneliu Coposu", "NE")
+    assert m.compare(stub, profile="morning")["carRoutes"] == []

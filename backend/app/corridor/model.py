@@ -361,20 +361,29 @@ class CorridorModel:
         inter = [{"nodeId": n.id, "name": n.name, "signalized": n.signalized, "delayBeforeSec": round(jb[n.id], 1),
                   "delayAfterSec": round(ja[n.id], 1), "lng": n.lng, "lat": n.lat} for n in net.junctions]
         inter.sort(key=lambda x: -abs(x["delayAfterSec"] - x["delayBeforeSec"]))
-        # car travel time for the busiest origin–destination pairs
+        # car routes the change affects most: time change × cars on the route (≥ 5 veh/h, ≥ 0.6 s change)
         od = self.od_table(profile)
-        pairs = sorted(((float(od.trips[i, j]), r, c) for i, r in enumerate(od.rows) for j, c in enumerate(od.cols)
-                        if r.node != c.node), key=lambda t: -t[0])[:6]
         _, usable_before = self.costs([])
         _, usable_after = self.costs(changes)
+        affected: dict[tuple[int, int], tuple[float, float, Any, Any]] = {}
+        for i, r in enumerate(od.rows):
+            for j, c in enumerate(od.cols):
+                q = float(od.trips[i, j]) * scale
+                key = (r.node, c.node)
+                if q < 5 or r.node == c.node or key not in before.od_time or key not in after.od_time:
+                    continue
+                d = after.od_time[key] - before.od_time[key]
+                if not np.isfinite(d) or abs(d) < 0.01:
+                    continue
+                if key not in affected or q * abs(d) > affected[key][0]:
+                    affected[key] = (q * abs(d), q, r, c)
         routes = []
-        for q, r, c in pairs:
+        for _, q, r, c in sorted(affected.values(), key=lambda t: -t[0])[:6]:
             key = (r.node, c.node)
-            if key not in before.od_time or key not in after.od_time:
-                continue
             routes.append({"from": r.label, "to": c.label, "fromGate": r.id, "toGate": c.id,
-                           "vehH": round(q * scale, 0),
+                           "vehH": round(q, 0),
                            "minutesBefore": round(before.od_time[key], 2), "minutesAfter": round(after.od_time[key], 2),
+                           "secondsChange": round((after.od_time[key] - before.od_time[key]) * 60, 1),
                            "pathBefore": self.path_coords(before.cost, usable_before, *key),
                            "pathAfter": self.path_coords(after.cost, usable_after, *key)})
         removed = any(c.car_lanes_after < self.car_lanes(c.link_id)[0] for c in changes)

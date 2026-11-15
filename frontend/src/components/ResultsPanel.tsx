@@ -193,13 +193,21 @@ export default function ResultsPanel({ result, changes, profile, busy, onHoverBu
       )}
       <div>
         <h3 className="text-[12.5px] font-semibold text-slate-800">{t.cars}</h3>
+        {r.carRoutes.length === 0 && <p className="mt-1 text-[12px] text-slate-500">{t.noRouteChange}</p>}
         <ul className="mt-1 divide-y divide-slate-100">
           {r.carRoutes.map((c) => (
             <li key={`${c.fromGate}-${c.toGate}`} className="-mx-1 cursor-pointer rounded-lg px-1 py-1.5 transition hover:bg-blue-50"
               onMouseEnter={() => onHighlight(routeHighlight(c, t.min))} onMouseLeave={() => onHighlight(null)}
               onClick={() => onFocus(routeHighlight(c, t.min))}>
               <div className="text-[12px] text-slate-700">{c.from} → {c.to} <span className="text-slate-400">· {fmt(c.vehH, 0)} {t.vehH}</span></div>
-              <Delta before={c.minutesBefore} after={c.minutesAfter} unit={t.min} digits={2} />
+              <span className="whitespace-nowrap font-secondary text-[12px]">
+                <span className="text-slate-500">{fmt(c.minutesBefore, 2)}</span>
+                <ArrowRight size={11} className="mx-1 inline text-slate-400" />
+                <b className="text-slate-900">{fmt(c.minutesAfter, 2)}</b> {t.min}{" "}
+                {c.secondsChange !== undefined && (
+                  <span className={c.secondsChange < 0 ? "text-emerald-700" : "text-orange-700"}>({signed(c.secondsChange, 0)} {t.s})</span>
+                )}
+              </span>
             </li>
           ))}
         </ul>

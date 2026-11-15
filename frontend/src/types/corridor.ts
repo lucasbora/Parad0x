@@ -201,6 +201,8 @@ export interface CarRoute {
   vehH: number;
   minutesBefore: number;
   minutesAfter: number;
+  /** after − before, seconds (routes are the ones the change affects most) */
+  secondsChange?: number;
   pathBefore: LngLat[];
   pathAfter: LngLat[];
 }
