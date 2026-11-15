@@ -238,6 +238,7 @@ export interface BusResult {
   usesChangedStreet: boolean;
   busesPerHour: number | null;
   busesPerHourSource: string;
+  stopName?: string | null;
   linkIds: string[];
 }
 
@@ -264,7 +265,7 @@ export interface SimulateOk {
   } | null;
   modeShift?: {
     minutesFaster: number; option?: number; k: number; n: number; share: number | null;
-    ci95?: number[] | null; belowSmallestOption?: number; basis: string; source: string;
+    ci95?: number[] | null; belowSmallestOption?: number; basis: string; source: string; responses?: number;
   } | null;
   warnings: string[];
 }

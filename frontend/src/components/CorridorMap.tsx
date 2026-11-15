@@ -324,6 +324,18 @@ export default function CorridorMap(props: Props) {
     });
     m.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "bottom-right");
     m.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: "© OpenStreetMap contributors · OpenFreeMap · SMTT" }), "bottom-right");
+    // MapLibre opens the compact attribution by itself once the sources load; close it that first time
+    // (before it paints), so it starts as the "i" button and opens only when clicked
+    const attrib = m.getContainer().querySelector(".maplibregl-ctrl-attrib");
+    if (attrib) {
+      const mo = new MutationObserver(() => {
+        if (attrib.classList.contains("maplibregl-compact-show")) {
+          attrib.classList.remove("maplibregl-compact-show");
+          mo.disconnect();
+        }
+      });
+      mo.observe(attrib, { attributes: true, attributeFilter: ["class"] });
+    }
     let fellBack = false;
     m.on("error", (ev) => {
       if (!fellBack && !m.isStyleLoaded() && String(ev.error?.message ?? "").toLowerCase().includes("fetch")) {

@@ -103,7 +103,7 @@ function Row({ r, i, tone, onPick }: { r: ScanRow; i: number; tone: Tone; onPick
       </span>
       <span className="shrink-0 text-right">
         <span className={`block font-secondary text-[12px] ${TONE[tone]}`}>{signed(r.changePct, 2)}%</span>
-        {r.vehHSaved > 0.05 && <span className="block font-secondary text-[10.5px] text-slate-500">{fmt(r.vehHSaved, 1)} veh·h</span>}
+        {r.vehHSaved > 0.05 && <span className="block font-secondary text-[10.5px] text-slate-500">{fmt(r.vehHSaved, 1)} veh/h</span>}
       </span>
     </button>
   );
@@ -144,7 +144,7 @@ function PackageSection({ pkg, onPick }: { pkg: PackageResponse; onPick: (r: Sca
           </span>
           <span className="shrink-0 text-right">
             <span className={`block font-secondary text-[12px] ${TONE.braess}`}>{signed(row.changePct, 2)}%</span>
-            {row.vehHSaved > 0.05 && <span className="block font-secondary text-[10.5px] text-slate-500">{fmt(row.vehHSaved, 1)} veh·h</span>}
+            {row.vehHSaved > 0.05 && <span className="block font-secondary text-[10.5px] text-slate-500">{fmt(row.vehHSaved, 1)} veh/h</span>}
           </span>
         </button>
       ))}

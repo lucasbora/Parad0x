@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Check, Loader2 } from "lucide-react";
 import type { AllDay, BreakEvenOk, BusResult, CarRoute, Change, Highlight, Profile, ProfileMeta, SimulateResponse,
   TripChange, TripCosts } from "../types/corridor";
 import { api, fmt, signed } from "../api";
 import { useI18n } from "../i18n/translations";
 import { useSlidingThumb, useTween } from "../motion";
-import SourceBadge from "./SourceBadge";
 import Collapse from "./Collapse";
 
 interface Props {
@@ -21,6 +20,7 @@ interface Props {
   evaporation?: number;
   onEvaporation?: (v: number) => void;
   evapOptions?: { literature_median: number; cautious: number; source: string };
+  onProfile?: (p: Profile) => void;
 }
 
 function routeHighlight(c: CarRoute, minLabel: string): Highlight {
@@ -44,7 +44,7 @@ function Delta({ before, after, unit, digits = 1, goodWhenLower = true }: {
 }
 
 export default function ResultsPanel({ result, changes, profile, busy, onHoverBus, onHighlight, onFocus, tripCosts, profiles,
-  evaporation = 0, onEvaporation, evapOptions }: Props) {
+  evaporation = 0, onEvaporation, evapOptions, onProfile }: Props) {
   const { t, lang } = useI18n();
   // the headline number counts to its new value instead of jumping
   const totalPct = useTween(result && result.status === "ok" ? result.totals.changePct : 0);
@@ -131,7 +131,7 @@ export default function ResultsPanel({ result, changes, profile, busy, onHoverBu
           {signed(totalPct, 2)}%
         </p>
         <p className="font-secondary text-[11px] text-slate-500">
-          {fmt(r.totals.vehMinBefore / 60, 0)} → {fmt(r.totals.vehMinAfter / 60, 0)} veh·h · {fmt(r.totals.demandVehH, 0)} {t.vehH}
+          {fmt(r.totals.vehMinBefore / 60, 0)} → {fmt(r.totals.vehMinAfter / 60, 0)} veh/h · {fmt(r.totals.demandVehH, 0)} {t.vehH}
           {r.demandScale !== 1 && ` · ${t.demandMeter} ${Math.round(r.demandScale * 100)}%`}
         </p>
         <p className={`mt-1 text-[11.5px] ${r.braess.detected ? "font-semibold text-fuchsia-700"
@@ -145,16 +145,18 @@ export default function ResultsPanel({ result, changes, profile, busy, onHoverBu
         {allDay && profiles && (
           <div>
             <h3 className="text-[12.5px] font-semibold text-slate-800">{t.allDayTitle}</h3>
-            <div className="mt-1 grid grid-cols-4 gap-1">
+            <div className="mt-1.5 grid gap-2 p-0.5" style={{ gridTemplateColumns: `repeat(${profiles.length}, minmax(0, 1fr))` }}>
               {profiles.map((p) => {
                 const v = allDay[p.id];
                 const tone = !v ? "border-slate-200 text-slate-400" : v.changePct < -0.005 ? "border-emerald-200 bg-emerald-50 text-emerald-800"
                   : v.changePct > 0.005 ? "border-orange-200 bg-orange-50 text-orange-800" : "border-slate-200 text-slate-600";
                 return (
-                  <div key={p.id} className={`rounded-lg border px-1.5 py-1 text-center ${tone} ${p.id === profile ? "ring-1 ring-[#005BBC]" : ""}`}>
+                  <button key={p.id} type="button" onClick={() => onProfile?.(p.id)} aria-pressed={p.id === profile}
+                    className={`rounded-lg border px-2 py-1.5 text-center transition hover:brightness-95 active:scale-[0.98] ${tone} ${
+                      p.id === profile ? "ring-2 ring-[#005BBC] ring-offset-1" : ""}`}>
                     <div className="truncate text-[11px] font-medium">{lang === "ro" ? p.labelRo : p.labelEn}</div>
                     <div className="font-secondary text-[12px] font-semibold">{v ? `${signed(v.changePct, 2)}%` : "—"}</div>
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -186,7 +188,7 @@ export default function ResultsPanel({ result, changes, profile, busy, onHoverBu
               {r.modeShift.belowSmallestOption
                 ? <>{fmt(r.modeShift.minutesFaster, 2)} {t.surveyBelow} ({r.modeShift.belowSmallestOption} min).</>
                 : <><span className="font-secondary">{Math.round((r.modeShift.share ?? 0) * 100)}%</span> {t.surveyShare} {r.modeShift.option} min.</>}{" "}
-              <span className="font-secondary">{r.modeShift.source}</span> · {t.statedPref}
+              {r.modeShift.responses ? <>{t.surveyPeople.replace("{n}", String(r.modeShift.responses))} · </> : null}{t.statedPref}
             </p>
           )}
         </div>
@@ -215,6 +217,9 @@ export default function ResultsPanel({ result, changes, profile, busy, onHoverBu
 
       <div>
         <h3 className="text-[12.5px] font-semibold text-slate-800">{t.buses}</h3>
+        {buses.some((b) => b.busesPerHour !== null) && (
+          <p className="mt-0.5 flex items-center gap-1 text-[11px] font-medium text-emerald-700"><Check size={12} strokeWidth={2.6} /> {t.busesUpToDate}</p>
+        )}
         {buses.length === 0 && <p className="text-[12px] text-slate-500">{t.noBuses}</p>}
         <ul className="mt-1 space-y-1.5">
           {buses.map((b) => (
@@ -227,7 +232,11 @@ export default function ResultsPanel({ result, changes, profile, busy, onHoverBu
               <div className="mt-1"><Delta before={b.minutesBefore} after={b.minutesAfter} unit={t.min} digits={2} /></div>
               <div className="mt-1 flex flex-wrap items-center gap-1 text-[11px] text-slate-600">
                 {b.busesPerHour !== null && <span className="font-secondary">{b.busesPerHour} {t.busesPerHour}</span>}
-                <SourceBadge label={b.busesPerHourSource} tone={b.busesPerHour !== null ? "live" : "seed"} />
+                {b.stopName && (
+                  <span className="flex items-center gap-1 text-emerald-700">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" aria-hidden="true" /> {b.stopName}
+                  </span>
+                )}
               </div>
             </li>
           ))}
@@ -298,7 +307,7 @@ function LocalBlock({ local }: { local: NonNullable<Extract<SimulateResponse, { 
         <p className="mt-0.5 text-[12px] text-slate-700">
           <b className={`font-secondary ${saved > 0 ? "text-emerald-700" : "text-orange-700"}`}>{fmt(Math.abs(saved), 1)}</b>{" "}
           {saved > 0 ? t.savedPerPeak : t.costPerPeak}
-          <span className="block font-secondary text-[11px] text-slate-500">≈ {fmt(Math.abs(saved) * 250, 0)} veh·h {t.perYear}</span>
+          <span className="block font-secondary text-[11px] text-slate-500">≈ {fmt(Math.abs(saved) * 250, 0)} veh/h {t.perYear}</span>
         </p>
       )}
       <ul className="mt-1 divide-y divide-slate-100">
@@ -341,10 +350,11 @@ function CostsLine({ c }: { c: TripCosts }) {
             <span className="text-slate-500">({topN} {t.segmentsOf} {total}{hours ? `, ${t.weekdays} ${hours[0]}–${hours[1]}` : ""})</span>
           </p>
         )}
-        <p className="flex flex-wrap gap-1 pt-0.5">
-          {c.ticket && <SourceBadge label={c.ticket.source} tone="live" />}
-          {c.parking && <SourceBadge label={c.parking.source} tone="live" />}
-        </p>
+        <div className="space-y-0.5 pt-0.5 text-[11px] font-medium text-emerald-700">
+          {[c.ticket?.source, c.parking?.source].filter(Boolean).map((s) => (
+            <p key={s} className="flex items-center gap-1"><Check size={12} strokeWidth={2.6} /> {s}</p>
+          ))}
+        </div>
       </div>
     </div>
   );

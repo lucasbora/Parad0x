@@ -218,6 +218,14 @@ body,
 .theme-dark .bg-fuchsia-50 {
   background-color: rgba(112, 26, 117, 0.55) !important;
 }
+/* selected row in the street search, and the orange "worse" pills */
+.theme-dark .bg-blue-50,
+.theme-dark .bg-blue-50\/80 {
+  background-color: rgba(30, 64, 175, 0.45) !important;
+}
+.theme-dark .bg-orange-50 {
+  background-color: rgba(124, 45, 18, 0.6) !important;
+}
 .theme-dark .from-emerald-50\/95 {
   --tw-gradient-from: rgba(6, 78, 59, 0.92) var(--tw-gradient-from-position) !important;
 }
@@ -282,6 +290,7 @@ body,
 .theme-dark .text-emerald-600 {
   color: #34d399 !important;
 }
+.theme-dark .text-orange-800,
 .theme-dark .text-orange-700 {
   color: #fb923c !important;
 }
@@ -356,6 +365,8 @@ body,
 /* the map's zoom buttons and attribution slide out from under the Recommended Points panel */
 .maplibregl-ctrl-bottom-right { transition: right 300ms var(--ease-out); }
 .right-panel-open .maplibregl-ctrl-bottom-right { right: 384px; }
+/* the collapsed attribution ("i", 24 px) sits centred above the zoom buttons (29 px) */
+.maplibregl-ctrl-bottom-right > .maplibregl-ctrl-attrib.maplibregl-compact:not(.maplibregl-compact-show) { margin: 0 12.5px 8px 0; }
 /* map: hover popup fades in once when it opens */
 .maplibregl-popup-content { animation: m-fade-in 140ms var(--ease-out) backwards; }
 /* map: intersection markers grow in and shrink out (the marker element itself is positioned by MapLibre) */

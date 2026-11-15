@@ -785,7 +785,7 @@ export default function App() {
                 <PinsPanel times={pinTimes} onTogglePin={togglePinOnMap} onOpen={openPin} changeLabel={changeLabel}
                   onRemove={(p) => setPins((ps) => ps.filter((x) => pinKey(x) !== pinKey(p)))} />
                 <ResultsPanel result={result} changes={changes} profile={profile} busy={busy} tripCosts={data.tripCosts} profiles={data.profiles}
-                  evaporation={evaporation} onEvaporation={setEvaporation} evapOptions={data.evaporation} onHoverBus={setHoverBus}
+                  evaporation={evaporation} onEvaporation={setEvaporation} evapOptions={data.evaporation} onProfile={setProfile} onHoverBus={setHoverBus}
                   onHighlight={setHovered} onFocus={(h) => { setPinned(h); focusCamera([...h.coordinates, ...(h.ghost ?? [])], "fit"); }} />
                 <SourcesNote data={data} />
               </>

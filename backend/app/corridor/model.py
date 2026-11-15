@@ -394,7 +394,7 @@ class CorridorModel:
         # never changes the traffic result. Basis = the best bus-minute gain on the changed street.
         gain = max((b["minutesBefore"] - b["minutesAfter"] for b in buses if b["usesChangedStreet"]), default=0.0)
         shift = survey.share_switching(config.SURVEY, max(gain, 0.0))
-        mode_shift = ({**shift, "basis": "best bus-minute gain on the changed street",
+        mode_shift = ({**shift, "basis": "best bus-minute gain on the changed street", "responses": config.SURVEY["responses"],
                        "source": f"citizen survey (n={config.SURVEY['responses']})"} if shift else None)
         return {
             "testData": False,
@@ -534,12 +534,12 @@ class CorridorModel:
             before_min, after_min = t(before, False), t(after, True)
             geom = [p for i in idx for p in self.net.links[i].geometry]
             win = PROFILES[profile]
-            per_hour, src = transit.buses_per_hour(line["routeId"], line["stops"], geom, win.start, win.end)
+            per_hour, src, stop_name = transit.buses_per_hour(line["routeId"], line["stops"], geom, win.start, win.end)
             out.append({"shortName": line["shortName"], "routeId": line["routeId"], "type": int(line["type"]),
                         "color": line["color"], "longName": line["longName"], "direction": line["direction"],
                         "minutesBefore": round(before_min, 2), "minutesAfter": round(after_min, 2),
                         "usesChangedStreet": bool(bus_links & set(line["links"])),
-                        "busesPerHour": per_hour, "busesPerHourSource": src, "linkIds": line["links"]})
+                        "busesPerHour": per_hour, "busesPerHourSource": src, "stopName": stop_name, "linkIds": line["links"]})
         out.sort(key=lambda b: (not b["usesChangedStreet"], b["minutesAfter"] - b["minutesBefore"]))
         return out
 

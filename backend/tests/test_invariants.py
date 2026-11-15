@@ -110,7 +110,7 @@ def test_bus_lane_skips_congestion(m, monkeypatch):
     monkeypatch.setitem(m._cache, "lines", [{"shortName": "T", "routeId": "t", "type": 3, "color": "#000",
                                               "longName": "test", "direction": 0, "links": ids, "stops": []}])
     monkeypatch.setitem(m._cache, "free_fixed", m.costs([])[0].fixed)
-    monkeypatch.setattr(transit, "buses_per_hour", lambda *a: (None, "test"))
+    monkeypatch.setattr(transit, "buses_per_hour", lambda *a: (None, "test", None))
     base, after = m.solve([], profile="morning"), m.solve(ch, profile="morning")
     b = m.bus_results(ch, base, after)[0]
     free = sum(m.costs([])[0].fixed[m.net.link_index[i]] for i in ids) * config.ASSUMPTIONS["bus_speed_factor"]
