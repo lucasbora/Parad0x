@@ -10,7 +10,7 @@ time-of-day profiles for Timișoara.
 OSM snapshot (backend/data/osm/corridor_martirilor.json)
   ├─ roads (main + side streets), signals, turn restrictions   → network: 385 links, 16 gateways, banned turns
   └─ buildings + POIs                                          → land use: residents + destinations → 27 zones
-profile (morning / day / evening / sunday)
+profile (morning / day / evening)
   → land-use OD: homes ↔ destinations (gravity), local ↔ gateways, gateway ↔ gateway (through)
   → counts (optional): gate counts replace gateway flows, link counts scale local demand → "calibrated"
   → Wardrop equilibrium (conjugate Frank–Wolfe, exact line search, tree loading on the link graph, warm starts)
@@ -58,7 +58,7 @@ On a one-lane street, turning its only lane into a bike lane, bus lane or sidewa
 ## Time of day for through-traffic
 
 Through-traffic is 25 % of gateway capacity at the **morning** peak; other profiles scale it like local trips
-(hour share × trip level): day ×0.76, evening ×1.06, Sunday ×0.66. Gate counts replace it per profile.
+(hour share × trip level): day ×0.76, evening ×1.06. Gate counts replace it per profile.
 
 ## Measured performance (estimated demand, laptop, 6 workers)
 
@@ -66,16 +66,19 @@ Through-traffic is 25 % of gateway capacity at the **morning** peak; other profi
 |---|---|
 | Base equilibrium, one profile | 0.1–0.25 s (gap < 10⁻⁵) |
 | User lane change (warm start) | ≈ 0.2 s per request incl. results |
-| Full Braess search, one profile (256 removals + 39 lanes) | 6–12 s with 6 workers; all four profiles warmed at startup, cached on disk |
+| Full Braess search, one profile (256 removals + 39 lanes) | 6–12 s with 6 workers; all three profiles warmed at startup, cached on disk |
 
 ## Current results — ESTIMATED demand, morning (not yet evidence)
 
 - Morning: 7 verified Braess segments, all **side-street closures**: Piața Tineretului −0.30 % total time
-  (one trip 6.6 % faster), Strada Craiova −0.27 %, Strada Cozia −0.17 % (one trip 10.4 % faster),
-  Protopop George Dragomir. 130 low-regret changes (< 0.5 %).
-- Evening: 13 Braess segments (Mitropolit Varlaam, Putna, Craiova, Piața Tineretului, Cozia, …).
-- Midday and Sunday: **none** — with less traffic the shortcuts are not congested. The paradox depends on the hour.
-- Demand ×1.2 (morning): Piața Tineretului still −0.2 %.
+  (Calea Martirilor routes ≈ 13 s faster), Strada Craiova −0.28 %, Strada Cozia −0.18 % (one trip 10.4 % faster),
+  Protopop George Dragomir.
+- Evening: 13 Braess segments; Mitropolit Varlaam −0.25 %, Putna −0.23 %, then Craiova, Piața Tineretului, Cozia.
+- Midday: **none** — with less traffic the shortcuts are not congested. The paradox depends on the hour.
+- Demand stress test: Varlaam (evening) −0.25 % at ×1.0, ×1.2 and ×1.5; Cozia (morning) −0.18 / −0.07 / −0.16 %;
+  Piața Tineretului and Craiova turn slightly worse at ×1.5 (+0.15 %, +0.07 %).
+- One car lane → bus: Calea Martirilor N +0.02 %, Strada Cluj S +0.24 %, Calea Martirilor S +0.28 % (morning).
+  Optional traffic evaporation (11 %): Strada Arieș SE −4.4 %, with the drivers who stay 0.2 % faster.
 
 These are what the model predicts **if** traffic looks like the land-use estimate. Through-traffic is
 the largest and least certain part (≈ 6,900 veh/h assumed) — gate counts fix it.

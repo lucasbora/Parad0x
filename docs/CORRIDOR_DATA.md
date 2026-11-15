@@ -14,10 +14,9 @@ All files live in `backend/data/corridor/`. The app reloads them automatically w
 | `morning` | 07:30–08:30 | weekday | home → work/school |
 | `day` | 12:30–13:30 | weekday | balanced, lower level |
 | `evening` | 17:00–18:00 | weekday | work/school → home |
-| `sunday` | **11:00–12:00** | Sunday | shopping / leisure — **use this for Sunday counts** |
 
 Every count row has a `profile` column (missing = `morning`). Counts outside the window are accepted but
-flagged with a warning. Sunday counts calibrate **only** the Sunday profile; weekday profiles stay "estimated".
+flagged with a warning. Counts calibrate **only** their own profile; the other profiles stay "estimated".
 
 ## What OpenStreetMap already tells us (check these on site)
 
@@ -48,8 +47,8 @@ Cars entering and leaving at the gates in `gates.csv`, in 15-minute intervals, i
 
 ```
 gate_id,direction,profile,start,end,vehicles,source,notes
-<gate id from gates.csv>,in,sunday,11:00,11:15,<cars counted>,video Laura 2026-11-15,
-<gate id from gates.csv>,out,sunday,11:00,11:15,<cars counted>,video Laura 2026-11-15,
+<gate id from gates.csv>,in,evening,17:00,17:15,<cars counted>,video Laura 2026-11-15,
+<gate id from gates.csv>,out,evening,17:00,17:15,<cars counted>,video Laura 2026-11-15,
 ```
 
 - `direction`: `in` = entering the area, `out` = leaving it. Only directions listed in `gates.csv` are valid.
@@ -66,7 +65,7 @@ between two junctions. The model scales its land-use estimate so these streets m
 
 ```
 link_id,profile,start,end,vehicles,source,notes
-<link id from links.csv>,sunday,11:00,11:15,<cars>,video Adriana 2026-11-15,
+<link id from links.csv>,evening,17:00,17:15,<cars>,video Adriana 2026-11-15,
 ```
 
 ### 3. `turn_counts.csv` — the PROOF (never used for fitting)
@@ -75,7 +74,7 @@ At 2–3 key intersections, how many cars make each movement. Link ids from `int
 
 ```
 node_id,from_link_id,to_link_id,profile,start,end,vehicles,source
-<node id>,<from link id>,<to link id>,sunday,11:00,11:15,<cars>,video Laura 2026-11-15
+<node id>,<from link id>,<to link id>,evening,17:00,17:15,<cars>,video Laura 2026-11-15
 ```
 
 The app compares them with the model using **GEH** (target: GEH < 5 on ≥ 85 % of counts).
@@ -86,7 +85,7 @@ GPS runs (phone / Strava) between two gates in the profile window, along the cor
 
 ```
 route,from_gate_id,to_gate_id,profile,start,minutes,source
-Martirilor → Bega via Ripensia,<gate id>,<gate id>,sunday,11:20,<minutes>,GPS run Rareș 2026-11-15
+Martirilor → Bega via Ripensia,<gate id>,<gate id>,evening,17:20,<minutes>,GPS run Rareș 2026-11-15
 ```
 
 ### 5. `signal_timings.csv` — replaces the textbook signal assumption
@@ -115,7 +114,7 @@ link_id,car_lanes,bus_lane,source
 | `turn_counts`, `travel_times` | **checked** (held out) | GEH / time difference = evidence the model works |
 | `signal_timings`, `lane_checks` | network | replace assumptions directly |
 
-`GET /api/corridor/calibration?profile=sunday` returns the fitted values and the held-out checks separately.
+`GET /api/corridor/calibration?profile=evening` returns the fitted values and the held-out checks separately.
 
 ## Assumptions still in the model (listed by the API until replaced)
 
@@ -124,7 +123,7 @@ link_id,car_lanes,bus_lane,source
 | Residents per building | 30 m² floor / resident; untyped buildings 50 % housing; default floors by type | census / `link_counts` |
 | Car trips per resident | 2.3 trips/day × hour share × car share 44 % (**PMUD, unverified**) ÷ 1.3 people/car | PMUD / `link_counts` |
 | Destinations | OSM POI + building weights per activity, scaled per profile | `link_counts` |
-| Through-traffic | 25 % of each gateway road's capacity at the morning peak; other profiles × hour share × trip level (day 0.76, evening 1.06, Sunday 0.66) | `gate_counts` |
+| Through-traffic | 25 % of each gateway road's capacity at the morning peak; other profiles × hour share × trip level (day 0.76, evening 1.06) | `gate_counts` |
 | Share of local trips leaving the area | 60 % | `gate_counts` |
 | Signal timing | cycle 90 s, green 45 % | `signal_timings.csv` |
 | Saturation flow | 1800 veh/h/lane (HCM); side streets 600 | calibration |
