@@ -366,11 +366,18 @@ export type BaselineResponse =
 /** UI lane type in the mixer. */
 export type LaneKind = "car" | "bus" | "bike" | "sidewalk";
 
+export interface PinSnapshot {
+  beforeSec: number | null;
+  afterSec: number | null;
+}
+
 export interface Pin {
   street: string;
   heading: string;
   /** kept on the map even when another street is selected (the selected street always shows its pin) */
   onMap: boolean;
+  /** the lane change tried on this street when it was pinned (before → after), kept until the row is removed */
+  snapshot?: PinSnapshot | null;
 }
 
 /** One tested change from the Braess search.

@@ -623,8 +623,8 @@ export default function CorridorMap(props: Props) {
         }
         const relieved = r && now < was - 3;
         const worse = r && now > was + 3;
-        // the base red-light wait (~14 s at a 90 s cycle) is normal; only queueing on top of it turns the marker amber or red
-        const state = now >= 35 ? "saturated" : now >= 20 ? "busy" : "free";
+        // the base red-light wait (~14 s at a 90 s cycle) is normal; queueing on top of it turns the marker yellow, red, then dark red
+        const state = now >= 60 ? "jammed" : now >= 35 ? "saturated" : now >= 20 ? "busy" : "free";
         const classes = [`queue-${relieved ? "resolved" : state}`, ...(worse ? ["queue-worse"] : [])];
         const key = classes.join(" ");
         if (entry.state !== key) {
@@ -635,7 +635,7 @@ export default function CorridorMap(props: Props) {
         }
         entry.el.style.setProperty("--qsize", `${Math.min(44, 16 + now / 2)}px`);
         entry.el.title = `${p.name}\n${fmt(was, 0)} s → ${fmt(now, 0)} s`;
-        entry.core.innerHTML = `${Math.round(now)}<small>s</small>`;
+        // colour and size carry the wait; the exact seconds are in the tooltip
       }
     }
     store.forEach((entry, id) => {
@@ -740,7 +740,7 @@ export default function CorridorMap(props: Props) {
       const c = highlight.coordinates;
       mk(`<div class="route-pin route-pin-start">A</div>`, c[0]);
       mk(`<div class="route-pin route-pin-end">B</div>`, c[c.length - 1]);
-      mk(`<div class="route-callout"><span style="background:${highlight.color}"></span>${highlight.label} · <b>${highlight.time}</b></div>`,
+      mk(`<div class="route-callout">${highlight.label} · <b>${highlight.time}</b></div>`,
         c[Math.floor(c.length / 2)], "bottom");
     }
     (map.getSource("highlight") as GeoJSONSource).setData(gj({ type: "FeatureCollection", features: feats }));

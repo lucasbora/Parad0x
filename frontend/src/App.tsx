@@ -8,7 +8,6 @@ import type {
   CalibrationResponse,
   Change,
   CorridorResponse,
-  DemandSource,
   DemandSummary,
   Highlight,
   LaneKind,
@@ -17,6 +16,7 @@ import type {
   MapLayers,
   PackageResponse,
   Pin,
+  PinSnapshot,
   Profile,
   ScanRow,
   SimulateResponse,
@@ -97,7 +97,6 @@ export default function App() {
   const [reload, setReload] = useState(0);
   const [calibration, setCalibration] = useState<CalibrationResponse | null>(null);
   const [profile, setProfile] = useState<Profile>("morning");
-  const [demandSource, setDemandSource] = useState<DemandSource | null>(null);
   const [demandSummary, setDemandSummary] = useState<DemandSummary | null>(null);
   const [demandInput, setDemandInput] = useState(1);        // slider position (moves instantly)
   const [demandScale, setDemandScale] = useState(1);        // applied after a short pause
@@ -127,6 +126,12 @@ export default function App() {
   const [camera, setCamera] = useState<CameraTarget | null>(null);
   const [explainer, setExplainer] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // the layers panel starts open (except on phones, where it would cover the map) and slides down
+  // whenever the street panel opens, from the menu or by clicking a street; the user can reopen it any time
+  const [layersOpen, setLayersOpen] = useState(() => window.innerWidth >= 768);
+  useEffect(() => {
+    if (sidebarOpen) setLayersOpen(false);
+  }, [sidebarOpen]);
   const [recommendedOpen, setRecommendedOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
@@ -213,7 +218,6 @@ export default function App() {
       if (!live || b.status !== "ok") return;
       setBaseline(b.links);
       setBaselineJunctions(b.junctions);
-      setDemandSource(b.demandSource);
       setDemandSummary(b.demandSummary);
       setDemandVehH(b.demandVehH);
     }).catch((e: Error) => live && setError(e.message));
@@ -362,9 +366,11 @@ export default function App() {
   const panelCoversMap = narrow && (sidebarOpen || recommendedOpen);
 
   const ctrl = useRef<AbortController | null>(null);
+  const autoDeltaFor = useRef("");
   useEffect(() => {
     ctrl.current?.abort();
     if (!changes.length) {
+      autoDeltaFor.current = "";
       setResult(null);
       setBusy(false);
       return;
@@ -374,7 +380,14 @@ export default function App() {
     setBusy(true);
     const id = window.setTimeout(() => {
       api.simulate(changes, profile, demandScale, c.signal, evaporation)
-        .then((r) => setResult(r))
+        .then((r) => {
+          setResult(r);
+          // a new lane edit: show its effect (before/after colours); later time-of-day or demand changes keep the user's choice
+          if (r.status === "ok" && autoDeltaFor.current !== changesKey) {
+            autoDeltaFor.current = changesKey;
+            setShowDelta(true);
+          }
+        })
         .catch((e: Error) => {
           if (e.name !== "AbortError") setError(e.message);
         })
@@ -413,27 +426,45 @@ export default function App() {
   }, [ok, baseline, focusIds]);
 
   // ------------------------------------------------------------ pins
-  const pinTimes: PinTime[] = useMemo(() => {
+  // live travel time of a street: under the current result if there is one, otherwise the base state
+  const liveTimes = useCallback((pin: Pin): PinSnapshot => {
     const base = new Map((baseline ?? []).map((l) => [l.id, l.timeSec]));
     const res = new Map((ok?.links ?? []).map((l) => [l.id, l]));
-    return pins.map((pin) => {
-      const ids = data?.streets.find((s) => s.street === pin.street)?.directions.find((d) => d.heading === pin.heading)?.linkIds ?? [];
-      const sum = (f: (id: string) => number | undefined) => {
-        let total = 0;
-        for (const id of ids) {
-          const v = f(id);
-          if (v === undefined) return null;
-          total += v;
-        }
-        return ids.length ? total : null;
-      };
-      return {
-        pin,
-        beforeSec: ok ? sum((id) => res.get(id)?.timeBeforeSec) : sum((id) => base.get(id)),
-        afterSec: ok ? sum((id) => res.get(id)?.timeAfterSec) : null,
-      };
+    const ids = data?.streets.find((s) => s.street === pin.street)?.directions.find((d) => d.heading === pin.heading)?.linkIds ?? [];
+    const sum = (f: (id: string) => number | undefined) => {
+      let total = 0;
+      for (const id of ids) {
+        const v = f(id);
+        if (v === undefined) return null;
+        total += v;
+      }
+      return ids.length ? total : null;
+    };
+    return {
+      beforeSec: ok ? sum((id) => res.get(id)?.timeBeforeSec) : sum((id) => base.get(id)),
+      afterSec: ok ? sum((id) => res.get(id)?.timeAfterSec) : null,
+    };
+  }, [data, baseline, ok]);
+  // a street pinned while its lanes were changed shows the before → after of that change, not the live time
+  const pinTimes: PinTime[] = useMemo(() => pins.map((pin) => ({ pin, ...(pin.snapshot ?? liveTimes(pin)) })), [pins, liveTimes]);
+
+  // pinned + being edited: keep its remembered change up to date with the latest result
+  const isEditing = useCallback((p: Pin) => p.street === street && p.heading === heading, [street, heading]);
+  useEffect(() => {
+    if (!ok || !changes.length) return;
+    setPins((ps) => {
+      let touched = false;
+      const next = ps.map((p) => {
+        if (!p.onMap || !isEditing(p)) return p;
+        const live = liveTimes(p);
+        if (p.snapshot && p.snapshot.beforeSec === live.beforeSec && p.snapshot.afterSec === live.afterSec) return p;
+        touched = true;
+        return { ...p, snapshot: live };
+      });
+      return touched ? next : ps;
     });
-  }, [pins, data, baseline, ok]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ok]);
 
   // on the map: the street being edited, plus the ones pinned with the pin button in the list
   const mapPins: MapPinView[] = useMemo(() => pinTimes
@@ -447,8 +478,10 @@ export default function App() {
       return { key: pinKey(pin), label: `${pin.street} · ${t.heading[pin.heading] ?? pin.heading}`, at, beforeSec, afterSec };
     }), [pinTimes, data, linkProps, t, street, heading]);
   const togglePinOnMap = useCallback((p: Pin) => {
-    setPins((ps) => ps.map((x) => (pinKey(x) === pinKey(p) ? { ...x, onMap: !x.onMap } : x)));
-  }, []);
+    // pinning the street whose lanes are being changed captures that change (shown until the row is removed)
+    const capture = !p.onMap && isEditing(p) && !!ok && changes.length > 0 ? liveTimes(p) : null;
+    setPins((ps) => ps.map((x) => (pinKey(x) === pinKey(p) ? { ...x, onMap: !x.onMap, snapshot: capture ?? x.snapshot } : x)));
+  }, [isEditing, ok, changes.length, liveTimes]);
 
   const pickLink = useCallback((id: string) => {
     const f = linkProps.get(id);
@@ -771,13 +804,14 @@ export default function App() {
           <div className="flex flex-row-reverse flex-wrap-reverse items-start gap-2">
             {data && data.profiles.length > 0 && (
               // leaves room on the right for the map's zoom buttons
-              <div className="flex min-w-0 flex-[1_1_380px] justify-center pr-11">
-                <ProfileBar profiles={data.profiles} profile={profile} demandSource={demandSource} demandScale={demandInput}
+              <div className="flex min-w-0 flex-[1_1_280px] justify-center pr-11">
+                <ProfileBar profiles={data.profiles} profile={profile} demandScale={demandInput}
                   demandVehH={demandVehH} onChange={setProfile} onDemandScale={setDemandInput} />
               </div>
             )}
             <div className="mr-auto max-w-full">
-              <LayersPill layers={layers} onChange={setLayers} showDelta={showDelta} onShowDelta={setShowDelta} hasResult={!!ok} />
+              <LayersPill layers={layers} onChange={setLayers} showDelta={showDelta} onShowDelta={setShowDelta} hasResult={!!ok}
+                open={layersOpen} onOpenChange={setLayersOpen} />
             </div>
           </div>
         </div>

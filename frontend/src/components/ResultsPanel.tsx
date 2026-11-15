@@ -148,7 +148,7 @@ export default function ResultsPanel({ result, changes, profile, busy, onHoverBu
         </p>
         <p className={`mt-1 text-[11.5px] ${r.braess.detected ? "font-semibold text-fuchsia-700"
           : r.evaporation && r.totals.changePct < 0 ? "font-semibold text-emerald-700" : "text-slate-500"}`}>
-          {r.braess.detected ? `${t.braessTitle} ${t.braessBody} ${fmt(Math.abs(r.braess.totalChangePct), 2)}%.`
+          {r.braess.detected ? `${t.braessBody} ${fmt(Math.abs(r.braess.totalChangePct), 2)}%.`
             : r.evaporation ? (r.totals.changePct < 0 ? t.evapImproves : t.evapWorse) : t.noBraess}
         </p>
       </div>

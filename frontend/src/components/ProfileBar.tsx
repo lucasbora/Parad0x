@@ -1,5 +1,5 @@
-import { BadgeCheck, Clock, FlaskConical, Gauge } from "lucide-react";
-import type { DemandSource, Profile, ProfileMeta } from "../types/corridor";
+import { Clock, Gauge } from "lucide-react";
+import type { Profile, ProfileMeta } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
 import { fmt } from "../api";
 import { useSlidingThumb } from "../motion";
@@ -7,7 +7,6 @@ import { useSlidingThumb } from "../motion";
 interface Props {
   profiles: ProfileMeta[];
   profile: Profile;
-  demandSource: DemandSource | null;
   demandScale: number;
   demandVehH: number | null;
   onChange: (p: Profile) => void;
@@ -15,9 +14,8 @@ interface Props {
 }
 
 /** Bottom bar: time-of-day selector + demand level meter + where the demand comes from. */
-export default function ProfileBar({ profiles, profile, demandSource, demandScale, demandVehH, onChange, onDemandScale }: Props) {
+export default function ProfileBar({ profiles, profile, demandScale, demandVehH, onChange, onDemandScale }: Props) {
   const { t, lang } = useI18n();
-  const calibrated = demandSource === "calibrated";
   const pct = Math.round(demandScale * 100);
   const thumb = useSlidingThumb(profile);
   return (
@@ -73,19 +71,6 @@ export default function ProfileBar({ profiles, profile, demandSource, demandScal
           <span className="hidden font-secondary text-[10.5px] text-slate-500 sm:inline">{fmt(demandVehH, 0)} {t.vehH}</span>
         )}
       </label>
-
-      {demandSource && (
-        <span
-          key={demandSource}
-          title={calibrated ? t.demandCalibratedHint : t.demandEstimatedHint}
-          className={`m-fade-in flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 font-secondary text-[10.5px] font-semibold ${
-            calibrated ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-amber-300 bg-amber-50 text-amber-800"
-          }`}
-        >
-          {calibrated ? <BadgeCheck size={12} /> : <FlaskConical size={12} />}
-          {calibrated ? t.demandCalibrated : t.demandEstimated}
-        </span>
-      )}
     </div>
   );
 }
