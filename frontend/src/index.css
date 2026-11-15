@@ -12,7 +12,7 @@ body,
   height: 100%;
   margin: 0;
   background: #f8fafc;
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: "Noto Sans Inscriptional Pahlavi", ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -31,6 +31,7 @@ body,
   box-shadow: 0 14px 36px -12px rgba(0, 0, 0, 0.7), 0 2px 8px -2px rgba(0, 0, 0, 0.45);
   color: #f8fafc;
 }
+
 
 .maplibregl-popup-content {
   border-radius: 12px;
@@ -77,12 +78,25 @@ body,
   animation-iteration-count: infinite;
 }
 
-/* pulsing intersection markers */
-@keyframes pulseRing {
-  0% { transform: scale(0.9); opacity: 0.85; }
-  70% { transform: scale(2); opacity: 0; }
-  100% { transform: scale(2); opacity: 0; }
+/* Braess explainer: a white streak runs along a road in the driving direction and fades out */
+@keyframes roadStreak {
+  0% { stroke-dashoffset: 22; opacity: 0; }
+  20% { opacity: 0.9; }
+  75% { opacity: 0.9; }
+  100% { stroke-dashoffset: -100; opacity: 0; }
 }
+.road-streak {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 22 200;
+  stroke-dashoffset: 22;
+  opacity: 0;
+  animation: roadStreak 2.4s ease-in-out infinite;
+}
+
+/* intersection markers */
 .queue-pillar {
   width: var(--qsize, 18px);
   height: var(--qsize, 18px);
@@ -96,7 +110,7 @@ body,
   place-items: center;
   border-radius: 9999px;
   border: 2px solid #fff;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-family: Sunflower, "Noto Sans Inscriptional Pahlavi", ui-sans-serif, system-ui, sans-serif;
   font-size: 10px;
   font-weight: 600;
   color: #fff;
@@ -104,15 +118,11 @@ body,
   transition: background-color 0.6s ease;
 }
 .queue-pillar .queue-core small { font-size: 7px; margin-left: 1px; opacity: 0.85; }
-.queue-pillar .queue-ring { position: absolute; inset: 0; border-radius: 9999px; }
 .queue-saturated .queue-core { background: #dc2626; }
-.queue-saturated .queue-ring { background: rgba(220, 38, 38, 0.45); animation: pulseRing 1.6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; }
 .queue-busy .queue-core { background: #d97706; }
-.queue-busy .queue-ring { background: rgba(217, 119, 6, 0.35); animation: pulseRing 2.4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; }
 .queue-free .queue-core { background: #059669; font-size: 0; }
 .queue-free { opacity: 0.85; }
 .queue-resolved .queue-core { background: #059669; }
-.queue-resolved .queue-ring { background: rgba(5, 150, 105, 0.45); animation: pulseRing 1.2s ease-out 3; }
 .queue-worse .queue-core { box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.55), 0 2px 6px rgba(15, 23, 42, 0.35); }
 
 /* highlighted route pins & callout */
@@ -124,7 +134,7 @@ body,
   border-radius: 9999px;
   border: 2px solid #fff;
   color: #fff;
-  font: 700 11px Inter, sans-serif;
+  font: 700 11px "Noto Sans Inscriptional Pahlavi", ui-sans-serif, system-ui, sans-serif;
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.35);
 }
 .route-pin-start { background: #0f172a; }
@@ -138,22 +148,24 @@ body,
   border-radius: 9999px;
   background: #fff;
   color: #0f172a;
-  font: 500 11px Inter, sans-serif;
+  font: 500 11px "Noto Sans Inscriptional Pahlavi", ui-sans-serif, system-ui, sans-serif;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
   margin-bottom: 8px;
 }
 .route-callout span { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
-.route-callout b { font-family: "JetBrains Mono", monospace; }
+.route-callout b { font-family: Sunflower, "Noto Sans Inscriptional Pahlavi", ui-sans-serif, system-ui, sans-serif; }
 
 /* travel-time pins on the map */
 .tmbg-pin { display: flex; flex-direction: column; align-items: center; pointer-events: none; }
 .tmbg-pin-card {
   background: #fff; border: 2px solid #005bbc; border-radius: 10px; padding: 4px 8px;
-  box-shadow: 0 6px 16px -6px rgba(15, 23, 42, 0.45); font: 11px Inter, sans-serif; color: #0f172a;
-  white-space: nowrap; transition: border-color 0.4s, background-color 0.4s;
+  box-shadow: 0 6px 16px -6px rgba(15, 23, 42, 0.45); font: 11px "Noto Sans Inscriptional Pahlavi", ui-sans-serif, system-ui, sans-serif; color: #0f172a;
+  /* as wide as the name needs, wrapping onto more lines past 230 px so nothing is cut off */
+  width: max-content; max-width: 230px; text-align: center;
+  transition: border-color 0.4s, background-color 0.4s;
 }
-.tmbg-pin-title { font-weight: 600; max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
-.tmbg-pin-time { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.tmbg-pin-title { font-weight: 600; line-height: 1.25; overflow-wrap: break-word; }
+.tmbg-pin-time { white-space: nowrap; font-family: Sunflower, "Noto Sans Inscriptional Pahlavi", ui-sans-serif, system-ui, sans-serif; }
 .tmbg-pin-stem { width: 2px; height: 10px; background: #005bbc; }
 .tmbg-pin-faster { border-color: #059669; background: #ecfdf5; }
 .tmbg-pin-slower { border-color: #ea580c; background: #fff7ed; }
@@ -293,6 +305,70 @@ body,
   color: #f8fafc !important;
 }
 
+/* ------------------------------------------------------------------ motion system
+   Enter/exit animations for menus, dialogs, toasts and list items, plus the map's marker animations.
+   Only opacity/transform are animated. Never put these on an element that is positioned with a
+   transform (Tailwind translate, MapLibre markers): animate a child instead. */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+}
+@keyframes m-fade-in { from { opacity: 0; } }
+@keyframes m-fade-out { to { opacity: 0; } }
+@keyframes m-pop-in { from { opacity: 0; transform: translateY(-6px) scale(0.97); } }
+@keyframes m-pop-out { to { opacity: 0; transform: translateY(-4px) scale(0.97); } }
+@keyframes m-side-in { from { opacity: 0; transform: translateX(-8px) scale(0.97); } }
+@keyframes m-side-out { to { opacity: 0; transform: translateX(-6px) scale(0.97); } }
+@keyframes m-dialog-in { from { opacity: 0; transform: translateY(16px) scale(0.98); } }
+@keyframes m-dialog-out { to { opacity: 0; transform: translateY(10px) scale(0.98); } }
+@keyframes m-rise-in { from { opacity: 0; transform: translateY(8px); } }
+@keyframes m-toast-in { from { opacity: 0; transform: translateY(-16px) scale(0.98); } }
+@keyframes m-toast-out { to { opacity: 0; transform: translateY(-12px) scale(0.98); } }
+@keyframes m-scale-in { from { opacity: 0; transform: scale(0.5); } }
+@keyframes m-scale-out { to { opacity: 0; transform: scale(0.5); } }
+@keyframes m-drop-in { from { opacity: 0; transform: translateY(-10px); } }
+@keyframes m-swap-in { from { opacity: 0; transform: scale(0.82); } }
+/* road markings are "painted" from the bottom up (clip-path, so it never fights a transform) */
+@keyframes m-paint-up { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+.m-fade-in { animation: m-fade-in 220ms var(--ease-out) backwards; }
+.m-fade-out { animation: m-fade-out 180ms var(--ease-in) both; }
+.m-pop-in { animation: m-pop-in 200ms var(--ease-out) backwards; }
+.m-pop-out { animation: m-pop-out 150ms var(--ease-in) both; }
+.m-side-in { animation: m-side-in 220ms var(--ease-out) backwards; transform-origin: left center; }
+.m-side-out { animation: m-side-out 150ms var(--ease-in) both; transform-origin: left center; }
+.m-dialog-in { animation: m-dialog-in 300ms var(--ease-out) backwards; }
+.m-dialog-out { animation: m-dialog-out 180ms var(--ease-in) both; }
+.m-rise-in { animation: m-rise-in 340ms var(--ease-out) backwards; }
+.m-toast-in { animation: m-toast-in 320ms var(--ease-out) backwards; }
+.m-toast-out { animation: m-toast-out 200ms var(--ease-in) both; }
+.m-scale-in { animation: m-scale-in 240ms var(--ease-out) backwards; }
+.m-swap-in { animation: m-swap-in 260ms var(--ease-out) backwards; }
+.m-paint-up { animation: m-paint-up 220ms var(--ease-out) backwards; }
+
+/* full-page cross-fade for theme and language changes (View Transitions API) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
+  animation-timing-function: var(--ease-out);
+}
+
+/* the map's zoom buttons and attribution slide out from under the Recommended Points panel */
+.maplibregl-ctrl-bottom-right { transition: right 300ms var(--ease-out); }
+.right-panel-open .maplibregl-ctrl-bottom-right { right: 384px; }
+/* map: hover popup fades in once when it opens */
+.maplibregl-popup-content { animation: m-fade-in 140ms var(--ease-out) backwards; }
+/* map: intersection markers grow in and shrink out (the marker element itself is positioned by MapLibre) */
+.queue-pillar .queue-core { animation: m-scale-in 260ms var(--ease-out) backwards; }
+.queue-pillar.queue-leaving .queue-core { animation: m-scale-out 200ms var(--ease-in) both; }
+/* map: travel-time pins drop in and fade out */
+.tmbg-pin > * { animation: m-drop-in 320ms var(--ease-out) backwards; }
+.tmbg-pin.is-leaving > * { animation: m-fade-out 180ms var(--ease-in) both; }
+/* map: route A/B pins and callout (wrapper is the marker, the child animates) */
+.tmbg-hl { display: flex; flex-direction: column; align-items: center; }
+.tmbg-hl > .route-pin { animation: m-scale-in 260ms var(--ease-out) backwards; }
+.tmbg-hl > .route-callout { animation: m-rise-in 300ms var(--ease-out) 80ms backwards; }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -300,5 +376,10 @@ body,
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

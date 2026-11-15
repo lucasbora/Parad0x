@@ -14,8 +14,12 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["'JetBrains Mono'", "ui-monospace", "SFMono-Regular", "monospace"],
+        sans: ["'Noto Sans Inscriptional Pahlavi'", "ui-sans-serif", "system-ui", "sans-serif"],
+        // secondary font (numbers, times, data labels): use the font-secondary class.
+        // Sunflower has no Romanian diacritics or minus / middle-dot / em-dash glyphs; the main font fills those in.
+        secondary: ["Sunflower", "'Noto Sans Inscriptional Pahlavi'", "ui-sans-serif", "system-ui", "sans-serif"],
+        // no monospace anywhere: Tailwind's base styles give code/kbd/pre the "mono" stack, so point it at the secondary font
+        mono: ["Sunflower", "'Noto Sans Inscriptional Pahlavi'", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
         island: "0 10px 30px -12px rgba(15, 23, 42, 0.35), 0 2px 6px -2px rgba(15, 23, 42, 0.12)",

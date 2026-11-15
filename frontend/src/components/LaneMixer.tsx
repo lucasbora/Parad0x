@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Bike, Bus, Car, Loader2, RotateCcw, TreeDeciduous } from "lucide-react";
 import type { LaneKind } from "../types/corridor";
 import { useI18n } from "../i18n/translations";
+import { usePresence } from "../motion";
 
 interface Props {
   lanes: LaneKind[];
@@ -22,6 +23,12 @@ const SURFACE: Record<LaneKind, string> = {
   bike: "#047857",
   sidewalk: "#cbd5e1",
 };
+// car lane centre line: whole white dashes only ("space" never cuts a dash in half at the ends)
+const DASH_STYLE = {
+  backgroundImage: "linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9))",
+  backgroundSize: "3px 12px",
+  backgroundRepeat: "no-repeat space",
+} as const;
 
 function LaneStrip({
   kind,
@@ -30,7 +37,6 @@ function LaneStrip({
   open,
   mergeLeft,
   mergeRight,
-  showDivider,
   onClick,
 }: {
   kind: LaneKind | "busExisting";
@@ -39,7 +45,6 @@ function LaneStrip({
   open?: boolean;
   mergeLeft?: boolean;
   mergeRight?: boolean;
-  showDivider?: boolean;
   onClick?: () => void;
 }) {
   const k: LaneKind = kind === "busExisting" ? "bus" : kind;
@@ -47,31 +52,52 @@ function LaneStrip({
   const isSidewalk = k === "sidewalk";
   const radiusClass = `${mergeLeft ? "rounded-l-none" : "rounded-l-md"} ${mergeRight ? "rounded-r-none" : "rounded-r-md"}`;
 
+  const iconAndName = (
+    <div key={`${k}-content`} className="m-swap-in flex flex-col items-center justify-center gap-1.5 px-1">
+      <Icon
+        size={22}
+        className={isSidewalk ? "" : "drop-shadow-sm"}
+        style={{ color: isSidewalk ? "#047857" : "#ffffff" }}
+        strokeWidth={2.2}
+      />
+      <span
+        className="text-center text-[11px] font-semibold leading-tight"
+        style={{ color: isSidewalk ? "#0f172a" : "#ffffff" }}
+      >
+        {typeName}
+      </span>
+    </div>
+  );
+
   const content = (
     <>
-      {showDivider && !isSidewalk && (
-        <div
-          className="absolute inset-y-0 right-0 w-[2px]"
-          style={{
-            backgroundImage: "repeating-linear-gradient(to bottom, rgba(255,255,255,0.75) 0 10px, transparent 10px 20px)",
-          }}
-        />
+      {k === "bike" && <div className="m-fade-in pointer-events-none absolute inset-x-1 inset-y-0 border-x-[3px] border-white/80" />}
+      {/* keyed by lane type, so a new type replays its markings */}
+      {k === "car" ? (
+        // dashed centre line, painted from the bottom up, with the icon and name sitting in its gap
+        <div key="car" className="absolute inset-0 flex flex-col items-center">
+          <span className="m-paint-up w-[3px] flex-1" style={{ ...DASH_STYLE, animationDelay: "170ms" }} />
+          <div className="py-2">{iconAndName}</div>
+          <span className="m-paint-up w-[3px] flex-1" style={DASH_STYLE} />
+        </div>
+      ) : k === "bus" ? (
+        // road marking: a long arrow, the bus, and "BUS" painted letter by letter (more room at the bottom when a label sits there)
+        <div key="bus" className={`flex flex-col items-center gap-1.5 px-1 ${label ? "pb-9" : "pb-2"}`}>
+          <svg viewBox="0 0 16 48" className={`m-paint-up w-3.5 ${label ? "h-6" : "h-9"}`}
+            style={{ animationDuration: "320ms" }} aria-hidden="true">
+            <polygon points="8,0 15.5,15 10,15 10,48 6,48 6,15 0.5,15" fill="#ffffff" />
+          </svg>
+          <Icon size={22} className="m-swap-in drop-shadow-sm" style={{ color: "#ffffff" }} strokeWidth={2.2} />
+          <span className="sr-only">{typeName}</span>
+          <span aria-hidden="true" className="my-1.5 flex gap-[2px] text-[13px] font-extrabold leading-none text-white">
+            {"BUS".split("").map((ch, i) => (
+              <span key={i} className="m-paint-up inline-block scale-y-[1.8]" style={{ animationDelay: `${300 + i * 140}ms` }}>{ch}</span>
+            ))}
+          </span>
+        </div>
+      ) : (
+        iconAndName
       )}
-      {k === "bike" && <div className="pointer-events-none absolute inset-x-1 inset-y-0 border-x-[3px] border-white/80" />}
-      <div className="flex flex-col items-center justify-center gap-1.5 px-1">
-        <Icon
-          size={22}
-          className={isSidewalk ? "" : "drop-shadow-sm"}
-          style={{ color: isSidewalk ? "#047857" : "#ffffff" }}
-          strokeWidth={2.2}
-        />
-        <span
-          className="text-center text-[11px] font-semibold leading-tight"
-          style={{ color: isSidewalk ? "#0f172a" : "#ffffff" }}
-        >
-          {typeName}
-        </span>
-      </div>
       {label && (
         <span className="absolute inset-x-0 bottom-0 bg-black/35 py-0.5 text-center text-[8.5px] font-semibold uppercase tracking-wide text-white">
           {label}
@@ -97,7 +123,7 @@ function LaneStrip({
       onClick={onClick}
       aria-haspopup="menu"
       aria-expanded={open}
-      className={`relative flex h-36 w-full flex-1 items-center justify-center overflow-hidden transition-[background-color,box-shadow] duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005BBC] ${radiusClass} ${
+      className={`relative flex h-36 w-full flex-1 items-center justify-center overflow-hidden transition-[background-color,box-shadow,transform,filter] duration-500 active:scale-[0.97] active:duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#005BBC] ${radiusClass} ${
         open ? "z-10 ring-2 ring-[#005BBC]" : "hover:brightness-95"
       }`}
       style={{ backgroundColor: SURFACE[k] }}
@@ -119,7 +145,13 @@ export default function LaneMixer({
   const { t } = useI18n();
   const [menuFor, setMenuFor] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const menu = usePresence(menuFor !== null, 140);
+  const lastMenu = useRef<number | null>(null);
+  if (menuFor !== null) lastMenu.current = menuFor;
+  const menuShownFor = menuFor ?? lastMenu.current;
   const changed = lanes.some((l, i) => l !== original[i]);
+  // with more than three lane strips the dropdown is too narrow for the names, so it shows icons only
+  const iconOnly = lanes.length + (existingBusLane ? 1 : 0) > 3;
 
   useEffect(() => {
     if (menuFor === null) return;
@@ -143,11 +175,11 @@ export default function LaneMixer({
   const lastIsSidewalk = !existingBusLane && lanes.length > 0 && lanes[lanes.length - 1] === "sidewalk";
 
   return (
-    <section>
+    <section className="m-rise-in">
       <div className="flex items-baseline justify-between">
         <h2 className="text-[14px] font-semibold text-slate-900">{t.step2}</h2>
         {busy && (
-          <span className="flex items-center gap-1 text-[11px] text-slate-500">
+          <span className="m-fade-in flex items-center gap-1 text-[11px] text-slate-500">
             <Loader2 size={12} className="animate-spin" /> {t.recalculating}
           </span>
         )}
@@ -174,12 +206,12 @@ export default function LaneMixer({
               i === lanes.length - 1 ? !existingBusLane : lanes[i + 1] === "sidewalk";
             const mergeLeft = l === "sidewalk" && prevIsSidewalk;
             const mergeRight = l === "sidewalk" && nextIsSidewalk;
-            const showDivider = l !== "sidewalk" && (i < lanes.length - 1 ? lanes[i + 1] !== "sidewalk" : existingBusLane);
 
             return (
               <div
                 key={i}
-                className={`relative flex flex-1 ${mergeLeft ? "ml-0" : "ml-1"}`}
+                className={`m-rise-in relative flex flex-1 ${mergeLeft ? "ml-0" : "ml-1"}`}
+                style={{ animationDelay: `${120 + i * 50}ms` }}
               >
                 <LaneStrip
                   kind={l}
@@ -187,13 +219,14 @@ export default function LaneMixer({
                   open={menuFor === i}
                   mergeLeft={mergeLeft}
                   mergeRight={mergeRight}
-                  showDivider={showDivider}
                   onClick={() => setMenuFor(menuFor === i ? null : i)}
                 />
-                {menuFor === i && (
+                {menu.mounted && menuShownFor === i && (
                   <div
                     role="menu"
-                    className=" -translate-x-0 absolute left-0 top-full z-30 mt-1.5 flex w-full flex-col gap-1 rounded-xl border border-slate-200/90 bg-white p-1 shadow-island animate-slideIn"
+                    className={`absolute left-0 top-full z-30 mt-1.5 flex w-full origin-top flex-col gap-1 rounded-xl border border-slate-200/90 bg-white p-1 shadow-island ${
+                      menu.closing ? "pointer-events-none m-pop-out" : "m-pop-in"
+                    }`}
                   >
                     {KINDS.map((opt) => {
                       const OptIcon = ICON[opt];
@@ -205,13 +238,15 @@ export default function LaneMixer({
                           type="button"
                           role="menuitemradio"
                           aria-checked={active}
+                          aria-label={iconOnly ? t.laneKinds[opt] : undefined}
+                          title={iconOnly ? t.laneKinds[opt] : undefined}
                           onClick={() => {
                             const next = [...lanes];
                             next[i] = opt;
                             onChange(next);
                             setMenuFor(null);
                           }}
-                          className={`flex w-full items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-[11.5px] font-semibold transition hover:brightness-110 ${
+                          className={`flex w-full items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-[11.5px] font-semibold transition hover:brightness-110 active:scale-95 ${
                             active ? "ring-2 ring-[#005BBC] ring-offset-1" : ""
                           }`}
                           style={{ backgroundColor: SURFACE[opt], color: optSidewalk ? "#0f172a" : "#ffffff" }}
@@ -222,7 +257,7 @@ export default function LaneMixer({
                             style={{ color: optSidewalk ? "#047857" : "#ffffff" }}
                             strokeWidth={2.2}
                           />
-                          <span className="truncate">{t.laneKinds[opt]}</span>
+                          {!iconOnly && <span className="truncate">{t.laneKinds[opt]}</span>}
                         </button>
                       );
                     })}
@@ -261,7 +296,7 @@ export default function LaneMixer({
             setMenuFor(null);
             onChange(original);
           }}
-          className="mt-2 flex items-center gap-1 text-[11.5px] font-medium text-slate-500 hover:text-slate-900"
+          className="m-fade-in mt-2 flex items-center gap-1 text-[11.5px] font-medium text-slate-500 transition-colors hover:text-slate-900"
         >
           <RotateCcw size={11} /> {t.resetLanes}
         </button>
