@@ -251,14 +251,14 @@ def _trip_costs() -> dict[str, Any]:
     out: dict[str, Any] = {}
     try:
         types, prov = pmt_client.get_wallet_types()
-        if prov.source != "seed":
+        if pmt_client.available(prov):
             by_id = {t.get("id"): t for t in types if isinstance(t, dict)}
             single, day = by_id.get("transit-single"), by_id.get("transit-day")
             if single:
                 out["ticket"] = {"lei": single.get("priceLei"), "minutes": 60, "dayPassLei": (day or {}).get("priceLei"),
                                  "source": "SMTT wallet API (cont.primariatm.ro)", "fetchedAt": prov.fetched_at}
         park, prov = pmt_client.get_parking()
-        if prov.source != "seed" and park.get("features"):
+        if pmt_client.available(prov) and park.get("features"):
             la0, lo0, la1, lo1 = config.CORRIDOR.bbox
             zones = Counter(f.get("tariff") for f in park["features"] if f.get("kind") == "street" and any(
                 lo0 <= c[0] <= lo1 and la0 <= c[1] <= la1 for c in f.get("coordinates") or []))

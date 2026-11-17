@@ -77,7 +77,7 @@ npm run dev                                         # http://localhost:5173 (tri
 
 Docker: `docker compose up --build` (interfața pe http://localhost:8080, documentația API pe http://localhost:8000/docs).
 
-Teste: `cd backend && pytest -q` (64 de teste, fără internet).
+Teste: `cd backend && pytest -q` (47 de teste, fără internet).
 
 ### Limite
 
@@ -162,7 +162,7 @@ npm run dev                                         # http://localhost:5173 (pro
 
 Docker: `docker compose up --build` (UI on http://localhost:8080, API docs on http://localhost:8000/docs).
 
-Tests: `cd backend && pytest -q` (64 tests, offline).
+Tests: `cd backend && pytest -q` (47 tests, offline).
 
 ### Limits
 

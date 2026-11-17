@@ -11,7 +11,8 @@ import math
 from typing import Any
 
 from app.corridor import config
-from app.corridor.osm_network import CorridorNetwork, bearing_deg
+from app.corridor.osm_network import CorridorNetwork, bearing_deg, haversine_m
+from app.services import pmt_client
 
 
 def _seg_dist_m(p, a, b) -> float:
@@ -57,12 +58,52 @@ def match_links(net: CorridorNetwork, polyline: list[list[float]], tol_m: float 
     return out
 
 
+def live_lines() -> dict[str, dict]:
+    """shortName → SMTT route info (id, colour, polyline per direction, stops) from the transit API."""
+    net, prov = pmt_client.get_transit_network()
+    if not pmt_client.available(prov) or not net.get("routes"):
+        return {}
+    stops_by_route: dict[str, list[dict]] = {}
+    for st in net.get("stops", []):
+        for rid in st.get("routeIds", []) or []:
+            stops_by_route.setdefault(rid, []).append(st)
+    paths: dict[str, dict[int, list[list[float]]]] = {}
+    for pth in net.get("paths", []):
+        try:
+            paths.setdefault(pth["routeId"], {})[int(pth.get("directionId", 0))] = pmt_client.decode_polyline(pth["polyline"])
+        except Exception:
+            continue
+    out = {}
+    for r in net["routes"]:
+        rid = r["id"]
+        color = str(r.get("color") or "")
+        out[r["shortName"]] = {
+            "routeId": rid,
+            "type": int(r.get("type", 3)),
+            "color": ("#" + color) if color and not color.startswith("#") else (color or None),
+            "longName": r.get("longName"),
+            "polylines": paths.get(rid, {}),
+            "stops": stops_by_route.get(rid, []),
+        }
+    return out
+
+
+def nearest_stop(stops: list[dict], point: list[float]) -> dict | None:
+    best = None
+    for st in stops:
+        try:
+            d = haversine_m((float(st["lon"]), float(st["lat"])), (float(point[0]), float(point[1])))
+        except (KeyError, TypeError, ValueError):
+            continue
+        if best is None or d < best[0]:
+            best = (d, st)
+    return best[1] if best else None
+
+
 def corridor_lines(net: CorridorNetwork) -> list[dict[str, Any]]:
     """Live STPT lines that run through the corridor, with their matched links per direction."""
-    from app.services import live_data  # live SMTT feed (cached, offline-safe)
-
     lines = []
-    for short, info in live_data.live_lines(wanted=None).items():
+    for short, info in live_lines().items():
         for direction, poly in (info.get("polylines") or {}).items():
             links = match_links(net, poly)
             if len(links) < 3:
@@ -78,16 +119,14 @@ def corridor_lines(net: CorridorNetwork) -> list[dict[str, Any]]:
 def buses_per_hour(route_id: str, stops: list[dict], links_geom: list[list[float]],
                    start: str | None = None, end: str | None = None) -> tuple[int | None, str, str | None]:
     """Departures in the simulated hour [start, end) at the line's stop nearest the matched corridor section."""
-    from app.services import live_data, pmt_client
-
     if not stops or not links_geom:
         return None, "no live timetable", None
     mid = links_geom[len(links_geom) // 2]
-    stop = live_data.nearest_stop(stops, mid)
+    stop = nearest_stop(stops, mid)
     if not stop:
         return None, "no live timetable", None
     tt, prov = pmt_client.get_stop_timetable(stop["id"])
-    if prov.source == "seed":
+    if not pmt_client.available(prov):
         return None, "no live timetable", None
     times = [t for line in tt.get("lines", []) if line.get("routeId") == route_id for t in line.get("times", [])]
     start, end = start or config.CORRIDOR.peak_start, end or config.CORRIDOR.peak_end

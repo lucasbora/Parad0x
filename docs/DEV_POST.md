@@ -83,7 +83,7 @@ time = free time × (1 + 0.15 × (cars ÷ capacity)⁴)
 
 Quiet streets barely slow down; full ones slow down fast. That steep curve is exactly what lets a shortcut hurt
 everyone. Our solver reproduces the textbook Braess example exactly (**65 minutes without the shortcut, 80 with it**),
-and that's one of our 64 automated tests.
+and that's one of our 47 automated tests.
 
 Our approach follows Burov et al., *Detecting Braess Routes* (UC Berkeley, IEEE ITSC 2021). They found the paradox
 disappears when traffic is light. **So did we**: no Braess street at midday, several at rush hour.
