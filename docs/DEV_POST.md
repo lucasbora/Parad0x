@@ -62,49 +62,18 @@ timetables, tickets and Timpark parking, the city's mobility plan, and a survey 
 
 ---
 
-> **68% of the people we asked in Timișoara said closing a side street makes traffic worse.**
-> We built a tool that finds the streets where the opposite is true.
-
 <!-- 🎬 Put a 10-second GIF here: click "Piața Tineretului" → the map turns blue/orange → "−13 s" appears -->
 
-## What we built
-
-**Timișoara Traffic Stress Tester** is a "what-if" engine for the streets of Timișoara, built for City Hall's planners.
-Pick a street, close it to cars or give one of its lanes to a bus, a bike lane or a wider sidewalk, and in **about a
-tenth of a second** you see how every car in the area reroutes:
-
-- 🕒 total time everyone spends in traffic
-- 🚗 the routes that get faster or slower, **in seconds**
-- 🔀 where the traffic moves to
-- 🚌 which STPT bus lines run on that street, with live timetables
-- 🌅 the same change in the morning, at midday and in the evening
-
-The surprise is that sometimes **removing road space makes everyone faster**. That's
-[Braess's paradox](https://en.wikipedia.org/wiki/Braess%27s_paradox), and our app found it on real streets:
-
-> Close **Piața Tineretului** at the morning rush, and drivers coming down Calea Martirilor arrive **13 seconds sooner**,
-> while ~450 cars an hour leave a residential square.
+## Under the hood
 
 We started where the stakes are high: the **Calea Martirilor / Strada Cluj corridor**, one of the city's main arteries,
 with 9,500 cars an hour at the morning rush. Because the whole engine is built straight from **OpenStreetMap** and the
 **city's own open data**, pointing it at any other neighbourhood of Timișoara is a configuration change, not a rewrite.
 
-## Why it matters
-
-Every bike lane or bus lane in a city starts the same argument: *"you'll make traffic worse."* Usually nobody can check
-quickly. A traffic study takes weeks. We wanted something a city planner can open in a browser and get an honest answer
-from in seconds, **before** anything gets built.
-
-## How it works (the 30-second version)
-
-1. **The real street network** from OpenStreetMap: 385 street segments, 30 traffic lights, lanes, speed limits, 39 turn
-   bans.
-2. **Who drives where**, estimated from 1,428 buildings and every school, office and shop: homes produce trips,
-   destinations attract them, nearer ones more than far ones (a gravity model).
-3. **Every driver picks their own fastest route**, like Waze. We compute that balance, the *Wardrop equilibrium*, with
-   the conjugate **Frank-Wolfe** algorithm.
-4. **Then we try everything**: close every busy street segment, take a lane from every multi-lane street, re-solve the
-   whole city each time. About 300 scenarios per hour of the day, in ~10 seconds.
+- **The real street network** from OpenStreetMap: 385 street segments, 30 traffic lights, lanes, speed limits, 39 turn
+  bans.
+- **Then we try everything**: close every busy street segment, take a lane from every multi-lane street, re-solve the
+  whole city each time. About 300 scenarios per hour of the day, in ~10 seconds.
 
 The time on each street follows the classic BPR curve:
 
@@ -129,7 +98,7 @@ We ran a survey with 31 people in Timișoara:
   of the Braess streets our app found
 
 The answers feed back into the app: they check our assumptions (car share, people per car) against the city's mobility
-plan, and next to every bus lane the app shows how many people said they'd leave the car for that time saving.
+plan.
 
 ## Built with
 
@@ -154,7 +123,7 @@ plan, and next to every bus lane the app shows how many people said they'd leave
 - It runs on **real streets and real city data**, not a toy network
 - Every number shows **where it comes from**, and the app says plainly that traffic is *estimated* until someone counts
   it
-- It answers in about a tenth of a second, fast enough to use live in a meeting
+- It's fast enough to use live in a meeting
 - It's **open source (MIT)**, so any city can run it
 
 ## What's next
